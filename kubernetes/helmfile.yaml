@@ -1,0 +1,27 @@
+repositories:
+    - name: bitnami
+      url: https://charts.bitnami.com/bitnami
+    - name: ingress-nginx
+      url: https://kubernetes.github.io/ingress-nginx
+
+releases:
+    - name: wedding
+      namespace: wedding
+      chart: ./charts/wedding
+      values:
+        - ./values/wedding.yaml
+    - name: postgres
+      namespace: wedding
+      chart: ./charts/postgres
+      values:
+        - ./values/postgres.yaml
+    - name: ingress-controller
+      namespace: ingress
+      chart: ingress-nginx/ingress-nginx
+      values:
+        - ./values/ingress-controller.yaml
+    - name: frontend
+      namespace: wedding
+      chart: bitnami/nginx
+      values:
+        - ./values/frontend.yaml

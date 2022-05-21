@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "wedding.fullname" . }}
+  labels:
+    app: {{ include "wedding.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{ include "wedding.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "wedding.fullname" . }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: {{ include "wedding.fullname" . }}
+          envFrom:
+            - secretRef:
+                name: wedding
+            - configMapRef:
+                name: wedding
+          ports:
+            - containerPort: 8000
+              name: gunicorn
+          resources:
+            limits:
+              memory: 265Mi
+              cpu: 500m
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: {{ .Values.service.port }}
+              httpHeaders:
+              - name: Accept
+                value: application/json
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: 10
+            {{- end }}
+
