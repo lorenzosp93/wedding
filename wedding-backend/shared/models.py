@@ -1,17 +1,18 @@
 "Define abstract models to be used in all apps"
-from tabnanny import verbose
 import uuid
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Serializable(models.Model):
     "Abstract model to define an uuid based id field"
     uuid = models.UUIDField(
         editable=False,
-        default=uuid.uuid4
+        default=uuid.uuid4,
     )
 
     class Meta:
@@ -202,3 +203,47 @@ class SiteSettings(SingletonBaseModel):
     "Concrete model for the settings for the website"
     about_text = models.TextField()
 
+I18N = (
+    (0, 'en'),
+    (1, 'it'),
+    (2, 'es'),
+)
+USER_TYPES = (
+    (0, 'family'),
+    (1, 'friend'),
+    (2, 'colleague')
+)
+
+class Address(models.Model):
+    "Model to capture an address from a user"
+    address1 = models.TextField(null=True, blank=True)
+    address2 = models.TextField(null=True, blank=True)
+    city = models.TextField()
+    postal_code = models.TextField()
+    province_or_state = models.TextField(null=True, blank=True)
+    country = models.TextField()
+
+class UserProfile(models.Model):
+    "Model to extend the built-in Django user with additional fields"
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='extended'
+    )
+    language = models.IntegerField(choices=I18N)
+    type = models.IntegerField(choices=USER_TYPES)
+    address = models.ForeignKey(
+        Address,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()

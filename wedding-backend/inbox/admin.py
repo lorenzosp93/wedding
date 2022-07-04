@@ -1,5 +1,10 @@
 from django.contrib import admin
-from . import models
-
+from django.apps import apps
 # Register your models here.
-admin.register(**models)
+
+
+app = apps.get_app_config('inbox')
+
+for model_name, model in app.models.items():
+    admin.site.register(model)
+
