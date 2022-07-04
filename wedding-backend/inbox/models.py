@@ -99,7 +99,6 @@ class Response(TimeStampable):
     "Model to capture the response from a specific user"
     option = models.ManyToManyField(
         Option,
-        null=True,
         blank=True,
     )
     question = models.ForeignKey(

@@ -1,4 +1,5 @@
 "Define abstract models to be used in all apps"
+from unicodedata import decimal
 import uuid
 from django.db import models
 from django.utils.text import slugify
@@ -7,6 +8,15 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+class Address(models.Model):
+    "Model to capture an address from a user"
+    address1 = models.TextField(null=True, blank=True)
+    address2 = models.TextField(null=True, blank=True)
+    city = models.TextField()
+    postal_code = models.TextField()
+    province_or_state = models.TextField(null=True, blank=True)
+    country = models.TextField()
 
 class Serializable(models.Model):
     "Abstract model to define an uuid based id field"
@@ -105,10 +115,19 @@ class Datable(models.Model):
     class Meta:
         abstract = True
 
+class Location(Named,):
+    url = models.URLField(blank=True, null=True)
+    latitude = models.DecimalField(max_digits=17, decimal_places=15,blank=True, null=True)
+    longitude = models.DecimalField(max_digits=17, decimal_places=15,blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.SET_NULL, blank=True, null=True)
+
 class Localizable(models.Model):
     "Abstract model to define locations"
-    location = models.CharField(
-        max_length=50,
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -214,14 +233,6 @@ USER_TYPES = (
     (2, 'colleague')
 )
 
-class Address(models.Model):
-    "Model to capture an address from a user"
-    address1 = models.TextField(null=True, blank=True)
-    address2 = models.TextField(null=True, blank=True)
-    city = models.TextField()
-    postal_code = models.TextField()
-    province_or_state = models.TextField(null=True, blank=True)
-    country = models.TextField()
 
 class UserProfile(models.Model):
     "Model to extend the built-in Django user with additional fields"
