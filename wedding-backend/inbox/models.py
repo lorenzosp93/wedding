@@ -2,37 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
     Serializable, Named, TimeStampable,
-    UserProfile, I18N
+    ContentString, HasContent, get_translated_content
 )
 
-class ContentString(Named):
-    """
-        Model to define a string of content
-    """
 
-class TranslatedString(models.Model):
-    "Model to define translations for a `ContentString`"
-    language = models.IntegerField(choices=I18N)
-    t9n = models.TextField()
-    content = models.ForeignKey(
-        ContentString,
-        on_delete=models.CASCADE,
-        related_name='translated_strings'
-    )
-    def __str__(self) -> str:
-        return f'{self.content.name} -> {self.get_language_display()}'
-
-def get_translated_content(content: ContentString, language: str) -> str:
-    "Helper function to return the translated string for a given content and language"
-    return content.translated_strings.get(language=language).t9n or content.name
-
-class Message(Serializable, Named):
+class Message(Serializable, Named, HasContent):
     "Model to define generic messages to users"
-    content = models.ForeignKey(ContentString, on_delete=models.CASCADE)
     
-class Question(Serializable, Named):
+class Question(Serializable, Named, HasContent):
     "Model to define questions for users"
-    content = models.ForeignKey(ContentString, on_delete=models.CASCADE)
     message = models.ForeignKey(
         Message,
         on_delete=models.CASCADE,
@@ -46,9 +24,8 @@ class Question(Serializable, Named):
     def get_options(self, language) -> list:
         return [option.get_content(language) for option in self.options.all()]
 
-class Option(Named):
+class Option(Named, HasContent):
     "Model to define selectable options for questions"
-    content = models.ForeignKey(ContentString, on_delete=models.CASCADE)
     question = models.ForeignKey(
         Question,
         on_delete=models.CASCADE,

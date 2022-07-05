@@ -1,4 +1,5 @@
 "Define abstract models to be used in all apps"
+from importlib.resources import contents
 from unicodedata import decimal
 import uuid
 from django.db import models
@@ -64,10 +65,10 @@ class TimeStampable(models.Model):
 
 class Datable(models.Model):
     "Abstract model to define dates for the entries"
-    start_date = models.DateField(
+    start_date = models.DateTimeField(
         verbose_name="Start date"
     )
-    end_date = models.DateField(
+    end_date = models.DateTimeField(
         verbose_name="End date",
         blank=True,
         null=True,
@@ -194,12 +195,6 @@ class HasPicture(models.Model):
     class Meta:
         abstract = True
 
-class HasContent(models.Model):
-    "Abstract class to define content"
-    content = models.TextField()
-
-    class Meta:
-        abstract = True
 
 class SingletonBaseModel(models.Model):
     "Abstract class to implement the singleton design pattern"
@@ -258,3 +253,31 @@ class UserProfile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
+class ContentString(Named):
+    """
+        Model to define a string of content
+    """
+
+class TranslatedString(models.Model):
+    "Model to define translations for a `ContentString`"
+    language = models.IntegerField(choices=I18N)
+    t9n = models.TextField()
+    content = models.ForeignKey(
+        ContentString,
+        on_delete=models.CASCADE,
+        related_name='translated_strings'
+    )
+    def __str__(self) -> str:
+        return f'{self.content.name} -> {self.get_language_display()}'
+
+def get_translated_content(content: ContentString, language: str) -> str:
+    "Helper function to return the translated string for a given content and language"
+    return content.translated_strings.get(language=language).t9n or content.name
+
+class HasContent(models.Model):
+    "Abstract class to define content"
+    content = models.ForeignKey(ContentString, on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
