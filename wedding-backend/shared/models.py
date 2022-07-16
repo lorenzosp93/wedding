@@ -213,7 +213,7 @@ class SingletonBaseModel(models.Model):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
 
-class SiteSettings(SingletonBaseModel):
+class SiteSetting(SingletonBaseModel):
     "Concrete model for the settings for the website"
     about_text = models.TextField()
 
@@ -234,16 +234,17 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name='extended'
+        related_name='profile'
     )
-    language = models.IntegerField(choices=I18N)
-    type = models.IntegerField(choices=USER_TYPES)
+    language = models.IntegerField(choices=I18N, default=0)
+    type = models.IntegerField(choices=USER_TYPES, default=0)
     address = models.ForeignKey(
         Address,
         on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
+    plus = models.IntegerField(default=0)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -253,6 +254,10 @@ class UserProfile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+    
+    def __str__(self):
+        return self.user.username
+    
 
 class ContentString(Named):
     """

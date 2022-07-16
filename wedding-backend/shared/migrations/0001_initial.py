@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='SiteSettings',
+            name='SiteSetting',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('about_text', models.TextField()),
@@ -65,10 +65,10 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('language', models.IntegerField(choices=[(0, 'en'), (1, 'it'), (2, 'es')])),
-                ('type', models.IntegerField(choices=[(0, 'family'), (1, 'friend'), (2, 'colleague')])),
+                ('language', models.IntegerField(choices=[(0, 'en'), (1, 'it'), (2, 'es')], default=0)),
+                ('type', models.IntegerField(choices=[(0, 'family'), (1, 'friend'), (2, 'colleague')], default=0)),
                 ('address', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='shared.address')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='extended', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(

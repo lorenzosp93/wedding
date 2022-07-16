@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shared',
     'inbox',
+    'info',
     'cal',
     'wedding',
     'storages',

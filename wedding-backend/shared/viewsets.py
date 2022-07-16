@@ -4,7 +4,7 @@ from .serializers import (
     SettingsSerializer
 )
 from .models import (
-    SiteSettings
+    SiteSetting
 )
 
 class SettingsViewSet(ReadOnlyModelViewSet):
@@ -14,5 +14,5 @@ class SettingsViewSet(ReadOnlyModelViewSet):
 
     A simple viewset to view Education entires.
     """
-    queryset = SiteSettings.objects.all()
+    queryset = SiteSetting.objects.all()
     serializer_class = SettingsSerializer

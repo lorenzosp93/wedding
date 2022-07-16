@@ -2,7 +2,7 @@ from rest_framework.serializers import (
     ModelSerializer
 )
 from .models import (
-    SiteSettings,
+    SiteSetting,
     Attachment
 )
 
@@ -16,7 +16,7 @@ class AttachmentSerializer(ModelSerializer):
 
 class SettingsSerializer(ModelSerializer):
     class Meta:
-        model = SiteSettings
+        model = SiteSetting
         fields = [
             'about_text'
         ]
