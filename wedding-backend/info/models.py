@@ -1,7 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 from shared.models import (
     Named, HasPicture, HasContent
 )
+
+
 
 INFO_TYPES = (
     (0, 'Accomodations'),
@@ -16,4 +19,5 @@ class Information(Named, HasPicture, HasContent):
     type = models.IntegerField(choices=INFO_TYPES,)
 
 class Photo(Named, HasPicture):
-    pass
+    tag = models.ManyToManyField(User, blank=True, null=True,)
+
