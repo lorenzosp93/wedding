@@ -245,6 +245,13 @@ class UserProfile(models.Model):
         blank=True
     )
     plus = models.IntegerField(default=0)
+    parent = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='childs'
+    )
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -255,6 +262,22 @@ class UserProfile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
     
+    def setup_plus_one(self, first_name, last_name, email):
+        if self.childs.count() < self.plus:
+            user = User.objects.create(
+                username=email,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+            )
+            UserProfile.objects.create(
+                user=user,
+                language=self.language,
+                type=self.type,
+                plus=0,
+                parent=self,
+            )
+
     def __str__(self):
         return self.user.username
     

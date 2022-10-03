@@ -1,13 +1,28 @@
+from random import choices
+from secrets import choice
+from tabnanny import check
 from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
     Serializable, Named, TimeStampable,
-    ContentString, HasContent, get_translated_content
+    HasContent, get_translated_content
+)
+MESSAGE_TYPES = (
+    (0, "Information"),
+    (1, "Question"),
 )
 
+QUESTION_TYPES = (
+    (0, "Freetext"),
+    (1, "SingleSelect"),
+    (2, "MultiSelect"),
+    (3, "SingleSelectOther"),
+
+)
 
 class Message(Serializable, Named, HasContent):
     "Model to define generic messages to users"
+    type = models.IntegerField(choices=MESSAGE_TYPES, default=0)
     
 class Question(Serializable, Named, HasContent):
     "Model to define questions for users"
@@ -16,7 +31,8 @@ class Question(Serializable, Named, HasContent):
         on_delete=models.CASCADE,
         related_name='questions',
     )
-    isMultiSelect = models.BooleanField()
+    type = models.IntegerField(choices=QUESTION_TYPES, default=0)
+    mandatory = models.BooleanField(default=True)
 
     def get_content(self, language) -> str:
         return get_translated_content(self.content, language)
@@ -25,7 +41,8 @@ class Question(Serializable, Named, HasContent):
         return [option.get_content(language) for option in self.options.all()]
 
 class Option(Named, HasContent):
-    "Model to define selectable options for questions"
+    """Model to define selectable options for questions - 'Other' 
+    option is omitted for SingleSelectOther questions"""
     question = models.ForeignKey(
         Question,
         on_delete=models.CASCADE,
@@ -39,7 +56,7 @@ class UserMessage(Serializable):
     "Model to define a message to a specific user"
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    isRead = models.BooleanField(default=False)
+    read = models.BooleanField(default=False)
 
     @property
     def language(self) -> str:
@@ -47,17 +64,21 @@ class UserMessage(Serializable):
     
     @property
     def get_message_content(self) -> str:
-        return get_translated_content(
-            content=self.message.content,
-            language=self.language
-        )
+        return {
+            'content': get_translated_content(
+                content=self.message.content,
+                language=self.language,
+            ),
+            'type': self.message.type,
+        }
     
     @property
     def get_questions_content(self) -> dict:
         return {
             q.get_content(self.language): {
                 'options': q.get_options(self.language),
-                'isMultiSelect': q.isMultiSelect,
+                'type': q.type,
+                'mandatory': q.mandatory,
             }
             for q in self.message.questions.all()
         }
@@ -66,7 +87,7 @@ class UserMessage(Serializable):
         self.read = True
     
     @property
-    def isReplied(self) -> bool:
+    def replied(self) -> bool:
         return all([
             q.responses.filter(user=self.user).count() > 1
             for q in self.message.questions
