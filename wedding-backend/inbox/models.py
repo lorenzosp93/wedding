@@ -56,7 +56,7 @@ class UserMessage(Serializable):
     "Model to define a message to a specific user"
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    read = models.BooleanField(default=False)
+    is_read = models.BooleanField(default=False)
 
     @property
     def language(self) -> str:
@@ -87,7 +87,7 @@ class UserMessage(Serializable):
         self.read = True
     
     @property
-    def replied(self) -> bool:
+    def is_replied(self) -> bool:
         return all([
             q.responses.filter(user=self.user).count() > 1
             for q in self.message.questions
