@@ -1,14 +1,10 @@
 "Define abstract models to be used in all apps"
-from importlib.resources import contents
-from unicodedata import decimal
 import uuid
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 class Address(models.Model):
     "Model to capture an address from a user"
@@ -73,19 +69,6 @@ class Datable(models.Model):
         blank=True,
         null=True,
     )
-    current = models.BooleanField(
-        verbose_name="Is current",
-        default=False,
-    )
-
-    @property
-    def end_date_display(self):
-        "Display end date"
-        if self.current:
-            return "Present"
-        if self.end_date:
-            return self.end_date
-        return "No end date"
 
     def save(self, **kwargs): # pylint: disable=W0221
         "Override save method to validate end date"
@@ -104,13 +87,6 @@ class Datable(models.Model):
             raise ValidationError(
                 "End date: %(end)s cannot be in the future",
                 params={"end": self.end_date},
-            )
-
-    def start_date_validation(self):
-        if self.start_date > timezone.now().date():
-            raise ValidationError(
-                "Start date: %(start)s cannot be in the future",
-                params={"start": self.start_date},
             )
 
     class Meta:
@@ -222,65 +198,7 @@ I18N = (
     (1, 'it'),
     (2, 'es'),
 )
-USER_TYPES = (
-    (0, 'family'),
-    (1, 'friend'),
-    (2, 'colleague')
-)
 
-
-class UserProfile(models.Model):
-    "Model to extend the built-in Django user with additional fields"
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        related_name='profile'
-    )
-    language = models.IntegerField(choices=I18N, default=0)
-    type = models.IntegerField(choices=USER_TYPES, default=0)
-    address = models.ForeignKey(
-        Address,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-    plus = models.IntegerField(default=0)
-    parent = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name='childs'
-    )
-
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserProfile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
-    
-    def setup_plus_one(self, first_name, last_name, email):
-        if self.childs.count() < self.plus:
-            user = User.objects.create(
-                username=email,
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-            )
-            UserProfile.objects.create(
-                user=user,
-                language=self.language,
-                type=self.type,
-                plus=0,
-                parent=self,
-            )
-
-    def __str__(self):
-        return self.user.username
-    
 
 class ContentString(Named):
     """

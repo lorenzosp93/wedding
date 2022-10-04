@@ -51,14 +51,14 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     kubernetes.io/tls-acme: "true"
   hosts:
-    - host: www.lorenzosp.com
+    - host: www.priscillalorenzo.com
       paths:
         - path: /api
           pathType: ImplementationSpecific
   tls: 
-    - secretName: www.lorenzosp.com-tls
+    - secretName: www.priscillalorenzo.com-tls
       hosts:
-        - www.lorenzosp.com
+        - www.priscillalorenzo.com
   
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

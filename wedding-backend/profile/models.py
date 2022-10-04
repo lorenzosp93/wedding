@@ -1,0 +1,67 @@
+"Define abstract models to be used in all apps"
+from unicodedata import decimal
+from django.db import models
+from django.utils.text import slugify
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from shared.models import Address, I18N
+
+USER_TYPES = (
+    (0, 'family'),
+    (1, 'friend'),
+    (2, 'colleague')
+)
+
+class UserProfile(models.Model):
+    "Model to extend the built-in Django user with additional fields"
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='profile'
+    )
+    language = models.IntegerField(choices=I18N, default=0)
+    type = models.IntegerField(choices=USER_TYPES, default=0)
+    address = models.ForeignKey(
+        Address,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    plus = models.IntegerField(default=0)
+    parent = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='childs'
+    )
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            UserProfile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
+    
+    def setup_plus_one(self, first_name, last_name, email):
+        if self.childs.count() < self.plus:
+            user = User.objects.create(
+                username=email,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+            )
+            UserProfile.objects.create(
+                user=user,
+                language=self.language,
+                type=self.type,
+                plus=0,
+                parent=self,
+            )
+
+    def __str__(self):
+        return self.user.username
+    

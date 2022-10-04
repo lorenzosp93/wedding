@@ -4,8 +4,6 @@ from shared.models import (
     Named, HasPicture, HasContent
 )
 
-
-
 INFO_TYPES = (
     (0, 'Accomodations'),
     (1, 'Food'),
@@ -19,5 +17,5 @@ class Information(Named, HasPicture, HasContent):
     type = models.IntegerField(choices=INFO_TYPES,)
 
 class Photo(Named, HasPicture):
-    tag = models.ManyToManyField(User, blank=True, null=True,)
+    tag = models.ManyToManyField(User, blank=True,)
 

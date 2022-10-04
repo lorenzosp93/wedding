@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/inbox/', include('inbox.urls')),
     path('api/shared/', include('shared.urls')),
     path('api/calendar/', include('cal.urls')),
+    path('api/user-profile/', include('profile.urls')),
 ]
 
 if settings.DEBUG:
