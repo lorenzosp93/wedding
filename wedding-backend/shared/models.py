@@ -217,9 +217,11 @@ class TranslatedString(models.Model):
     def __str__(self) -> str:
         return f'{self.content.name} -> {self.get_language_display()}'
 
-def get_translated_content(content: ContentString, language: str) -> str:
+def get_translated_content(content: ContentString, language: str = 0) -> str:
     "Helper function to return the translated string for a given content and language"
-    return content.translated_strings.get(language=language).t9n or content.name
+    if (translated_str := content.translated_strings.filter(language=language).first()):
+        return translated_str.t9n
+    return content.name
 
 class HasContent(models.Model):
     "Abstract class to define content"
