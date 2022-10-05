@@ -49,7 +49,7 @@ class Option(Named, HasContent):
     def get_content(self, language=0):
         return get_translated_content(self.content, language)
 
-class UserMessage(Serializable):
+class UserMessage(Serializable, TimeStampable):
     "Model to define a message to a specific user"
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -60,8 +60,9 @@ class UserMessage(Serializable):
         return self.user.profile.language
     
     @property
-    def get_message_content(self) -> str:
+    def message_content(self) -> dict:
         return {
+            'name': self.message.name,
             'content': get_translated_content(
                 content=self.message.content,
                 language=self.language,
@@ -70,7 +71,7 @@ class UserMessage(Serializable):
         }
     
     @property
-    def get_questions_content(self) -> dict:
+    def questions_content(self) -> dict:
         return {
             q.message: {
                 'type': q.get_type_display(),
@@ -92,20 +93,27 @@ class UserMessage(Serializable):
     
     def __str__(self) -> str:
         return f"'{self.message}' to '{self.user}'"
+
+    class Meta:
+        ordering = ["-created_at"]
     
 class Response(TimeStampable):
     "Model to capture the response from a specific user"
-    option = models.ManyToManyField(
-        Option,
-        blank=True,
-    )
     question = models.ForeignKey(
         Question,
         on_delete=models.CASCADE,
         related_name='responses'
     )
+    option = models.ManyToManyField(
+        Option,
+        blank=True,
+    )
     text = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user}'s reply to {self.question.name}"
+    
 
     class Meta:
         constraints = [

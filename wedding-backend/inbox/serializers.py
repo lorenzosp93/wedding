@@ -4,8 +4,8 @@ from .models import (
 )
 
 class UserMessageSerializer(ModelSerializer):
-    get_message_content = CharField()
-    get_questions_content = DictField()
+    message_content = DictField()
+    questions = DictField(source='questions_content')
     class Meta:
         model = UserMessage
         exclude = ['message', 'id', 'user',]
