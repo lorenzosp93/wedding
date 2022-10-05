@@ -13,4 +13,4 @@ class InformationSerializer(ModelSerializer):
 class PhotoSerializer(ModelSerializer):
     class Meta:
         model = Photo
-        fields = '__all__'
+        fields = ['picture']

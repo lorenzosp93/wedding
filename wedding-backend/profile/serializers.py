@@ -16,7 +16,7 @@ class UserProfileRWSerializer(ModelSerializer):
     setup_plus_one = CharField()
     class Meta:
         model = UserProfile
-        fields = ['address', 'setup_plus_one']
+        fields = ['address', 'setup_plus_one', 'user']
 
 
 class UserProfileReadSerializer(ModelSerializer):

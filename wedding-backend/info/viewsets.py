@@ -1,4 +1,5 @@
 from django.conf import Settings
+from django.db.models import Q
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from .serializers import (
     InformationSerializer, PhotoSerializer
@@ -19,4 +20,7 @@ class InformationViewSet(ReadOnlyModelViewSet):
 
 class PhotoViewSet(ReadOnlyModelViewSet):
     queryset = Photo.objects.all()
-    serializer_class = Photo
+    serializer_class = PhotoSerializer
+    def get_queryset(self):
+        return Photo.objects.filter(Q(tag__id=self.request.user.id) | Q(private=False))
+    
