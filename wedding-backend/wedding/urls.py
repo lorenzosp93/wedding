@@ -31,7 +31,7 @@ urlpatterns = [
     path('api/shared/', include('shared.urls')),
     path('api/calendar/', include('cal.urls')),
     path('api/info/', include('info.urls')),
-    path('api/user-profile/', include('profile.urls')),
+    path('api/user/', include('profile.urls')),
 ]
 
 if settings.DEBUG:

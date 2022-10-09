@@ -10,18 +10,16 @@ from .models import (
 )
 
 
-class UserProfileRWSerializer(ModelSerializer):
+class UserProfileAddressSerializer(ModelSerializer):
     address = AddressSerializer()
-    user = UserSerializer()
-    setup_plus_one = CharField()
     class Meta:
         model = UserProfile
-        fields = ['address', 'setup_plus_one', 'user']
+        fields = ['address']
 
-
-class UserProfileReadSerializer(ModelSerializer):
+class UserProfileSerializer(ModelSerializer):
     user = UserSerializer()
-    childs = UserSerializer(many=True) # review to enable nested objects serializers
+    childs = UserSerializer(many=True, required=False,) # review to enable nested objects serializers
     class Meta:
         model = UserProfile
+        depth = 1
         fields = '__all__'

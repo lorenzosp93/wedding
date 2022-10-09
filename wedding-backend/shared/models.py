@@ -1,4 +1,5 @@
 "Define abstract models to be used in all apps"
+from unittest.util import _MAX_LENGTH
 import uuid
 from django.db import models
 from django.utils.text import slugify
@@ -8,12 +9,12 @@ from django.contrib.auth.models import User
 
 class Address(models.Model):
     "Model to capture an address from a user"
-    address1 = models.TextField(null=True, blank=True)
-    address2 = models.TextField(null=True, blank=True)
-    city = models.TextField()
-    postal_code = models.TextField()
-    province_or_state = models.TextField(null=True, blank=True)
-    country = models.TextField()
+    address1 = models.TextField(max_length=128)
+    address2 = models.TextField(max_length=128, null=True, blank=True)
+    city = models.CharField(max_length=20)
+    postal_code = models.CharField(max_length=10)
+    province_or_state = models.CharField(max_length=10, null=True, blank=True)
+    country = models.CharField(max_length=20)
 
 class Serializable(models.Model):
     "Abstract model to define an uuid based id field"

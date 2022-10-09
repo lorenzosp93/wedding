@@ -1,7 +1,5 @@
 "Define abstract models to be used in all apps"
-from unicodedata import decimal
 from django.db import models
-from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -34,7 +32,7 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='childs'
+        related_name='childs',
     )
 
     @receiver(post_save, sender=User)
@@ -47,20 +45,21 @@ class UserProfile(models.Model):
         instance.profile.save()
     
     def setup_plus_one(self, first_name, last_name, email):
-        if self.childs.count() < self.plus:
-            user = User.objects.create(
+        if self.user.childs.count() < self.plus:
+            user, created = User.objects.get_or_create(
                 username=email,
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
             )
-            UserProfile.objects.create(
-                user=user,
-                language=self.language,
-                type=self.type,
-                plus=0,
-                parent=self,
-            )
+            if created:
+                profile = user.profile
+                profile.language = self.language
+                profile.type = self.type
+                profile.parent = self.user
+                profile.save()
+            return user, created
+        return None, False
 
     def __str__(self):
         return self.user.username
