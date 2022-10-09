@@ -4,9 +4,12 @@ Django settings for wedding project.
 
 import os
 
+SITE_NAME = "PRISCILLALORENZO.COM"
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -26,6 +29,7 @@ if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
     ALLOWED_HOSTS = [
+        SITE_NAME,
         'localhost',
         '127.0.0.1', #local debugging
     ]
@@ -54,6 +58,8 @@ INSTALLED_APPS = [
     'health_check.db',                          # stock Django health checkers
     'health_check.cache',
     'rest_framework',
+    'rest_framework.authtoken',
+    'drfpasswordless',
     'corsheaders',
 ]
 
@@ -67,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'wedding.urls'
 
@@ -177,10 +184,22 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
+
+PASSWORDLESS_AUTH = {
+    'PASSWORDLESS_AUTH_TYPES': ['EMAIL',],
+    'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'me@lorenzosp.com',
+    'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': "token_email.html",
+    'PASSWORDLESS_REGISTER_NEW_USERS': True,
+    'PASSWORDLESS_EMAIL_SUBJECT': f"[{SITE_NAME}] Login",
+    'PASSWORDLESS_EMAIL_CALLBACK': 'shared.utils.send_email_with_callback_token',
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_TO = os.environ.get('EMAIL_TO', 'me@lorenzosp.com')

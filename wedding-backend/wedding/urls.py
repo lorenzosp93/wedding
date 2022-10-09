@@ -32,6 +32,7 @@ urlpatterns = [
     path('api/calendar/', include('cal.urls')),
     path('api/info/', include('info.urls')),
     path('api/user/', include('profile.urls')),
+    path('', include('drfpasswordless.urls')),
 ]
 
 if settings.DEBUG:
