@@ -24,6 +24,8 @@ QUESTION_TYPES = (
 class Message(Serializable, HasContent):
     "Model to define generic messages to users"
     type = models.IntegerField(choices=MESSAGE_TYPES, default=0)
+    def __str__(self) -> str:
+        return f"{self.content}"
     
 class Question(Serializable, HasContent):
     "Model to define questions for users"
@@ -34,6 +36,8 @@ class Question(Serializable, HasContent):
     )
     type = models.IntegerField(choices=QUESTION_TYPES, default=0)
     mandatory = models.BooleanField(default=True)
+    def __str__(self) -> str:
+        return f"{self.message} - {self.content}"
     
 class Option(Serializable, HasContent):
     """Model to define selectable options for questions - 'Other' 
@@ -43,6 +47,8 @@ class Option(Serializable, HasContent):
         on_delete=models.CASCADE,
         related_name='options',
     )
+    def __str__(self) -> str:
+        return f"{self.question} - {self.content}"
 
 class Response(Serializable, TimeStampable):
     "Model to capture the response from a specific user"

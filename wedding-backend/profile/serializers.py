@@ -17,7 +17,6 @@ class TranslationContentMixin(ModelSerializer):
 
     content = SerializerMethodField('translated_content')
 
-
 class UserProfileAddressSerializer(ModelSerializer):
     address = AddressSerializer()
     class Meta:

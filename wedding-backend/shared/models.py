@@ -228,7 +228,7 @@ def get_translated_content(content: ContentString, language: str = 0) -> str:
 
 class HasContent(models.Model):
     "Abstract class to define content"
-    content = models.ForeignKey(ContentString, on_delete=models.CASCADE)
+    content = models.ForeignKey(ContentString, on_delete=models.CASCADE, unique=True)
 
     class Meta:
         abstract = True

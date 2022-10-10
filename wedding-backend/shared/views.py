@@ -9,7 +9,7 @@ import requests
 import json
 
 BACKEND = Site.objects.get_current()
-FRONTEND = Site.objects.get(name='Frontend')
+FRONTEND = Site.objects.get(name='FRONTEND')
 
 # Create your views here.
 @api_view(('GET',))

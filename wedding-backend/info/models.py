@@ -18,7 +18,8 @@ class Information(Named, HasPicture, HasContent):
         ContentString,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        related_name='information_subject',
     )
     type = models.IntegerField(choices=INFO_TYPES,)
 
