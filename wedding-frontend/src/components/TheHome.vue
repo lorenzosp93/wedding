@@ -1,8 +1,6 @@
 <template>
     <div class="">
-      <p>
-        Some main content
-      </p>
+      <p>{{ $t('thehome.someMainContent') }}</p>
       
     </div>
   </template>

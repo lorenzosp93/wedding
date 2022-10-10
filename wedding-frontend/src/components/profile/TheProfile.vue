@@ -1,8 +1,6 @@
 <template>
     <div class="">
-      <p>
-        Some profile content
-      </p>
+      <p>{{ $t('profile.theprofile.someProfileContent') }}</p>
       
     </div>
   </template>
@@ -16,6 +14,13 @@
       }
     },
     props: {
+    },
+    methods: {
+      getProfile() {
+        this.$http.get(
+
+        )
+      }
     },
     emits: [
     ],

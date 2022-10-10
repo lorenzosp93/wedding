@@ -1,8 +1,6 @@
 <template>
     <div class="">
-      <p>
-        Some gallery content
-      </p>
+      <p>{{ $t('gallery.thegallery.someGalleryContent') }}</p>
       
     </div>
   </template>

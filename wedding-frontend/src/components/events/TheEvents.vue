@@ -1,8 +1,6 @@
 <template>
     <div class="">
-      <p>
-        Some events content
-      </p>
+      <p>{{ $t('events.theevents.someEventsContent') }}</p>
       
     </div>
   </template>

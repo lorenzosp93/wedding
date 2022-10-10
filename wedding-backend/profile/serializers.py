@@ -16,9 +16,22 @@ class UserProfileAddressSerializer(ModelSerializer):
         model = UserProfile
         fields = ['address']
 
-class UserProfileSerializer(ModelSerializer):
+class BaseUserProfileSerializer(ModelSerializer):
     user = UserSerializer()
-    childs = UserSerializer(many=True, required=False,) # review to enable nested objects serializers
+    class Meta:
+        model = UserProfile
+        fields = ['user']
+
+class UserProfileSerializer(BaseUserProfileSerializer):
+    language = CharField(source='get_language_display')
+    type = CharField(source='get_type_display')
+    parent = UserSerializer(required=False,)
+    childs = BaseUserProfileSerializer(
+        source='user.childs',
+        many=True,
+        required=False,
+    )
+
     class Meta:
         model = UserProfile
         depth = 1

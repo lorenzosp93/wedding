@@ -1,0 +1,52 @@
+{
+  "auth": {
+    "loginpage": {
+      "loginPage": "Página de inicio de sesión",
+      "emailAddress": "Correo electrónico",
+      "submit": "Envia"
+    }
+  },
+  "events": {
+    "theevents": {
+      "someEventsContent": "Algo sobre los eventos"
+    }
+  },
+  "gallery": {
+    "thegallery": {
+      "someGalleryContent": "\n        Some gallery content\n      "
+    }
+  },
+  "inbox": {
+    "theinbox": {
+      "someInboxContent": "\\"
+    }
+  },
+  "information": {
+    "theinfo": {
+      "someInfoContent": "\n        Some info content\n      "
+    }
+  },
+  "profile": {
+    "theprofile": {
+      "someProfileContent": "\n        Some profile content\n      "
+    }
+  },
+  "shared": {
+    "notfound": {
+      "pageNotFound": "Page not found!"
+    },
+    "thenavbar": {
+      "priscillaELorenzo": "Priscilla y Lorenzo",
+      "openMainMenu": "Abrir el menu principal",
+      "home": "Home",
+      "events": "Eventos",
+      "information": "Informaciónes",
+      "inbox": "Mensajes",
+      "gallery": "Galería",
+      "profile": "Perfil"
+    }
+  },
+  "thehome": {
+    "someMainContent": "\n        Some main content\n      "
+  }
+}

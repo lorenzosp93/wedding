@@ -1,27 +1,25 @@
 <template>
-    <div class="">
-      <p>
-        Landing page content
-      </p>
-      
-    </div>
-  </template>
+
+<p>{{ $t('shared.notfound.pageNotFound') }}</p>
+
+</template>
   
   <script>
   export default {
-    name: 'LandingPage',
+    name: 'NotFound',
     data () {
       return {
-        data: [],
-      }
+      };
     },
-    props: {
-    },
-    emits: [
+    props: [
     ],
     inject: [
     ],
-    computed: {
+    methods: {
+    },
+    computed:{
+    },
+    beforeUnmount () {
     },
     mounted () {
     }
@@ -30,6 +28,4 @@
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
-  
   </style>
-  
