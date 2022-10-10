@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import apiService from './service/api.service';
+
 
 export default {
   name: 'App',
@@ -14,65 +16,39 @@ export default {
   data () {
     return{
       profile: null,
-<<<<<<< HEAD
-=======
       requestFactory: null,
->>>>>>> ebce308 (squash commits)
     }
   },
   props: [
   ],
   computed: {},
   methods: {
-<<<<<<< HEAD
-    loadData: (url, self, isPaginated) => {
-      self.isLoading = true;
-      let backendUrl = process.env.VUE_APP_BACKEND_URL;
-      return fetch(backendUrl + url).then(
-        response => {
-          if (response.ok) {
-            return response.json();
-          }
-          else if (response.status == '401') {
-            this.$router.push("landing")
-          }
-        }
-      ).then(
-        data => {
-          if (data) {
-            self.isLoading = false;
-            if (isPaginated) {
-              self.total = data.count;
-              self.data.push(...data.results);
-            } else {
-              self.data = data;
-            }
-          }
-        }
-      ).catch(
-        error => {
-          self.isLoading = false;
-          self.error = "Something went wrong when loading the site data...";
-          console.log(error);
-        }
-      )
-    },
-    loadProfile: {
-      this.loadData(url='/api/user/profile', self)
-    }
-  },
-  created () {
-    this.loadData('', )
-=======
   },
   created () {
     this.token = this.$router.query.get('token');
->>>>>>> ebce308 (squash commits)
+    localStorage.setItem('token', this.token);
   },
   beforeUnmount () {},
-  mounted () {},
+  mounted () {
+    apiService.getProfileContent().then(
+      (response) => {
+        this.profile = response.data;
+      },
+      (error) => {
+        this.message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+      }
+    )
+  },
   provide () {
-    return {}
+    return {
+      profile: this.profile
+    }
   },
 }
 </script>

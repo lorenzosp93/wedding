@@ -14,7 +14,9 @@
     name: 'LoginPage',
     data () {
       return {
-        data: [],
+        data: [
+          'loading'
+        ],
       }
     },
     props: {
@@ -24,6 +26,21 @@
     inject: [
     ],
     computed: {
+    },
+    methods: {
+      handleLogin(email){
+        this.loading = true;
+        this.$store.dispatch("auth/login", email).then(
+          ()=>{},
+          (error) => {
+            this.loading = false;
+            this.message = (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+              error.message ||
+              error.toString();
+          })
+      }
     },
     mounted () {
     }

@@ -1,20 +1,20 @@
+import router from '@/router';
 import axios from 'axios';
 
 const API_URL = process.env.VUE_APP_BACKEND_URL;
 
 class AuthService {
-  login(email, token) {
+  login(email) {
     return axios
-      .post(API_URL + '/auth/token/', {
+      .post(API_URL + '/auth/email/', {
         email: email,
-        token: token
       }, {
         headers: {
             'content-type': 'multipart/form-data',
       }})
       .then(response => {
-        if (response.data.token) {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
+        if (response.status == 200) {
+          router.push('/login/success')
         }
         return response.data;
       });
