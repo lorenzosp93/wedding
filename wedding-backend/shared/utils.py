@@ -6,7 +6,9 @@ from django.utils import translation
 from django.urls import reverse
 from drfpasswordless.settings import api_settings
 from drfpasswordless.utils import inject_template_context
+from django.contrib.sites.models import Site
 
+BACKEND = Site.objects.get_current()
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -31,12 +33,13 @@ def send_email_with_callback_token(user, email_token, **kwargs):
                                     api_settings.PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME)
 
             # activate user language
-            translation.activate(user.profile.get_language_display)
+            translation.activate(user.profile.get_language_display())
             # Inject context if user specifies.
             context = inject_template_context({
                 'callback_token': email_token.key,
-                'user_email': [getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME)],
+                'user_email': getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME),
                 'auth_url': reverse('magic-auth'),
+                'site_name': BACKEND,
             })
             html_message = loader.render_to_string(email_html, context,)
             send_mail(

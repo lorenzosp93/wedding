@@ -23,7 +23,7 @@
             "cwd": "${workspaceFolder}/wedding-backend",
             "args": ["runserver"],
             "django": true,
-            "justMyCode": true
+            "justMyCode": false
         },
         {
             "name": "Docker: Python - Django",

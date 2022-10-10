@@ -7,8 +7,9 @@ from .serializers import (
 from .models import (
     Information, Photo
 )
+from shared.viewsets import SerializerContextUserMixin
 
-class InformationViewSet(ReadOnlyModelViewSet):
+class InformationViewSet(SerializerContextUserMixin, ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `retrieve`
     actions.

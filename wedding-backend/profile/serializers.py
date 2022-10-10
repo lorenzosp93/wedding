@@ -1,13 +1,21 @@
 from rest_framework.serializers import (
-    ModelSerializer, CharField,
+    ModelSerializer, CharField, SerializerMethodField
 )
 from shared.serializers import (
     AddressSerializer,
-    UserSerializer
+    UserSerializer,
 )
 from .models import (
     UserProfile
 )
+from shared.models import get_translated_content
+
+class TranslationContentMixin(ModelSerializer):
+    def translated_content(self, obj):
+        profile = UserProfile.objects.get(user__id=self.context.get('user_id'))
+        return get_translated_content(obj.content, profile.language)
+
+    content = SerializerMethodField('translated_content')
 
 
 class UserProfileAddressSerializer(ModelSerializer):

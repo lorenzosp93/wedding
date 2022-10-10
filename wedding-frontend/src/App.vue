@@ -14,10 +14,17 @@ export default {
   data () {
     return{
       profile: null,
+<<<<<<< HEAD
+=======
+      requestFactory: null,
+>>>>>>> ebce308 (squash commits)
     }
   },
+  props: [
+  ],
   computed: {},
   methods: {
+<<<<<<< HEAD
     loadData: (url, self, isPaginated) => {
       self.isLoading = true;
       let backendUrl = process.env.VUE_APP_BACKEND_URL;
@@ -56,6 +63,11 @@ export default {
   },
   created () {
     this.loadData('', )
+=======
+  },
+  created () {
+    this.token = this.$router.query.get('token');
+>>>>>>> ebce308 (squash commits)
   },
   beforeUnmount () {},
   mounted () {},

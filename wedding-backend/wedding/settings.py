@@ -4,7 +4,6 @@ Django settings for wedding project.
 
 import os
 
-SITE_NAME = "PRISCILLALORENZO.COM"
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,8 +28,7 @@ if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
     ALLOWED_HOSTS = [
-        SITE_NAME,
-        'localhost',
+        HOST,
         '127.0.0.1', #local debugging
     ]
 
@@ -61,7 +59,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drfpasswordless',
     'corsheaders',
+    'django.contrib.sites',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -183,7 +184,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -194,15 +195,15 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 PASSWORDLESS_AUTH = {
     'PASSWORDLESS_AUTH_TYPES': ['EMAIL',],
-    'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': 'me@lorenzosp.com',
+    'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': os.environ.get('EMAIL_TO', 'me@lorenzosp.com'),
     'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': "token_email.html",
     'PASSWORDLESS_REGISTER_NEW_USERS': True,
-    'PASSWORDLESS_EMAIL_SUBJECT': f"[{SITE_NAME}] Login",
+    'PASSWORDLESS_EMAIL_SUBJECT': f"[{HOST}] Login",
     'PASSWORDLESS_EMAIL_CALLBACK': 'shared.utils.send_email_with_callback_token',
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_TO = os.environ.get('EMAIL_TO', 'me@lorenzosp.com')
+EMAIL_TO = os.environ.get('EMAIL_TO')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')

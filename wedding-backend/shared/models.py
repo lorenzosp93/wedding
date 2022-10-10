@@ -166,7 +166,9 @@ class HasPicture(models.Model):
     "Abstract class to capture a picture"
     picture = models.ImageField(
         verbose_name='Header picture',
-        upload_to="pictures/"
+        upload_to="pictures/",
+        blank=True,
+        null=True,
     )
 
     class Meta:

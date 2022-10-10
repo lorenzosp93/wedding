@@ -1,5 +1,4 @@
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from rest_framework.permissions import IsAuthenticated
 from .serializers import (
     UserProfileAddressSerializer, UserProfileSerializer
 )
@@ -15,7 +14,6 @@ class UserProfileViewset(ModelViewSet):
     actions for UserProfile entries.
 
     """
-    permission_classes = [IsAuthenticated]
     queryset = UserProfile.objects.all()
 
     def get_serializer_class(self):

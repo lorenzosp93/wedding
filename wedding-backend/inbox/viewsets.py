@@ -1,23 +1,21 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
-from rest_framework.permissions import IsAuthenticated
-from .serializers import UserMessageSerializer, ResponseSerializer
-from .models import UserMessage, Response
+from .serializers import MessageSerializer, ResponseSerializer
+from .models import Message, Response
+from shared.viewsets import SerializerContextUserMixin
 
-
-class UserMessageViewSet(ReadOnlyModelViewSet):
+class UserMessageViewSet(SerializerContextUserMixin, ReadOnlyModelViewSet):
     """
         This ViewSet enables retrieval and listing of
         UserMessage objects
     """
-    queryset = UserMessage.objects.all()
-    serializer_class = UserMessageSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class = MessageSerializer
+    queryset = Message.objects.all()
 
 class ResponseViewSet(ModelViewSet):
     """
         This ViewSet enables creation, modification, retrieval 
         and listing of Response objects
     """
-    permission_classes = [IsAuthenticated]
-    queryset = Response.objects.all()
     serializer_class = ResponseSerializer
+    def get_queryset(self):
+        return Response.objects.filter(user__id=self.request.user.id)

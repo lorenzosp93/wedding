@@ -8,7 +8,7 @@ from shared.models import Address, I18N
 USER_TYPES = (
     (0, 'family'),
     (1, 'friend'),
-    (2, 'colleague')
+    (2, 'colleague'),
 )
 
 class UserProfile(models.Model):

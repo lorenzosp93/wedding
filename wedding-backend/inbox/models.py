@@ -5,8 +5,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
     Serializable, Named, TimeStampable,
-    HasContent, get_translated_content
+    HasContent, get_translated_content, 
 )
+
 MESSAGE_TYPES = (
     (0, "Information"),
     (1, "Question"),
@@ -20,11 +21,11 @@ QUESTION_TYPES = (
     (4, "MultiSelectOther"),
 )
 
-class Message(Serializable, Named, HasContent):
+class Message(Serializable, HasContent):
     "Model to define generic messages to users"
     type = models.IntegerField(choices=MESSAGE_TYPES, default=0)
     
-class Question(Serializable, Named):
+class Question(Serializable, HasContent):
     "Model to define questions for users"
     message = models.ForeignKey(
         Message,
@@ -34,10 +35,7 @@ class Question(Serializable, Named):
     type = models.IntegerField(choices=QUESTION_TYPES, default=0)
     mandatory = models.BooleanField(default=True)
     
-    def get_options(self, language=0) -> list:
-        return [option.get_content(language) for option in self.options.all()]
-
-class Option(Named, HasContent):
+class Option(Serializable, HasContent):
     """Model to define selectable options for questions - 'Other' 
     option is omitted for SingleSelectOther or MultiSelectOther questions"""
     question = models.ForeignKey(
@@ -46,58 +44,7 @@ class Option(Named, HasContent):
         related_name='options',
     )
 
-    def get_content(self, language=0):
-        return get_translated_content(self.content, language)
-
-class UserMessage(Serializable, TimeStampable):
-    "Model to define a message to a specific user"
-    message = models.ForeignKey(Message, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    read = models.BooleanField(default=False)
-
-    @property
-    def language(self) -> str:
-        return self.user.profile.language
-    
-    @property
-    def message_content(self) -> dict:
-        return {
-            'name': self.message.name,
-            'content': get_translated_content(
-                content=self.message.content,
-                language=self.language,
-            ),
-            'type': self.message.type,
-        }
-    
-    @property
-    def questions_content(self) -> dict:
-        return {
-            q.message: {
-                'type': q.get_type_display(),
-                'mandatory': q.mandatory,
-                'options': q.get_options(self.language)
-            }
-            for q in self.message.questions.all()
-        }
-    
-    def read(self):
-        self.read = True
-    
-    @property
-    def replied(self) -> bool:
-        return all([
-            q.responses.filter(user=self.user).count() > 1
-            for q in self.message.questions
-        ])
-    
-    def __str__(self) -> str:
-        return f"'{self.message}' to '{self.user}'"
-
-    class Meta:
-        ordering = ["-created_at"]
-    
-class Response(TimeStampable):
+class Response(Serializable, TimeStampable):
     "Model to capture the response from a specific user"
     question = models.ForeignKey(
         Question,
