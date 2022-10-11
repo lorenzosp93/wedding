@@ -9,7 +9,8 @@ INFO_TYPES = (
     (1, 'Food'),
     (2, 'Attractions'),
     (3, 'Tips'),
-    (4, 'Travel')
+    (4, 'Travel'),
+    (5, 'Events'),
 )
 
 # Create your models here.

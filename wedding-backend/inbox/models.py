@@ -4,13 +4,13 @@ from tabnanny import check
 from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
-    Serializable, Named, TimeStampable,
-    HasContent, get_translated_content, 
+    Serializable, TimeStampable,
+    HasContent, HasSubject
 )
 
 MESSAGE_TYPES = (
     (0, "Information"),
-    (1, "Question"),
+    (1, "Questions"),
 )
 
 QUESTION_TYPES = (
@@ -21,13 +21,13 @@ QUESTION_TYPES = (
     (4, "MultiSelectOther"),
 )
 
-class Message(Serializable, HasContent):
+class Message(Serializable, HasSubject, HasContent):
     "Model to define generic messages to users"
     type = models.IntegerField(choices=MESSAGE_TYPES, default=0)
     def __str__(self) -> str:
-        return f"{self.content}"
+        return f"{self.subject}"
     
-class Question(Serializable, HasContent):
+class Question(Serializable, HasSubject, HasContent):
     "Model to define questions for users"
     message = models.ForeignKey(
         Message,
@@ -37,7 +37,7 @@ class Question(Serializable, HasContent):
     type = models.IntegerField(choices=QUESTION_TYPES, default=0)
     mandatory = models.BooleanField(default=True)
     def __str__(self) -> str:
-        return f"{self.message} - {self.content}"
+        return f"{self.message} - {self.subject}"
     
 class Option(Serializable, HasContent):
     """Model to define selectable options for questions - 'Other' 

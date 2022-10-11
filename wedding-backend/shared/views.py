@@ -1,15 +1,13 @@
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect
-from django.contrib.sites.models import Site
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 import requests
 import json
+from wedding.settings import FRONTEND_HOST
 
-BACKEND = Site.objects.get_current()
-FRONTEND = Site.objects.get(name='FRONTEND')
 
 # Create your views here.
 @api_view(('GET',))
@@ -31,11 +29,11 @@ def get_auth_token(request, *args, **kwargs):
     otp = request.GET.get('token')
     if email and otp:
         r = requests.post(
-            f"{BACKEND}/auth/token/",
+            f"/auth/token/",
             data=json.dumps({"email": email, "token": int(otp)}),
             headers={'Content-Type': 'application/json'}
         )
         if r.status_code == 200:
-            return redirect(f"{FRONTEND}/?token={r.json().get('token')}" )
+            return redirect(f"{FRONTEND_HOST}/?token={r.json().get('token')}" )
         return Response(r.text, status=r.status_code)
     return Response("Email and Token must be provided", status=status.HTTP_400_BAD_REQUEST)

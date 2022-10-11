@@ -93,7 +93,8 @@ affinity: {}
 configMap:
   debug: 'False'
   emailTo: 'me@lorenzosp.com'
-  djangoHost: 'lorenzosp.com'
+  djangoHost: 'priscillalorenzo.com'
+  frontendHost: 'priscillalorenzo.com'
 
 database:
   host: 'postgres'

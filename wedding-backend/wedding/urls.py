@@ -29,8 +29,7 @@ urlpatterns = [
     path('api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/inbox/', include('inbox.urls')),
     path('api/shared/', include('shared.urls')),
-    path('api/calendar/', include('cal.urls')),
-    path('api/info/', include('info.urls')),
+    path('api/', include('info.urls')),
     path('api/user/', include('profile.urls')),
     path('', include('drfpasswordless.urls')),
 ]

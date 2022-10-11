@@ -19,6 +19,7 @@ class Address(models.Model):
 class Serializable(models.Model):
     "Abstract model to define an uuid based id field"
     uuid = models.UUIDField(
+        primary_key=True,
         editable=False,
         default=uuid.uuid4,
     )
@@ -161,6 +162,8 @@ class Authorable(models.Model):
         related_query_name="%(app_label)s_%(class)s_modified",
         editable=False,
     )
+    class Meta:
+        abstract = True
 
 class HasPicture(models.Model):
     "Abstract class to capture a picture"
@@ -177,8 +180,6 @@ class HasPicture(models.Model):
 
 class SingletonBaseModel(models.Model):
     "Abstract class to implement the singleton design pattern"
-    class Meta:
-        abstract = True
 
     def save(self, *args, **kwargs):
         self.pk = 1
@@ -186,6 +187,9 @@ class SingletonBaseModel(models.Model):
 
     def delete(self, *args, **kwargs):
         pass
+
+    class Meta:
+        abstract = True
 
     @classmethod
     def load(cls):
@@ -203,10 +207,14 @@ I18N = (
 )
 
 
-class ContentString(Named):
+class ContentString(models.Model):
     """
         Model to define a string of content
     """
+    value = models.TextField()
+
+    def __str__(self) -> str:
+        return f"{self.value} - {self.id}"
 
 class TranslatedString(models.Model):
     "Model to define translations for a `ContentString`"
@@ -217,18 +225,36 @@ class TranslatedString(models.Model):
         on_delete=models.CASCADE,
         related_name='translated_strings'
     )
+    class Meta:
+        unique_together = ['language', 'content']
     def __str__(self) -> str:
-        return f'{self.content.name} -> {self.get_language_display()}'
+        return f'{self.content.value} -> {self.get_language_display()}'
 
 def get_translated_content(content: ContentString, language: str = 0) -> str:
     "Helper function to return the translated string for a given content and language"
     if (translated_str := content.translated_strings.filter(language=language).first()):
         return translated_str.t9n
-    return content.name
+    return content.value
 
 class HasContent(models.Model):
     "Abstract class to define content"
-    content = models.ForeignKey(ContentString, on_delete=models.CASCADE, unique=True)
+    content = models.ForeignKey(
+        ContentString,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        abstract = True
+
+class HasSubject(models.Model):
+    "Abstract class to define subject content"
+    subject = models.ForeignKey(
+        ContentString,
+        on_delete=models.CASCADE,
+        related_name='%(class)s_subject'
+    )
 
     class Meta:
         abstract = True

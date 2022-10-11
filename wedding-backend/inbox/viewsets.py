@@ -3,7 +3,7 @@ from .serializers import MessageSerializer, ResponseSerializer
 from .models import Message, Response
 from shared.viewsets import SerializerContextUserMixin
 
-class UserMessageViewSet(SerializerContextUserMixin, ReadOnlyModelViewSet):
+class MessageViewSet(SerializerContextUserMixin, ReadOnlyModelViewSet):
     """
         This ViewSet enables retrieval and listing of
         UserMessage objects
@@ -11,7 +11,7 @@ class UserMessageViewSet(SerializerContextUserMixin, ReadOnlyModelViewSet):
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
 
-class ResponseViewSet(ModelViewSet):
+class ResponseViewSet(SerializerContextUserMixin, ModelViewSet):
     """
         This ViewSet enables creation, modification, retrieval 
         and listing of Response objects

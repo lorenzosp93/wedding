@@ -10,12 +10,21 @@ from .models import (
 )
 from shared.models import get_translated_content
 
+def translated_string(self, obj, field):
+    profile = UserProfile.objects.get(user__id=self.context.get('user_id'))
+    return get_translated_content(getattr(obj, field), profile.language)
+
 class TranslationContentMixin(ModelSerializer):
     def translated_content(self, obj):
-        profile = UserProfile.objects.get(user__id=self.context.get('user_id'))
-        return get_translated_content(obj.content, profile.language)
+        return translated_string(self, obj, 'content')
 
     content = SerializerMethodField('translated_content')
+
+class TranslationSubjectMixin(ModelSerializer):
+    def translated_subject(self, obj):
+        return translated_string(self, obj, 'subject')
+
+    subject = SerializerMethodField('translated_subject')
 
 class UserProfileAddressSerializer(ModelSerializer):
     address = AddressSerializer()

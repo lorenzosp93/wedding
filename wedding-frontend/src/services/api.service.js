@@ -8,7 +8,7 @@ const request = axios.create({
 
 class ApiService {
   getProfileContent() {
-    return request.get(API_URL + '/api/user/profile');
+    return request.get(API_URL + '/api/user/profile/');
   }
 
   updateAddress(address1, address2, city, postalCode, provinceOrState, country) {
@@ -19,15 +19,37 @@ class ApiService {
           city,
           postalCode,
           provinceOrState,
-          country
+          country,
         }},
     );
   }
 
   getInboxContent() {
-    return request.get(API_URL + '/api/inbox')
+    return request.get(API_URL + '/api/inbox/message/')
   }
 
+  postInboxResponse(question, option, text="") {
+    return request.post(
+      API_URL + '/api/inbox/response/',
+      {
+        "question": question,
+        "option": option,
+        "text": text,
+      }
+    );
+  }
+
+  getInfoContent() {
+    return request.get(
+      API_URL + '/api/info/'
+    );
+  }
+  
+  getGalleryContent() {
+    return request.get(
+      API_URL + '/api/photo/'
+    );
+  }
   
 }
 

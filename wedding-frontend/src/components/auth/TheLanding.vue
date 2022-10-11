@@ -1,16 +1,13 @@
 <template>
 <div>
 
-  <login-page />
 </div>
 </template>
   
 <script>
-import LoginPage from './LoginPage.vue'
 
 export default {
   name: 'TheLanding',
-  components: { LoginPage },
   data () {
     return {
       data: [],

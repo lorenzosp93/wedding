@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import apiService from './service/api.service';
+import apiService from './services/api.service';
 
 
 export default {
@@ -16,7 +16,6 @@ export default {
   data () {
     return{
       profile: null,
-      requestFactory: null,
     }
   },
   props: [
@@ -25,25 +24,24 @@ export default {
   methods: {
   },
   created () {
-    this.token = this.$router.query.get('token');
-    localStorage.setItem('token', this.token);
   },
   beforeUnmount () {},
   mounted () {
-    apiService.getProfileContent().then(
-      (response) => {
-        this.profile = response.data;
-      },
-      (error) => {
-        this.message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-      }
-    )
+    if (this.token) {
+      apiService.getProfileContent().then(
+        (response) => {
+          this.profile = response.data;
+        },
+        (error) => {
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+      )
+    }
   },
   provide () {
     return {

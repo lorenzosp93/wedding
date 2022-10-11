@@ -1,6 +1,5 @@
-from django.conf import Settings
 from django.db.models import Q
-from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet 
 from .serializers import (
     InformationSerializer, PhotoSerializer
 )

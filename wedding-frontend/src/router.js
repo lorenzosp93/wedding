@@ -1,15 +1,15 @@
-import {createRouter, createWebHistory} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import TheLanding from './components/auth/TheLanding.vue'
 import LoginPage from './components/auth/LoginPage.vue'
-import LoginSuccess from './components/auth/LoginSuccess.vue'
-import TheHome from './components/TheHome.vue'
-import TheNavbar from './components/shared/TheNavbar.vue'
-import TheEvents from './components/events/TheEvents.vue'
-import TheInbox from './components/inbox/TheInbox.vue'
-import TheInfo from './components/information/TheInfo.vue'
-import TheProfile from './components/profile/TheProfile.vue'
-import NotFound from './components/shared/NotFound.vue'
+// Lazy load
+const LoginSuccess = () => import('./components/auth/LoginSuccess.vue')
+const TheHome = () => import('./components/TheHome.vue')
+const TheNavbar = () => import('./components/shared/TheNavbar.vue')
+const TheInbox = () => import('./components/inbox/TheInbox.vue')
+const TheInfo = () => import('./components/information/TheInfo.vue')
+const TheProfile = () => import('./components/profile/TheProfile.vue')
+const NotFound = () => import('./components/shared/NotFound.vue')
 
 const router = createRouter({
     history: createWebHistory(),
@@ -17,14 +17,31 @@ const router = createRouter({
         {name: 'landing', path: '/landing', component: TheLanding},
         {name: 'login', path: '/login', component: LoginPage},
         {name: 'login-success', path: '/login/success', component: LoginSuccess},
-        {name: 'home', path: '/', components: {default: TheHome, TheNavbar}, meta: {requiresAuth: true}},
-        {name: 'events', path: '/events', components: {default: TheEvents, TheNavbar}, meta: {requiresAuth: true}},
-        {name: 'inbox', path: '/inbox', components: {default: TheInbox, TheNavbar}, meta: {requiresAuth: true}},
-        {name: 'info', path: '/info', components: {default: TheInfo, TheNavbar}, meta: {requiresAuth: true}},
-        {name: 'profile', path: '/profile', components: {default: TheProfile, TheNavbar}, meta: {requiresAuth: true}},
+        {name: 'home', path: '/', components: {default: TheHome, TheNavbar}, },
+        {name: 'inbox', path: '/inbox', components: {default: TheInbox, TheNavbar}, },
+        {name: 'info', path: '/info', components: {default: TheInfo, TheNavbar}, },
+        {name: 'profile', path: '/profile', components: {default: TheProfile, TheNavbar}, },
         {name: 'notFound', path: '/:notFound(.*)', components: {default: NotFound, TheNavbar}},
 
     ]
 })
 
-export default router ;
+router.beforeEach((to, _, next) => {
+    const publicPages = ['/landing', '/login', '/login/success'];
+    const authRequired = !publicPages.includes(to.path);
+    const token = to?.query["token"];
+    if (token){
+      localStorage.setItem('token', token)
+    }
+    
+    const loggedIn = !!localStorage.getItem('token');
+    // trying to access a restricted page + not logged in
+    // redirect to login page
+    if (authRequired && !loggedIn) {
+      next('/login');
+    } else {
+      next();
+    }
+  });
+
+export default router; 
