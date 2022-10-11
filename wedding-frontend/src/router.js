@@ -8,6 +8,7 @@ const TheHome = () => import('./components/TheHome.vue')
 const TheNavbar = () => import('./components/shared/TheNavbar.vue')
 const TheInbox = () => import('./components/inbox/TheInbox.vue')
 const TheInfo = () => import('./components/information/TheInfo.vue')
+const TheGallery = () => import('./components/gallery/TheGallery.vue')
 const TheProfile = () => import('./components/profile/TheProfile.vue')
 const NotFound = () => import('./components/shared/NotFound.vue')
 
@@ -20,6 +21,7 @@ const router = createRouter({
         {name: 'home', path: '/', components: {default: TheHome, TheNavbar}, },
         {name: 'inbox', path: '/inbox', components: {default: TheInbox, TheNavbar}, },
         {name: 'info', path: '/info', components: {default: TheInfo, TheNavbar}, },
+        {name: 'gallery', path: '/gallery', components: {default: TheGallery, TheNavbar}, },
         {name: 'profile', path: '/profile', components: {default: TheProfile, TheNavbar}, },
         {name: 'notFound', path: '/:notFound(.*)', components: {default: NotFound, TheNavbar}},
 

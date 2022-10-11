@@ -12,22 +12,19 @@
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul class="flex flex-col p-4 mt-4 bg-secondary rounded-lg border border-accent md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-neutral dark:bg-darkSecondary md:dark:bg-darkNeutral dark:border-darkAccent">
         <li>
-          <a href="#" class="block py-2 pr-4 pl-3 text-primary bg-neutral rounded md:bg-transparent md:text-accent md:p-0 dark:text-darkPrimary" aria-current="page">{{ $t('shared.thenavbar.home') }}</a>
+          <router-link to="home" class="block py-2 pr-4 pl-3 text-primary bg-neutral rounded md:bg-transparent md:text-accent md:p-0 dark:text-darkPrimary" aria-current="page">{{ $t('shared.thenavbar.home') }}</router-link>
         </li>
         <li>
-          <a href="#" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.events') }}</a>
+          <router-link to="info" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.information') }}</router-link>
         </li>
         <li>
-          <a href="#" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.information') }}</a>
+          <router-link to="inbox" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.inbox') }}</router-link>
         </li>
         <li>
-          <a href="#" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.inbox') }}</a>
+          <router-link to="gallery" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.gallery') }}</router-link>
         </li>
         <li>
-          <a href="#" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.gallery') }}</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.profile') }}</a>
+          <router-link to="profile" class="block py-2 pr-4 pl-3 ml-auto text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary md:dark:hover:text-white dark:hover:bg-darkAccent dark:hover:text-white md:dark:hover:bg-transparent">{{ $t('shared.thenavbar.profile') }}</router-link>
         </li>
       </ul>
     </div>

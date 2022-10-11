@@ -1,5 +1,6 @@
 from django.db.models import Q
 from rest_framework.viewsets import ReadOnlyModelViewSet 
+from rest_framework.pagination import LimitOffsetPagination
 from .serializers import (
     InformationSerializer, PhotoSerializer
 )
@@ -21,6 +22,7 @@ class InformationViewSet(SerializerContextUserMixin, ReadOnlyModelViewSet):
 class PhotoViewSet(ReadOnlyModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
+    pagination_class = LimitOffsetPagination
     def get_queryset(self):
         return Photo.objects.filter(Q(tag__id=self.request.user.id) | Q(private=False))
     

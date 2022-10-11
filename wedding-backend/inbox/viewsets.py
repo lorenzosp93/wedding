@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
+from rest_framework.pagination import LimitOffsetPagination
 from .serializers import MessageSerializer, ResponseSerializer
 from .models import Message, Response
 from shared.viewsets import SerializerContextUserMixin
@@ -8,6 +9,7 @@ class MessageViewSet(SerializerContextUserMixin, ReadOnlyModelViewSet):
         This ViewSet enables retrieval and listing of
         UserMessage objects
     """
+    pagination_class = LimitOffsetPagination
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
 
