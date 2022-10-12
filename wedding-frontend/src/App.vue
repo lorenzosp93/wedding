@@ -1,12 +1,12 @@
 <template>
-  <div id="app" class="bg-neutral dark:bg-darkNeutral">
+  <div id="app" class="">
     <router-view name="TheNavbar"></router-view>
-    <router-view></router-view>
+    <router-view :profile="profile" :loading="loading"></router-view>
   </div>
 </template>
 
 <script>
-import apiService from './services/api.service';
+import ApiService from './services/api.service';
 
 
 export default {
@@ -16,36 +16,39 @@ export default {
   data () {
     return{
       profile: null,
+      error: null,
+      loading: false,
     }
   },
   props: [
   ],
   computed: {},
   methods: {
-  },
-  created () {
-  },
-  beforeUnmount () {},
-  mounted () {
-    if (this.token) {
-      apiService.getProfileContent().then(
+    getProfile(){
+      return ApiService.getProfileContent().then(
         (response) => {
-          this.profile = response.data;
+          this.profile = response.data[0];
         },
-        (error) => {
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-        }
       )
     }
   },
+  created () {
+    this.token = localStorage.getItem('token');
+    if (this.token && !this.profile) {
+      this.loading = true;
+      this.getProfile().then(() => {
+        this.loading = false
+      }
+      );
+    }
+  },
+  beforeUnmount () {},
+  beforeMount() {
+  },
+  mounted () {
+  },
   provide () {
     return {
-      profile: this.profile
     }
   },
 }

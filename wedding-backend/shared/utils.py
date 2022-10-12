@@ -6,7 +6,7 @@ from django.utils import translation
 from django.urls import reverse
 from drfpasswordless.settings import api_settings
 from drfpasswordless.utils import inject_template_context
-from wedding.settings import HOST
+from wedding.settings import BACKEND_HOST
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -37,7 +37,7 @@ def send_email_with_callback_token(user, email_token, **kwargs):
                 'callback_token': email_token.key,
                 'user_email': getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME),
                 'auth_url': reverse('magic-auth'),
-            'site_name': HOST,
+            'site_name': BACKEND_HOST,
             })
             html_message = loader.render_to_string(email_html, context,)
             send_mail(

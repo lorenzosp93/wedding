@@ -8,23 +8,22 @@ class AuthService {
     return axios
       .post(API_URL + '/auth/email/', {
         email: email
-      }, {
-        headers: {
-            // 'content-type': 'multipart/form-data',
-      }})
-      .then(response => {
-        if (response.status == 200) {
-          router.push('/login/success')
+      }, )
+      .then( response => {
+        console.log(response);
+        if(response.status == 200){
+          router.push('/login/success');
         }
-        return response.data;
       })
       .catch(error => {
-        return error
+        console.log(error.message);
+        throw error;
       });
   }
 
   logout() {
     localStorage.removeItem('token');
+    router.push('/login');
   }
 
 }

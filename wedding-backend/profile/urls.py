@@ -8,5 +8,5 @@ router.register(r'profile', UserProfileViewset, 'profile')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('setup-plus-one', setup_plus_one, name='setup-plus-one')
+    path('setup-plus-one/', setup_plus_one, name='setup-plus-one')
 ]

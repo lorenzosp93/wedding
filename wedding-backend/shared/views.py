@@ -6,7 +6,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 import requests
 import json
-from wedding.settings import FRONTEND_HOST
+
+from wedding.settings import FRONTEND_HOST, BACKEND_HOST
 
 
 # Create your views here.
@@ -29,7 +30,7 @@ def get_auth_token(request, *args, **kwargs):
     otp = request.GET.get('token')
     if email and otp:
         r = requests.post(
-            f"/auth/token/",
+            f"{BACKEND_HOST}/auth/token/",
             data=json.dumps({"email": email, "token": int(otp)}),
             headers={'Content-Type': 'application/json'}
         )

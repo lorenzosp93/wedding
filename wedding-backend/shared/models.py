@@ -1,4 +1,5 @@
 "Define abstract models to be used in all apps"
+from enum import unique
 from unittest.util import _MAX_LENGTH
 import uuid
 from django.db import models

@@ -22,6 +22,7 @@ module.exports = {
       darkAccent: '#D5B19B',
       darkPale: '#7F9593',
       darkNeutral: '#1F4045',
+      alert: 'red'
     }
   },
   plugins: [

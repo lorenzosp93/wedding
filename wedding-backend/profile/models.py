@@ -48,11 +48,12 @@ class UserProfile(models.Model):
         if self.user.childs.count() < self.plus:
             user, created = User.objects.get_or_create(
                 username=email,
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
             )
             if created:
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.save()
                 profile = user.profile
                 profile.language = self.language
                 profile.type = self.type
