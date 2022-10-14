@@ -6,7 +6,7 @@
       <h1>Last name(s): {{ profile.user?.last_name }}</h1>
       <h1>Email: {{ profile.user?.email }}</h1>
       <h1>Plus one: {{ profile?.plus ?? 0 }}</h1>
-      <p v-if="profile.childs.length > 0" class="font-bold"> Your plus ones </p> 
+      <p v-if="profile.childs.length" class="font-bold"> Your plus ones </p> 
       <div v-for="child in profile?.childs" :key="child.uuid">
         <ul>
           <li>{{ child.user.email }} | {{ child.user.first_name }} {{ child.user.last_name }}</li>
@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import AuthService from '../../services/auth.service'
 import PlusOne from './PlusOne.vue'
 
 export default {
@@ -37,11 +36,11 @@ export default {
     PlusOne
    },
   props: [
-    'profile'
+    'authStore'
   ],
   methods: {
     logout(){
-      AuthService.logout()
+      this.authStore.logout()
     },
     togglePlusOne(){
       this.showPlusOne = !this.showPlusOne;
@@ -52,6 +51,9 @@ export default {
   inject: [
   ],
   computed: {
+    profile () {
+      return this.authStore.profile
+    },
   },
   mounted () {
   }

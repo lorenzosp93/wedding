@@ -12,7 +12,10 @@ from shared.models import get_translated_content
 
 def translated_string(self, obj, field):
     profile = UserProfile.objects.get(user__id=self.context.get('user_id'))
-    return get_translated_content(getattr(obj, field), profile.language)
+    content = getattr(obj,field)
+    if content:
+        return get_translated_content(content, profile.language)
+    return None
 
 class TranslationContentMixin(ModelSerializer):
     def translated_content(self, obj):

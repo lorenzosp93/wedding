@@ -1,12 +1,13 @@
 <template>
   <div id="app" class="">
     <router-view name="TheNavbar"></router-view>
-    <router-view :profile="profile" :loading="loading"></router-view>
+    <router-view :authStore="authStore"></router-view>
   </div>
 </template>
 
 <script>
-import ApiService from './services/api.service';
+import { mapStores } from 'pinia'
+import { useAuthStore } from '@/stores'
 
 
 export default {
@@ -15,32 +16,16 @@ export default {
   },
   data () {
     return{
-      profile: null,
-      error: null,
-      loading: false,
     }
   },
   props: [
   ],
-  computed: {},
+  computed: {
+    ...mapStores(useAuthStore),
+  },
   methods: {
-    getProfile(){
-      return ApiService.getProfileContent().then(
-        (response) => {
-          this.profile = response.data[0];
-        },
-      )
-    }
   },
   created () {
-    this.token = localStorage.getItem('token');
-    if (this.token && !this.profile) {
-      this.loading = true;
-      this.getProfile().then(() => {
-        this.loading = false
-      }
-      );
-    }
   },
   beforeUnmount () {},
   beforeMount() {
@@ -52,6 +37,7 @@ export default {
     }
   },
 }
+
 </script>
 
 <style>

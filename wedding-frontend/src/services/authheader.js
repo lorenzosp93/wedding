@@ -1,8 +1,11 @@
+import { useAuthStore } from "@/stores";
+
 export default function authHeader() {
-  var token = localStorage.getItem('token')
-  
-  if (token != 'undefined') {
-    return { Authorization: 'Token ' + token };
+  const auth = useAuthStore();
+  const isLoggedIn = !!auth?.token;
+
+  if (isLoggedIn) {
+    return { Authorization: `Token ${auth.token}`};
   } else {
     return {};
   }

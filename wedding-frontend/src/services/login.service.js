@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const API_URL = process.env.VUE_APP_BACKEND_URL;
 
-class AuthService {
+class LoginService {
   login(email) {
     return axios
       .post(API_URL + '/auth/email/', {
@@ -20,12 +20,6 @@ class AuthService {
         throw error;
       });
   }
-
-  logout() {
-    localStorage.removeItem('token');
-    router.push('/login');
-  }
-
 }
 
-export default new AuthService();
+export default new LoginService();

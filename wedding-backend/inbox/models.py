@@ -5,25 +5,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
     Serializable, TimeStampable,
-    HasContent, HasSubject
+    HasContent, HasSubject, 
 )
 
-MESSAGE_TYPES = (
-    (0, "Information"),
-    (1, "Questions"),
-)
 
-QUESTION_TYPES = (
-    (0, "Freetext"),
-    (1, "SingleSelect"),
-    (2, "MultiSelect"),
-    (3, "SingleSelectOther"),
-    (4, "MultiSelectOther"),
-)
-
-class Message(Serializable, HasSubject, HasContent):
+class Message(Serializable, HasSubject, HasContent, TimeStampable):
     "Model to define generic messages to users"
-    type = models.IntegerField(choices=MESSAGE_TYPES, default=0)
     def __str__(self) -> str:
         return f"{self.subject}"
     
@@ -34,8 +21,10 @@ class Question(Serializable, HasSubject, HasContent):
         on_delete=models.CASCADE,
         related_name='questions',
     )
-    type = models.IntegerField(choices=QUESTION_TYPES, default=0)
+    multi_select = models.BooleanField(default=False)
+    free_text = models.BooleanField(default=False)
     mandatory = models.BooleanField(default=True)
+
     def __str__(self) -> str:
         return f"{self.message} - {self.subject}"
     
@@ -66,6 +55,9 @@ class Response(Serializable, TimeStampable):
 
     def __str__(self):
         return f"{self.user}'s reply to {self.question.name}"
+    
+    class Meta:
+        unique_together = ['question', 'user']
     
 
     class Meta:

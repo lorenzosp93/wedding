@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import AuthService from '../../services/auth.service'
+import LoginService from '@/services/login.service'
 
 export default {
 name: 'LoginPage',
@@ -34,7 +34,7 @@ computed: {
 methods: {
   handleLogin(email) {
     this.loading = true;
-    AuthService.login(email)
+    LoginService.login(email)
     .catch(
       (error) => {
         this.error = error.response?.data?.detail ?? "Unable to return response";

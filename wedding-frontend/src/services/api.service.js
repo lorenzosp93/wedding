@@ -1,31 +1,30 @@
 import axios from 'axios';
 import authHeader from './authheader';
+import { useAuthStore } from '@/stores';
 
-const API_URL = process.env.VUE_APP_BACKEND_URL;
-const request = axios.create({
-  headers: authHeader()
-}); 
-
-// handle errors and redirect 401
-request.interceptors.response.use(
-  response => response,
-  error => {
-    if (error?.response?.status == 401) {
-      localStorage.removeItem('token');
-      this.$router.push('/login');
+export const API_URL = process.env.VUE_APP_BACKEND_URL;
+export function request(){
+  const request = axios.create({
+    headers: authHeader()
+  })
+  request.interceptors.response.use(
+    response => response,
+    error => {
+      if ([401, 403].includes(error?.response?.status)) {
+        const auth = useAuthStore()
+        auth.logout();
+      }
+      console.log(error);
+      return Promise.reject(error)
     }
-    console.log(error);
-    return Promise.reject(error)
-  }
-);
- 
-class ApiService {
-  getProfileContent() {
-    return request.get(API_URL + '/api/user/profile/')
-  }
+  );
+  return request
+}
 
-  updateAddress(address1, address2, city, postalCode, provinceOrState, country) {
-    return request.post(
+class ApiService {
+
+  async updateAddress(address1, address2, city, postalCode, provinceOrState, country) {
+    return request().post(
       API_URL + '/api/user/profile/', { address: {
           address1,
           address2,
@@ -37,8 +36,8 @@ class ApiService {
     );
   }
 
-  setupPlusOne(email, first_name, last_name){
-    return request.post(
+  async setupPlusOne(email, first_name, last_name){
+    return request().post(
       API_URL + '/api/user/setup-plus-one/',
       {
         email,
@@ -48,12 +47,12 @@ class ApiService {
     )
   }
 
-  getInboxContent() {
-    return request.get(API_URL + '/api/inbox/message/')
+  async getInboxContent() {
+    return request().get(API_URL + '/api/inbox/message/')
   }
 
-  postInboxResponse(question, option, text="") {
-    return request.post(
+  async postInboxResponse(question, option, text="") {
+    return request().post(
       API_URL + '/api/inbox/response/',
       {
         "question": question,
@@ -63,14 +62,14 @@ class ApiService {
     )
   }
 
-  getInfoContent() {
-    return request.get(
+  async getInfoContent() {
+    return request().get(
       API_URL + '/api/info/'
     )
   }
   
-  getGalleryContent() {
-    return request.get(
+  async getGalleryContent() {
+    return request().get(
       API_URL + '/api/photo/'
     )
   }
