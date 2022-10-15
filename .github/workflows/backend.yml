@@ -5,10 +5,12 @@ on:
     branches: [ master ]
     paths: 
       - 'wedding-backend/**'
+      - '.github/workflows/backend.yml'
   pull_request:
     branches: [ master ]
     paths: 
       - 'wedding-backend/**'
+      - '.github/workflows/backend.yml'
 
 jobs:
   test:
