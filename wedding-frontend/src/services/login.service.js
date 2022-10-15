@@ -6,7 +6,7 @@ const API_URL = process.env.VUE_APP_BACKEND_URL;
 class LoginService {
   login(email) {
     return axios
-      .post(API_URL + '/auth/email/', {
+      .post(API_URL + '/api/auth/email/', {
         email: email
       }, )
       .then( response => {
