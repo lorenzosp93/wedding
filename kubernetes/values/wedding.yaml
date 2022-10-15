@@ -50,11 +50,12 @@ ingress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
     - host: www.priscillalorenzo.com
       paths:
         - path: /api
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: 
     - secretName: www.priscillalorenzo.com-tls
       hosts:
