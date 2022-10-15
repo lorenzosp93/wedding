@@ -31,7 +31,7 @@ def get_auth_token(request, *args, **kwargs):
     if email and otp:
         r = requests.post(
             f"{BACKEND_HOST}/api/auth/token/",
-            data=json.dumps({"email": email, "token": int(otp)}),
+            data=json.dumps({"email": email, "token": otp}),
             headers={'Content-Type': 'application/json'}
         )
         if r.status_code == 200:
