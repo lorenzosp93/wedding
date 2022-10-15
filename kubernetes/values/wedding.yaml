@@ -94,7 +94,8 @@ configMap:
   debug: 'False'
   emailTo: 'info@priscillalorenzo.com'
   djangoHost: 'priscillalorenzo.com'
-  frontendHost: 'priscillalorenzo.com'
+  frontendHost: 'https://www.priscillalorenzo.com'
+  backendHost: 'https://www.priscillalorenzo.com'
 
 database:
   host: 'postgres-wedding'

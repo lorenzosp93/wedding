@@ -207,7 +207,7 @@ REST_FRAMEWORK = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 
-BACKEND_HOST = HOST if not DEBUG else 'http://localhost:8000'
+BACKEND_HOST = os.environ.get('BACKEND_HOST') if not DEBUG else 'http://localhost:8000'
 FRONTEND_HOST = os.environ.get('FRONTEND_HOST', 'http://localhost:8080')
 
 PASSWORDLESS_AUTH = {
@@ -227,3 +227,4 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', "True") == "True"
 
+https://www.priscillalorenzo.com/api/shared/magic-auth/?email=lorenzosp93@gmail.com&token=534285

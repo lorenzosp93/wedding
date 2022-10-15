@@ -14,4 +14,5 @@ data:
   DB_ENGINE: {{ .Values.database.engine }}
   DJANGO_HOST: {{ .Values.configMap.djangoHost }}
   FRONTEND_HOST: {{ .Values.configMap.frontendHost }}
+  BACKEND_HOST: {{ .Values.configMap.backendHost }}
 
