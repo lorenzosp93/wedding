@@ -3,9 +3,19 @@ import authHeader from './authheader';
 import { useAuthStore } from '@/stores';
 
 export const API_URL = process.env.VUE_APP_BACKEND_URL;
-export function request(){
+
+export function getCSRFHeader() {
+    const token = request().get(
+      API_URL + '/api/shared/get-token/'
+    ).then( response => response.data.token )
+    return {'X-CSRFToken': token}
+  }
+
+export function request(post=false){
+  var headers = {...authHeader()};
+  headers = post ? {...headers, ...getCSRFHeader()} : headers;
   const request = axios.create({
-    headers: authHeader()
+    headers: headers
   })
   request.interceptors.response.use(
     response => response,
@@ -23,8 +33,10 @@ export function request(){
 
 class ApiService {
 
+
   async updateAddress(address1, address2, city, postalCode, provinceOrState, country) {
-    return request().post(
+    
+    return request(true).post(
       API_URL + '/api/user/profile/', { address: {
           address1,
           address2,
@@ -37,7 +49,7 @@ class ApiService {
   }
 
   async setupPlusOne(email, first_name, last_name){
-    return request().post(
+    return request(true).post(
       API_URL + '/api/user/setup-plus-one/',
       {
         email,
@@ -52,7 +64,7 @@ class ApiService {
   }
 
   async postInboxResponse(question, option, text="") {
-    return request().post(
+    return request(true).post(
       API_URL + '/api/inbox/response/',
       {
         "question": question,

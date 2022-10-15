@@ -6,7 +6,7 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 data:
   DJANGO_LOGLEVEL: INFO
-  EMAIL_TO: {{ .Values.ConfigMap.emailTo | quote }}
+  EMAIL_TO: {{ .Values.configMap.emailTo | quote }}
   DEBUG: {{ .Values.configMap.debug | quote }}
   DATABASE_NAME: {{ .Values.database.name }}
   DATABASE_HOST: {{ .Values.database.host }}

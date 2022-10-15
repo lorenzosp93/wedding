@@ -5,23 +5,23 @@ repositories:
       url: https://kubernetes.github.io/ingress-nginx
 
 releases:
-    - name: wedding
-      namespace: wedding
-      chart: ./charts/wedding
-      values:
-        - ./values/wedding.yaml
     - name: postgres
       namespace: wedding
       chart: ./charts/postgres
       values:
         - ./values/postgres.yaml
-    - name: ingress-controller
-      namespace: ingress
-      chart: ingress-nginx/ingress-nginx
+    - name: wedding
+      namespace: wedding
+      chart: ./charts/wedding
       values:
-        - ./values/ingress-controller.yaml
+        - ./values/wedding.yaml
     - name: frontend
       namespace: wedding
       chart: bitnami/nginx
       values:
         - ./values/frontend.yaml
+    - name: ingress-controller
+      namespace: default
+      chart: ingress-nginx/ingress-nginx
+      values:
+        - ./values/ingress-controller.yaml

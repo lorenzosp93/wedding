@@ -11,7 +11,7 @@ image:
   tag: ""
 
 imagePullSecrets: []
-nameOverride: ""
+nameOverride: "wedding"
 fullnameOverride: ""
 
 serviceAccount:
@@ -70,11 +70,11 @@ resources: {}
   #   memory: 128Mi
 
 autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
@@ -83,7 +83,7 @@ tolerations: []
 affinity: {}
 
 persistentVolume:
-  storage: 2Gi
+  storage: 8Gi
   
 database:
   name: django

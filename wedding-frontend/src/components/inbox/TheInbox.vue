@@ -55,7 +55,7 @@
       <article v-html="activeMessage?.content" class="my-3 text-gray-500 leading-7 tracking-wider">
       </article>
       <form v-if="activeMessage?.questions.length">
-        <p class="my-5" v-if="!activeMessage?.questions.some(q => !q.response)">You have already answered these questions.</p>
+        <p class="my-5 text-accent" v-if="!activeMessage?.questions.some(q => !q.response)">You have already answered these questions.</p>
         <div v-for="(question, idx) in activeMessage?.questions" :key="question.uuid">
           <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
           <p>{{ question.content }}</p>

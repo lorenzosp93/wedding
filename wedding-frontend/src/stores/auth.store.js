@@ -12,7 +12,7 @@ export const useAuthStore = defineStore({
         async login(token) {
             // update pinia state
             this.token = token;
-            await request().get(API_URL + '/api/user/profile/').then((response) => {
+            request().get(API_URL + '/api/user/profile/').then((response) => {
                 this.profile = response.data[0];
             })
 

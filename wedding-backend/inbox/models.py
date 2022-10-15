@@ -13,6 +13,9 @@ class Message(Serializable, HasSubject, HasContent, TimeStampable):
     "Model to define generic messages to users"
     def __str__(self) -> str:
         return f"{self.subject}"
+
+    class Meta:
+        ordering = ['-created_at']
     
 class Question(Serializable, HasSubject, HasContent):
     "Model to define questions for users"

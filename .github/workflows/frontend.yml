@@ -68,4 +68,4 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Rollout deploy
-        run: kubectl rollout restart deploy frontend-nginx -n wedding
+        run: kubectl rollout restart deploy frontend-wedding -n wedding

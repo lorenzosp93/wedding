@@ -73,8 +73,8 @@ resources: {}
   #   memory: 128Mi
 
 livenessProbe:
-  enabled: true
-  path: /api/health
+  enabled: false
+  path: /api/health/
   initialDelaySeconds: 60
 
 autoscaling:
@@ -92,12 +92,12 @@ affinity: {}
 
 configMap:
   debug: 'False'
-  emailTo: 'me@lorenzosp.com'
+  emailTo: 'info@priscillalorenzo.com'
   djangoHost: 'priscillalorenzo.com'
   frontendHost: 'priscillalorenzo.com'
 
 database:
-  host: 'postgres'
+  host: 'postgres-wedding'
   port: 5432
   engine: django.db.backends.postgresql
   name: django

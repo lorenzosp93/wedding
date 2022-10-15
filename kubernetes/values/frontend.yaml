@@ -18,7 +18,7 @@ global:
 
 ## @param nameOverride String to partially override nginx.fullname template (will maintain the release name)
 ##
-nameOverride: ""
+nameOverride: "wedding"
 ## @param fullnameOverride String to fully override nginx.fullname template
 ##
 fullnameOverride: ""
