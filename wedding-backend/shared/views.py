@@ -30,7 +30,7 @@ def get_auth_token(request, *args, **kwargs):
     otp = request.GET.get('token')
     if email and otp:
         r = requests.post(
-            f"{BACKEND_HOST}/auth/token/",
+            f"{BACKEND_HOST}/api/auth/token/",
             data=json.dumps({"email": email, "token": int(otp)}),
             headers={'Content-Type': 'application/json'}
         )

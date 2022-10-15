@@ -31,7 +31,7 @@ urlpatterns = [
     path('api/shared/', include('shared.urls')),
     path('api/', include('info.urls')),
     path('api/user/', include('profile.urls')),
-    path('', include('drfpasswordless.urls')),
+    path('api/', include('drfpasswordless.urls')),
 ]
 
 if settings.DEBUG:
