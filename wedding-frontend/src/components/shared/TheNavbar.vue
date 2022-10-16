@@ -5,12 +5,13 @@
         <img src="" class="mr-3 h-6 sm:h-9" alt="Website logo">
         <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ $t('shared.thenavbar.priscillaELorenzo') }}</span>
     </a>
-    <button type="button" @click="toggleMenu" class="inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:bg-pale hover:text-neutral focus:outline-none focus:ring-1 focus:ring-accent dark:text-darkPrimary dark:hover:bg-darkPale dark:focus:ring-darkSecondary dark:hover:text-darkNeutral" aria-controls="navbar-default" aria-expanded="false">
+    <button type="button" @click="toggleMenu" class="z-20 inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:bg-pale hover:text-neutral focus:outline-none focus:ring-1 focus:ring-accent dark:text-darkPrimary dark:hover:bg-darkPale dark:focus:ring-darkSecondary dark:hover:text-darkNeutral" aria-controls="navbar-default" aria-expanded="false">
       <span class="sr-only">{{ $t('shared.thenavbar.openMainMenu') }}</span>
       <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
     </button>
-    <div :class="{hidden: !menu, block: menu}" class="w-full md:block md:w-auto" id="navbarDefault">
-      <ul class="flex flex-wrap p-4 mt-4 bg-pale rounded-lg border border-accent md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-neutral dark:bg-darkPale md:dark:bg-darkNeutral dark:border-darkAccent">
+    <div @click="toggleMenu" :class="{hidden:!menu, 'block': menu}" class="z-10 w-screen h-screen backdrop-blur-sm fixed top-0 left-0"></div>
+    <div :class="{hidden: !menu, 'block absolute': menu}" class="z-20 w-full md:block md:w-auto top-10 left-0" id="navbarDefault">
+      <ul class="flex flex-col p-4 mt-4 mx-3 bg-pale rounded-lg border border-accent md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-neutral dark:bg-darkPale md:dark:bg-darkNeutral dark:border-darkAccent">
         <li>
           <router-link to="/" class="block py-2 pr-4 pl-3 text-primary rounded hover:bg-secondary md:hover:bg-transparent md:border-0 md:hover:text-accent md:p-0 dark:text-darkPrimary  dark:hover:bg-darkNeutral dark:hover:text-darkPrimary md:dark:hover:bg-transparent" aria-current="page">{{ $t('shared.thenavbar.home') }}</router-link>
         </li>

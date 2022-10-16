@@ -28,7 +28,7 @@ def get_csrf_token(request):
 @permission_classes([AllowAny,])
 def get_auth_token(request, *args, **kwargs):
     """
-        Function to retrieve auth token from email + OTP combination.
+        Function to retrieve auth token from email/mobile + OTP combination.
     """
     serializer = CallbackTokenAuthSerializer(data=request.GET)
     if serializer.is_valid():
@@ -42,7 +42,6 @@ def get_auth_token(request, *args, **kwargs):
             token_serializer = TokenSerializer(data=token.__dict__, partial=True)
             if token_serializer.is_valid():
                 return redirect(f"{FRONTEND_HOST}/?token={token_serializer.data.get('token')}")
-    else:
-        logger.error("Couldn't log in unknown user. Errors on serializer: {}".format(serializer.error_messages))
-    return Response({'detail': 'Couldn\'t log you in. Try again later.'}, status=status.HTTP_400_BAD_REQUEST)
 
+    logger.error("Couldn't log in unknown user. Errors on serializer: {}".format(serializer.error_messages))
+    return Response({'detail': 'Couldn\'t log you in. Try again later.'}, status=status.HTTP_400_BAD_REQUEST)

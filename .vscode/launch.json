@@ -11,7 +11,6 @@
             "type": "chrome",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}/wedding-frontend/src",
-            "breakOnLoad": true,
             "sourceMapPathOverrides": {
                 "webpack:///src/*": "${webRoot}/*"
             }
@@ -24,7 +23,7 @@
             "cwd": "${workspaceFolder}/wedding-backend",
             "args": ["runserver"],
             "django": true,
-            "justMyCode": false
+            "justMyCode": true
         },
         {
             "name": "Docker: Python - Django",
