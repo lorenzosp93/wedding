@@ -1,14 +1,18 @@
 from django.middleware.csrf import get_token
 from django.shortcuts import redirect
+from django.utils.module_loading import import_string
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
-import requests
-import json
 
-from wedding.settings import FRONTEND_HOST, BACKEND_HOST
+import logging
 
+from drfpasswordless.serializers import CallbackTokenAuthSerializer
+from drfpasswordless.settings import api_settings
+from wedding.settings import FRONTEND_HOST
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 @api_view(('GET',))
@@ -26,15 +30,19 @@ def get_auth_token(request, *args, **kwargs):
     """
         Function to retrieve auth token from email + OTP combination.
     """
-    email = request.GET.get('email')
-    otp = request.GET.get('token')
-    if email and otp:
-        r = requests.post(
-            f"http://localhost:8000/api/auth/token/",
-            data=json.dumps({"email": email, "token": otp}),
-            headers={'Content-Type': 'application/json'}
-        )
-        if r.status_code == 200:
-            return redirect(f"{FRONTEND_HOST}/?token={r.json().get('token')}" )
-        return Response(r.text, status=r.status_code)
-    return Response("Email and Token must be provided", status=status.HTTP_400_BAD_REQUEST)
+    serializer = CallbackTokenAuthSerializer(data=request.GET)
+    if serializer.is_valid():
+        user = serializer.validated_data['user']
+        token_creator = import_string(api_settings.PASSWORDLESS_AUTH_TOKEN_CREATOR)
+
+        (token, _) = token_creator(user)
+
+        if token:
+            TokenSerializer = import_string(api_settings.PASSWORDLESS_AUTH_TOKEN_SERIALIZER)
+            token_serializer = TokenSerializer(data=token.__dict__, partial=True)
+            if token_serializer.is_valid():
+                return redirect(f"{FRONTEND_HOST}/?token={token_serializer.data.get('token')}")
+    else:
+        logger.error("Couldn't log in unknown user. Errors on serializer: {}".format(serializer.error_messages))
+    return Response({'detail': 'Couldn\'t log you in. Try again later.'}, status=status.HTTP_400_BAD_REQUEST)
+

@@ -27,4 +27,3 @@ class Information(Named, HasPicture, HasContent):
 class Photo(Named, HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
     private = models.BooleanField(default=False,)
-
