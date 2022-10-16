@@ -13,6 +13,14 @@ INFO_TYPES = (
     (5, 'Events'),
 )
 
+PHOTO_TYPES = (
+    (0, 'Ice-breaker'),
+    (1, 'Ceremony'),
+    (2, 'Reception'),
+    (3, 'Dinner'),
+    (4, 'Dance'),
+)
+
 # Create your models here.
 class Information(HasPicture, HasContent, HasSubject):
     type = models.IntegerField(choices=INFO_TYPES,)
@@ -20,6 +28,7 @@ class Information(HasPicture, HasContent, HasSubject):
     def __str__(self) -> str:
         return f"{self.subject}"
 
-class Photo(Named, HasPicture):
+class Photo(HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
     private = models.BooleanField(default=False,)
+    type = models.IntegerField(choices=PHOTO_TYPES,)
