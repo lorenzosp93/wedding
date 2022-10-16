@@ -2,7 +2,7 @@ from rest_framework.serializers import (
     ModelSerializer, CharField, PrimaryKeyRelatedField, SerializerMethodField
 )
 from .models import (
-    Message, Question, Response, Option, User
+    Message, Question, Response, Option
 )
 from profile.serializers import TranslationContentMixin, TranslationSubjectMixin
 
@@ -27,8 +27,7 @@ class ResponseSerializer(ModelSerializer):
 
     def save(self, **kwargs):
         """Include default for read_only `user` field"""
-        user_id = self.context.get('user_id')
-        kwargs["user"] = User.objects.get(id=user_id)
+        kwargs["user"] = self.context.get('request').user
         return super().save(**kwargs)
 
 class QuestionSerializer(
@@ -37,7 +36,7 @@ class QuestionSerializer(
     ModelSerializer
 ):
     def get_response(self, obj):
-        user = User.objects.get(id=self.context.get('user_id'))
+        user = self.context.get('request').user
         response = Response.objects.filter(question=obj, user=user).first()
         if response:
             option_list = response.option.values_list('uuid', flat=True)

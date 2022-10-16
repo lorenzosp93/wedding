@@ -3,6 +3,8 @@ from rest_framework.routers import DefaultRouter
 from .viewsets import UserProfileViewset
 from .views import setup_plus_one
 
+app_name = 'profile'
+
 router = DefaultRouter()
 router.register(r'profile', UserProfileViewset, 'profile')
 
