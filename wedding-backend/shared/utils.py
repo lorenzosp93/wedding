@@ -36,7 +36,7 @@ def send_email_with_callback_token(user, email_token, **kwargs):
             context = inject_template_context({
                 'callback_token': email_token.key,
                 'user_email': getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME),
-                'auth_url': reverse('magic-auth'),
+                'auth_url': reverse('shared:magic-auth'),
             'site_name': BACKEND_HOST,
             })
             html_message = loader.render_to_string(email_html, context,)
