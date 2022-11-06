@@ -68,14 +68,14 @@
                 :id="option.uuid"
                 class="my-2"
                 v-model="responses.filter(r => r.question == question.uuid)[0].option"
-                :disabled="question.multi_select ? !question?.response?.option.includes(option.uuid) : question?.response?.option != option.uuid"
+                :disabled="question?.response ? (question.multi_select ? !question?.response?.option.includes(option.uuid) : question?.response?.option != option.uuid) : false"
                 :required="question.mandatory">
               <label :for="option.uuid" class="mx-2">{{ option.content }}</label>
             </li>
           </ul>
           <input v-if="question.free_text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1" v-model="responses.filter(r => r.question == question.uuid)[0].text" :readonly="question.response" :required="question.mandatory && question.options.length == 0">
         </div>
-        <button v-if="!submitLoading && activeMessage?.questions.some(q => !q.response)" class="bg-acccent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="submitResponse">Submit</button>
+        <button v-if="!submitLoading && activeMessage?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="submitResponse">Submit</button>
         <p v-if="submitLoading">Loading</p>
         <p v-if="submitSuccess">Success</p>
       </form>

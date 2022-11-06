@@ -21,7 +21,7 @@ export default {
   props: {
   },
   methods: {
-    getInfo () {
+    getGalleryContent () {
       this.loading = true;
       ApiService.getGalleryContent().then(
         (response) => {

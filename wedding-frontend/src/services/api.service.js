@@ -33,7 +33,6 @@ export function request(post=false){
 
 class ApiService {
 
-
   async updateAddress(address1, address2, city, postalCode, provinceOrState, country) {
     
     return request(true).post(

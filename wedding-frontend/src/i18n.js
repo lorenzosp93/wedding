@@ -1,4 +1,4 @@
-import { createI18n } from "vue-i18n";
+import { createI18n } from "vue-i18n/index.mjs";
 
 // On change of language, switch the /locals/_language_.json file
 function loadLocaleMessages() {

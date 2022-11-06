@@ -2,8 +2,8 @@ import { createPinia } from 'pinia';
 import router from '@/router'
 import i18n from '@/i18n'
 import { createApp } from 'vue'
-import { VueAxios } from 'vue-axios';
-import { axios } from 'axios';
+import VueAxios from 'vue-axios';
+import axios from 'axios';
 import { gsap } from "gsap";
 import App from './App.vue'
 import './index.css'
