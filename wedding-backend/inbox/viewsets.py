@@ -12,18 +12,18 @@ class MessageViewSet(ReadOnlyModelViewSet):
     pagination_class = LimitOffsetPagination
     serializer_class = MessageSerializer
     def get_queryset(self):
-        messages_pre = Message.objects.filter(option_prerequisite__isnull=False) \
-                                      .values('pk', 'option_prerequisite')
+        messages_pre = Message.objects.filter(option_pre__isnull=False) \
+                                      .values('pk', 'option_pre')
         messages_list = []
         if messages_pre:
             user_options = Response.objects.filter(
                 user__id=self.request.user.id,
             ).values_list('option', flat=True)
             for message in messages_pre:
-                if message.get('option_prerequisite') in user_options:
+                if all(item in user_options for item in message.get('option_pre')):
                     messages_list = [*messages_list, message.get('pk')]
         return Message.objects.filter(
-            Q(option_prerequisite__isnull=True)
+            Q(option_pre__isnull=True)
             |
             Q(pk__in=messages_list)
         )
