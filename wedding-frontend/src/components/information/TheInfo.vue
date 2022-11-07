@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useInfoStore } from '@/stores/api.store';
 
 export default {
@@ -38,8 +38,10 @@ export default {
       'activeType',
       'infosActiveType',
       'infoTypes',
-      'activeInfo',
     ]),
+    ...mapWritableState(useInfoStore, [
+      'activeInfo'
+    ])
   },
   methods: {
     ...mapActions(useInfoStore, [

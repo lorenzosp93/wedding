@@ -47,7 +47,6 @@ export const useInfoStore = defineStore({
                     }
                 ).catch(
                     error => {
-                        console.log(error);
                         this.error = error;
                     }
                 );
@@ -70,8 +69,12 @@ export const useInboxStore = defineStore({
         active: 0,
         submitLoading: false,
         submitSuccess: false,
+        submitError: null,
         search: '',
         viewDetail: false,
+        deleteLoading: false,
+        deleteSuccess: false,
+        deleteError: null,
     }),
     getters: {
         activeMessage: (state) => {
@@ -98,7 +101,6 @@ export const useInboxStore = defineStore({
                 }
             ).catch(
                 error => {
-                    console.log(error);
                     this.error = error;
                 }
             )
@@ -117,24 +119,52 @@ export const useInboxStore = defineStore({
         })
         },
         submitResponse () {
-        this.submitLoading = true;
-        const out = this.responses.some(
-            response => {
-            if(this.activeMessage.questions.some(q => q.uuid == response.question && !q.response)){
-                apiService.postInboxResponse(
-                response.question,
-                Array.isArray(response.option) ? response.option : response.option ? [response.option] : [],
-                response.text,
-                ).then(
-                () => false
-                )
+            this.submitLoading = true;
+            const out = this.responses.some(
+                response => {
+                    if(this.activeMessage.questions.some(q => q.uuid == response.question && !q.response)){
+                        apiService.postInboxResponse(
+                            response.question,
+                            [...response.option],
+                            response.text,
+                        ).then(
+                            () => false
+                        ).catch(
+                            error => {
+                                this.submitError = [...(this.submitError ?? []), {q: response.question, e: error}];
+                                return true;
+                            }
+                        )
+                    }
+                }
+            )
+            this.submitLoading = false;
+            if (!out) {
+                this.submitSuccess = true;
+                this.getInbox();
             }
+        },
+        deleteResponses () {
+            this.deleteLoading = true;
+            const out = this.activeMessage.questions.some(
+                question => {
+                    apiService.deleteInboxResponse(
+                        question.response.uuid
+                    ).then(
+                        () => false
+                    ).catch(
+                        error => {
+                            this.deleteError = error;
+                            return true;
+                        }
+                    )
+                }
+            );
+            this.deleteLoading = false;
+            if (!out) {
+                this.deleteSuccess = true;
+                this.getInbox();
             }
-        )
-        this.submitLoading = false;
-        if (!out) {
-            this.submitSuccess = true;
-        }
         },
         setActive (n) {
             this.active = n;
@@ -162,7 +192,6 @@ export const useGalleryStore = defineStore({
                     }
                 ).catch(
                     error => {
-                        console.log(error);
                         this.error = error;
                     }
                 )

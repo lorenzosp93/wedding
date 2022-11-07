@@ -73,6 +73,12 @@ class ApiService {
     )
   }
 
+  async deleteInboxResponse(response) {
+    return request().delete(
+      `${API_URL}/api/inbox/response/${response}/`
+    )
+  }
+
   async getInfoContent() {
     return request().get(
       API_URL + '/api/info/'

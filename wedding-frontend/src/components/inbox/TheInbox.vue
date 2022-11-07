@@ -55,7 +55,10 @@
       <article v-html="activeMessage?.content" class="my-3 text-gray-500 leading-7 tracking-wider">
       </article>
       <form v-if="activeMessage?.questions.length && responses">
-        <p class="my-5 text-accent" v-if="!activeMessage?.questions.some(q => !q.response)">You have already answered these questions.</p>
+        <div v-if="!activeMessage?.questions.some(q => !q.response)">
+          <p class="my-5 text-accent" >You have already answered these questions.</p>
+          <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="deleteResponses">Change your responses</button>
+        </div>
         <div v-for="(question, idx) in activeMessage?.questions" :key="question.uuid">
           <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
           <p>{{ question.content }}</p>
@@ -68,12 +71,13 @@
                 :id="option.uuid"
                 class="my-2"
                 v-model="responses.find(r => r.question == question.uuid).option"
-                :disabled="question?.response ? (question.multi_select ? !question?.response?.option.includes(option.uuid) : question?.response?.option != option.uuid) : false"
+                :disabled="question.response ? (question.multi_select ? !question?.response?.option.includes(option.uuid) : question?.response?.option != option.uuid) : false"
                 :required="question.mandatory">
               <label :for="option.uuid" class="mx-2">{{ option.content }}</label>
             </li>
           </ul>
           <input v-if="question.free_text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1" v-model="responses.find(r => r.question == question.uuid).text" :readonly="question.response" :required="question.mandatory && question.options.length == 0">
+          <p v-if="question.uuid == submitError?.find(e => e.q == question)">{{ submitError?.find(e => e.q == question)?.e }}</p>
         </div>
         <button v-if="!submitLoading && activeMessage?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="submitResponse">Submit</button>
         <p v-if="submitLoading">Loading</p>
@@ -104,11 +108,16 @@ export default {
   computed: {
     ...mapState(useInboxStore, [
       'inbox',
-      'inboxLoading',
       'activeMessage',
       'searchedInbox',
+      'inboxLoading',
+      'error',
       'submitLoading',
       'submitSuccess',
+      'submitError',
+      'deleteLoading',
+      'deleteSuccess',
+      'deleteError',
     ]),
     ...mapWritableState(useInboxStore, [
       'responses',
@@ -121,6 +130,7 @@ export default {
     ...mapActions(useInboxStore, [
       'getInbox',
       'submitResponse',
+      'deleteResponses',
       'setActive',
     ]),
     removeHtml (value) {
