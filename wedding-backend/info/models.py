@@ -19,6 +19,7 @@ PHOTO_TYPES = (
     (2, 'Reception'),
     (3, 'Dinner'),
     (4, 'Dance'),
+    (5, 'Before'),
 )
 
 # Create your models here.

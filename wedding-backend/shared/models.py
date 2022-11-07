@@ -1,12 +1,14 @@
 "Define abstract models to be used in all apps"
-from enum import unique
-from unittest.util import _MAX_LENGTH
 import uuid
+from PIL import Image
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
+
+THUMBNAIL_SIZE = (640, 640)
 
 class Address(models.Model):
     "Model to capture an address from a user"
@@ -169,11 +171,26 @@ class Authorable(models.Model):
 class HasPicture(models.Model):
     "Abstract class to capture a picture"
     picture = models.ImageField(
-        verbose_name='Header picture',
         upload_to="pictures/",
         blank=True,
         null=True,
     )
+    thumbnail = models.ImageField(
+       upload_to="thumb/",
+       blank=True,
+       null=True,
+       editable=False,
+    )
+    def save(self) -> None:
+        if self.picture:
+            img = Image.open(self.picture)
+            img.thumbnail(THUMBNAIL_SIZE)
+            save_path = f"thumb/{self.picture.name}"
+            fh = default_storage.open(save_path, "wb")
+            img.save(fh, format='png')
+            fh.close()
+            self.thumbnail = save_path
+        return super(HasPicture, self).save()
 
     class Meta:
         abstract = True

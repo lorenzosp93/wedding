@@ -1,12 +1,14 @@
 import apiService from '@/services/api.service';
 import { defineStore } from 'pinia';
+
 const INFOS_LIFETIME = 30 // minutes
 
 export const useInfoStore = defineStore({
     id: 'info',
     state: () => ({
         // initialize state from local storage to enable user to stay logged in
-        infos: null, loading: false,
+        infos: [], 
+        loading: false,
         error: null,
         infosExpiry: null,
         activeInfo: null,
@@ -14,13 +16,13 @@ export const useInfoStore = defineStore({
     }),
     getters: {
         infosActiveType: (state) => {
-            return state.infos?.filter(info => {
+            return state.infos.filter(info => {
                 return info.type == state.activeType
             })
         },
         infoTypes: (state) => {
             var infoTypes = [];
-            state.infos?.forEach(info => {
+            state.infos.forEach(info => {
                 if (!infoTypes.includes(info?.type)) {
                     infoTypes = [...infoTypes, info?.type];
                 }
@@ -40,18 +42,13 @@ export const useInfoStore = defineStore({
                         this.infosExpiry = now.setTime(
                             now.getTime + INFOS_LIFETIME * 60 * 60 * 1000
                         );
+                        this.activeInfo = this.infos.find(info => info);
+                        this.activeType = this.activeInfo?.type;
                     }
                 ).catch(
                     error => {
                         console.log(error);
                         this.error = error;
-                    }
-                ).then(
-                    () => {
-                        if (this.infos) {
-                            this.activeInfo = this.infos.find(info => info);
-                            this.activeType = this.activeInfo?.type;
-                        }
                     }
                 );
             }
@@ -66,7 +63,7 @@ export const useInfoStore = defineStore({
 export const useInboxStore = defineStore({
     id: 'inbox',
     state: () => ({
-        inbox: null,
+        inbox: [],
         responses: [],
         error: null,
         inboxExpiry: null,
@@ -144,4 +141,32 @@ export const useInboxStore = defineStore({
             this.viewDetail = true;
         },
     },
+})
+
+export const useGalleryStore = defineStore({
+    id: 'gallery',
+    state: () => ({
+        loading: false,
+        error: null,
+        gallery: [],
+        galleryExpiry: null,
+    }),
+    actions: {
+        async getGalleryContent () {
+            if (!this.gallery || this.galleryExpiry < Date.now()) {
+                this.loading = true;
+                apiService.getGalleryContent().then(
+                    (response) => {
+                    this.gallery = response.data;
+                    this.loading = false;
+                    }
+                ).catch(
+                    error => {
+                        console.log(error);
+                        this.error = error;
+                    }
+                )
+            }
+        },
+    }
 })

@@ -1,41 +1,38 @@
 <template>
   <div class="">
     <h1 class="text-xl my-5 mx-3">Gallery</h1> 
-    <div>
-      <img class="m-5 border border-primary border-spacing-2" v-for="photo in gallery" src="photo.url" alt="Wedding picture" :key="photo.uuid">
+    <div class="bg-pale dark:bg-darkPale rounded-md border-accent">
+      <img class="m-5 border border-primary border-spacing-2 shadow-md" v-for="photo in gallery" :src="photo.thumbnail" alt="Wedding picture" :key="photo.id">
     </div>
 
   </div>
 </template>
 
 <script>
-import ApiService from '@/services/api.service'
+import { mapActions, mapState } from 'pinia';
+import { useGalleryStore } from '@/stores/api.store';
 
 export default {
   name: 'TheGallery',
   data () {
     return {
-      gallery: [],
     }
   },
   props: {
   },
   methods: {
-    getGalleryContent () {
-      this.loading = true;
-      ApiService.getGalleryContent().then(
-        (response) => {
-          this.gallery = response.data;
-          this.loading = false;
-        }
-      )
-    },
+    ...mapActions(useGalleryStore, ['getGalleryContent'])
   },
   emits: [
   ],
   inject: [
   ],
   computed: {
+    ...mapState(useGalleryStore, [
+      'gallery',
+      'loading',
+      'error',
+    ])
   },
   mounted () {
     this.getGalleryContent();
