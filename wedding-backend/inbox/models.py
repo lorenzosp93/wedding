@@ -11,6 +11,8 @@ from shared.models import (
 
 class Message(Serializable, HasSubject, HasContent, TimeStampable):
     "Model to define generic messages to users"
+    option_prerequisite = models.ManyToManyField('Option', blank=True)
+
     def __str__(self) -> str:
         return f"{self.subject}"
 

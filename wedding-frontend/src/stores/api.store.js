@@ -106,26 +106,28 @@ export const useInboxStore = defineStore({
             )
         },
         async responseSetup () {
-        this.inbox.forEach(message => {
-            if (message.questions.length){
-            message.questions.forEach(question => {
-                this.responses = [...this.responses, {
-                question: question.uuid,
-                option: question?.response?.option ?? (question.multi_select ? [] : null),
-                text: question?.response?.text ?? '',
-                }]
+            this.responses = [],
+            this.inbox.forEach(message => {
+                if (message.questions.length){
+                message.questions.forEach(question => {
+                    this.responses = [...this.responses, {
+                    question: question.uuid,
+                    option: question?.response?.option ?? (question.multi_select ? [] : null),
+                    text: question?.response?.text ?? '',
+                    }]
+                })
+                }
             })
-            }
-        })
         },
         submitResponse () {
+            console.log(this.responses)
             this.submitLoading = true;
             const out = this.responses.some(
                 response => {
                     if(this.activeMessage.questions.some(q => q.uuid == response.question && !q.response)){
                         apiService.postInboxResponse(
                             response.question,
-                            [...response.option],
+                            Array.isArray(response.option) ? [...response.option] : [response.option],
                             response.text,
                         ).then(
                             () => false

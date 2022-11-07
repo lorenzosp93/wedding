@@ -71,7 +71,7 @@
                 :id="option.uuid"
                 class="my-2"
                 v-model="responses.find(r => r.question == question.uuid).option"
-                :disabled="question.response ? (question.multi_select ? !question?.response?.option.includes(option.uuid) : question?.response?.option != option.uuid) : false"
+                :disabled="question.response ? (question.multi_select ? true : question?.response?.option != option.uuid) : false"
                 :required="question.mandatory">
               <label :for="option.uuid" class="mx-2">{{ option.content }}</label>
             </li>

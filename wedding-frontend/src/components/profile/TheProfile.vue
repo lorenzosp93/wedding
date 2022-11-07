@@ -23,6 +23,7 @@
 
 <script>
 import PlusOne from './PlusOne.vue'
+import profile from '@/mixins/profile'
 
 export default {
   
@@ -35,28 +36,14 @@ export default {
   components: { 
     PlusOne
    },
-  props: [
-    'authStore'
+  mixins: [
+    profile
   ],
   methods: {
-    logout(){
-      this.authStore.logout()
-    },
     togglePlusOne(){
       this.showPlusOne = !this.showPlusOne;
     }
   },
-  emits: [
-  ],
-  inject: [
-  ],
-  computed: {
-    profile () {
-      return this.authStore.profile
-    },
-  },
-  mounted () {
-  }
 }
 </script>
 
