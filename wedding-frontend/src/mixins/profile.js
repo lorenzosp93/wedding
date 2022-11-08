@@ -7,12 +7,13 @@ export default {
         }
     },
     computed: {
-    ...mapState(useAuthStore, ['profile'])
+    ...mapState(useAuthStore, ['profile', 'languages'])
     },
     methods: {
     ...mapActions(useAuthStore, [
         'login',
-        'logout'
+        'logout',
+        'updateLanguage'
     ])
     },
 }

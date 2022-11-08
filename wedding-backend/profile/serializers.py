@@ -29,11 +29,11 @@ class TranslationSubjectMixin(ModelSerializer):
 
     subject = SerializerMethodField('translated_subject')
 
-class UserProfileAddressSerializer(ModelSerializer):
-    address = AddressSerializer()
+class UserProfileWriteSerializer(ModelSerializer):
+    address = AddressSerializer(required=False)
     class Meta:
         model = UserProfile
-        fields = ['address']
+        fields = ['address', 'language']
 
 class BaseUserProfileSerializer(ModelSerializer):
     user = UserSerializer()
@@ -42,7 +42,6 @@ class BaseUserProfileSerializer(ModelSerializer):
         fields = ['user']
 
 class UserProfileSerializer(BaseUserProfileSerializer):
-    language = CharField(source='get_language_display')
     type = CharField(source='get_type_display')
     parent = UserSerializer(required=False,)
     childs = BaseUserProfileSerializer(

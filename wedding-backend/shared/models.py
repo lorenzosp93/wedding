@@ -219,9 +219,9 @@ class SiteSetting(SingletonBaseModel):
     about_text = models.TextField()
 
 I18N = (
-    (0, 'en'),
-    (1, 'it'),
-    (2, 'es'),
+    ('en', 'English'),
+    ('it', 'Italiano'),
+    ('es', 'Español'),
 )
 
 
@@ -236,7 +236,11 @@ class ContentString(models.Model):
 
 class TranslatedString(models.Model):
     "Model to define translations for a `ContentString`"
-    language = models.IntegerField(choices=I18N)
+    language = models.CharField(
+        choices=I18N,
+        max_length=2,
+        default='en',
+    )
     t9n = models.TextField()
     content = models.ForeignKey(
         ContentString,

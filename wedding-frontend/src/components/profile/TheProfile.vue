@@ -15,7 +15,13 @@
       
       <button v-if="profile?.plus" @click="togglePlusOne" class="rounded-md bg-secondary py-1 px-2 mx-2">Invite +1</button>
       <plus-one :toggle="togglePlusOne" v-if="showPlusOne" />
-      <h1>Lingua: {{ profile?.language }}</h1>
+      <h1>Language:</h1>
+      <form v-if="profile?.language">
+        <select name="language" id="lang" v-model="profile.language" @change="updateLanguage">
+          <option v-for="l in languages" :key="l.iso" :value="l.iso">{{ l.display }}</option>
+          <button ></button>
+        </select>
+      </form>
     </div>
     <button @click="logout" class="rounded-md bg-accent py-1 px-2 ml-auto mr-5">Log out</button>
   </div>

@@ -11,10 +11,20 @@ import logging
 from drfpasswordless.serializers import CallbackTokenAuthSerializer
 from drfpasswordless.settings import api_settings
 from wedding.settings import FRONTEND_HOST
+from .models import I18N
 
 logger = logging.getLogger(__name__)
 
 # Create your views here.
+@api_view(('GET',))
+@permission_classes((AllowAny,))
+def get_languages(request):
+    """
+        Return supported languages
+    """
+    return Response([{'iso': x, 'display': y} for x,y in I18N], status=status.HTTP_200_OK)
+
+
 @api_view(('GET',))
 @permission_classes((AllowAny,))
 def get_csrf_token(request):

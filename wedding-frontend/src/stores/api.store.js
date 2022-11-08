@@ -95,9 +95,9 @@ export const useInboxStore = defineStore({
             this.loading = true;
             apiService.getInboxContent().then(
                 (response) => {
-                this.inbox = response.data;
-                this.responseSetup();
-                this.loading = false;
+                    this.inbox = response.data;
+                    this.responseSetup();
+                    this.loading = false;
                 }
             ).catch(
                 error => {
@@ -120,7 +120,6 @@ export const useInboxStore = defineStore({
             })
         },
         submitResponse () {
-            console.log(this.responses)
             this.submitLoading = true;
             const out = this.responses.some(
                 response => {
@@ -143,8 +142,8 @@ export const useInboxStore = defineStore({
             this.submitLoading = false;
             if (!out) {
                 this.submitSuccess = true;
-                this.getInbox();
             }
+            this.getInbox();
         },
         deleteResponses () {
             this.deleteLoading = true;

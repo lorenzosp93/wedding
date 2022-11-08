@@ -11,7 +11,12 @@ class MessageViewSet(ReadOnlyModelViewSet):
     """
     pagination_class = LimitOffsetPagination
     serializer_class = MessageSerializer
+
     def get_queryset(self):
+        """
+        Logic to correctly return messages with no prerequisites and messages
+        for which the prerequisite is met by the user.
+        """
         messages_pre = Message.objects.filter(option_pre__isnull=False) \
                                       .values('pk', 'option_pre')
         messages_list = []
@@ -20,7 +25,11 @@ class MessageViewSet(ReadOnlyModelViewSet):
                 user__id=self.request.user.id,
             ).values_list('option', flat=True)
             for message in messages_pre:
-                if all(item in user_options for item in message.get('option_pre')):
+                pre = message.get('option_pre')
+                if (
+                    hasattr(pre, '__iter__') and all(item in user_options for item in pre)
+                    or pre in user_options
+                ):
                     messages_list = [*messages_list, message.get('pk')]
         return Message.objects.filter(
             Q(option_pre__isnull=True)

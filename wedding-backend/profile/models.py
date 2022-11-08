@@ -18,13 +18,20 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='profile'
     )
-    language = models.IntegerField(choices=I18N, default=0)
-    type = models.IntegerField(choices=USER_TYPES, default=0)
+    language = models.CharField(
+        choices=I18N,
+        default='en',
+        max_length=2,
+    )
+    type = models.IntegerField(
+        choices=USER_TYPES,
+        default=0,
+    )
     address = models.ForeignKey(
         Address,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
     )
     plus = models.IntegerField(default=0)
     parent = models.ForeignKey(

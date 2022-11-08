@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from .serializers import (
-    UserProfileAddressSerializer, UserProfileSerializer
+    UserProfileWriteSerializer, UserProfileSerializer
 )
 from .models import (
     UserProfile
@@ -18,7 +18,7 @@ class UserProfileViewset(ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in WRITE_ACTIONS:
-            return UserProfileAddressSerializer
+            return UserProfileWriteSerializer
         return UserProfileSerializer
 
     def get_queryset(self):
