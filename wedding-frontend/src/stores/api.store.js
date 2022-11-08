@@ -1,23 +1,32 @@
 import apiService from '@/services/api.service';
 import { defineStore } from 'pinia';
 
-const INFOS_LIFETIME = 30 // minutes
+const INFOS_LIFETIME = 60 // minutes
+const INBOX_LIFETIME = 30 // minutes
+const GALLERY_LIFETIME = 60 // minutes
 
 export const useInfoStore = defineStore({
     id: 'info',
     state: () => ({
         // initialize state from local storage to enable user to stay logged in
-        infos: [], 
+        infos: JSON.parse(localStorage.getItem('infos') ?? "[]"), 
         loading: false,
         error: null,
-        infosExpiry: null,
-        activeInfo: null,
+        infosExpiry: localStorage.getItem('infosExpiry'),
         activeType: null,
+        search: '',
+        viewDetail: false,
+        active: 0,
     }),
     getters: {
         infosActiveType: (state) => {
             return state.infos.filter(info => {
-                return info.type == state.activeType
+                return (
+                    (info.type == state.activeType)
+                    && 
+                    ((info.subject + info.content).toLowerCase()
+                    .search(state.search.toLowerCase()) != -1)
+                )
             })
         },
         infoTypes: (state) => {
@@ -28,6 +37,9 @@ export const useInfoStore = defineStore({
                 }
             })
             return infoTypes
+        },
+        activeInfo: (state) => {
+            return state.infosActiveType[state.active]
         },
     },
     actions: {
@@ -42,8 +54,9 @@ export const useInfoStore = defineStore({
                         this.infosExpiry = now.setTime(
                             now.getTime + INFOS_LIFETIME * 60 * 60 * 1000
                         );
-                        this.activeInfo = this.infos.find(info => info);
-                        this.activeType = this.activeInfo?.type;
+                        this.activeType = this.this.infos.find(info => info)?.type;
+                        localStorage.setItem('infos', JSON.stringify(this.infos));
+                        localStorage.setItem('infosExpiry', this.infosExpiry);
                     }
                 ).catch(
                     error => {
@@ -53,9 +66,14 @@ export const useInfoStore = defineStore({
             }
         },
         activateType (type) {
+            this.active = 0;
             this.activeType = type;
-            this.activeInfo = this.infos.find(info => info.type == this.activeType);
-        }
+        },
+        setActive (n) {
+            this.active = n;
+            this.viewDetail = true;
+        },
+
     },
 });
 
@@ -91,19 +109,25 @@ export const useInboxStore = defineStore({
         }
     },
     actions: {
-        async getInbox() {
-            this.loading = true;
-            apiService.getInboxContent().then(
-                (response) => {
-                    this.inbox = response.data;
-                    this.responseSetup();
-                    this.loading = false;
-                }
-            ).catch(
-                error => {
-                    this.error = error;
-                }
-            )
+        async getInbox(force=false) {
+            if(this.inbox.length == 0 | force | this.inboxExpiry < Date.now()){
+                this.loading = true;
+                apiService.getInboxContent().then(
+                    (response) => {
+                        this.inbox = response.data;
+                        this.responseSetup();
+                        this.loading = false;
+                        let now = new Date()
+                        this.inboxExpiry = now.setTime(
+                            now.getTime + INBOX_LIFETIME * 60 * 60 * 1000
+                        );
+                    }
+                ).catch(
+                    error => {
+                        this.error = error;
+                    }
+                )
+            }
         },
         async responseSetup () {
             this.responses = [],
@@ -119,7 +143,7 @@ export const useInboxStore = defineStore({
                 }
             })
         },
-        submitResponse () {
+        async submitResponse () {
             this.submitLoading = true;
             const out = this.responses.some(
                 response => {
@@ -129,7 +153,10 @@ export const useInboxStore = defineStore({
                             Array.isArray(response.option) ? [...response.option] : [response.option],
                             response.text,
                         ).then(
-                            () => false
+                            () => {
+                                this.getInbox(true);
+                                return false;
+                            }
                         ).catch(
                             error => {
                                 this.submitError = [...(this.submitError ?? []), {q: response.question, e: error}];
@@ -143,16 +170,18 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.submitSuccess = true;
             }
-            this.getInbox();
         },
-        deleteResponses () {
+        async deleteResponses () {
             this.deleteLoading = true;
             const out = this.activeMessage.questions.some(
                 question => {
                     apiService.deleteInboxResponse(
                         question.response.uuid
                     ).then(
-                        () => false
+                        () => {
+                            this.getInbox(true);
+                            return false;
+                        }
                     ).catch(
                         error => {
                             this.deleteError = error;
@@ -164,7 +193,6 @@ export const useInboxStore = defineStore({
             this.deleteLoading = false;
             if (!out) {
                 this.deleteSuccess = true;
-                this.getInbox();
             }
         },
         setActive (n) {
@@ -184,12 +212,16 @@ export const useGalleryStore = defineStore({
     }),
     actions: {
         async getGalleryContent () {
-            if (!this.gallery || this.galleryExpiry < Date.now()) {
+            if (this.gallery.length == 0 || this.galleryExpiry < Date.now()) {
                 this.loading = true;
                 apiService.getGalleryContent().then(
                     (response) => {
                     this.gallery = response.data;
                     this.loading = false;
+                    let now = new Date()
+                    this.galleryExpiry = now.setTime(
+                        now.getTime + GALLERY_LIFETIME * 60 * 60 * 1000
+                    );
                     }
                 ).catch(
                     error => {

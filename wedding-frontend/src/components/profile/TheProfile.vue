@@ -17,7 +17,7 @@
       <plus-one :toggle="togglePlusOne" v-if="showPlusOne" />
       <h1>Language:</h1>
       <form v-if="profile?.language">
-        <select name="language" id="lang" v-model="profile.language" @change="updateLanguage">
+        <select class="bg-pale dark:bg-darkPale rounded-md py-1" name="language" id="lang" v-model="profile.language" @change="updateLanguage">
           <option v-for="l in languages" :key="l.iso" :value="l.iso">{{ l.display }}</option>
           <button ></button>
         </select>

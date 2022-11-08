@@ -22,7 +22,7 @@ const router = createRouter({
         {name: 'login-success', path: '/login/success', component: LoginSuccess},
         {name: 'home', path: '/', components: {default: TheHome, TheNavbar}, },
         {name: 'inbox', path: '/inbox', components: {default: TheInbox, TheNavbar}, },
-        {name: 'info', path: '/info', components: {default: TheInfo, TheNavbar}, },
+        {name: 'info', path: '/info/:infoType?', components: {default: TheInfo, TheNavbar}, },
         {name: 'gallery', path: '/gallery', components: {default: TheGallery, TheNavbar}, },
         {name: 'profile', path: '/profile', components: {default: TheProfile, TheNavbar}, },
         {name: 'notFound', path: '/:notFound(.*)', components: {default: NotFound, TheNavbar}},
