@@ -32,8 +32,7 @@ export const useAuthStore = defineStore({
         },
         logout() {
             this.token = null;
-            localStorage.removeItem('token');
-            localStorage.removeItem('profile');
+            localStorage.clear();
             this.$router.push('/login')
         },
         async getLanguages() {

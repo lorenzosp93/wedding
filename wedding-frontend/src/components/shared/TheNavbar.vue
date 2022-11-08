@@ -1,10 +1,10 @@
 <template>
   <nav class="sticky bg-neutral border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-darkNeutral">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
-      <a href="" class="flex items-center">
+      <router-link to="/" class="flex items-center">
           <img src="" class="mr-3 h-6 sm:h-9" alt="Website logo">
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ $t('shared.thenavbar.priscillaELorenzo') }}</span>
-      </a>
+          <span class="self-center text-xl font-semibold italic whitespace-nowrap dark:text-white">Priscilla & Lorenzo - 1/10/2023</span>
+      </router-link>
       <button type="button" @click="toggleMenu" class="z-30 inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:bg-pale hover:text-neutral focus:outline-none focus:ring-1 focus:ring-accent dark:text-darkPrimary dark:hover:bg-darkPale dark:focus:ring-darkSecondary dark:hover:text-darkNeutral" aria-controls="navbar-default" aria-expanded="false">
         <span class="sr-only">{{ $t('shared.thenavbar.openMainMenu') }}</span>
         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
