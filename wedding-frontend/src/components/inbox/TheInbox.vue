@@ -18,7 +18,7 @@
       @deleteResponses="deleteResponses"
     >
     <template v-slot:search>
-      <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" placeholder="Search..." />
+      <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('inbox.theinbox.search')" />
     </template>
     </list-view>
   </div>

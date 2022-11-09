@@ -3,7 +3,7 @@
     <div class="container flex flex-wrap justify-between items-center mx-auto">
       <router-link to="/" class="flex items-center">
           <img src="" class="mr-3 h-6 sm:h-9" alt="Website logo">
-          <span class="hidden md:block self-center text-xl font-semibold italic whitespace-nowrap dark:text-white">Priscilla & Lorenzo</span>
+          <span class="hidden md:block self-center text-xl font-semibold italic whitespace-nowrap dark:text-white">Priscilla & Lorenzo </span>
           <span class="hidden lg:block self-center text-xl font-semibold italic whitespace-nowrap dark:text-white"> - 1/10/2023</span>
       </router-link>
       <button type="button" @click="toggleMenu" class="z-30 inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:bg-pale hover:text-neutral focus:outline-none focus:ring-1 focus:ring-accent dark:text-darkPrimary dark:hover:bg-darkPale dark:focus:ring-darkSecondary dark:hover:text-darkNeutral" aria-controls="navbar-default" aria-expanded="false">

@@ -5,16 +5,16 @@
  rounded-lg max-w-md shadow-md bg-pale dark:bg-darkPale ring-1 ring-accent p-3">
     <form class="flex flex-wrap">
 
-      <label class="w-full ml-3 mt-2" for="email">Email</label>
+      <label class="w-full ml-3 mt-2" for="email">{{ $t('profile.plusone.email') }}</label>
       <input class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" v-model="email" type="email">
-      <label class="w-full ml-3 mt-2" for="firstName">First Name</label>
+      <label class="w-full ml-3 mt-2" for="firstName">{{ $t('profile.plusone.firstName') }}</label>
       <input class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" v-model="firstName" type="text">
-      <label class="w-full ml-3 mt-2" for="lastName">Last Name(s)</label>
+      <label class="w-full ml-3 mt-2" for="lastName">{{ $t('profile.plusone.lastNames') }}</label>
       <input class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" v-model="lastName" type="text">
       <p v-if="error" class="text-alert">{{ error }}</p>
-      <button v-if="!loading & !success" class="px-2 py-1 bg-accent mx-auto rounded-md my-5" @click.prevent="setupPlusOne">Submit</button>
-      <p v-if="loading">Loading</p>
-      <p v-if="success">Success!</p>
+      <button v-if="!loading & !success" class="px-2 py-1 bg-accent mx-auto rounded-md my-5" @click.prevent="setupPlusOne">{{ $t('profile.plusone.submit') }}</button>
+      <p v-if="loading">{{ $t('profile.plusone.loading') }}</p>
+      <p v-if="success">{{ $t('profile.plusone.success') }}</p>
     </form>
 
 

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-neutral dark:bg-darkNeutral border-2 p-10 m-20 rounded-2xl">
-    <p>Login was successful, please check your inbox for your login link.</p>
+    <p>{{ $t('auth.loginsuccess.loginWasSuccessful') }}</p>
   </div>
 </template>
   

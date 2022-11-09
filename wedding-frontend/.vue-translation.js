@@ -4,7 +4,7 @@ const { JSONAdapter } = require("vue-translation-manager");
 module.exports = {
   srcPath: path.join(__dirname, "src/"),
   adapter: new JSONAdapter({
-    path: path.join(__dirname, "src/locales/"),
+    path: path.join(__dirname, "src/i18n/locales/"),
   }),
   languages: ["en", "es", "it",],
 };
