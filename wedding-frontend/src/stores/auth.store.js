@@ -25,7 +25,7 @@ export const useAuthStore = defineStore({
                 localStorage.setItem('profile', JSON.stringify(profile));
                 if (this.profile?.language){
                     i18n().then(
-                        i18n => i18n.global.locale = this.profile?.language
+                        i18n => i18n.default.global.locale = this.profile?.language
                     ).finally(
                         localStorage.setItem('lang', this.profile?.language)
                     );

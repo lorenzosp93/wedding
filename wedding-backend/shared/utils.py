@@ -2,7 +2,7 @@ import logging
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.template import loader
-from django.utils import translation
+from django.utils.translation import activate
 from django.urls import reverse
 from drfpasswordless.settings import api_settings
 from drfpasswordless.utils import inject_template_context
@@ -31,7 +31,7 @@ def send_email_with_callback_token(user, email_token, **kwargs):
                                     api_settings.PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME)
 
             # activate user language
-            translation.activate(user.profile.get_language_display())
+            activate(user.profile.language)
             # Inject context if user specifies.
             context = inject_template_context({
                 'callback_token': email_token.key,
