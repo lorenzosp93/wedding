@@ -13,7 +13,7 @@ class TestProfileModels(TestCase):
             email=email
         )
         self.profile = UserProfile.objects.get(user=self.user)
-        self.profile.language = 1
+        self.profile.language = 'it'
         self.profile.plus = 3
         self.profile.save()
 
@@ -21,7 +21,7 @@ class TestProfileModels(TestCase):
         self.assertIsInstance(self.profile, UserProfile)
     
     def test_profile_update(self):
-        self.assertEqual(self.profile.language, 1)
+        self.assertEqual(self.profile.language, 'it')
         self.assertEqual(self.profile.plus, 3)
 
     def test_setup_plus_one(self):
