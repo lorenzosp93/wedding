@@ -69,10 +69,6 @@ export const useInfoStore = defineStore({
             this.active = 0;
             this.activeType = type;
         },
-        setActive (n) {
-            this.active = n;
-            this.viewDetail = true;
-        },
 
     },
 });
@@ -89,7 +85,6 @@ export const useInboxStore = defineStore({
         submitSuccess: false,
         submitError: null,
         search: '',
-        viewDetail: false,
         deleteLoading: false,
         deleteSuccess: false,
         deleteError: null,
@@ -194,10 +189,6 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.deleteSuccess = true;
             }
-        },
-        setActive (n) {
-            this.active = n;
-            this.viewDetail = true;
         },
     },
 })
