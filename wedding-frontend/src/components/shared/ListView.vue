@@ -14,7 +14,6 @@
                 <div class="text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
               </div>
             </div>
-            <div class="text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
           </li>
           <div v-if="searchedList?.length == 0 && !isListEmpty">
             <p>Couldn't find any message that matches your search.</p>

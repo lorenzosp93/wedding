@@ -33,7 +33,6 @@ function detectLanguage() {
 }
 
 const i18n = createI18n({
-  legacy: false,
   locale:
     localStorage.getItem('lang') ||
     // Detect user's browser language

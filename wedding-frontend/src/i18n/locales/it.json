@@ -39,7 +39,7 @@
 			"email": "Email: {a}",
 			"firstName": "Nome: {a}",
 			"invite": "Invita +1",
-			"language": "Linguaggio:",
+			"language": "Lingua:",
 			"lastNames": "Cognome/i: {a}",
 			"logOut": "Disconnettersi",
 			"plusOne": "+1: {a}",
@@ -55,8 +55,7 @@
 			"pageNotFound": "Pagina non trovata!"
 		},
 		"thenavbar": {
-			"events": "eventi",
-			"gallery": "galleria",
+			"gallery": "Galleria",
 			"home": "Casa",
 			"inbox": "Posta in arrivo",
 			"information": "Informazione",
@@ -69,7 +68,7 @@
 		"hi": "Ciao {a},",
 		"priscillaAndLorenzo": "Priscilla e Lorenzo",
 		"weAreDelighted": "siamo lieti di invitarvi al nostro matrimonio a Roma.\n          La Città Eterna è il luogo in cui ci siamo trovati e ci siamo innamorati e ci piacerebbe che tu ti unissi a noi nella celebrazione!",
-		"welcome": "benvenuto",
+		"welcome": "Benvenuto/a",
 		"withLove": "Con amore,"
 	}
 }

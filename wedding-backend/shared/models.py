@@ -4,11 +4,17 @@ from PIL import Image
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
 
 THUMBNAIL_SIZE = (640, 640)
+I18N = (
+    ('en', _('English')),
+    ('it', _('Italian')),
+    ('es', _('Spanish')),
+)
 
 class Address(models.Model):
     "Model to capture an address from a user"

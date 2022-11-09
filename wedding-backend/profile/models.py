@@ -1,7 +1,8 @@
 "Define abstract models to be used in all apps"
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
+from django.utils.translation import activate
 from django.dispatch import receiver
 from shared.models import Address, I18N
 
@@ -50,7 +51,14 @@ class UserProfile(models.Model):
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
-    
+
+    def save(self, *args, **kwargs):
+        if self.pk is not None:
+            old_profile = UserProfile.objects.get(pk=self.pk)
+            if old_profile.language != self.language:
+                activate(self.language)
+        super().save(*args, **kwargs)
+
     def setup_plus_one(self, first_name, last_name, email):
         if self.user.childs.count() < self.plus:
             user, created = User.objects.get_or_create(

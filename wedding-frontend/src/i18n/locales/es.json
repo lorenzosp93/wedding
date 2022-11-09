@@ -55,13 +55,12 @@
 			"pageNotFound": "¡Página no encontrada!"
 		},
 		"thenavbar": {
-			"events": "Eventos",
 			"gallery": "Galeria",
 			"home": "Casa",
-			"inbox": "bandeja de entrada",
-			"information": "información",
+			"inbox": "Bandeja de entrada",
+			"information": "Información",
 			"openMainMenu": "Abrir menú principal",
-			"priscillaELorenzo": "priscila y lorenzo",
+			"priscillaELorenzo": "Priscila y Lorenzo",
 			"profile": "Perfil"
 		}
 	},

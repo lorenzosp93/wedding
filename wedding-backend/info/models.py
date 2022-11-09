@@ -1,25 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from shared.models import (
     Named, HasPicture, HasContent, HasSubject
 )
 
 INFO_TYPES = (
-    (0, 'Venues'),
-    (1, 'Food'),
-    (2, 'Attractions'),
-    (3, 'Tips'),
-    (4, 'Travel'),
-    (5, 'Events'),
+    (0, _('Venues')),
+    (1, _('Food')),
+    (2, _('Attractions')),
+    (3, _('Tips')),
+    (4, _('Travel')),
+    (5, _('Events')),
 )
 
 PHOTO_TYPES = (
-    (0, 'Ice-breaker'),
-    (1, 'Ceremony'),
-    (2, 'Reception'),
-    (3, 'Dinner'),
-    (4, 'Dance'),
-    (5, 'Before'),
+    (0, _('Ice-breaker')),
+    (1, _('Ceremony')),
+    (2, _('Reception')),
+    (3, _('Dinner')),
+    (4, _('Dance')),
+    (5, _('Before')),
 )
 
 # Create your models here.

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { API_URL, request } from '@/services/api.service'
-import { i18n } from '@/i18n'
+
+const i18n = () => import('@/i18n')
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -23,7 +24,11 @@ export const useAuthStore = defineStore({
                 this.loading = false;
                 localStorage.setItem('profile', JSON.stringify(profile));
                 if (this.profile?.language){
-                    i18n.global.locale.value = this.profile?.language;
+                    i18n().then(
+                        i18n => i18n.global.locale = this.profile?.language
+                    ).finally(
+                        localStorage.setItem('lang', this.profile?.language)
+                    );
                 }
             }).catch(
                 error => {
@@ -58,8 +63,13 @@ export const useAuthStore = defineStore({
                 () => {
                     this.loading = false;
                     localStorage.setItem('profile', JSON.stringify(this.profile));
-                    i18n.locale = this.profile.language;
-                    localStorage.setItem('lang', this.profile.language);
+                    i18n().then(
+                        i18n => {
+                            i18n.default.global.locale = this.profile.language;
+                        }
+                    ).finally(
+                        localStorage.setItem('lang', this.profile.language)
+                    );
                 }
             ).catch(
                 error => {
