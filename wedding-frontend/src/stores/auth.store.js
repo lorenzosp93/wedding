@@ -62,6 +62,8 @@ export const useAuthStore = defineStore({
             ).then(
                 () => {
                     this.loading = false;
+                    localStorage.clear();
+                    localStorage.setItem('token', this.token);
                     localStorage.setItem('profile', JSON.stringify(this.profile));
                     i18n().then(
                         i18n => {

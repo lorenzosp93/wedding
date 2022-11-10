@@ -12,7 +12,7 @@ export const useInfoStore = defineStore({
         infos: JSON.parse(localStorage.getItem('infos') ?? "[]"), 
         loading: false,
         error: null,
-        infosExpiry: JSON.parse(localStorage.getItem('infosExpiry')),
+        infosExpiry: Date.parse(localStorage.getItem('infosExpiry') ?? new Date()),
         activeType: null,
         search: '',
         viewDetail: false,
@@ -80,7 +80,7 @@ export const useInboxStore = defineStore({
         inbox: JSON.parse(localStorage.getItem('inbox') ?? "[]"),
         responses: [],
         error: null,
-        inboxExpiry: JSON.parse(localStorage.getItem('inboxExpiry')),
+        inboxExpiry: Date.parse(localStorage.getItem('inboxExpiry') ?? new Date()),
         active: 0,
         submitLoading: false,
         submitSuccess: false,
@@ -202,7 +202,7 @@ export const useGalleryStore = defineStore({
         loading: false,
         error: null,
         gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]"),
-        galleryExpiry: JSON.parse(localStorage.getItem('galleryExpiry')),
+        galleryExpiry: Date.parse(localStorage.getItem('galleryExpiry') ?? new Date()),
     }),
     actions: {
         async getGalleryContent () {
