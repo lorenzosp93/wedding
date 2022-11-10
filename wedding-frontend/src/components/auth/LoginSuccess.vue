@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral dark:bg-darkNeutral border-2 p-10 m-20 rounded-2xl">
+  <div class="bg-neutral dark:bg-darkNeutral border-2 p-5 mx-3 rounded-2xl">
     <p>{{ $t('auth.loginsuccess.loginWasSuccessful') }}</p>
   </div>
 </template>

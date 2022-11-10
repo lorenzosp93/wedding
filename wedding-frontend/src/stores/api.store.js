@@ -12,7 +12,7 @@ export const useInfoStore = defineStore({
         infos: JSON.parse(localStorage.getItem('infos') ?? "[]"), 
         loading: false,
         error: null,
-        infosExpiry: localStorage.getItem('infosExpiry'),
+        infosExpiry: JSON.parse(localStorage.getItem('infosExpiry')),
         activeType: null,
         search: '',
         viewDetail: false,
@@ -44,22 +44,23 @@ export const useInfoStore = defineStore({
     },
     actions: {
         async getInfo () {
-            if (!this.infos || this.infosExpiry < Date.now()) {
+            if (this.infos.length == 0 || this.infosExpiry < Date.now()) {
                 this.loading = true;
                 apiService.getInfoContent().then(
                     (response) => {
                         this.infos = response.data;
                         this.loading = false;
-                        let now = new Date()
-                        this.infosExpiry = now.setTime(
-                            now.getTime + INFOS_LIFETIME * 60 * 60 * 1000
+                        this.infosExpiry = new Date();
+                        this.infosExpiry.setTime(
+                            this.infosExpiry.getTime() + INFOS_LIFETIME * 60 * 60 * 1000
                         );
-                        this.activeType = this.this.infos.find(info => info)?.type;
+                        this.activeType = this.infos.find(info => info)?.type;
                         localStorage.setItem('infos', JSON.stringify(this.infos));
-                        localStorage.setItem('infosExpiry', this.infosExpiry);
+                        localStorage.setItem('infosExpiry', JSON.stringify(this.infosExpiry));
                     }
                 ).catch(
                     error => {
+                        console.log(error)
                         this.error = error;
                     }
                 );
@@ -76,10 +77,10 @@ export const useInfoStore = defineStore({
 export const useInboxStore = defineStore({
     id: 'inbox',
     state: () => ({
-        inbox: [],
+        inbox: JSON.parse(localStorage.getItem('inbox') ?? "[]"),
         responses: [],
         error: null,
-        inboxExpiry: null,
+        inboxExpiry: JSON.parse(localStorage.getItem('inboxExpiry')),
         active: 0,
         submitLoading: false,
         submitSuccess: false,
@@ -112,10 +113,12 @@ export const useInboxStore = defineStore({
                         this.inbox = response.data;
                         this.responseSetup();
                         this.loading = false;
-                        let now = new Date()
-                        this.inboxExpiry = now.setTime(
-                            now.getTime + INBOX_LIFETIME * 60 * 60 * 1000
+                        this.inboxExpiry = new Date()
+                        this.inboxExpiry.setTime(
+                            this.inboxExpiry.getTime() + INBOX_LIFETIME * 60 * 60 * 1000
                         );
+                        localStorage.setItem('inbox', JSON.stringify(this.inbox));
+                        localStorage.setItem('inboxExpiry', JSON.stringify(this.inboxExpiry));
                     }
                 ).catch(
                     error => {
@@ -198,8 +201,8 @@ export const useGalleryStore = defineStore({
     state: () => ({
         loading: false,
         error: null,
-        gallery: [],
-        galleryExpiry: null,
+        gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]"),
+        galleryExpiry: JSON.parse(localStorage.getItem('galleryExpiry')),
     }),
     actions: {
         async getGalleryContent () {
@@ -207,12 +210,14 @@ export const useGalleryStore = defineStore({
                 this.loading = true;
                 apiService.getGalleryContent().then(
                     (response) => {
-                    this.gallery = response.data;
-                    this.loading = false;
-                    let now = new Date()
-                    this.galleryExpiry = now.setTime(
-                        now.getTime + GALLERY_LIFETIME * 60 * 60 * 1000
-                    );
+                        this.gallery = response.data;
+                        this.loading = false;
+                        this.galleryExpiry = new Date()
+                        this.galleryExpiry.setTime(
+                            this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 60 * 1000
+                        );
+                        localStorage.setItem('gallery', JSON.stringify(this.gallery));
+                        localStorage.setItem('galleryExpiry', JSON.stringify(this.galleryExpiry));
                     }
                 ).catch(
                     error => {

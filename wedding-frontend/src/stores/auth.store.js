@@ -27,7 +27,7 @@ export const useAuthStore = defineStore({
                     i18n().then(
                         i18n => i18n.default.global.locale = this.profile?.language
                     ).finally(
-                        localStorage.setItem('lang', this.profile?.language)
+                    localStorage.setItem('lang', this.profile?.language)
                     );
                 }
             }).catch(

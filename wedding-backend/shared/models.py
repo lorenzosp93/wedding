@@ -224,12 +224,6 @@ class SiteSetting(SingletonBaseModel):
     "Concrete model for the settings for the website"
     about_text = models.TextField()
 
-I18N = (
-    ('en', 'English'),
-    ('it', 'Italiano'),
-    ('es', 'Español'),
-)
-
 
 class ContentString(models.Model):
     """
