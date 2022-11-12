@@ -1,75 +1,74 @@
 {
-  "auth": {
-    "loginpage": {
-      "emailAddress": "Dirección de correo electrónico",
-      "loading": "Cargando",
-      "loginPage": "Página de inicio de sesión",
-      "submit": "Enviar",
-      "thereWasAn": "Hubo un error al enviarte el código de acceso: {a}"
-    },
-    "loginsuccess": {
-      "loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
-    }
-  },
-  "gallery": {
-    "thegallery": {
-      "gallery": "Galeria"
-    }
-  },
-  "inbox": {
-    "theinbox": {
-      "search": "Buscar..."
-    }
-  },
-  "information": {
-    "theinfo": {
-      "search": "Buscar..."
-    }
-  },
-  "profile": {
-    "plusone": {
-      "email": "Email",
-      "firstName": "Nombre",
-      "lastNames": "Apellido(s)",
-      "loading": "Cargando",
-      "submit": "Enviar",
-      "success": "¡Éxito!"
-    },
-    "theprofile": {
-      "email": "Correo electrónico: {a}",
-      "firstName": "Nombre: {a}",
-      "invite": "Invitar +1",
-      "language": "Idioma:",
-      "lastNames": "Apellido(s): {a}",
-      "logOut": "Cerrar sesión",
-      "plusOne": "+1: {a}",
-      "userProfile": "Perfil del usuario",
-      "yourPlusOnes": " Tus +1"
-    }
-  },
-  "shared": {
-    "loadingview": {
-      "loading": "Cargando..."
-    },
-    "notfound": {
-      "pageNotFound": "¡Página no encontrada!"
-    },
-    "thenavbar": {
-      "gallery": "Galeria",
-      "home": "Home",
-      "inbox": "Bandeja de entrada",
-      "information": "Información",
-      "openMainMenu": "Abrir menú principal",
-      "priscillaELorenzo": "Priscila y Lorenzo",
-      "profile": "Perfil",
-      "priscillaAndLorenzo": "Priscilla y Lorenzo"
-    }
-  },
-  "thehome": {
-    "hi": "Hola {a},",
-    "priscillaAndLorenzo": "Priscilla y Lorenzo",
-    "weAreDelighted": "estamos encantados de invitaros a nuestra boda en Roma.\n          La Ciudad Eterna es donde nos encontramos y nos enamoramos, ¡y nos encantaría que te unas a nosotros en la celebración!",
-    "welcome": "Bienvenido",
-    "withLove": "con amor,"
-  }
+	"auth": {
+		"loginpage": {
+			"emailAddress": "Dirección de correo electrónico",
+			"loading": "Cargando",
+			"loginPage": "Página de inicio de sesión",
+			"submit": "Enviar",
+			"thereWasAn": "Hubo un error al enviarte el código de acceso: {a}"
+		},
+		"loginsuccess": {
+			"loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
+		}
+	},
+	"gallery": {
+		"thegallery": {
+			"gallery": "Galeria"
+		}
+	},
+	"profile": {
+		"plusone": {
+			"email": "Email",
+			"firstName": "Nombre",
+			"lastNames": "Apellido(s)",
+			"loading": "Cargando",
+			"submit": "Enviar",
+			"success": "¡Éxito!"
+		},
+		"theprofile": {
+			"email": "Correo electrónico: {a}",
+			"firstName": "Nombre: {a}",
+			"invite": "Invitar +1",
+			"language": "Idioma:",
+			"lastNames": "Apellido(s): {a}",
+			"logOut": "Cerrar sesión",
+			"plusOne": "+1: {a}",
+			"userProfile": "Perfil del usuario",
+			"yourPlusOnes": " Tus +1"
+		}
+	},
+	"shared": {
+		"listview": {
+			"alreadyAnswered": "Ya has respondido a estas preguntas.",
+			"changeResponses": "Cambia tus respuestas",
+			"done": "¡Has terminado por hoy!",
+			"loading": "Cargando",
+			"noMessage": "No se pudo encontrar ningún mensaje que coincida con su búsqueda.",
+			"other": "Otro:",
+			"submit": "Enviar",
+			"success": "Éxito"
+		},
+		"loadingview": {
+			"loading": "Cargando..."
+		},
+		"notfound": {
+			"pageNotFound": "¡Página no encontrada!"
+		},
+		"thenavbar": {
+			"gallery": "Galeria",
+			"home": "Home",
+			"inbox": "Bandeja de entrada",
+			"information": "Información",
+			"openMainMenu": "Abrir menú principal",
+			"priscillaAndLorenzo": "Priscilla y Lorenzo",
+			"profile": "Perfil",
+			"search": "Buscar..."
+		}
+	},
+	"thehome": {
+		"hi": "Hola {a},",
+		"priscillaAndLorenzo": "Priscilla y Lorenzo",
+		"weAreDelighted": "estamos encantados de invitaros a nuestra boda en Roma.\n          La Ciudad Eterna es donde nos encontramos y nos enamoramos, ¡y nos encantaría que te unas a nosotros en la celebración!",
+		"withLove": "con amor,"
+	}
 }

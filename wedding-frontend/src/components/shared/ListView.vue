@@ -3,7 +3,7 @@
     <main class="flex w-full h-full rounded-3xl">
       <section class="flex flex-col w-full min-h-full py-5 md:w-1/3  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
         <label class="px-3">
-          <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('inbox.theinbox.search')" />
+          <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
         <ul class="mt-6">
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" @click="setActive(idx)" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer">
@@ -16,10 +16,10 @@
                 </div>
             </li>
           <div v-if="searchedList?.length == 0 && objList.length">
-            <p> Couldn't find any message that matches your search. </p>
+            <p>{{ $t('shared.listview.noMessage') }}</p>
           </div>
           <div v-if="!objList.length">
-            <p> You're all done for the day! </p>
+            <p>{{ $t('shared.listview.done') }}</p>
           </div>
         </ul>
       </section>
@@ -60,8 +60,8 @@
           <article v-html="activeObject?.content" class="my-3 leading-7 tracking-wider" />
           <form v-if="activeObject?.questions?.length && responses?.length">
             <div v-if="!activeObject?.questions.some(q => !q.response)">
-              <p class="my-5 text-accent" > You have already answered these questions. </p>
-              <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses')"> Change your responses </button>
+              <p class="my-5 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
+              <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses')">{{ $t('shared.listview.changeResponses') }}</button>
             </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
@@ -81,14 +81,14 @@
                 </li>
               </ul>
               <div v-if="question.free_text" class="mb-5">
-                <label for="input" class="ml-3 my-1">Other:</label>
+                <label for="input" class="ml-3 my-1">{{ $t('shared.listview.other') }}</label>
                 <input type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 ml-3" v-model="responses.find(r => r.question == question.uuid).text" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
               </div>
               <p v-if="question.uuid == submitError?.find(e => e.q == question)">{{ submitError?.find(e => e.q == question)?.e }}</p>
             </div>
-            <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('submitResponse', responses)">Submit</button>
-            <p v-if="submitLoading">Loading</p>
-            <p v-if="submitSuccess">Success</p>
+            <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('submitResponse', responses)">{{ $t('shared.listview.submit') }}</button>
+            <p v-if="submitLoading">{{ $t('shared.listview.loading') }}</p>
+            <p v-if="submitSuccess">{{ $t('shared.listview.success') }}</p>
           </form>
         </div>
       </section>
