@@ -61,7 +61,7 @@
       </table>
 
     </div>
-    <button @click="logout" class="rounded-md bg-accent py-1 px-2 ml-auto mr-5">{{ $t('profile.theprofile.logOut') }}</button>
+    <button @click="logout" class="rounded-md bg-secondary dark:bg-darkPale py-1 px-2 ml-auto mr-5">{{ $t('profile.theprofile.logOut') }}</button>
   </div>
 </template>
 
