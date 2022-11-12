@@ -20,7 +20,7 @@
                 <div class="block py-2 pr-4 pl-3 md:p-0 hover:text-accent ">{{ $t('shared.thenavbar.information') }}</div>
                 <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': dropInfo, 'rotate-0': !dropInfo}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
               </div>
-              <ul v-show="dropInfo" class="md:absolute right-0 top-5 pt-2 origin-top-right bg-neutral dark:bg-darkNeutral text-primary flex flex-row z-40">
+              <ul v-show="dropInfo" class="md:absolute right-0 top-5 pt-2 origin-top-right bg-neutral dark:bg-darkNeutral flex flex-row z-40">
                 <li class="block md:flex">
                   <router-link v-for="type in infoTypes" :to="{name: 'info', params: {infoType: type}}" :key="type" @click="{activateType(type); dropInfo = false}" class="pl-5 py-1 text-sm rounded-lg   hover:text-accent child block md:flex" >
                     {{ type }}

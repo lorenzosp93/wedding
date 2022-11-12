@@ -5,7 +5,7 @@
 			"loading": "Cargando",
 			"loginPage": "Página de inicio de sesión",
 			"submit": "Enviar",
-			"thereWasAn": "Hubo un error al enviarte el código de acceso: {a}"
+			"thereWasAn": "Hubo un error al enviarte el código de acceso:"
 		},
 		"loginsuccess": {
 			"loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
@@ -26,13 +26,13 @@
 			"success": "¡Éxito!"
 		},
 		"theprofile": {
-			"email": "Correo electrónico: {a}",
-			"firstName": "Nombre: {a}",
+			"email": "Correo electrónico:",
+			"firstName": "Nombre:",
 			"invite": "Invitar +1",
 			"language": "Idioma:",
-			"lastNames": "Apellido(s): {a}",
+			"lastNames": "Apellido(s):",
 			"logOut": "Cerrar sesión",
-			"plusOne": "+1: {a}",
+			"plusOne": "+1:",
 			"userProfile": "Perfil del usuario",
 			"yourPlusOnes": " Tus +1"
 		}

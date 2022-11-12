@@ -5,7 +5,7 @@
 			"loading": "Caricamento in corso",
 			"loginPage": "Pagina di login",
 			"submit": "Sottoscrivi",
-			"thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso: {a}"
+			"thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:"
 		},
 		"loginsuccess": {
 			"loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta per il tuo link di accesso."
@@ -26,13 +26,13 @@
 			"success": "Successo!"
 		},
 		"theprofile": {
-			"email": "Email: {a}",
-			"firstName": "Nome: {a}",
+			"email": "Email:",
+			"firstName": "Nome:",
 			"invite": "Invita +1",
 			"language": "Lingua:",
-			"lastNames": "Cognome/i: {a}",
+			"lastNames": "Cognome/i:",
 			"logOut": "Disconnettersi",
-			"plusOne": "+1: {a}",
+			"plusOne": "+1:",
 			"userProfile": "Profilo Utente",
 			"yourPlusOnes": " I tuoi +1"
 		}

@@ -5,7 +5,7 @@
 			"loading": "Loading",
 			"loginPage": "Login page",
 			"submit": "Submit",
-			"thereWasAn": "There was an error sending you the access code: {a}"
+			"thereWasAn": "There was an error sending you the access code:"
 		},
 		"loginsuccess": {
 			"loginWasSuccessful": "Login was successful, please check your inbox for your login link."
@@ -26,13 +26,13 @@
 			"success": "Success!"
 		},
 		"theprofile": {
-			"email": "Email: {a}",
-			"firstName": "First name: {a}",
+			"email": "Email:",
+			"firstName": "First name:",
 			"invite": "Invite +1",
 			"language": "Language:",
-			"lastNames": "Last name(s): {a}",
+			"lastNames": "Last name(s):",
 			"logOut": "Log out",
-			"plusOne": "Plus one: {a}",
+			"plusOne": "Plus one:",
 			"userProfile": "User profile",
 			"yourPlusOnes": " Your plus ones "
 		}
