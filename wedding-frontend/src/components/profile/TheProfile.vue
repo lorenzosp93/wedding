@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col">
-    <h1 class="m-3 text-xl font-bold">{{ $t('profile.theprofile.userProfile') }}</h1>
     <div class="mx-auto" v-if="!!profile">
       <h1>{{ $t('profile.theprofile.firstName', { 'a': profile.user?.first_name }) }}</h1>
       <h1>{{ $t('profile.theprofile.lastNames', { 'a': profile.user?.last_name }) }}</h1>

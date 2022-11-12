@@ -1,24 +1,24 @@
 <template>
-  <div class="md:mt-20 w-11/12 mx-auto text-primary dark:text-darkPrimary">
-    <main class="flex w-full h-full shadow-inner rounded-3xl">
+  <div class=" w-11/12 mx-auto text-primary dark:text-darkPrimary">
+    <main class="flex w-full h-full rounded-3xl">
       <section class="flex flex-col w-full min-h-full py-5 md:w-1/3  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
         <label class="px-3">
-          <slot  name="search"></slot>
+          <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('inbox.theinbox.search')" />
         </label>
         <ul class="mt-6">
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" @click="setActive(idx)" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer">
-            <div class="flex justify-between items-center">
-              <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
-              <div class="mr-5 pl-5">
-                <h3 class="text-lg font-semibold">{{ obj?.subject }}</h3>
-                <div class="text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
-              </div>
-            </div>
-          </li>
-          <div v-if="searchedList?.length == 0 && !isListEmpty">
+                <div class="flex justify-between items-center">
+                  <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
+                  <div class="mr-5 pl-5">
+                    <h3 class="text-lg font-semibold">{{ obj?.subject }}</h3>
+                    <div class="text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
+                  </div>
+                </div>
+            </li>
+          <div v-if="searchedList?.length == 0 && objList.length">
             <p>Couldn't find any message that matches your search.</p>
           </div>
-          <div v-if="isListEmpty">
+          <div v-if="!objList.length">
             <p>You're all done for the day!</p>
           </div>
         </ul>
@@ -54,15 +54,14 @@
           </div>
         </div>
         <div>
-          <div v-if="activeObject?.picture" class="w-full px-5 rounded-lg shadow-md">
-            <img :src="activeObject?.picture" alt="Information article picture" >
+          <div v-if="activeObject?.picture" class="w-full">
+            <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
           </div>
-          <article v-html="activeObject?.content" class="my-3 leading-7 tracking-wider">
-          </article>
-          <form v-if="activeObject?.questions?.length && responses">
+          <article v-html="activeObject?.content" class="my-3 leading-7 tracking-wider" />
+          <form v-if="activeObject?.questions?.length && responses?.length">
             <div v-if="!activeObject?.questions.some(q => !q.response)">
               <p class="my-5 text-accent" >You have already answered these questions.</p>
-              <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="deleteResponses">Change your responses</button>
+              <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses')">Change your responses</button>
             </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
@@ -87,7 +86,7 @@
               </div>
               <p v-if="question.uuid == submitError?.find(e => e.q == question)">{{ submitError?.find(e => e.q == question)?.e }}</p>
             </div>
-            <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="submitResponse">Submit</button>
+            <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('submitResponse', responses)">Submit</button>
             <p v-if="submitLoading">Loading</p>
             <p v-if="submitSuccess">Success</p>
           </form>
@@ -97,89 +96,114 @@
   </div>
 </template>
   
-  <script>
-  export default {
-    name: 'ListView',
-    data () {
-      return {
-        active: 0,
-        viewDetail: false,
-        responses: null,
-      };
-    },
-    props: [
-      'searchedList',
-      'isListEmpty',
-      'activeObject',
-      'loading',
-      'error',
-      'submitLoading',
-      'submitError',
-      'submitSuccess',
-      'responsesInit'
-    ],
-    watch: {
-      responsesInit (newVal) {
-        this.responses = newVal;
-      },
-    },
-    methods: {
-      setActive(n){
-        this.$router.push(
-          {
-            name: this.$route.name,
-            params: {active: `${n}`},
-          }
-        )
-        this.active = n;
-        this.viewDetail = true;
-        this.$emit('active', this.active);
-      },
-      submitResponse () {
-        this.$emit('submitResponse', this.responses);
-      },
-      deleteResponses () {
-        this.$emit('deleteResponses');
-      },
-      removeHtml (value) {
-      const div = document.createElement('div')
-      div.innerHTML = value
-      const text = div.textContent || div.innerText || ''
-      return text
-      },
-      truncate (value, length) {
-      if (!value) return "";
-      value = value.toString();
-      if (value.length > length) {
-          return value.substring(0, length) + "...";
-      } else {
-          return value;
-      }
-      },
-      formattedDate (date) {
-      date = new Date(date);
-      const yyyy = date.getYear() + 1900;
-      const mm = date.getMonth() + 1;
-      const dd = date.getDate();
-      return `${yyyy}.${mm}.${dd}`
-      },
-      hideDetail () {
-        this.viewDetail = false;
-        this.$router.push({name: this.$route.name})
-      },
-    },
-    mounted () {
-      this.viewDetail = !!this.$route.params.active;
-      if (this.viewDetail) {
-        let parseActive = parseInt(this.$route.params.active);
-        if (Number.isSafeInteger(parseActive)) {
-          this.setActive(parseInt(this.$route.params.active));
+<script>
+export default {
+  name: 'ListView',
+  data () {
+    return {
+      active: 0,
+      viewDetail: false,
+      responses: JSON.parse(localStorage.getItem('responses') ?? "[]"),
+      search: '',
+    };
+  },
+  props: [
+    'objList',
+    'loading',
+    'error',
+    'submitLoading',
+    'submitError',
+    'submitSuccess',
+    'deleteLoading',
+    'deleteError',
+    'deleteSuccess',
+  ],
+  computed: {
+    searchedList () {
+        if (!this.search) {
+            return this.objList
         }
-      }
+        return this.objList.filter(obj => {
+            return (obj?.subject + obj?.content).toLowerCase()
+            .search(this.search.toLowerCase()) != -1
+        })
     },
+    activeObject () {
+      return this.objList ? this.objList[this.active] : null
+    },
+  },
+  watch: {
+    objList() {
+      this.responseSetup();
+    },
+  },
+  methods: {
+    setActive(n){
+      this.$router.push(
+        {
+          name: this.$route.name,
+          params: {...this.$route.params, active: `${n}`},
+        }
+      )
+      this.active = n;
+      this.viewDetail = true;
+    },
+    removeHtml (value) {
+    const div = document.createElement('div')
+    div.innerHTML = value
+    const text = div.textContent || div.innerText || ''
+    return text
+    },
+    truncate (value, length) {
+    if (!value) return "";
+    value = value.toString();
+    if (value.length > length) {
+        return value.substring(0, length) + "...";
+    } else {
+        return value;
+    }
+    },
+    formattedDate (date) {
+    date = new Date(date);
+    const yyyy = date.getYear() + 1900;
+    const mm = date.getMonth() + 1;
+    const dd = date.getDate();
+    return `${yyyy}.${mm}.${dd}`
+    },
+    hideDetail () {
+      this.viewDetail = false;
+      this.$router.push({name: this.$route.name, params: {...this.$route.params}})
+    },
+    responseSetup () {
+      this.responses = [];
+      this.objList.forEach(obj => {
+        if (obj.questions?.length){
+          obj.questions.forEach(question => {
+              this.responses = [...this.responses, {
+              question: question.uuid,
+              option: question?.response?.option ?? (question.multi_select ? [] : null),
+              text: question?.response?.text ?? '',
+              }]
+          })
+        }
+      })
+    },
+  },
+  mounted () {
+    this.viewDetail = !!this.$route.params.active;
+    if (this.viewDetail) {
+      let parseActive = parseInt(this.$route.params.active);
+      if (Number.isSafeInteger(parseActive)) {
+        this.setActive(parseInt(this.$route.params.active));
+      }
+    }
+  },
+  beforeUnmount () {
+    localStorage.setItem('responses', JSON.stringify(this.responses));
   }
-  </script>
-  
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
-  </style>
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+</style>

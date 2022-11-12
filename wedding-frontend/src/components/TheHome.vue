@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col mx-auto max-w-2xl">
-    <h1 class="text-xl mx-3 my-3 font-extrabold">{{ $t('thehome.welcome') }}</h1>
     <div class="max-w-xl mx-auto">
       <div class="max-w-xl my-3 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale ring-1 ring-accent shadow-md">
         <p class="mx-auto mt-2">{{ $t('thehome.hi', { 'a': profile?.user.first_name }) }}</p>

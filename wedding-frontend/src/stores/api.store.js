@@ -2,7 +2,6 @@ import apiService from '@/services/api.service';
 import { defineStore } from 'pinia';
 
 const INFOS_LIFETIME = 60 // minutes
-const INBOX_LIFETIME = 30 // minutes
 const GALLERY_LIFETIME = 60 // minutes
 
 export const useInfoStore = defineStore({
@@ -14,18 +13,12 @@ export const useInfoStore = defineStore({
         error: null,
         infosExpiry: Date.parse(localStorage.getItem('infosExpiry') ?? new Date()),
         activeType: null,
-        search: '',
-        viewDetail: false,
-        active: 0,
     }),
     getters: {
         infosActiveType: (state) => {
             return state.infos.filter(info => {
                 return (
-                    (info.type == state.activeType)
-                    && 
-                    ((info.subject + info.content).toLowerCase()
-                    .search(state.search.toLowerCase()) != -1)
+                    info.type == state.activeType
                 )
             })
         },
@@ -37,9 +30,6 @@ export const useInfoStore = defineStore({
                 }
             })
             return infoTypes
-        },
-        activeInfo: (state) => {
-            return state.infosActiveType[state.active]
         },
     },
     actions: {
@@ -67,7 +57,6 @@ export const useInfoStore = defineStore({
             }
         },
         activateType (type) {
-            this.active = 0;
             this.activeType = type;
         },
 
@@ -77,48 +66,25 @@ export const useInfoStore = defineStore({
 export const useInboxStore = defineStore({
     id: 'inbox',
     state: () => ({
-        inbox: JSON.parse(localStorage.getItem('inbox') ?? "[]"),
+        inbox: [],
         responses: [],
         error: null,
-        inboxExpiry: Date.parse(localStorage.getItem('inboxExpiry') ?? new Date()),
-        active: 0,
         submitLoading: false,
         submitSuccess: false,
         submitError: null,
-        search: '',
         deleteLoading: false,
         deleteSuccess: false,
         deleteError: null,
     }),
-    getters: {
-        activeMessage: (state) => {
-            return state.inbox ? state.inbox[state.active] : null
-        },
-        searchedInbox: (state) => {
-            if (!state.search) {
-                return state.inbox
-            }
-            return state.inbox.filter(message => {
-                return (message.subject + message.content).toLowerCase()
-                .search(state.search.toLowerCase()) != -1
-            })
-        }
-    },
     actions: {
-        async getInbox(force=false) {
-            if(this.inbox.length == 0 | force | this.inboxExpiry < Date.now()){
+        async getInbox() {
+            if(this.inbox.length == 0){
                 this.loading = true;
                 apiService.getInboxContent().then(
                     (response) => {
                         this.inbox = response.data;
                         this.responseSetup();
                         this.loading = false;
-                        this.inboxExpiry = new Date()
-                        this.inboxExpiry.setTime(
-                            this.inboxExpiry.getTime() + INBOX_LIFETIME * 60 * 60 * 1000
-                        );
-                        localStorage.setItem('inbox', JSON.stringify(this.inbox));
-                        localStorage.setItem('inboxExpiry', JSON.stringify(this.inboxExpiry));
                     }
                 ).catch(
                     error => {
@@ -127,23 +93,9 @@ export const useInboxStore = defineStore({
                 )
             }
         },
-        async responseSetup () {
-            this.responses = [],
-            this.inbox.forEach(message => {
-                if (message.questions.length){
-                message.questions.forEach(question => {
-                    this.responses = [...this.responses, {
-                    question: question.uuid,
-                    option: question?.response?.option ?? (question.multi_select ? [] : null),
-                    text: question?.response?.text ?? '',
-                    }]
-                })
-                }
-            })
-        },
-        async submitResponse () {
+        async submitResponse (responses) {
             this.submitLoading = true;
-            const out = this.responses.some(
+            const out = responses.some(
                 response => {
                     if(this.activeMessage.questions.some(q => q.uuid == response.question && !q.response)){
                         apiService.postInboxResponse(
@@ -152,7 +104,7 @@ export const useInboxStore = defineStore({
                             response.text,
                         ).then(
                             () => {
-                                this.getInbox(true);
+                                this.getInbox();
                                 return false;
                             }
                         ).catch(
@@ -177,7 +129,7 @@ export const useInboxStore = defineStore({
                         question.response.uuid
                     ).then(
                         () => {
-                            this.getInbox(true);
+                            this.getInbox();
                             return false;
                         }
                     ).catch(

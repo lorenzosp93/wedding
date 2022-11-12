@@ -11,9 +11,17 @@
             "type": "chrome",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}/wedding-frontend/src",
+            "pathMapping": {
+                "/_karma_webpack_": "${workspaceFolder}"
+              },
             "sourceMapPathOverrides": {
-                "webpack:///src/*": "${webRoot}/*"
-            }
+                "webpack:///src/*": "${webRoot}/*",
+                "/./*": "${webRoot}/*",
+                "/src/*": "${webRoot}/*",
+                "/*": "*",
+                "/./~/*": "${webRoot}/node_modules/*"
+            },
+            "preLaunchTask": "vuejs: start"
         },
         {
             "name": "Python: Django",

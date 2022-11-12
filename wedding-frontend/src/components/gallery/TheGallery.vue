@@ -1,6 +1,5 @@
 <template>
   <div class="">
-    <h1 class="text-xl my-5 mx-3 font-bold">{{ $t('gallery.thegallery.gallery') }}</h1> 
     <div class="flex flex-wrap m-3 p-5 bg-pale dark:bg-darkPale rounded-md border-accent border">
       <img class="mx-auto my-5 max-w-[160px] shadow-md cursor-pointer" v-for="photo in gallery" :src="photo.thumbnail" alt="Picture thumbnail" :key="photo.id" @click="activePhoto = photo">
       <div v-if="activePhoto" class="fixed top-0 left-0 w-screen h-screen">

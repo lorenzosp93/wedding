@@ -1,10 +1,7 @@
 <template>
   <div>
     <list-view
-      :searchedList="searchedInbox"
-      :isListEmpty="inbox.length == 0"
-      :activeObject="activeMessage"
-      :responsesInit="responses"
+      :objList="inbox"
       :loading="inboxLoading"
       :error="error"
       :submitLoading="submitLoading"
@@ -13,12 +10,10 @@
       :deleteLoading="deleteLoading"
       :deleteError="deleteError"
       :deleteSuccess="deleteSuccess"
-      @active="(n) => active = n"
-      @submitResponse="callSubmitResponse"
+      @submitResponse="submitResponse"
       @deleteResponses="deleteResponses"
     >
     <template v-slot:search>
-      <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('inbox.theinbox.search')" />
     </template>
     </list-view>
   </div>
@@ -26,7 +21,7 @@
 
 <script>
 import { useInboxStore } from '@/stores/api.store'
-import { mapActions, mapState, mapWritableState } from 'pinia'
+import { mapActions, mapState} from 'pinia'
 import ListView from '@/components/shared/ListView'
 
 export default {
@@ -41,8 +36,6 @@ export default {
   computed: {
     ...mapState(useInboxStore, [
       'inbox',
-      'activeMessage',
-      'searchedInbox',
       'inboxLoading',
       'error',
       'submitLoading',
@@ -52,11 +45,6 @@ export default {
       'deleteSuccess',
       'deleteError',
     ]),
-    ...mapWritableState(useInboxStore, [
-      'responses',
-      'search',
-      'active',
-    ]),
   },
   methods: {
     ...mapActions(useInboxStore, [
@@ -64,10 +52,6 @@ export default {
       'submitResponse',
       'deleteResponses',
     ]),
-    callSubmitResponse (responses) {
-      this.responses = responses;
-      this.submitResponse();
-    },
   },
   mounted () {
     this.getInbox();

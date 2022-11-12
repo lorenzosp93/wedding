@@ -51,6 +51,14 @@
 			"node": {
 				"package": "${workspaceFolder}/wedding-frontend/package.json"
 			}
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "wedding-frontend",
+			"label": "vuejs: start",
+			"detail": "vue-cli-service serve",
+			"isBackground": true
 		}
 	]
 }
