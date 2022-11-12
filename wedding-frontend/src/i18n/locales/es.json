@@ -46,7 +46,8 @@
 			"noMessage": "No se pudo encontrar ningún mensaje que coincida con su búsqueda.",
 			"other": "Otro:",
 			"submit": "Enviar",
-			"success": "Éxito"
+			"success": "Éxito",
+			"search": "Buscar..."
 		},
 		"loadingview": {
 			"loading": "Cargando..."
@@ -62,7 +63,6 @@
 			"openMainMenu": "Abrir menú principal",
 			"priscillaAndLorenzo": "Priscilla y Lorenzo",
 			"profile": "Perfil",
-			"search": "Buscar..."
 		}
 	},
 	"thehome": {
