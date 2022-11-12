@@ -1,74 +1,74 @@
 {
-	"auth": {
-		"loginpage": {
-			"emailAddress": "indirizzo email",
-			"loading": "Caricamento in corso",
-			"loginPage": "Pagina di login",
-			"submit": "Sottoscrivi",
-			"thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso: {a}"
-		},
-		"loginsuccess": {
-			"loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta per il tuo link di accesso."
-		}
-	},
-	"gallery": {
-		"thegallery": {
-			"gallery": "galleria"
-		}
-	},
-	"inbox": {
-		"theinbox": {
-			"search": "Ricerca..."
-		}
-	},
-	"information": {
-		"theinfo": {
-			"search": "Ricerca..."
-		}
-	},
-	"profile": {
-		"plusone": {
-			"email": "E-mail",
-			"firstName": "Nome",
-			"lastNames": "Cognome/i",
-			"loading": "Caricamento in corso",
-			"submit": "Inviare",
-			"success": "Successo!"
-		},
-		"theprofile": {
-			"email": "Email: {a}",
-			"firstName": "Nome: {a}",
-			"invite": "Invita +1",
-			"language": "Lingua:",
-			"lastNames": "Cognome/i: {a}",
-			"logOut": "Disconnettersi",
-			"plusOne": "+1: {a}",
-			"userProfile": "Profilo Utente",
-			"yourPlusOnes": " I tuoi +1"
-		}
-	},
-	"shared": {
-		"loadingview": {
-			"loading": "Caricamento in corso..."
-		},
-		"notfound": {
-			"pageNotFound": "Pagina non trovata!"
-		},
-		"thenavbar": {
-			"gallery": "Galleria",
-			"home": "Casa",
-			"inbox": "Posta in arrivo",
-			"information": "Informazioni",
-			"openMainMenu": "Apri il menu principale",
-			"priscillaELorenzo": "Priscilla e Lorenzo",
-			"profile": "Profilo"
-		}
-	},
-	"thehome": {
-		"hi": "Ciao {a},",
-		"priscillaAndLorenzo": "Priscilla e Lorenzo",
-		"weAreDelighted": "siamo lieti di invitarvi al nostro matrimonio a Roma.\n          La Città Eterna è il luogo in cui ci siamo trovati e ci siamo innamorati e ci piacerebbe che tu ti unissi a noi nella celebrazione!",
-		"welcome": "Benvenuto/a",
-		"withLove": "Con amore,"
-	}
+  "auth": {
+    "loginpage": {
+      "emailAddress": "indirizzo email",
+      "loading": "Caricamento in corso",
+      "loginPage": "Pagina di login",
+      "submit": "Sottoscrivi",
+      "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso: {a}"
+    },
+    "loginsuccess": {
+      "loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta per il tuo link di accesso."
+    }
+  },
+  "gallery": {
+    "thegallery": {
+      "gallery": "galleria"
+    }
+  },
+  "inbox": {
+    "theinbox": {
+      "search": "Ricerca..."
+    }
+  },
+  "information": {
+    "theinfo": {
+      "search": "Ricerca..."
+    }
+  },
+  "profile": {
+    "plusone": {
+      "email": "E-mail",
+      "firstName": "Nome",
+      "lastNames": "Cognome/i",
+      "loading": "Caricamento in corso",
+      "submit": "Inviare",
+      "success": "Successo!"
+    },
+    "theprofile": {
+      "email": "Email: {a}",
+      "firstName": "Nome: {a}",
+      "invite": "Invita +1",
+      "language": "Lingua:",
+      "lastNames": "Cognome/i: {a}",
+      "logOut": "Disconnettersi",
+      "plusOne": "+1: {a}",
+      "userProfile": "Profilo Utente",
+      "yourPlusOnes": " I tuoi +1"
+    }
+  },
+  "shared": {
+    "loadingview": {
+      "loading": "Caricamento in corso..."
+    },
+    "notfound": {
+      "pageNotFound": "Pagina non trovata!"
+    },
+    "thenavbar": {
+      "gallery": "Galleria",
+      "home": "Home",
+      "inbox": "Posta in arrivo",
+      "information": "Informazioni",
+      "openMainMenu": "Apri il menu principale",
+      "profile": "Profilo",
+      "priscillaAndLorenzo": "Priscilla e Lorenzo"
+    }
+  },
+  "thehome": {
+    "hi": "Ciao {a},",
+    "priscillaAndLorenzo": "Priscilla e Lorenzo",
+    "weAreDelighted": "siamo lieti di invitarti al nostro matrimonio a Roma.\n          La Città Eterna è il luogo in cui ci siamo trovati e ci siamo innamorati e ci piacerebbe che tu ti unissi a noi nella celebrazione!",
+    "welcome": "Benvenuto/a",
+    "withLove": "Con amore,"
+  }
 }

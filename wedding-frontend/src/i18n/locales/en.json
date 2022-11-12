@@ -1,74 +1,75 @@
 {
-	"auth": {
-		"loginpage": {
-			"emailAddress": "Email address",
-			"loading": "Loading",
-			"loginPage": "Login page",
-			"submit": "Submit",
-			"thereWasAn": "There was an error sending you the access code: {a}"
-		},
-		"loginsuccess": {
-			"loginWasSuccessful": "Login was successful, please check your inbox for your login link."
-		}
-	},
-	"gallery": {
-		"thegallery": {
-			"gallery": "Gallery"
-		}
-	},
-	"inbox": {
-		"theinbox": {
-			"search": "Search..."
-		}
-	},
-	"information": {
-		"theinfo": {
-			"search": "Search..."
-		}
-	},
-	"profile": {
-		"plusone": {
-			"email": "Email",
-			"firstName": "First Name",
-			"lastNames": "Last Name(s)",
-			"loading": "Loading",
-			"submit": "Submit",
-			"success": "Success!"
-		},
-		"theprofile": {
-			"email": "Email: {a}",
-			"firstName": "First name: {a}",
-			"invite": "Invite +1",
-			"language": "Language:",
-			"lastNames": "Last name(s): {a}",
-			"logOut": "Log out",
-			"plusOne": "Plus one: {a}",
-			"userProfile": "User profile",
-			"yourPlusOnes": " Your plus ones "
-		}
-	},
-	"shared": {
-		"loadingview": {
-			"loading": "Loading..."
-		},
-		"notfound": {
-			"pageNotFound": "Page not found!"
-		},
-		"thenavbar": {
-			"gallery": "Gallery",
-			"home": "Home",
-			"inbox": "Inbox",
-			"information": "Information",
-			"openMainMenu": "Open main menu",
-			"priscillaELorenzo": "Priscilla & Lorenzo",
-			"profile": "Profile"
-		}
-	},
-	"thehome": {
-		"hi": "Hi {a},",
-		"priscillaAndLorenzo": "Priscilla and Lorenzo",
-		"weAreDelighted": "we are delighted to invite you to our wedding in Rome.\n          The Eternal City is where we found each other and fell in love, and we would love to have you join us in the celebration!",
-		"welcome": "Welcome",
-		"withLove": "with love,"
-	}
+  "auth": {
+    "loginpage": {
+      "emailAddress": "Email address",
+      "loading": "Loading",
+      "loginPage": "Login page",
+      "submit": "Submit",
+      "thereWasAn": "There was an error sending you the access code: {a}"
+    },
+    "loginsuccess": {
+      "loginWasSuccessful": "Login was successful, please check your inbox for your login link."
+    }
+  },
+  "gallery": {
+    "thegallery": {
+      "gallery": "Gallery"
+    }
+  },
+  "inbox": {
+    "theinbox": {
+      "search": "Search..."
+    }
+  },
+  "information": {
+    "theinfo": {
+      "search": "Search..."
+    }
+  },
+  "profile": {
+    "plusone": {
+      "email": "Email",
+      "firstName": "First Name",
+      "lastNames": "Last Name(s)",
+      "loading": "Loading",
+      "submit": "Submit",
+      "success": "Success!"
+    },
+    "theprofile": {
+      "email": "Email: {a}",
+      "firstName": "First name: {a}",
+      "invite": "Invite +1",
+      "language": "Language:",
+      "lastNames": "Last name(s): {a}",
+      "logOut": "Log out",
+      "plusOne": "Plus one: {a}",
+      "userProfile": "User profile",
+      "yourPlusOnes": " Your plus ones "
+    }
+  },
+  "shared": {
+    "loadingview": {
+      "loading": "Loading..."
+    },
+    "notfound": {
+      "pageNotFound": "Page not found!"
+    },
+    "thenavbar": {
+      "gallery": "Gallery",
+      "home": "Home",
+      "inbox": "Inbox",
+      "information": "Information",
+      "openMainMenu": "Open main menu",
+      "priscillaELorenzo": "Priscilla & Lorenzo",
+      "profile": "Profile",
+      "priscillaAndLorenzo": "Priscilla and Lorenzo"
+    }
+  },
+  "thehome": {
+    "hi": "Hi {a},",
+    "priscillaAndLorenzo": "Priscilla and Lorenzo",
+    "weAreDelighted": "we are delighted to invite you to our wedding in Rome.\n          The Eternal City is where we found each other and fell in love, and we would love to have you join us in the celebration!",
+    "welcome": "Welcome",
+    "withLove": "with love,"
+  }
 }

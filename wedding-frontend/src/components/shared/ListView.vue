@@ -16,10 +16,10 @@
                 </div>
             </li>
           <div v-if="searchedList?.length == 0 && objList.length">
-            <p>Couldn't find any message that matches your search.</p>
+            <p> Couldn't find any message that matches your search. </p>
           </div>
           <div v-if="!objList.length">
-            <p>You're all done for the day!</p>
+            <p> You're all done for the day! </p>
           </div>
         </ul>
       </section>
@@ -60,8 +60,8 @@
           <article v-html="activeObject?.content" class="my-3 leading-7 tracking-wider" />
           <form v-if="activeObject?.questions?.length && responses?.length">
             <div v-if="!activeObject?.questions.some(q => !q.response)">
-              <p class="my-5 text-accent" >You have already answered these questions.</p>
-              <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses')">Change your responses</button>
+              <p class="my-5 text-accent" > You have already answered these questions. </p>
+              <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses')"> Change your responses </button>
             </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
@@ -92,10 +92,10 @@
           </form>
         </div>
       </section>
-    </main> 
-  </div>
+    </main>
+  </div> 
 </template>
-  
+
 <script>
 export default {
   name: 'ListView',
