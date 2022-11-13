@@ -26,11 +26,14 @@
               </form>
             </td>
           </tr>
-          <tr>
+          <tr v-if="profile?.plus">
             <td>{{ $t('profile.theprofile.plusOne', ) }}</td>
-            <td class="flex"> <p class="my-auto">{{ profile?.plus ?? 0 }} </p>
-              <button v-if="profile?.plus - profile?.childs?.length" @click="togglePlusOne" class="rounded-md bg-secondary py-1 px-2 mr-2 ml-auto">{{ $t('profile.theprofile.invite') }} </button>
-              <plus-one :toggle="togglePlusOne" v-if="showPlusOne" />
+            <td class="flex w-full"> 
+              <p class="my-auto ml-auto">{{ profile.plus }} </p>
+              <div v-if="profile?.plus - profile?.childs?.length" class="ml-auto mr-2">
+                <button  @click="togglePlusOne" class="rounded-md bg-secondary py-1 px-2">{{ $t('profile.theprofile.invite') }} </button>
+                <plus-one :toggle="togglePlusOne" v-if="showPlusOne" />
+              </div>
             </td>
           </tr>
           <tr v-if="profile.childs.length">
@@ -61,7 +64,7 @@
       </table>
 
     </div>
-    <button @click="logout" class="rounded-md bg-secondary dark:bg-darkPale py-1 px-2 ml-auto mr-5">{{ $t('profile.theprofile.logOut') }}</button>
+    <button @click="logout" class="rounded-md bg-secondary dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3">{{ $t('profile.theprofile.logOut') }}</button>
   </div>
 </template>
 
@@ -100,7 +103,7 @@ tr:not(:last-child), th {
   @apply border-b;
 };
 td {
-  @apply py-3 pr-5 text-right;
+  @apply py-3 pr-5 text-right pl-3;
 };
 td:first-child {
   @apply font-bold text-left pr-5;

@@ -5,6 +5,7 @@ import { createApp } from 'vue'
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import App from './App.vue'
 import './index.css'
 const pinia = createPinia()
@@ -19,6 +20,7 @@ const myApp = createApp(App)
   .use(i18n);
 
 
+gsap.registerPlugin(ScrollTrigger);
 myApp.config.globalProperties.$gsap = gsap;
 
 myApp.mount('#app');

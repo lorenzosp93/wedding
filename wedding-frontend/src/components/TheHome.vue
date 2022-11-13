@@ -6,7 +6,12 @@
         <p class="mx-auto mt-2 font-thin">{{ $t('thehome.weAreDelighted') }}</p>
         <p class="mx-auto mt-2 font-thin">{{ $t('thehome.withLove') }}</p>
         <p class="mx-auto mt-2 font-thin">{{ $t('thehome.priscillaAndLorenzo') }}</p>
-    </div>
+      </div>
+      <div class="flex w-fit mx-auto mt-8 bg-accent px-2 py-1 rounded-md">
+        <router-link :to="{name: 'invitation'}" class="" >
+          Open your invitation!
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

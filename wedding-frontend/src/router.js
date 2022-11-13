@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores';
 
-import TheLanding from './components/auth/TheLanding.vue'
+import TheLanding from './components/TheInvitation.vue'
 import LoginPage from './components/auth/LoginPage.vue'
 
 // Lazy load
 const LoginSuccess = () => import('./components/auth/LoginSuccess.vue')
 const TheHome = () => import('./components/TheHome.vue')
+const TheInvitation = () => import('./components/TheInvitation.vue')
 const TheNavbar = () => import('./components/shared/TheNavbar.vue')
 const TheInbox = () => import('./components/inbox/TheInbox.vue')
 const TheInfo = () => import('./components/information/TheInfo.vue')
@@ -21,6 +22,7 @@ const router = createRouter({
         {name: 'login', path: '/login', component: LoginPage},
         {name: 'login-success', path: '/login/success', component: LoginSuccess},
         {name: 'home', path: '/', components: {default: TheHome, TheNavbar}, },
+        {name: 'invitation', path: '/invitation', components: {default: TheInvitation, TheNavbar}, },
         {name: 'inbox', path: '/inbox/:active?', components: {default: TheInbox, TheNavbar}, },
         {name: 'info', path: '/info/:infoType?/:active?', components: {default: TheInfo, TheNavbar}, },
         {name: 'gallery', path: '/gallery', components: {default: TheGallery, TheNavbar}, },
