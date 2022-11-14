@@ -3,33 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "vite preview",
+    "build": "vite build",
+    "dev": "vite",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "format": "prettier .  --write"
   },
   "dependencies": {
+    "@vitejs/plugin-vue": "^1.6.1",
     "axios": "^1.1.2",
-    "core-js": "^3.8.3",
     "gsap": "^3.10.3",
     "pinia": "^2.0.23",
+    "vite": "^2.5.4",
     "vue": "^3.2.13",
     "vue-axios": "^3.4.1",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.5",
-    "vue-translation-manager": "^1.2.0",
-    "vuex": "^4.0.2"
+    "vue-translation-manager": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
+    "@intlify/vite-plugin-vue-i18n": "^6.0.3",
     "@tailwindcss/forms": "^0.5.3",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
     "autoprefixer": "^10.4.4",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-vue": "^8.7.1",
     "postcss": "^8.4.12",
+    "prettier": "^2.7.1",
     "tailwindcss": "^3.0.23",
     "vue-cli-plugin-compression": "~2.0.0"
   },
@@ -42,9 +42,7 @@
       "plugin:vue/vue3-essential",
       "eslint:recommended"
     ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
+    "parserOptions": {},
     "rules": {}
   },
   "browserslist": [

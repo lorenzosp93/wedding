@@ -1,7 +1,7 @@
 <template>
   <div>
     <list-view
-      :objList="infosActiveType"
+      :obj-list="infosActiveType"
       :loading="loading"
       :error="error"
     />
@@ -11,16 +11,16 @@
 <script>
 import { mapActions, mapState} from 'pinia';
 import { useInfoStore } from '@/stores/api.store';
-import ListView from '@/components/shared/ListView';
+import ListView from '@/components/shared/ListView.vue';
 
 export default {
   name: 'TheInfo',
+  components: {
+    ListView
+  },
   data () {
     return {
     }
-  },
-  components: {
-    ListView
   },
   computed: {
     ...mapState(useInfoStore, [

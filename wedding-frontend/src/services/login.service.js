@@ -1,7 +1,7 @@
 import router from '@/router';
 import axios from 'axios';
 
-const API_URL = process.env.VUE_APP_BACKEND_URL;
+const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
 
 class LoginService {
   login(email) {

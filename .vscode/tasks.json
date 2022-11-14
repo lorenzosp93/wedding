@@ -3,11 +3,11 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "serve",
+			"script": "dev",
 			"path": "wedding-frontend/",
 			"problemMatcher": [],
 			"label": "npm: serve - wedding-frontend",
-			"detail": "vue-cli-service serve"
+			"detail": "vite dev"
 		},
 		{
 			"type": "docker-build",

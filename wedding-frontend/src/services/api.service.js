@@ -2,8 +2,7 @@ import axios from 'axios';
 import authHeader from './authheader';
 import { useAuthStore } from '@/stores';
 
-export const API_URL = process.env.VUE_APP_BACKEND_URL;
-
+export const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
 export function getCSRFHeader() {
     const token = request().get(
       API_URL + '/api/shared/get-token/'

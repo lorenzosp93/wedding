@@ -50,6 +50,7 @@ export const useInfoStore = defineStore({
                     }
                 ).catch(
                     error => {
+                        this.loading = false;
                         console.log(error)
                         this.error = error;
                     }
@@ -89,6 +90,7 @@ export const useInboxStore = defineStore({
                     }
                 ).catch(
                     error => {
+                        this.inboxLoading = false;
                         this.error = error;
                     }
                 )

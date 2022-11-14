@@ -5,8 +5,8 @@
       <form class="flex flex-col">
         <label class="block mx-auto my-1" for="email_input">{{ $t('auth.loginpage.emailAddress') }}</label>
         <p v-if="error?.email" class="text-alert font-bold text-sm mx-auto pb-1">{{ error.email[0] }}</p>
-        <input v-model="email" class="block bg-neutral dark:bg-darkNeutral rounded-md mx-auto px-2 w-full max-w-xs" id="email_input" type="email">
-        <button v-if="!loading" @click.prevent="handleLogin(email)" class="flex border-2 border-white mx-auto my-4 px-2 py-1 rounded-lg bg-neutral dark:bg-darkNeutral" type="submit">{{ $t('auth.loginpage.submit') }}</button>
+        <input id="email_input" v-model="email" class="block bg-neutral dark:bg-darkNeutral rounded-md mx-auto px-2 w-full max-w-xs" type="email">
+        <button v-if="!loading" class="flex border-2 border-white mx-auto my-4 px-2 py-1 rounded-lg bg-neutral dark:bg-darkNeutral" type="submit" @click.prevent="handleLogin(email)">{{ $t('auth.loginpage.submit') }}</button>
         <div v-if="loading" class="relative w-10 h-10 my-1 mx-auto">
           <loading-view >{{ $t('auth.loginpage.loading') }}</loading-view>
         </div>
@@ -18,7 +18,7 @@
 
 <script>
 import LoginService from '@/services/login.service'
-import LoadingView from '@/components/shared/LoadingView';
+import LoadingView from '@/components/shared/LoadingView.vue';
 
 export default {
 name: 'LoginPage',
@@ -32,28 +32,18 @@ data () {
     error: null,
   }
 },
-props: {
-},
-emits: [
-],
-inject: [
-],
 computed: {
 },
 methods: {
   handleLogin(email) {
     this.loading = true;
     LoginService.login(email)
-    .catch(
-      (error) => {
+    .catch((error) => {
         this.loading = false;
         this.error = error.response?.data ?? "Unable to return response";
-      }
-    )
-  }
-},
-mounted () {
-}
+      })
+    }
+  },
 }
 </script>
 

@@ -7,27 +7,27 @@
           <title>envelope</title>
           <defs>
               <polygon id="path-1" points="1 237 24.7881718 188.473418 283.5 5.61220497e-14 542.8762 188.473418 566 237 21.245112 237"></polygon>
-              <filter x="-0.5%" y="-1.2%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox" id="filter-2">
+              <filter id="filter-2" x="-0.5%" y="-1.2%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
                   <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
                   <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
                   <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
                   <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.304769449 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
               </filter>
               <polygon id="path-3" points="32.8370339 342.27023 532.538115 342.27023 532.538115 623.52023 32.538115 623.52023"></polygon>
-              <filter x="-0.2%" y="-0.4%" width="100.8%" height="101.4%" filterUnits="objectBoundingBox" id="filter-4">
+              <filter id="filter-4" x="-0.2%" y="-0.4%" width="100.8%" height="101.4%" filterUnits="objectBoundingBox">
                   <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
                   <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
                   <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
               </filter>
               <polygon id="path-5" points="1.000015 237.17223 283.682115 473.20623 566.217115 236.91623 566.217115 636.91663 1.000015 636.91663"></polygon>
-              <filter x="-0.4%" y="-0.9%" width="101.2%" height="102.0%" filterUnits="objectBoundingBox" id="filter-6">
+              <filter id="filter-6" x="-0.4%" y="-0.9%" width="101.2%" height="102.0%" filterUnits="objectBoundingBox">
                   <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
                   <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
                   <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
                   <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.298978365 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
               </filter>
               <polygon id="path-7" points="0 637 23.8302747 588.473418 283 400 542.835273 588.473418 566 636.91663 20.2809441 637"></polygon>
-              <filter x="-0.5%" y="-1.2%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox" id="filter-8">
+              <filter id="filter-8" x="-0.5%" y="-1.2%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
                   <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
                   <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
                   <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
@@ -36,7 +36,7 @@
             </defs>
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="envelope" transform="translate(1.661885, 1.729770)">
-                  <g class="invisible" id="topFlap">
+                  <g id="topFlap" class="invisible">
                       <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
                       <use fill="#EAE6D3" fill-rule="evenodd" xlink:href="#path-1"></use>
                   </g>
@@ -60,7 +60,7 @@
           <title>envelopeFlap</title>
           <defs>
               <polygon id="path-1" points="1.661885 237.72977 25.5342627 189.203188 285.161885 0.72977 545.456231 189.203188 568.661885 237.72977 21.9786611 237.72977"></polygon>
-              <filter x="-0.5%" y="-2.0%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox" id="filter-2">
+              <filter id="filter-2" x="-0.5%" y="-2.0%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
                   <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
                   <feOffset dx="1" dy="-1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
                   <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
@@ -74,14 +74,15 @@
               </g>
           </g>
       </svg>
-      <img @load="upsertEnvelopeAnimation" id="waxSeal" class="absolute top-[70%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="require('@/assets/waxSeal.webp')">
+      <img id="waxSeal" class="absolute top-[70%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="waxSeal" @load="upsertEnvelopeAnimation">
     </div>
   </div>
-  <div :class="{invisible: !loaded}" id="scroller" class="fixed bottom-5 right-5 flex">
+  <div id="scroller" :class="{invisible: !loaded}" class="fixed bottom-5 right-5 flex">
     <p>
       Scroll down
     </p>
-    <svg class="h-7 w-7 block m-auto pt-3.5 animate-bounce" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    <svg
+class="h-7 w-7 block m-auto pt-3.5 animate-bounce stroke-accent" version="1.1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
         <g>
           <path
@@ -96,7 +97,7 @@
 </template>
   
 <script>
-import LoadingView from '@/components/shared/LoadingView'
+import LoadingView from '@/components/shared/LoadingView.vue'
 
 export default {
   name: 'TheInvitation',
@@ -107,6 +108,7 @@ export default {
     return {
       loaded: false,
       tl: null,
+      waxSeal: new URL("../assets/waxSeal.webp", import.meta.url).href,
     }
   },
   beforeUnmount () {

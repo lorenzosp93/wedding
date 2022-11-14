@@ -1,19 +1,19 @@
 <template>
   <div>
     <list-view
-      :objList="inbox"
+      :obj-list="inbox"
       :loading="inboxLoading"
       :error="error"
-      :submitLoading="submitLoading"
-      :submitError="submitError"
-      :submitSuccess="submitSuccess"
-      :deleteLoading="deleteLoading"
-      :deleteError="deleteError"
-      :deleteSuccess="deleteSuccess"
-      @submitResponse="submitResponse"
-      @deleteResponses="deleteResponses"
+      :submit-loading="submitLoading"
+      :submit-error="submitError"
+      :submit-success="submitSuccess"
+      :delete-loading="deleteLoading"
+      :delete-error="deleteError"
+      :delete-success="deleteSuccess"
+      @submit-response="submitResponse"
+      @delete-responses="deleteResponses"
     >
-    <template v-slot:search>
+    <template #search>
     </template>
     </list-view>
   </div>
@@ -22,16 +22,16 @@
 <script>
 import { useInboxStore } from '@/stores/api.store'
 import { mapActions, mapState} from 'pinia'
-import ListView from '@/components/shared/ListView'
+import ListView from '@/components/shared/ListView.vue'
 
 export default {
   name: 'TheInbox',
+  components: {
+    ListView,
+  },
   data () {
     return {
     }
-  },
-  components: {
-    ListView,
   },
   computed: {
     ...mapState(useInboxStore, [
@@ -46,15 +46,15 @@ export default {
       'deleteError',
     ]),
   },
+  mounted () {
+    this.getInbox();
+  },
   methods: {
     ...mapActions(useInboxStore, [
       'getInbox',
       'submitResponse',
       'deleteResponses',
     ]),
-  },
-  mounted () {
-    this.getInbox();
   },
 }
 </script>
