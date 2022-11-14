@@ -101,16 +101,15 @@ export default {
   methods: {
     upsertEnvelopeAnimation () {
       let envelope = document.querySelectorAll("#envelope")[0];
-      let topFlap = document.querySelectorAll("#topFlap")[0];
+      // let topFlap = document.querySelectorAll("#topFlap")[0];
       let invite = document.querySelectorAll("#invite")[0];
-
-      let flapRatio = 2.5 * topFlap.getBoundingClientRect().height / (envelope.getBoundingClientRect().height + invite.getBoundingClientRect().height);
+      let app = document.querySelectorAll('#app')[0];
 
       this.tl?.kill();
 
       const tl = this.$gsap.timeline({
         scrollTrigger: {
-          trigger: '#app',
+          trigger: app,
           scrub: true,
           start: 'top top',
           end: 'bottom bottom',
@@ -129,12 +128,12 @@ export default {
         .set('#envelopeFlap', {autoAlpha: 0}, 0.5)
         .set('#topFlap', {autoAlpha: 1}, 0.5)
         .to(envelope, {
-          y: flapRatio * envelope.getBoundingClientRect().height,
+          y: 0.5 * envelope.getBoundingClientRect().height,
           duration: 0.5,
           ease: 'none',
         }, 0.5)
         .to(invite, {
-          y: - flapRatio * (envelope.getBoundingClientRect().height + invite.getBoundingClientRect().height),
+          y: - (app.getBoundingClientRect().height - window.innerHeight) * 0.5 - envelope.getBoundingClientRect().height * 0.25,
           duration: 0.5,
           ease: 'none',
         }, 0.5);
