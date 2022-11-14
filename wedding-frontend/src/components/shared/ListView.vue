@@ -85,7 +85,7 @@
                 <label for="input" class="ml-3 my-1">{{ $t('shared.listview.other') }}</label>
                 <input type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 ml-3" v-model="responses.find(r => r.question == question.uuid).text" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
               </div>
-              <p v-if="question.uuid == submitError?.find(e => e.q == question)">{{ submitError?.find(e => e.q == question)?.e }}</p>
+              <p v-if="question.uuid == submitError?.find(e => e.q == question && e.e?.non_field_errors)">{{ JSON.stringify(submitError?.find(e => e.q == question)?.e.non_field_errors[0]) }}</p>
             </div>
             <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('submitResponse', responses)">{{ $t('shared.listview.submit') }}</button>
             <p v-if="submitLoading">{{ $t('shared.listview.loading') }}</p>

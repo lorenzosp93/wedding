@@ -110,7 +110,7 @@ export const useInboxStore = defineStore({
                             }
                         ).catch(
                             error => {
-                                this.submitError = [...(this.submitError ?? []), {q: response.question, e: error}];
+                                this.submitError = [...(this.submitError ?? []), {q: response.question, e: error.response.data}];
                                 return true;
                             }
                         )
