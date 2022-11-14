@@ -24,5 +24,6 @@ ScrollTrigger.config({
 });
 gsap.registerPlugin(ScrollTrigger);
 myApp.config.globalProperties.$gsap = gsap;
+myApp.config.globalProperties.$st = ScrollTrigger;
 
 myApp.mount('#app');
