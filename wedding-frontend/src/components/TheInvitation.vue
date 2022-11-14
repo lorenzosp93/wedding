@@ -82,7 +82,7 @@
       Scroll down
     </p>
     <svg
-class="h-7 w-7 block m-auto pt-3.5 animate-bounce stroke-accent" version="1.1" xmlns="http://www.w3.org/2000/svg"
+class="h-7 w-7 block m-auto pt-3.5 animate-bounce fill-accent" version="1.1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
         <g>
           <path
