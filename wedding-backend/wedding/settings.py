@@ -227,6 +227,7 @@ PASSWORDLESS_AUTH = {
     'PASSWORDLESS_REGISTER_NEW_USERS': True,
     'PASSWORDLESS_EMAIL_SUBJECT': f"[{HOST}] Login",
     'PASSWORDLESS_EMAIL_CALLBACK': 'shared.utils.send_email_with_callback_token',
+    'PASSWORDLESS_REGISTER_NEW_USERS': False,
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

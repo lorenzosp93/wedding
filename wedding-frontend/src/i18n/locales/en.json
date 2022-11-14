@@ -5,7 +5,7 @@
 			"loading": "Loading",
 			"loginPage": "Login page",
 			"submit": "Submit",
-			"thereWasAn": "There was an error sending you the access code:"
+			"thereWasAn": "There was an error sending you the access code:\n {a}"
 		},
 		"loginsuccess": {
 			"loginWasSuccessful": "Login was successful, please check your inbox for your login link."

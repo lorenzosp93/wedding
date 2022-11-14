@@ -5,7 +5,7 @@
 			"loading": "Cargando",
 			"loginPage": "Página de inicio de sesión",
 			"submit": "Enviar",
-			"thereWasAn": "Hubo un error al enviarte el código de acceso:"
+			"thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}"
 		},
 		"loginsuccess": {
 			"loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
