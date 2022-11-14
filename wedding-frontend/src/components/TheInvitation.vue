@@ -1,7 +1,7 @@
 <template>
-<div id="the-invitation" class="h-[200vh]">
+<div id="the-invitation" class="h-[200vh] overflow-y-hidden">
   <div class="flex max-h-screen">
-    <div id="envelopeContainer" class="relative w-full mx-auto max-w-md md:max-w-2xl">
+    <div id="envelopeContainer" class=" relative w-full mx-auto max-w-xl">
       <svg id="envelope" class="w-full overflow-visible" viewBox="0 0 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <title>envelope</title>
           <defs>
@@ -55,7 +55,7 @@
               </g>
           </g>
       </svg>
-      <svg id="envelopeFlap" class="w-full absolute top-0 translate-y-[99.8%] translate-x-[0.4%] origin-top" viewBox="0 0 572 241" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <svg id="envelopeFlap" class="w-full absolute top-0 translate-y-[99%]  origin-top" viewBox="0 0 572 241" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <title>envelopeFlap</title>
           <defs>
               <polygon id="path-1" points="1.661885 237.72977 25.5342627 189.203188 285.161885 0.72977 545.456231 189.203188 568.661885 237.72977 21.9786611 237.72977"></polygon>
@@ -73,7 +73,7 @@
               </g>
           </g>
       </svg>
-      <img @load="upsertEnvelopeAnimation" id="waxSeal" class="absolute top-[70%] -translate-y-[50%] left-1/2 -translate-x-1/2 w-[18%]" :src="require('@/assets/waxSeal.webp')">
+      <img @load="upsertEnvelopeAnimation" id="waxSeal" class="absolute top-[70%] -translate-y-1/2 left-1/2 -translate-x-1/2 w-[18%]" :src="require('@/assets/waxSeal.webp')">
     </div>
   </div>
 </div>
@@ -96,22 +96,24 @@ export default {
   },
   beforeUnmount () {
     this.tl?.kill();
-    screen.orientation.unlock();
+    try {
+      screen.orientation.unlock();
+    } catch (error) {console.log(error)}
   },
   methods: {
     upsertEnvelopeAnimation () {
       let envelope = document.querySelectorAll("#envelope")[0];
       // let topFlap = document.querySelectorAll("#topFlap")[0];
       let invite = document.querySelectorAll("#invite")[0];
-      let app = document.querySelectorAll('#app')[0];
+      let invitation = document.querySelectorAll('#app')[0];
 
       this.tl?.kill();
 
       const tl = this.$gsap.timeline({
         scrollTrigger: {
-          trigger: app,
+          trigger: invitation,
           scrub: true,
-          start: 'top top',
+          start: '1% top',
           end: 'bottom bottom',
           pin: '#envelopeContainer',
         }
@@ -133,7 +135,7 @@ export default {
           ease: 'none',
         }, 0.5)
         .to(invite, {
-          y: - (app.getBoundingClientRect().height - window.innerHeight) * 0.5 - envelope.getBoundingClientRect().height * 0.25,
+          y: - (invitation.getBoundingClientRect().height - window.innerHeight) * 0.5 - envelope.getBoundingClientRect().height * 0.25,
           duration: 0.5,
           ease: 'none',
         }, 0.5);
