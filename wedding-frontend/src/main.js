@@ -19,7 +19,9 @@ const myApp = createApp(App)
   .use(VueAxios, axios)
   .use(i18n);
 
-
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+});
 gsap.registerPlugin(ScrollTrigger);
 myApp.config.globalProperties.$gsap = gsap;
 
