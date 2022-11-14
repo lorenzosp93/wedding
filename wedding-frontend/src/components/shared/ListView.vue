@@ -1,6 +1,7 @@
 <template>
   <div class=" w-11/12 mx-auto text-primary dark:text-darkPrimary">
-    <main class="flex w-full h-full rounded-3xl">
+    <loading-view v-if="loading"></loading-view>
+    <main v-show="!loading" class="flex w-full h-full rounded-3xl">
       <section class="flex flex-col w-full min-h-full py-5 md:w-1/3  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
         <label class="px-3">
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
@@ -97,8 +98,12 @@
 </template>
 
 <script>
+import LoadingView from '@/components/shared/LoadingView';
 export default {
   name: 'ListView',
+  components: {
+    LoadingView
+  },
   data () {
     return {
       active: 0,

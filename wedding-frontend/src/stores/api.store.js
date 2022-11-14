@@ -67,6 +67,7 @@ export const useInboxStore = defineStore({
     id: 'inbox',
     state: () => ({
         inbox: [],
+        inboxLoading: false,
         responses: [],
         error: null,
         submitLoading: false,
@@ -79,12 +80,12 @@ export const useInboxStore = defineStore({
     actions: {
         async getInbox() {
             if(this.inbox.length == 0){
-                this.loading = true;
+                this.inboxLoading = true;
                 apiService.getInboxContent().then(
                     (response) => {
+                        this.inboxLoading = false;
                         this.inbox = response.data;
                         this.responseSetup();
-                        this.loading = false;
                     }
                 ).catch(
                     error => {

@@ -1,6 +1,8 @@
 <template>
 
-<p>{{ $t('shared.loadingview.loading') }}</p>
+<div>
+  <p>{{ $t('shared.loadingview.loading') }}</p>
+</div>
 
 </template>
   
