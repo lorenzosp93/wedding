@@ -4,6 +4,7 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'url'
 import vue from '@vitejs/plugin-vue'
 import vueI18n from '@intlify/vite-plugin-vue-i18n'
+import viteCompression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,7 +12,8 @@ export default defineConfig({
         vue(),
         vueI18n({
             include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**'),
-        })
+        }),
+        viteCompression(),
     ],
     resolve: {
         alias: {
