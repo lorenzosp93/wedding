@@ -54,7 +54,7 @@
 		},
 		{
 			"type": "npm",
-			"script": "serve",
+			"script": "dev",
 			"path": "wedding-frontend",
 			"label": "vuejs: start",
 			"detail": "vue-cli-service serve",

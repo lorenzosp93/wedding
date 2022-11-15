@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { API_URL, request } from '@/services/api.service'
-
-const i18n = () => import('@/i18n')
+import i18n from '@/i18n';
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -25,11 +24,8 @@ export const useAuthStore = defineStore({
                 // store user details and jwt in local storage to keep user logged in between page refreshes
                 localStorage.setItem('token', token);
                 if (this.profile?.language){
-                    await i18n().then(
-                        i18n => i18n.default.global.locale = this.profile?.language
-                    ).finally(
-                    localStorage.setItem('lang', this.profile?.language)
-                    );
+                    i18n.global.locale.value = this.profile.language;
+                    localStorage.setItem('lang', this.profile.language);
                 }
             }).catch(
                 error => {

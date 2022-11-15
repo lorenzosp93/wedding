@@ -4,22 +4,14 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    
         {
             "name": "vuejs: chrome",
             "request": "launch",
             "type": "chrome",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}/wedding-frontend/src",
-            "pathMapping": {
-                "/_karma_webpack_": "${workspaceFolder}"
-              },
             "sourceMapPathOverrides": {
                 "webpack:///src/*": "${webRoot}/*",
-                "/./*": "${webRoot}/*",
-                "/src/*": "${webRoot}/*",
-                "/*": "*",
-                "/./~/*": "${webRoot}/node_modules/*"
             },
             "preLaunchTask": "vuejs: start"
         },
@@ -29,7 +21,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/wedding-backend/manage.py",
             "cwd": "${workspaceFolder}/wedding-backend",
-            "args": ["runserver"],
+            "args": [
+                "runserver"
+            ],
             "django": true,
             "justMyCode": false
         },
@@ -39,10 +33,12 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "python": {
-                "pathMappings": [{
-                    "localRoot": "${workspaceFolder}/wedding-backend",
-                    "remoteRoot": "/app"
-                }],
+                "pathMappings": [
+                    {
+                        "localRoot": "${workspaceFolder}/wedding-backend",
+                        "remoteRoot": "/app"
+                    }
+                ],
                 "projectType": "django"
             }
         },
