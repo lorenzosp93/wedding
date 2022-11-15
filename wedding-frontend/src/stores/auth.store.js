@@ -17,11 +17,13 @@ export const useAuthStore = defineStore({
             // update pinia state
             this.token = token;
             this.loading = true;
-            request().get(API_URL + '/api/user/profile/').then((response) => {
+            await request().get(API_URL + '/api/user/profile/').then((response) => {
                 let profile = response.data.find(d => d);
                 this.profile = profile;
                 this.loading = false;
                 localStorage.setItem('profile', JSON.stringify(profile));
+                // store user details and jwt in local storage to keep user logged in between page refreshes
+                localStorage.setItem('token', token);
                 if (this.profile?.language){
                     i18n().then(
                         i18n => i18n.default.global.locale = this.profile?.language
@@ -31,12 +33,11 @@ export const useAuthStore = defineStore({
                 }
             }).catch(
                 error => {
+                    this.loading = false;
                     console.log(error);
                     this.error = error;
                 }
             )
-            // store user details and jwt in local storage to keep user logged in between page refreshes
-            localStorage.setItem('token', token);
         },
         logout() {
             this.token = null;
