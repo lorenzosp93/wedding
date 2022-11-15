@@ -16,18 +16,6 @@
       return {
       };
     },
-    props: [
-    ],
-    inject: [
-    ],
-    methods: {
-    },
-    computed:{
-    },
-    beforeUnmount () {
-    },
-    mounted () {
-    }
   }
   </script>
   

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import profile from '@/mixins/profile'
+import profile from '@/components/mixins/profile'
 
 export default {
   name: 'TheHome',

@@ -32,17 +32,17 @@ export default {
       'error',
     ]),
   },
-  methods: {
-    ...mapActions(useInfoStore, [
-      'getInfo',
-      'activateType',
-    ]),
-  },
   mounted () {
     this.getInfo();
     if (!this.activeType) {
       this.activateType(this.$route.params.infoType)
     }
+  },
+  methods: {
+    ...mapActions(useInfoStore, [
+      'getInfo',
+      'activateType',
+    ]),
   },
 }
 </script>

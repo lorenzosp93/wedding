@@ -51,7 +51,7 @@ import { mapActions, mapState } from 'pinia';
 
 export default {
   name: 'TheNavbar',
-  props: ['infoType'],
+  props: { infoType: {type: Array} },
   data () {
     return {
       menu: false,

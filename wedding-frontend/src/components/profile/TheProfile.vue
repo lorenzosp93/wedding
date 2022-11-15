@@ -59,7 +59,7 @@
 
 <script>
 import PlusOne from './PlusOne.vue'
-import profile from '@/mixins/profile'
+import profile from '@/components/mixins/profile'
 
 export default {
   

@@ -109,17 +109,18 @@ export default {
   components: {
     LoadingView
   },
-  props: [
-    'objList',
-    'loading',
-    'error',
-    'submitLoading',
-    'submitError',
-    'submitSuccess',
-    'deleteLoading',
-    'deleteError',
-    'deleteSuccess',
-  ],
+  props: {
+    objList: {type: Array},
+    loading: {type: Boolean},
+    error: {type: Object},
+    submitLoading: {type: Boolean},
+    submitError: {type:Object},
+    submitSuccess: {type: Boolean},
+    deleteLoading: {type: Boolean},
+    deleteError: {type: Object},
+    deleteSuccess: {type: Boolean},
+  },
+emits: ['submitResponse', 'deleteResponses'],
   data () {
     return {
       active: 0,

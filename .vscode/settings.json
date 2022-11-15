@@ -3,7 +3,7 @@
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "./mainpage",
+        "./wedding-backend",
         "-p",
         "test*.py"
     ],
@@ -12,6 +12,6 @@
     "python.testing.unittestEnabled": false,
     "python.testing.promptToConfigure": false,
     "python.linting.pylintArgs": [
-     "--load-plugins=pylint_django"
+        "--load-plugins=pylint_django"
     ]
 }

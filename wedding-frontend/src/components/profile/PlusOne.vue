@@ -1,16 +1,17 @@
 <template>
-  <div @click="toggle" class="z-20 absolute left-0 top-0 backdrop-blur-sm h-screen w-screen">
+  <div class="z-20 absolute left-0 top-0 backdrop-blur-sm h-screen w-screen" @click="toggle">
   </div>
-  <div class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2
+  <div
+class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2
  rounded-lg max-w-md shadow-md bg-pale dark:bg-darkPale ring-1 ring-accent p-3">
     <form class="flex flex-wrap">
 
       <label class="w-full ml-3 mt-2" for="email">{{ $t('profile.plusone.email') }}</label>
-      <input class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" v-model="email" type="email">
+      <input v-model="email" class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" type="email">
       <label class="w-full ml-3 mt-2" for="firstName">{{ $t('profile.plusone.firstName') }}</label>
-      <input class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" v-model="firstName" type="text">
+      <input v-model="firstName" class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" type="text">
       <label class="w-full ml-3 mt-2" for="lastName">{{ $t('profile.plusone.lastNames') }}</label>
-      <input class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" v-model="lastName" type="text">
+      <input v-model="lastName" class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" type="text">
       <p v-if="error" class="text-alert">{{ error }}</p>
       <button v-if="!loading & !success" class="px-2 py-1 bg-accent mx-auto rounded-md my-5" @click.prevent="setupPlusOne">{{ $t('profile.plusone.submit') }}</button>
       <p v-if="loading">{{ $t('profile.plusone.loading') }}</p>
@@ -27,6 +28,13 @@ import ApiService from './../../services/api.service';
 export default {
   
   name: 'PlusOne',
+  inject: [
+  ],
+  props: {
+    toggle: {type: Function}
+  },
+  emits: [
+  ],
   data () {
     return {
       email: null,
@@ -37,9 +45,10 @@ export default {
       success: false,
     }
   },
-  props: [
-    'toggle'
-  ],
+  computed: {
+  },
+  mounted () {
+  },
   methods: {
     setupPlusOne(){
       this.loading = true;
@@ -58,14 +67,6 @@ export default {
         }
       )
     }
-  },
-  emits: [
-  ],
-  inject: [
-  ],
-  computed: {
-  },
-  mounted () {
   }
 }
 </script>

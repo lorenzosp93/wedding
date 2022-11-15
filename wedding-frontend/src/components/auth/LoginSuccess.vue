@@ -12,16 +12,6 @@
         data: [],
       }
     },
-    props: {
-    },
-    emits: [
-    ],
-    inject: [
-    ],
-    computed: {
-    },
-    mounted () {
-    }
   }
   </script>
   
