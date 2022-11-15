@@ -42,9 +42,6 @@ router.beforeEach(async (to) => {
     if(!auth.profile && token){
       await auth.login(token);
     }
-    if(!auth.languages){
-      await auth.getLanguages();
-    }
 
     if (authRequired && !token) {
       return '/login'

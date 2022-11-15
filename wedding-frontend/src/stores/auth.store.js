@@ -9,7 +9,6 @@ export const useAuthStore = defineStore({
         // initialize state from local storage to enable user to stay logged in
         token: localStorage.getItem('token'),
         profile: JSON.parse(localStorage.getItem('profile')),
-        languages: JSON.parse(localStorage.getItem('languages')),
         loading: false,
         error: null,
     }),
@@ -44,41 +43,5 @@ export const useAuthStore = defineStore({
             localStorage.clear();
             this.$router.push('/login')
         },
-        async getLanguages() {
-            request().get(API_URL + '/api/shared/get-languages/').then(
-                response => {
-                    this.languages = response.data;
-                    localStorage.setItem('languages', JSON.stringify(this.languages));
-                }
-            ).catch(error => console.log(error))
-        },
-        async updateLanguage() {
-            this.loading = true;
-            request(true).put(
-                `${API_URL}/api/user/profile/${this.profile.id}/`,
-                {
-                    'language': this.profile.language
-                }
-            ).then(
-                () => {
-                    this.loading = false;
-                    localStorage.clear();
-                    localStorage.setItem('token', this.token);
-                    localStorage.setItem('profile', JSON.stringify(this.profile));
-                    i18n().then(
-                        i18n => {
-                            i18n.default.global.locale = this.profile.language;
-                        }
-                    ).finally(
-                        localStorage.setItem('lang', this.profile.language)
-                    );
-                }
-            ).catch(
-                error => {
-                    console.log(error);
-                    this.error = error;
-                }
-            )
-        }
     }
 });

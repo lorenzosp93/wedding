@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col max-w-2xl mx-auto">
     <div class="w-full overflow-auto px-5">
-      <table class="table-auto mx-auto my-5 text-right py-3 px-5" v-if="!!profile">
+      <table v-if="!!profile" class="table-auto mx-auto my-5 text-right py-3 px-5">
         <tbody class="">
           <tr>
             <td>{{ $t('profile.theprofile.firstName') }}</td>
@@ -15,24 +15,13 @@
             <td>{{ $t('profile.theprofile.email', ) }}</td>
             <td>{{ profile.user?.email }}</td>
           </tr>
-          <tr>
-            <td>{{ $t('profile.theprofile.language') }}</td>
-            <td>
-              <form v-if="profile?.language">
-                <select class="bg-pale dark:bg-darkPale rounded-md py-1" name="language" id="lang" v-model="profile.language" @change="updateLanguage">
-                  <option v-for="l in languages" :key="l.iso" :value="l.iso">{{ l.display }}</option>
-                  <button ></button>
-                </select>
-              </form>
-            </td>
-          </tr>
           <tr v-if="profile?.plus">
             <td>{{ $t('profile.theprofile.plusOne', ) }}</td>
             <td class="flex w-full"> 
               <p class="my-auto ml-auto">{{ profile.plus }} </p>
               <div v-if="profile?.plus - profile?.childs?.length" class="ml-auto mr-2">
-                <button  @click="togglePlusOne" class="rounded-md bg-secondary py-1 px-2">{{ $t('profile.theprofile.invite') }} </button>
-                <plus-one :toggle="togglePlusOne" v-if="showPlusOne" />
+                <button  class="rounded-md bg-secondary py-1 px-2" @click="togglePlusOne">{{ $t('profile.theprofile.invite') }} </button>
+                <plus-one v-if="showPlusOne" :toggle="togglePlusOne" />
               </div>
             </td>
           </tr>
@@ -64,7 +53,7 @@
       </table>
 
     </div>
-    <button @click="logout" class="rounded-md bg-secondary dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3">{{ $t('profile.theprofile.logOut') }}</button>
+    <button class="rounded-md bg-secondary dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3" @click="logout">{{ $t('profile.theprofile.logOut') }}</button>
   </div>
 </template>
 
@@ -75,23 +64,23 @@ import profile from '@/mixins/profile'
 export default {
   
   name: 'TheProfile',
-  data () {
-    return {
-      showPlusOne: false,
-    }
-  },
   components: { 
     PlusOne
    },
   mixins: [
     profile
   ],
+  data () {
+    return {
+      showPlusOne: false,
+    }
+  },
+  mounted () {
+  },
   methods: {
     togglePlusOne(){
       this.showPlusOne = !this.showPlusOne;
     }
-  },
-  mounted () {
   }
 }
 </script>
