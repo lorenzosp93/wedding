@@ -25,7 +25,7 @@ export const useAuthStore = defineStore({
                 // store user details and jwt in local storage to keep user logged in between page refreshes
                 localStorage.setItem('token', token);
                 if (this.profile?.language){
-                    i18n().then(
+                    await i18n().then(
                         i18n => i18n.default.global.locale = this.profile?.language
                     ).finally(
                     localStorage.setItem('lang', this.profile?.language)
