@@ -4,7 +4,7 @@
     <loading-view v-if="!loaded"></loading-view>
     <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-2xl max-h-[80vh]">
       <svg class="w-full h-full overflow-visible" viewBox="0 0 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>envelope</title>
+    <title>{{ $t('theinvitation.envelope') }}</title>
     <defs>
         <polygon id="path-1" points="1 237 24.7881718 188.473418 283.5 5.61220497e-14 542.8762 188.473418 566 237 21.245112 237"></polygon>
         <filter id="filter-2" x="-0.5%" y="-1.2%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
@@ -57,7 +57,7 @@
     </g>
       </svg>
       <svg id="envelopeFlap" class="w-full h-full absolute top-[37.25%] origin-top" viewBox="-1 1 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <title>envelopeFlap</title>
+          <title>{{ $t('theinvitation.envelopeflap') }}</title>
           <defs>
               <polygon id="path-1" points="1.661885 237.72977 25.5342627 189.203188 285.161885 0.72977 545.456231 189.203188 568.661885 237.72977 21.9786611 237.72977"></polygon>
               <filter id="filter-2" x="-0.5%" y="-2.0%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
@@ -78,9 +78,7 @@
     </div>
   </div>
   <div id="scroller" :class="{invisible: !loaded}" class="fixed bottom-5 right-5 flex">
-    <p>
-      Scroll down
-    </p>
+    <p>{{ $t('theinvitation.scrollDown') }}</p>
     <svg
 class="h-7 w-7 block m-auto pt-3.5 animate-bounce fill-accent" version="1.1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
