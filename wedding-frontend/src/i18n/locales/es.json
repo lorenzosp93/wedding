@@ -1,73 +1,75 @@
 {
-  "auth": {
-    "loginpage": {
-      "emailAddress": "Dirección de correo electrónico",
-      "loading": "Cargando",
-      "loginPage": "Página de inicio de sesión",
-      "submit": "Enviar",
-      "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}"
-    },
-    "loginsuccess": {
-      "loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
-    }
-  },
-  "gallery": {
-    "thegallery": {}
-  },
-  "profile": {
-    "plusone": {
-      "email": "Email",
-      "firstName": "Nombre",
-      "lastNames": "Apellido(s)",
-      "loading": "Cargando",
-      "submit": "Enviar",
-      "success": "¡Éxito!"
-    },
-    "theprofile": {
-      "email": "Correo electrónico:",
-      "firstName": "Nombre:",
-      "invite": "Invitar +1",
-      "lastNames": "Apellido(s):",
-      "logOut": "Cerrar sesión",
-      "plusOne": "+1:",
-      "yourPlusOnes": " Tus +1"
-    }
-  },
-  "shared": {
-    "listview": {
-      "alreadyAnswered": "Ya has respondido a estas preguntas.",
-      "changeResponses": "Cambia tus respuestas",
-      "done": "¡Has terminado por hoy!",
-      "loading": "Cargando",
-      "noMessage": "No se pudo encontrar ningún mensaje que coincida con su búsqueda.",
-      "other": "Otro:",
-      "submit": "Enviar",
-      "success": "Éxito",
-      "search": "Buscar..."
-    },
-    "loadingview": {},
-    "notfound": {
-      "pageNotFound": "¡Página no encontrada!"
-    },
-    "thenavbar": {
-      "gallery": "Galeria",
-      "home": "Home",
-      "inbox": "Bandeja de entrada",
-      "information": "Información",
-      "openMainMenu": "Abrir menú principal",
-      "profile": "Perfil"
-    }
-  },
-  "thehome": {
-    "hi": "Hola {a},",
-    "priscillaAndLorenzo": "Priscilla y Lorenzo",
-    "weAreDelighted": "estamos encantados de invitaros a nuestra boda en Roma.\n          La Ciudad Eterna es donde nos encontramos y nos enamoramos, ¡y nos encantaría que te unas a nosotros en la celebración!",
-    "withLove": "con amor,",
-    "openYourInvitation": "¡Abre tu invitación!"
-  },
-  "theinvitation": {
-    "envelope": "sobre",
-    "envelopeflap": "solapa del sobre",
-    "scrollDown": "Desplazar hacia abajo"
-  }
+	"auth": {
+		"loginpage": {
+			"emailAddress": "Dirección de correo electrónico",
+			"loading": "Cargando",
+			"loginPage": "Página de inicio de sesión",
+			"submit": "Enviar",
+			"thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}"
+		},
+		"loginsuccess": {
+			"loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
+		}
+	},
+	"profile": {
+		"plusone": {
+			"email": "Email",
+			"firstName": "Nombre",
+			"lastNames": "Apellido(s)",
+			"loading": "Cargando",
+			"submit": "Enviar",
+			"success": "¡Éxito!"
+		},
+		"theprofile": {
+			"email": "Correo electrónico:",
+			"firstName": "Nombre:",
+			"invite": "Invitar +1",
+			"lastNames": "Apellido(s):",
+			"logOut": "Cerrar sesión",
+			"plusOne": "+1:",
+			"yourPlusOnes": " Tus +1"
+		}
+	},
+	"shared": {
+		"listview": {
+			"alreadyAnswered": "Ya has respondido a estas preguntas.",
+			"changeResponses": "Cambia tus respuestas",
+			"done": "¡Has terminado por hoy!",
+			"loading": "Cargando",
+			"noMessage": "No se pudo encontrar ningún mensaje que coincida con su búsqueda.",
+			"other": "Otro:",
+			"search": "Buscar...",
+			"submit": "Enviar",
+			"success": "Éxito"
+		},
+		"notfound": {
+			"pageNotFound": "¡Página no encontrada!"
+		},
+		"reloadpwa": {
+			"appReadyTo": " App lista para trabajar sin conexión",
+			"close": "\n          Cerca\n        ",
+			"newContentAvailable": "Nuevo contenido disponible, haga clic en el botón de recargar para actualizar.",
+			"reload": "\n          Recargar\n        "
+		},
+		"thenavbar": {
+			"gallery": "Galeria",
+			"home": "Home",
+			"inbox": "Bandeja de entrada",
+			"information": "Información",
+			"openMainMenu": "Abrir menú principal",
+			"profile": "Perfil"
+		}
+	},
+	"thehome": {
+		"hi": "Hola {a},",
+		"openYourInvitation": "¡Abre tu invitación!",
+		"priscillaAndLorenzo": "Priscilla y Lorenzo",
+		"weAreDelighted": "estamos encantados de invitaros a nuestra boda en Roma.\n          La Ciudad Eterna es donde nos encontramos y nos enamoramos, ¡y nos encantaría que te unas a nosotros en la celebración!",
+		"withLove": "con amor,"
+	},
+	"theinvitation": {
+		"envelope": "sobre",
+		"envelopeflap": "solapa del sobre",
+		"scrollDown": "Desplazar hacia abajo"
+	}
 }
