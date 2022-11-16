@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores';
+import axios from 'axios'
 
 import TheLanding from './components/TheInvitation.vue'
 import LoginPage from './components/auth/LoginPage.vue'
@@ -27,7 +28,17 @@ const router = createRouter({
         {name: 'info', path: '/info/:infoType?/:active?', components: {default: TheInfo, TheNavbar}, },
         {name: 'gallery', path: '/gallery', components: {default: TheGallery, TheNavbar}, },
         {name: 'profile', path: '/profile', components: {default: TheProfile, TheNavbar}, },
-        {name: 'notFound', path: '/:notFound(.*)', components: {default: NotFound, TheNavbar}},
+        {
+          name: 'notFound',
+          path: '/:notFound(.*)',
+          components: {default: NotFound, TheNavbar},
+          beforeEnter: (to) => {
+            let path = to.params.notFound;
+            if (path.substring(0, 3) == 'api') {
+              axios.get(path);
+            }
+            return false
+        }},
     ]
 })
 

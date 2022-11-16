@@ -46,7 +46,7 @@
 			"pageNotFound": "Pagina non trovata!"
 		},
 		"reloadpwa": {
-			"appReadyTo": " App pronta per funzionare offline",
+			"appReadyTo": " Sito pronto per funzionare offline",
 			"close": "\n          Chiudere\n        ",
 			"newContentAvailable": "Nuovi contenuti disponibili, fare clic sul pulsante di ricarica per aggiornare.",
 			"reload": "\n          Ricaricare\n        "

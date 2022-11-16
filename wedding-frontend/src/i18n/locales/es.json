@@ -46,7 +46,7 @@
 			"pageNotFound": "¡Página no encontrada!"
 		},
 		"reloadpwa": {
-			"appReadyTo": " App lista para trabajar sin conexión",
+			"appReadyTo": " Sitio listo para trabajar sin conexión",
 			"close": "\n          Cerca\n        ",
 			"newContentAvailable": "Nuevo contenido disponible, haga clic en el botón de recargar para actualizar.",
 			"reload": "\n          Recargar\n        "

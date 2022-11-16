@@ -26,7 +26,8 @@ export default defineConfig({
           'favicon-16x16.ico',
           'favicon-32x32.ico',
           'apple-touch-icon.png',
-          'masked-icon.svg'
+          'masked-icon.svg',
+          'index.html'
       ],
       manifest: {
         name: 'Priscilla & Lorenzo - wedding app',
