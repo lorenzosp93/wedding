@@ -27,7 +27,7 @@ const router = createRouter({
         {name: 'info', path: '/info/:infoType?/:active?', components: {default: TheInfo, TheNavbar}, },
         {name: 'gallery', path: '/gallery', components: {default: TheGallery, TheNavbar}, },
         {name: 'profile', path: '/profile', components: {default: TheProfile, TheNavbar}, },
-        {name: 'notFound', path: '/:notFound(^(?!api).+)', components: {default: NotFound, TheNavbar}},
+        {name: 'notFound', path: '/:notFound(/^(?!api).+/)', components: {default: NotFound, TheNavbar}},
     ]
 })
 
