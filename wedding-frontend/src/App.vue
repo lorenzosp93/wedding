@@ -7,9 +7,12 @@
 </template>
 
 <script>
+import ReloadPWA from '@/components/shared/ReloadPWA.vue'
+
 export default {
   name: 'App',
   components: {
+    ReloadPWA
   },
 }
 </script>

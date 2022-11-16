@@ -9,9 +9,6 @@ module.exports = defineConfig({
       title: "Priscilla and Lorenzo's wedding",
     },
   },
-  configureWebpack: {
-    devtool: 'source-map'
-  },
   transpileDependencies: true,
   pluginOptions: {
     compression:{
