@@ -6,15 +6,11 @@ import vue from '@vitejs/plugin-vue'
 import vueI18n from '@intlify/vite-plugin-vue-i18n'
 import viteCompression from 'vite-plugin-compression'
 import { VitePWA } from 'vite-plugin-pwa'
-import legacy from '@vitejs/plugin-legacy'
 
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    legacy({
-      targets: ['defaults', 'not IE 11']
-    }),
     vue(),
     vueI18n({
       include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**'),
