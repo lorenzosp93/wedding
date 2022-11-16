@@ -18,6 +18,9 @@ export default defineConfig({
     viteCompression(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        navigateFallbackDenylist: [/\/api\//],
+      },
       devOptions: {
           enabled: true,
       },
@@ -27,7 +30,6 @@ export default defineConfig({
           'favicon-32x32.ico',
           'apple-touch-icon.png',
           'masked-icon.svg',
-          'index.html'
       ],
       manifest: {
         name: 'Priscilla & Lorenzo - wedding app',
