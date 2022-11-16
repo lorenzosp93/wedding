@@ -13,7 +13,7 @@ const TheInbox = () => import('./components/inbox/TheInbox.vue')
 const TheInfo = () => import('./components/information/TheInfo.vue')
 const TheGallery = () => import('./components/gallery/TheGallery.vue')
 const TheProfile = () => import('./components/profile/TheProfile.vue')
-
+const NotFound = () => import('./components/shared/NotFound.vue')
 
 const router = createRouter({
     history: createWebHistory(),
@@ -27,7 +27,7 @@ const router = createRouter({
         {name: 'info', path: '/info/:infoType?/:active?', components: {default: TheInfo, TheNavbar}, },
         {name: 'gallery', path: '/gallery', components: {default: TheGallery, TheNavbar}, },
         {name: 'profile', path: '/profile', components: {default: TheProfile, TheNavbar}, },
-        {path: '/api', },
+        {name: 'notFound', path: '/:notFound(.*)', components: {default: NotFound, TheNavbar}},
     ]
 })
 
