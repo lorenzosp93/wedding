@@ -29,13 +29,13 @@
       </table>
     </div>
 
-    <div class="w-full overflow-auto px-5">
+    <div v-if="profile?.childs.length" class="w-full overflow-auto px-5">
       <p class="font-bold">
         {{ $t('profile.theprofile.yourPlusOnes') }}
       </p>
-      <table v-if="!!profile" class="table-auto mx-auto my-5 text-right py-3 px-5">
+      <table class="table-auto mx-auto my-5 text-right py-3 px-5">
         <tbody>
-          <tr v-if="profile.childs.length">
+          <tr >
             <td>
               <table class="w-full text-left">
                 <thead>
