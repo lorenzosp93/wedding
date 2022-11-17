@@ -20,7 +20,6 @@ export default defineConfig({
       registerType: 'autoUpdate',
       workbox: {
         navigateFallbackDenylist: [/\/api\//],
-        sourcemap: true,
       },
       devOptions: {
           enabled: true,
