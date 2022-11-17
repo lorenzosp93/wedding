@@ -20,6 +20,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       workbox: {
         navigateFallbackDenylist: [/\/api\//],
+        sourcemap: true,
       },
       devOptions: {
           enabled: true,
@@ -29,7 +30,6 @@ export default defineConfig({
           'favicon-16x16.ico',
           'favicon-32x32.ico',
           'apple-touch-icon.png',
-          'masked-icon.svg',
       ],
       manifest: {
         name: 'Priscilla & Lorenzo - wedding app',
@@ -41,16 +41,15 @@ export default defineConfig({
             src: 'pwa-192x192.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'maskable'
           },
           {
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'maskable'
+            purpose: 'any maskable'
           }
         ]
-      }
+      },
     })
   ],
   resolve: {
@@ -60,5 +59,8 @@ export default defineConfig({
   },
   server: {
       port: 8080,
+  },
+  build: {
+    sourcemap: true,
   }
 })

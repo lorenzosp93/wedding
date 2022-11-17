@@ -23,7 +23,7 @@ module.exports = {
       darkPale: '#7F9593',
       darkNeutral: '#1F4045',
       alert: 'red'
-    }
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),
