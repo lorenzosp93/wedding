@@ -7,7 +7,6 @@ import vueI18n from '@intlify/vite-plugin-vue-i18n'
 import viteCompression from 'vite-plugin-compression'
 import { VitePWA } from 'vite-plugin-pwa'
 
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -22,7 +21,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/\/api\//],
       },
       devOptions: {
-          enabled: true,
+        enabled: process.env.ENV === 'true',
       },
       includeAssets: [
           'favicon.ico',
