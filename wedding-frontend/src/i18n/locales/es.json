@@ -14,19 +14,19 @@
 	"profile": {
 		"plusone": {
 			"email": "Email",
-			"firstName": "Nombre",
-			"lastNames": "Apellido(s)",
+			"first_name": "Nombre",
+			"last_name": "Apellido(s)",
 			"loading": "Cargando",
 			"submit": "Enviar",
 			"success": "¡Éxito!"
 		},
 		"theprofile": {
 			"email": "Correo electrónico:",
-			"firstName": "Nombre:",
+			"first_name": "Nombre: ",
 			"invite": "Invitar +1",
-			"lastNames": "Apellido(s):",
+			"last_name": "Apellido(s):",
 			"logOut": "Cerrar sesión",
-			"plusOne": "+1:",
+			"plusOne": "+1 disponbiles:",
 			"yourPlusOnes": " Tus +1"
 		}
 	},

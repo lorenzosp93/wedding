@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-col max-w-2xl mx-auto">
     <div class="w-full overflow-auto px-5">
-      <table v-if="!!profile" class="table-auto mx-auto my-5 text-right py-3 px-5">
+      <table v-if="!!profile" id="mainTable" class="table-auto mx-auto my-5 text-right py-3 px-5">
         <tbody class="">
           <tr>
-            <td>{{ $t('profile.theprofile.firstName') }}</td>
+            <td>{{ $t('profile.theprofile.first_name') }}</td>
             <td>{{ profile.user?.first_name }}</td>
           </tr>
           <tr>
-            <td>{{ $t('profile.theprofile.lastNames') }}</td>
+            <td>{{ $t('profile.theprofile.last_name') }}</td>
             <td>{{ profile.user?.last_name }}</td>
           </tr>
           <tr>
@@ -25,18 +25,23 @@
               </div>
             </td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="w-full overflow-auto px-5">
+      <p class="font-bold">
+        {{ $t('profile.theprofile.yourPlusOnes') }}
+      </p>
+      <table v-if="!!profile" class="table-auto mx-auto my-5 text-right py-3 px-5">
+        <tbody>
           <tr v-if="profile.childs.length">
-            <td>
-              <p>
-                {{ $t('profile.theprofile.yourPlusOnes') }}
-              </p>
-            </td>
             <td>
               <table class="w-full text-left">
                 <thead>
                   <th>{{ $t('profile.theprofile.email') }}</th>
-                  <th>{{ $t('profile.theprofile.firstName') }}</th>
-                  <th>{{ $t('profile.theprofile.lastNames') }}</th>
+                  <th>{{ $t('profile.theprofile.first_name') }}</th>
+                  <th>{{ $t('profile.theprofile.last_name') }}</th>
                 </thead>
                 <tbody>
                   <tr v-for="child in profile?.childs" :key="child.uuid">
@@ -48,11 +53,10 @@
               </table>
             </td>
           </tr>
-          
         </tbody>
       </table>
-
     </div>
+
     <button class="rounded-md bg-secondary dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3" @click="logout">{{ $t('profile.theprofile.logOut') }}</button>
   </div>
 </template>
@@ -94,7 +98,7 @@ tr:not(:last-child), th {
 td {
   @apply py-3 pr-5 text-right pl-3;
 };
-td:first-child {
+#mainTable td:first-child {
   @apply font-bold text-left pr-5;
 };
 th {

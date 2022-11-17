@@ -3,19 +3,19 @@
   </div>
   <div
 class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2
- rounded-lg max-w-md shadow-md bg-pale dark:bg-darkPale ring-1 ring-accent p-3">
+ rounded-lg bg-pale dark:bg-darkPale ring-1 ring-accent p-3 w-full max-w-sm">
     <form class="flex flex-wrap">
-
-      <label class="w-full ml-3 mt-2" for="email">{{ $t('profile.plusone.email') }}</label>
-      <input v-model="email" class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" type="email">
-      <label class="w-full ml-3 mt-2" for="firstName">{{ $t('profile.plusone.firstName') }}</label>
-      <input v-model="firstName" class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" type="text">
-      <label class="w-full ml-3 mt-2" for="lastName">{{ $t('profile.plusone.lastNames') }}</label>
-      <input v-model="lastName" class="w-full px-2 mx-3 rounded-md bg-neutral dark:bg-darkNeutral" type="text">
-      <p v-if="error" class="text-alert">{{ error }}</p>
-      <button v-if="!loading & !success" class="px-2 py-1 bg-accent mx-auto rounded-md my-5" @click.prevent="setupPlusOne">{{ $t('profile.plusone.submit') }}</button>
-      <p v-if="loading">{{ $t('profile.plusone.loading') }}</p>
-      <p v-if="success">{{ $t('profile.plusone.success') }}</p>
+      <div v-for="field in submit" :key="field.name" class="my-1 px-5 mx-auto w-full text-start">
+        <label class="w-full" :for="field.name">{{ $t('profile.plusone.' + field.name) }}</label>
+        <input v-model="submit.find(x=>x.name == field.name).value" class="w-full rounded-md bg-neutral dark:bg-darkNeutral" :type="field.name == 'email' ? field.name : 'text'">
+        <p v-if="error ? error[field.name] : false" class="text-alert mx-3">{{ error[field.name][0] }}</p>
+      </div>
+      <p v-if="error?.non_field_errors" class="text-alert mx-auto">{{ error.non_field_errors }}</p>
+      <div class="relative w-full h-16">
+        <button v-show="!loading & !success" class="flex mx-auto px-2 py-1 bg-accent rounded-md my-5" @click.prevent="setupPlusOne">{{ $t('profile.plusone.submit') }}</button>
+        <loading-view v-if="loading"></loading-view>
+        <p v-if="success">{{ $t('profile.plusone.success') }}</p>
+      </div>
     </form>
 
 
@@ -24,22 +24,30 @@ class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/
 
 <script>
 import ApiService from './../../services/api.service';
+import LoadingView from '@/components/shared/LoadingView.vue'
 
 export default {
-  
   name: 'PlusOne',
-  inject: [
-  ],
+  components: {LoadingView},
   props: {
     toggle: {type: Function}
   },
-  emits: [
-  ],
   data () {
     return {
-      email: null,
-      firstName: null,
-      lastName: null,
+      submit: [ 
+        {
+          name: 'email',
+          value: ''
+        },
+        {
+          name: 'first_name',
+          value: ''
+        },
+        {
+          name: 'last_name',
+          value: ''
+        },
+      ],
       error: null,
       loading: false,
       success: false,
@@ -52,16 +60,21 @@ export default {
   methods: {
     setupPlusOne(){
       this.loading = true;
-      ApiService.setupPlusOne(this.email, this.firstName, this.lastName).then(
+      console.log(this.submit)
+      ApiService.setupPlusOne(
+        this.submit.find(x => x.name == 'email').value,
+        this.submit.find(x => x.name == 'first_name').value,
+        this.submit.find(x => x.name == 'last_name').value,
+      ).then(
         (response) => {
           if(response.status == 200){
+            this.error = null;
             this.loading = false;
             this.success = true;
             setTimeout(() => this.toggle(), 2000)
           }
         },
         (error) => {
-          console.log(error);
           this.loading = false;
           this.error = error.response.data;
         }
