@@ -6,10 +6,11 @@ from django.dispatch import receiver
 from shared.models import Address, I18N
 
 USER_TYPES = (
-    (0, 'family'),
-    (1, 'friend'),
-    (2, 'colleague'),
+    (2, 'family'),
+    (3, 'friend'),
+    (5, 'colleague'),
 )
+
 
 class UserProfile(models.Model):
     "Model to extend the built-in Django user with additional fields"
@@ -25,7 +26,7 @@ class UserProfile(models.Model):
     )
     type = models.IntegerField(
         choices=USER_TYPES,
-        default=0,
+        default=2,
     )
     address = models.ForeignKey(
         Address,
@@ -71,4 +72,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-    
