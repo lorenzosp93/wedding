@@ -87,5 +87,5 @@ msgid "Please click the link below to access the invitee area."
 msgstr "Por favor, haz click al enlace a continuación para acceder al área de invitados."
 
 #: templates/token_email.html:12
-msgid "Click here to access the invitee area"
-msgstr "Click aquí para acceder al área de invitados"
+msgid "Click here"
+msgstr "Click aquí"

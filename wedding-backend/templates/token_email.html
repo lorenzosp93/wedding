@@ -1,20 +1,25 @@
 {% load i18n %}
-<body style="font-family:sans-serif;">
-<h1>{% translate "Your login link" %}</h1>
-<p>{% translate "Please click the link below to access the invitee area." %}</p>
 
-<div>
-    <table cellspacing="0" cellpadding="0"> 
-        <tr> 
-            <td align="center" width="300" height="40" bgcolor="#426cf5" style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #ffffff; display: block;">
-                <a href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}" style="font-size:16px; font-weight: bold; font-family:sans-serif; text-decoration: none; line-height:40px; width:100%; display:inline-block">
-                <span style="color: #ffffff">
-                {% translate "Click here to access the invitee area" %}
-                </span>
-                </a>
-            </td> 
-        </tr> 
-    </table> 
-</div>
+<body style="font-family:serif; background-color: #EAE6E3; color: #1F4045">
+    <div style="padding: 20px">
+        <h3>{% translate "Your login link" %}</h3>
+        <p>{% translate "Please click the link below to access the invitee area." %}</p>
+
+        <div>
+            <table cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center" width="200" height="30"
+                        style="-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; color: #EAE6E3; display: block; background-color: #7F9593;">
+                        <a href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}"
+                            style="font-size:16px; font-weight: bold; font-family:serif; text-decoration: none; line-height:30px; width:100%; display:inline-block">
+                            <span style="color: #EAE6E3">
+                                {% translate "Click here" %}
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 </body>

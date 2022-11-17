@@ -1,6 +1,8 @@
 <template>
-  <div class="bg-neutral dark:bg-darkNeutral border-2 p-5 mx-3 rounded-2xl">
-    <p>{{ $t('auth.loginsuccess.loginWasSuccessful') }}</p>
+  <div class="py-5 flex">
+    <div class="bg-pale dark:bg-darkPale border-2 p-5 rounded-2xl mx-auto" >
+      <p>{{ $t('auth.loginsuccess.loginWasSuccessful') }}</p>
+    </div>
   </div>
 </template>
   
