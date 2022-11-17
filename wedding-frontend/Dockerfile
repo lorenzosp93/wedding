@@ -15,5 +15,8 @@ COPY --from=build-stage /app/dist .
 # Add nginx config
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
+# add mime-types
+COPY ./mime.types /etc/nginx/mime.types
+
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
