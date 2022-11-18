@@ -1,29 +1,17 @@
-from itertools import combinations
 from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
     Serializable, TimeStampable,
     HasContent, HasSubject,
 )
-from profile.models import USER_TYPES
-USER_TYPES_DICT = dict(USER_TYPES)
+from profile.models import AUDIENCE_TYPES
 
 
 class Message(Serializable, HasSubject, HasContent, TimeStampable):
     "Model to define generic messages to users"
     option_pre = models.ManyToManyField('Option', blank=True)
     audience = models.IntegerField(
-        choices=[
-            *USER_TYPES,
-            *list(
-                (a*b, f"{dict(USER_TYPES)[a]} & {dict(USER_TYPES)[b]}")
-                for (a, b) in combinations(
-                    [idx for (idx, val) in USER_TYPES],
-                    r=2
-                )
-            ),
-            (30, 'all')
-        ],
+        choices=AUDIENCE_TYPES,
         default=30,
     )
 

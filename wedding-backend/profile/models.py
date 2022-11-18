@@ -1,4 +1,5 @@
 "Define abstract models to be used in all apps"
+from itertools import combinations
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
@@ -10,6 +11,18 @@ USER_TYPES = (
     (3, 'friend'),
     (5, 'colleague'),
 )
+USER_TYPES_DICT = dict(USER_TYPES)
+AUDIENCE_TYPES = [
+    *USER_TYPES,
+    *list(
+        (a*b, f"{dict(USER_TYPES)[a]} & {dict(USER_TYPES)[b]}")
+        for (a, b) in combinations(
+            [idx for (idx, val) in USER_TYPES],
+            r=2
+        )
+    ),
+    (30, 'all')
+]
 
 
 class UserProfile(models.Model):
