@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from shared.models import (
     HasPicture, HasContent, HasSubject
 )
-from profile.models import AUDIENCE_TYPES
+from profile.models import audience_types
 
 INFO_TYPES = (
     (0, _('Venues')),
@@ -29,7 +29,7 @@ PHOTO_TYPES = (
 
 class Information(HasPicture, HasContent, HasSubject):
     type = models.IntegerField(choices=INFO_TYPES,)
-    audience = models.IntegerField(choices=AUDIENCE_TYPES, default=30)
+    audience = models.IntegerField(choices=audience_types, default=30)
 
     def __str__(self) -> str:
         return f"{self.subject}"

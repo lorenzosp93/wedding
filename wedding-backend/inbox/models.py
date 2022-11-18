@@ -4,14 +4,14 @@ from shared.models import (
     Serializable, TimeStampable,
     HasContent, HasSubject,
 )
-from profile.models import AUDIENCE_TYPES
+from profile.models import audience_types
 
 
 class Message(Serializable, HasSubject, HasContent, TimeStampable):
     "Model to define generic messages to users"
     option_pre = models.ManyToManyField('Option', blank=True)
     audience = models.IntegerField(
-        choices=AUDIENCE_TYPES,
+        choices=audience_types,
         default=30,
     )
 

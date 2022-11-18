@@ -97,57 +97,71 @@ export const useInboxStore = defineStore({
             }
         },
         async submitResponse (responses, activeUuid) {
+            var calls = [];
+            let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.submitLoading = true;
-            const out = responses.some(
+            responses.forEach(
                 response => {
-                    if(this.inbox.find(m => m.uuid == activeUuid).questions.some(q => q.uuid == response.question && !q.response)){
-                        apiService.postInboxResponse(
+                    if(activeMessage.questions.some(q => q.uuid == response.question && !q.response)){
+                        calls = [...calls, apiService.postInboxResponse(
                             response.question,
-                            Array.isArray(response.option) ? [...response.option] : [response.option],
+                            Array.isArray(response.option) ? response.option : response.option ? [response.option] : null,
                             response.text,
-                        ).then(
-                            () => {
-                                return false;
-                            }
-                        ).catch(
-                            error => {
-                                this.submitError = [...(this.submitError ?? []), {q: response.question, e: error.response.data}];
-                                return true;
-                            }
-                        )
+                        )];    
                     }
                 }
             )
-            this.submitLoading = false;
-            if (!out) {
-                this.submitSuccess = true;
-            }
-            this.getInbox(true);
+            Promise.allSettled(calls).then(responses => {
+                this.submitLoading = false;
+                responses.forEach((response, idx) => {
+                    if (response.status == 'rejected') {
+                        this.submitError = [
+                            ...(this.submitError ?? []),
+                            {
+                                q: activeMessage.questions[idx].uuid,
+                                e: response.reason.response.data
+                            }
+                        ];
+                    };
+                })
+                if (responses.every(response => response.status == 'fulfilled')) {
+                    this.submitSuccess = true;
+                    this.submitError = null;
+                }
+                this.getInbox(true);
+            });
         },
         async deleteResponses (activeUuid) {
+            var calls = [];
+            let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.deleteLoading = true;
             this.submitSuccess = false;
-            const out = this.inbox.find(m => m.uuid == activeUuid).questions.some(
+            activeMessage.questions.forEach(
                 question => {
-                    apiService.deleteInboxResponse(
+                    calls = [...calls, apiService.deleteInboxResponse(
                         question.response.uuid
-                    ).then(
-                        () => {
-                            return false;
-                        }
-                    ).catch(
-                        error => {
-                            this.deleteError = error;
-                            return true;
-                        }
-                    )
+                    )];
                 }
             );
-            this.deleteLoading = false;
-            if (!out) {
-                this.deleteSuccess = true;
-            }
-            this.getInbox(true);
+            Promise.allSettled(calls).then(responses => {
+                this.deleteLoading = false;
+                responses.forEach((response, idx) => {
+                    if (response.status == 'rejected') {
+                        this.deleteError = [
+                            ...(this.deleteError ?? []),
+                            {
+                                q: activeMessage.questions[idx].uuid,
+                                e: response.reason.response.data
+                            }
+                        ];
+                    };
+                })
+                if (responses.every(response => response.status == 'fulfilled')) {
+                    this.deleteSuccess = true;
+                    this.deleteError = null;
+                }
+                this.getInbox(true);
+            });
         },
     },
 })
