@@ -2,12 +2,7 @@ name: backend
 
 on:
   push:
-    branches: [master]
-    paths:
-      - "wedding-backend/**"
-      - ".github/workflows/backend.yml"
-  pull_request:
-    branches: [master]
+    branches: [master, develop]
     paths:
       - "wedding-backend/**"
       - ".github/workflows/backend.yml"
