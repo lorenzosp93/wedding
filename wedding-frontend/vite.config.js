@@ -21,7 +21,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/\/api\//],
       },
       devOptions: {
-        enabled: process.env.ENV === 'true',
+        enabled: process.env.DEV === 'true',
       },
       includeAssets: [
           'favicon.ico',
