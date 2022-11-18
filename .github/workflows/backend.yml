@@ -106,7 +106,7 @@ jobs:
           context: ./wedding-backend
           platforms: linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:${{ env.GITHUB_REF_NAME }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:${{ github.ref_name }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -121,8 +121,8 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Rollout deploy
-        if: ${{ env.GITHUB_REF_NAME }} == 'master'
+        if: ${{ github.ref_name }} == 'master'
         run: kubectl rollout restart deploy wedding -n wedding
       - name: Rollout deploy stage
-        if: ${{ env.GITHUB_REF_NAME }}== 'develop'
+        if: ${{ github.ref_name }} == 'develop'
         run: kubectl rollout restart deploy wedding -n wedding-stg
