@@ -79,8 +79,8 @@ export const useInboxStore = defineStore({
         deleteError: null,
     }),
     actions: {
-        async getInbox() {
-            if(this.inbox.length == 0){
+        async getInbox(force) {
+            if(this.inbox.length == 0 || force){
                 this.inboxLoading = true;
                 apiService.getInboxContent().then(
                     (response) => {
@@ -122,9 +122,11 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.submitSuccess = true;
             }
+            this.getInbox(true);
         },
         async deleteResponses (activeUuid) {
             this.deleteLoading = true;
+            this.submitSuccess = false;
             const out = this.inbox.find(m => m.uuid == activeUuid).questions.some(
                 question => {
                     apiService.deleteInboxResponse(
@@ -145,6 +147,7 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.deleteSuccess = true;
             }
+            this.getInbox(true);
         },
     },
 })
