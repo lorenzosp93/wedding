@@ -85,14 +85,16 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   <label :for="option.uuid" class="ml-3">{{ option.content }}</label>
                 </li>
               </ul>
+              <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.option)" class="text-alert mx-3">{{ submitError.find(e => e.q == question.uuid)?.e.option[0] }}</p>
               <div v-if="question.free_text" class="mb-5">
                 <label for="input" class="ml-3 my-1">{{ $t('shared.listview.other') }}</label>
                 <input v-model="responses.find(r => r.question == question.uuid).text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 ml-3" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
+                <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.text)" class="text-alert mx-3"> {{ submitError.find(e => e.q == question.uuid)?.e.text[0] }}</p>
               </div>
-              <p v-if="question.uuid == submitError?.find(e => e.q == question && e.e?.non_field_errors)">{{ JSON.stringify(submitError?.find(e => e.q == question)?.e.non_field_errors[0]) }}</p>
+              <p v-if="question.uuid == submitError?.find(e => e.q == question.uuid && e.e?.non_field_errors)">{{ submitError.find(e => e.q == question)?.e.non_field_errors[0] }}</p>
             </div>
-            <div>
-              <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('submitResponse', responses, activeObject.uuid)">{{ $t('shared.listview.submit') }}</button>
+            <div class="relative h-20 w-full pt-5 mx-auto">
+              <button v-show="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent text-primary rounded-md px-2 py-1 flex mx-auto" @click.prevent="$emit('submitResponse', responses, activeObject.uuid)">{{ $t('shared.listview.submit') }}</button>
               <loading-view v-if="submitLoading"></loading-view>
               <p v-if="submitSuccess">{{ $t('shared.listview.success') }}</p>
             </div>
