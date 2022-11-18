@@ -20,7 +20,7 @@
             <td class="flex w-full"> 
               <p class="my-auto ml-auto">{{ profile.plus }} </p>
               <div v-if="profile?.plus - profile?.childs?.length" class="ml-auto mr-2">
-                <button  class="rounded-md bg-secondary py-1 px-2" @click="togglePlusOne">{{ $t('profile.theprofile.invite') }} </button>
+                <button  class="rounded-md bg-pale dark:bg-darkPale py-1 px-2" @click="togglePlusOne">{{ $t('profile.theprofile.invite') }} </button>
                 <plus-one v-if="showPlusOne" :toggle="togglePlusOne" />
               </div>
             </td>
@@ -57,7 +57,7 @@
       </table>
     </div>
 
-    <button class="rounded-md bg-secondary dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3" @click="logout">{{ $t('profile.theprofile.logOut') }}</button>
+    <button class="rounded-md bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3" @click="logout">{{ $t('profile.theprofile.logOut') }}</button>
   </div>
 </template>
 

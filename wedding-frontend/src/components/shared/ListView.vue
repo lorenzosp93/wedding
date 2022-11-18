@@ -17,12 +17,12 @@
                   </div>
                 </div>
             </li>
-          <div v-if="searchedList?.length == 0 && objList.length">
+          <li v-if="searchedList?.length == 0 && objList.length">
             <p>{{ $t('shared.listview.noMessage') }}</p>
-          </div>
-          <div v-if="!objList.length">
+          </li>
+          <li v-if="!objList.length">
             <p>{{ $t('shared.listview.done') }}</p>
-          </div>
+          </li>
         </ul>
       </section>
       <section :class="{hidden: !viewDetail}" class="md:block absolute left-0 z-10 md:relative w-full mx-auto min-h-screen md:w-1/2 px-4 flex flex-col bg-neutral dark:bg-darkNeutral overflow-y-scroll">

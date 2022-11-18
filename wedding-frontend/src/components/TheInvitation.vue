@@ -74,7 +74,7 @@
               </g>
           </g>
       </svg>
-      <img id="waxSeal" class="absolute top-[70%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="waxSeal" @load="upsertEnvelopeAnimation">
+      <img id="waxSeal" class="absolute top-[70%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="waxSeal" aria-label="Wax seal on the envelope" @load="upsertEnvelopeAnimation">
     </div>
   </div>
   <div id="scroller" :class="{invisible: !loaded}" class="fixed bottom-5 right-5 flex">
