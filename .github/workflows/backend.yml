@@ -105,7 +105,7 @@ jobs:
           context: ./wedding-backend
           platforms: linux/arm64/v8
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:${{ github.ref_name }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding:${{ github.ref_name }}
 
   deploy:
     runs-on: ubuntu-latest

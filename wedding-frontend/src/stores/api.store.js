@@ -122,7 +122,6 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.submitSuccess = true;
             }
-            window.location.reload();
         },
         async deleteResponses (activeUuid) {
             this.deleteLoading = true;
@@ -146,7 +145,6 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.deleteSuccess = true;
             }
-            window.location.reload();
         },
     },
 })
