@@ -2,7 +2,7 @@
 from itertools import combinations
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 from shared.models import Address, I18N
 
@@ -10,14 +10,14 @@ USER_TYPES = (
     (2, 'family'),
     (3, 'friend'),
     (5, 'colleague'),
-)
-USER_TYPES_DICT = dict(USER_TYPES)
-AUDIENCE_TYPES = [
+)  # index should be prime number!
+
+audience_types = [
     *USER_TYPES,
     *list(
         (a*b, f"{dict(USER_TYPES)[a]} & {dict(USER_TYPES)[b]}")
         for (a, b) in combinations(
-            [idx for (idx, val) in USER_TYPES],
+            [idx for (idx, _) in USER_TYPES],
             r=2
         )
     ),
