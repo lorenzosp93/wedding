@@ -59,8 +59,8 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Rollout deploy
-        if: ${{ github.ref_name }} == 'master'
+        if: ${{ github.ref_name == 'master' }}
         run: kubectl rollout restart deploy wedding -n wedding
       - name: Rollout deploy stage
-        if: ${{ github.ref_name }} == 'develop'
+        if: ${{ github.ref_name == 'develop' }}
         run: kubectl rollout restart deploy wedding -n wedding-stg
