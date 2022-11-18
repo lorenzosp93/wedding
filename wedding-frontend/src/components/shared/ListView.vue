@@ -66,7 +66,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           <form v-if="activeObject?.questions?.length && responses?.length">
             <div v-if="!activeObject?.questions.some(q => !q.response)">
               <p class="my-5 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
-              <button class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
+              <button class="bg-accent text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
             </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
@@ -92,7 +92,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               <p v-if="question.uuid == submitError?.find(e => e.q == question && e.e?.non_field_errors)">{{ JSON.stringify(submitError?.find(e => e.q == question)?.e.non_field_errors[0]) }}</p>
             </div>
             <div>
-              <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent dark:bg-accent rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('submitResponse', responses, activeObject.uuid)">{{ $t('shared.listview.submit') }}</button>
+              <button v-if="!submitLoading && activeObject?.questions.some(q => !q.response)" class="bg-accent text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('submitResponse', responses, activeObject.uuid)">{{ $t('shared.listview.submit') }}</button>
               <loading-view v-if="submitLoading"></loading-view>
               <p v-if="submitSuccess">{{ $t('shared.listview.success') }}</p>
             </div>
