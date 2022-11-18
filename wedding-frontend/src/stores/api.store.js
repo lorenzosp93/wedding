@@ -79,8 +79,8 @@ export const useInboxStore = defineStore({
         deleteError: null,
     }),
     actions: {
-        async getInbox() {
-            if(this.inbox.length == 0){
+        async getInbox(force) {
+            if(this.inbox.length == 0 || force){
                 this.inboxLoading = true;
                 apiService.getInboxContent().then(
                     (response) => {
@@ -96,18 +96,17 @@ export const useInboxStore = defineStore({
                 )
             }
         },
-        async submitResponse (responses) {
+        async submitResponse (responses, activeUuid) {
             this.submitLoading = true;
             const out = responses.some(
                 response => {
-                    if(this.activeMessage.questions.some(q => q.uuid == response.question && !q.response)){
+                    if(this.inbox.find(m => m.uuid == activeUuid).questions.some(q => q.uuid == response.question && !q.response)){
                         apiService.postInboxResponse(
                             response.question,
                             Array.isArray(response.option) ? [...response.option] : [response.option],
                             response.text,
                         ).then(
                             () => {
-                                this.getInbox();
                                 return false;
                             }
                         ).catch(
@@ -123,16 +122,17 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.submitSuccess = true;
             }
+            this.getInbox(true);
         },
-        async deleteResponses () {
+        async deleteResponses (activeUuid) {
             this.deleteLoading = true;
-            const out = this.activeMessage.questions.some(
+            this.submitSuccess = false;
+            const out = this.inbox.find(m => m.uuid == activeUuid).questions.some(
                 question => {
                     apiService.deleteInboxResponse(
                         question.response.uuid
                     ).then(
                         () => {
-                            this.getInbox();
                             return false;
                         }
                     ).catch(
@@ -147,6 +147,7 @@ export const useInboxStore = defineStore({
             if (!out) {
                 this.deleteSuccess = true;
             }
+            this.getInbox(true);
         },
     },
 })

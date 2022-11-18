@@ -16,6 +16,7 @@ I18N = (
     ('es', _('Spanish')),
 )
 
+
 class Address(models.Model):
     "Model to capture an address from a user"
     address1 = models.TextField(max_length=128)
@@ -24,6 +25,7 @@ class Address(models.Model):
     postal_code = models.CharField(max_length=10)
     province_or_state = models.CharField(max_length=10, null=True, blank=True)
     country = models.CharField(max_length=20)
+
 
 class Serializable(models.Model):
     "Abstract model to define an uuid based id field"
@@ -36,12 +38,13 @@ class Serializable(models.Model):
     class Meta:
         abstract = True
 
+
 class Named(models.Model):
     "Abstract model to define names and slug behavior"
     name = models.CharField(max_length=90, unique=True)
     slug = models.SlugField(max_length=100, editable=False)
 
-    def save(self, **kwargs): # pylint: disable=W0221
+    def save(self, **kwargs):  # pylint: disable=W0221
         "Override save method to create slug from name"
         if not self.slug:
             self.slug = slugify(self.name)
@@ -52,6 +55,7 @@ class Named(models.Model):
 
     class Meta:
         abstract = True
+
 
 class TimeStampable(models.Model):
     "Abstract model to define timestamps for the entries"
@@ -70,6 +74,7 @@ class TimeStampable(models.Model):
         abstract = True
         ordering = ['-created_at']
 
+
 class Datable(models.Model):
     "Abstract model to define dates for the entries"
     start_date = models.DateTimeField(
@@ -81,7 +86,7 @@ class Datable(models.Model):
         null=True,
     )
 
-    def save(self, **kwargs): # pylint: disable=W0221
+    def save(self, **kwargs):  # pylint: disable=W0221
         "Override save method to validate end date"
         if self.end_date:
             self.end_date_validation()
@@ -103,11 +108,16 @@ class Datable(models.Model):
     class Meta:
         abstract = True
 
+
 class Location(Named,):
     url = models.URLField(blank=True, null=True)
-    latitude = models.DecimalField(max_digits=17, decimal_places=15,blank=True, null=True)
-    longitude = models.DecimalField(max_digits=17, decimal_places=15,blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.SET_NULL, blank=True, null=True)
+    latitude = models.DecimalField(
+        max_digits=17, decimal_places=15, blank=True, null=True)
+    longitude = models.DecimalField(
+        max_digits=17, decimal_places=15, blank=True, null=True)
+    address = models.ForeignKey(
+        Address, on_delete=models.SET_NULL, blank=True, null=True)
+
 
 class Localizable(models.Model):
     "Abstract model to define locations"
@@ -120,6 +130,7 @@ class Localizable(models.Model):
 
     class Meta:
         abstract = True
+
 
 class Described(models.Model):
     "Abstract model to define descriptions"
@@ -139,6 +150,7 @@ class Attachment(Named, Serializable):
         verbose_name="File",
     )
 
+
 class Attachable(models.Model):
     "Abstract model to allow attachments"
     attachments = models.ManyToManyField(
@@ -151,6 +163,7 @@ class Attachable(models.Model):
 
     class Meta:
         abstract = True
+
 
 class Authorable(models.Model):
     "Abstract model to describe the author"
@@ -171,8 +184,10 @@ class Authorable(models.Model):
         related_query_name="%(app_label)s_%(class)s_modified",
         editable=False,
     )
+
     class Meta:
         abstract = True
+
 
 class HasPicture(models.Model):
     "Abstract class to capture a picture"
@@ -182,11 +197,12 @@ class HasPicture(models.Model):
         null=True,
     )
     thumbnail = models.ImageField(
-       upload_to="thumb/",
-       blank=True,
-       null=True,
-       editable=False,
+        upload_to="thumb/",
+        blank=True,
+        null=True,
+        editable=False,
     )
+
     def save(self) -> None:
         if self.picture:
             img = Image.open(self.picture)
@@ -220,6 +236,7 @@ class SingletonBaseModel(models.Model):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
 
+
 class SiteSetting(SingletonBaseModel):
     "Concrete model for the settings for the website"
     about_text = models.TextField()
@@ -234,6 +251,7 @@ class ContentString(models.Model):
     def __str__(self) -> str:
         return f"{self.value} - {self.id}"
 
+
 class TranslatedString(models.Model):
     "Model to define translations for a `ContentString`"
     language = models.CharField(
@@ -247,16 +265,20 @@ class TranslatedString(models.Model):
         on_delete=models.CASCADE,
         related_name='translated_strings'
     )
+
     class Meta:
         unique_together = ['language', 'content']
+
     def __str__(self) -> str:
         return f'{self.content.value} -> {self.get_language_display()}'
+
 
 def get_translated_content(content: ContentString, language: str = 0) -> str:
     "Helper function to return the translated string for a given content and language"
     if (translated_str := content.translated_strings.filter(language=language).first()):
         return translated_str.t9n
     return content.value
+
 
 class HasContent(models.Model):
     "Abstract class to define content"
@@ -269,6 +291,7 @@ class HasContent(models.Model):
 
     class Meta:
         abstract = True
+
 
 class HasSubject(models.Model):
     "Abstract class to define subject content"

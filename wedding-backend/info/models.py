@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from shared.models import (
     HasPicture, HasContent, HasSubject
 )
+from profile.models import AUDIENCE_TYPES
 
 INFO_TYPES = (
     (0, _('Venues')),
@@ -24,11 +25,15 @@ PHOTO_TYPES = (
 )
 
 # Create your models here.
+
+
 class Information(HasPicture, HasContent, HasSubject):
     type = models.IntegerField(choices=INFO_TYPES,)
+    audience = models.IntegerField(choices=AUDIENCE_TYPES, default=30)
 
     def __str__(self) -> str:
         return f"{self.subject}"
+
 
 class Photo(HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
