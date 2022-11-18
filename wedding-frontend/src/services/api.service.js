@@ -2,13 +2,25 @@ import axios from 'axios';
 import authHeader from './authheader';
 import { useAuthStore } from '@/stores';
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
 export const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
 export function getCSRFHeader() {
-    const token = request().get(
-      API_URL + '/api/shared/get-token/'
-    ).then( response => response.data.token )
-    return {'X-CSRFToken': token}
-  }
+  return {'X-CSRFToken': getCookie('csrftoken')}
+}
 
 export function request(post=false){
   var headers = {...authHeader()};
