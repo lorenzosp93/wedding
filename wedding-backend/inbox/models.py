@@ -64,17 +64,10 @@ class Response(Serializable, TimeStampable):
     text = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
+    deleted_at = models.DateTimeField(default=None, null=True, blank=True)
 
     def __str__(self):
         return f"{self.user}'s reply to {self.question.subject}"
 
     class Meta:
-        unique_together = ['question', 'user', 'active']
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'question'],
-                name='unique_user_response',
-            ),
-        ]
+        unique_together = ['question', 'user', 'active', 'deleted_at']

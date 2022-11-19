@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework.viewsets import (
     ReadOnlyModelViewSet,
     ModelViewSet,
@@ -38,4 +39,5 @@ class ResponseViewSet(ModelViewSet):
 
     def perform_destroy(self, instance):
         instance.active = False
+        instance.deleted_at = datetime.now()
         instance.save()
