@@ -2,7 +2,7 @@
 <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden">
   <div class="flex max-h-screen">
     <loading-view v-if="!loaded"></loading-view>
-    <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-2xl max-h-[80vh]">
+    <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl max-h-screen top-10 sm:-top-20 lg:-top-40">
       <svg class="w-full h-full overflow-visible" viewBox="0 0 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>{{ $t('theinvitation.envelope') }}</title>
     <defs>
@@ -191,5 +191,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
 </style>
