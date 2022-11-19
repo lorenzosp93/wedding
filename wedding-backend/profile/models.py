@@ -56,15 +56,6 @@ class UserProfile(models.Model):
         related_name='childs',
     )
 
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserProfile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
-
     def setup_plus_one(self, first_name, last_name, email):
         if self.user.childs.count() < self.plus:
             user, created = User.objects.get_or_create(
@@ -75,11 +66,12 @@ class UserProfile(models.Model):
                 user.last_name = last_name
                 user.email = email
                 user.save()
-                profile = user.profile
-                profile.language = self.language
-                profile.type = self.type
-                profile.parent = self.user
-                profile.save()
+                profile = UserProfile.objects.create(
+                    user=user,
+                    language=self.language,
+                    type=self.type,
+                    parent=self.user
+                )
             return user, created
         return None, False
 

@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 
 # Create your tests here.
+
+
 class TestProfileModels(TestCase):
     def setUp(self):
         username = 'someuser'
@@ -12,14 +14,14 @@ class TestProfileModels(TestCase):
             username=username,
             email=email
         )
-        self.profile = UserProfile.objects.get(user=self.user)
+        self.profile = UserProfile.objects.create(user=self.user)
         self.profile.language = 'it'
         self.profile.plus = 3
         self.profile.save()
 
     def test_profile_creation(self):
         self.assertIsInstance(self.profile, UserProfile)
-    
+
     def test_profile_update(self):
         self.assertEqual(self.profile.language, 'it')
         self.assertEqual(self.profile.plus, 3)
@@ -45,5 +47,3 @@ class TestProfileModels(TestCase):
             self.plus_one.profile.parent,
             self.user
         )
-
-

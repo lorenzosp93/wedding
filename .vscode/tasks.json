@@ -2,14 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "npm",
-			"script": "dev",
-			"path": "wedding-frontend/",
-			"problemMatcher": [],
-			"label": "npm: serve - wedding-frontend",
-			"detail": "vite dev"
-		},
-		{
 			"type": "docker-build",
 			"label": "docker-build",
 			"platform": "python",
@@ -56,9 +48,19 @@
 			"type": "npm",
 			"script": "dev",
 			"path": "wedding-frontend",
+			"problemMatcher": [],
 			"label": "vuejs: start",
-			"detail": "vue-cli-service serve",
+			"detail": "vite dev",
 			"isBackground": true
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "wedding-frontend",
+			"problemMatcher": [],
+			"label": "vuejs: build",
+			"detail": "vite build",
+			"isBackground": false
 		}
 	]
 }
