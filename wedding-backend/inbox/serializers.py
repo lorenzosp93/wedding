@@ -1,5 +1,5 @@
 from rest_framework.serializers import (
-    ModelSerializer, CharField, PrimaryKeyRelatedField,
+    ModelSerializer, PrimaryKeyRelatedField,
     SerializerMethodField, ValidationError
 )
 from .models import (
@@ -7,11 +7,13 @@ from .models import (
 )
 from profile.serializers import TranslationContentMixin, TranslationSubjectMixin
 
+
 class OptionSerializer(TranslationContentMixin, ModelSerializer):
-    
+
     class Meta:
         model = Option
         fields = '__all__'
+
 
 class ResponseSerializer(ModelSerializer):
     option = PrimaryKeyRelatedField(
@@ -21,7 +23,7 @@ class ResponseSerializer(ModelSerializer):
     )
     question = PrimaryKeyRelatedField(queryset=Question.objects.all())
     user = PrimaryKeyRelatedField(read_only=True)
-    
+
     class Meta:
         model = Response
         fields = '__all__'
@@ -38,6 +40,7 @@ class ResponseSerializer(ModelSerializer):
         kwargs["user"] = self.context.get('request').user
         return super().save(**kwargs)
 
+
 class QuestionSerializer(
     TranslationContentMixin,
     TranslationSubjectMixin,
@@ -45,22 +48,24 @@ class QuestionSerializer(
 ):
     def get_response(self, obj):
         user = self.context.get('request').user
-        response = Response.objects.filter(question=obj, user=user).first()
+        response = Response.objects.filter(
+            question=obj, user=user, active=True).first()
         if response:
             option_list = response.option.values_list('uuid', flat=True)
             return {
-                'option': option_list[0] if len(option_list) == 1  and not response.question.multi_select else option_list,
+                'option': option_list[0] if len(option_list) == 1 and not response.question.multi_select else option_list,
                 'text': response.text if response else '',
                 'uuid': response.uuid,
             }
         return None
 
     options = OptionSerializer(many=True, required=False)
-    response = SerializerMethodField("get_response") 
+    response = SerializerMethodField("get_response")
 
     class Meta:
         model = Question
         fields = '__all__'
+
 
 class MessageSerializer(
     TranslationContentMixin,

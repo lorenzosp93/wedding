@@ -63,6 +63,7 @@ class Response(Serializable, TimeStampable):
     )
     text = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.user}'s reply to {self.question.subject}"
