@@ -69,7 +69,7 @@ class Response(Serializable, TimeStampable):
         return f"{self.user}'s reply to {self.question.subject}"
 
     class Meta:
-        unique_together = ['question', 'user']
+        unique_together = ['question', 'user', 'active']
 
     class Meta:
         constraints = [
