@@ -20,6 +20,7 @@ class TestInboxViewsets(TestCase):
 
     def setUp(self):
         self.user = User.objects.create(username='testuser')
+        UserProfile.objects.create(user=self.user)
         self.message = Message.objects.create(
             subject=ContentString.objects.create(value='something'),
         )
@@ -54,8 +55,7 @@ class TestInboxViewsets(TestCase):
         ).to_representation(new_message)
         self.assertNotIn(serialized_obj, response.data)
         new_user = User.objects.create(username='new')
-        new_user.profile.type = 3
-        new_user.profile.save()
+        UserProfile.objects.create(user=new_user, type=3)
         new_request = self.factory.get(reverse('inbox:message-list'))
         force_authenticate(new_request, new_user)
         new_response = MessageViewSet.as_view({'get': 'list'})(new_request)
@@ -79,6 +79,7 @@ class TestInboxViewsets(TestCase):
         ).to_representation(new_message)
         self.assertIn(serialized_obj, response.data)
         new_user = User.objects.create(username='new')
+        UserProfile.objects.create(user=new_user)
         new_request = self.factory.get(reverse('inbox:message-list'))
         force_authenticate(new_request, new_user)
         new_response = MessageViewSet.as_view({'get': 'list'})(new_request)

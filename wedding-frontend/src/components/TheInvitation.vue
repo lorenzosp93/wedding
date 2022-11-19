@@ -2,7 +2,7 @@
 <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden">
   <div class="flex max-h-screen">
     <loading-view v-if="!loaded"></loading-view>
-    <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-2xl max-h-[80vh]">
+    <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl max-h-screen top-10 sm:-top-20 lg:-top-40">
       <svg class="w-full h-full overflow-visible" viewBox="0 0 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>{{ $t('theinvitation.envelope') }}</title>
     <defs>
@@ -13,9 +13,10 @@
             <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.304769449 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
-        <polygon id="path-3" points="17.8562676 251.52023 549.710246 251.52023 549.710246 622.52023 17.538115 622.52023"></polygon>
-        <filter id="filter-4" x="-0.2%" y="-0.3%" width="100.8%" height="101.1%" filterUnits="objectBoundingBox">
-            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+        <polygon id="path-3" points="0.321195 4.11996826e-14 537.261195 4.11996826e-14 537.261195 380 1.28629342e-14 380"></polygon>
+        <filter id="filter-4" x="-0.5%" y="-0.7%" width="101.3%" height="101.8%" filterUnits="objectBoundingBox">
+            <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
             <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
@@ -41,9 +42,49 @@
                 <use fill="#EAE6D3" fill-rule="evenodd" xlink:href="#path-1"></use>
             </g>
             <polygon id="base" fill="#EAE6D3" points="1.338115 237.27023 566.538115 237.27023 566.538115 637.27023 1.000015 637.27023"></polygon>
-            <g id="invite">
-                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
-                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+            <g id="invite" transform="translate(15.276920, 247.270230)">
+                <g>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                </g>
+                <text id="Daniel-Cabrera-Uscan" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" letter-spacing="0.00145161749" fill="#1F4045">
+                    <tspan x="30.1843401" y="55">{{ $t('theinvitation.danielCabreraUscangaAndReginaMatos') }}</tspan>
+                    <tspan x="35.5853562" y="73">{{ $t('theinvitation.canoCommunicateTheWeddingOfTheirDaughter') }}</tspan>
+                    <tspan x="102.669759" y="91">{{ $t('theinvitation.priscillaWith') }}</tspan>
+                </text>
+                <text id="Renato-R.-Spinelli-e" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" letter-spacing="0.00145161749" fill="#1F4045">
+                    <tspan x="312.86034" y="55">{{ $t('theinvitation.renatoRSpinelliAndVincenzaAlessio') }}</tspan>
+                    <tspan x="303.988082" y="73">{{ $t('theinvitation.ruffoDiCalabriaCommunicateTheWeddingOf') }}</tspan>
+                    <tspan x="359.472501" y="91">{{ $t('theinvitation.theirSonLorenzoWith') }}</tspan>
+                </text>
+                <text id="Lorenzo-Spinelli" font-family="Tangerine-Regular, Tangerine" font-size="21" font-weight="normal" letter-spacing="0.00169355374" fill="#1F4045">
+                    <tspan x="88.1421466" y="145">{{ $t('theinvitation.lorenzoSpinelli') }}</tspan>
+                </text>
+                <text id="Priscilla-Cabrera-Ma" font-family="Tangerine-Regular, Tangerine" font-size="21" font-weight="normal" letter-spacing="0.00169355374" fill="#1F4045">
+                    <tspan x="335.094719" y="145">{{ $t('theinvitation.priscillaCabreraMatos') }}</tspan>
+                </text>
+                <text id="Domenica,-1-ottobre" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
+                    <tspan x="209.603872" y="193">{{ $t('theinvitation.sundayOct1st2023h1630') }}</tspan>
+                </text>
+                <text id="Roma" font-family="Tangerine-Regular, Tangerine" font-size="16" font-weight="normal" letter-spacing="0.00129032666" fill="#1F4045">
+                    <tspan x="254.770614" y="244">{{ $t('theinvitation.rome') }}</tspan>
+                </text>
+                <text id="Amsterdam,-the-Nethe" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
+                    <tspan x="216.588518" y="294">{{ $t('theinvitation.amsterdamTheNetherlands') }}</tspan>
+                    <tspan x="223.722082" y="309">{{ $t('theinvitation.witteDeWithstraat1601') }}</tspan>
+                </text>
+                <text id="Roma,-Italia-via-Ett" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
+                    <tspan x="445.546421" y="346">{{ $t('theinvitation.romeItaly') }}</tspan>
+                    <tspan x="433.899211" y="361">{{ $t('theinvitation.viaEttorePetrolini11') }}</tspan>
+                </text>
+                <text id="Puebla,-Messico-Pase" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
+                    <tspan x="41.8317272" y="331">{{ $t('theinvitation.pueblaMexico') }}</tspan>
+                    <tspan x="26.3415175" y="346">{{ $t('theinvitation.paseoToscana165Cluster') }}</tspan>
+                    <tspan x="26.6990821" y="361">{{ $t('theinvitation.888LomasDeAngelopolis') }}</tspan>
+                </text>
+                <text id="Basilica-dei-Santi-G" font-family="Tangerine-Regular, Tangerine" font-size="21" font-weight="normal" letter-spacing="0.00169355374" fill="#1F4045">
+                    <tspan x="154.248437" y="219">{{ $t('theinvitation.basilicaDeiSantiGiovanniEPaoloAlCelio') }}</tspan>
+                </text>
             </g>
             <g id="sideFlaps">
                 <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
@@ -55,7 +96,7 @@
             </g>
         </g>
     </g>
-      </svg>
+</svg>
       <svg id="envelopeFlap" class="w-full h-full absolute top-[37.25%] origin-top" viewBox="-1 1 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <title>{{ $t('theinvitation.envelopeflap') }}</title>
           <defs>
@@ -150,5 +191,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  @import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
 </style>
