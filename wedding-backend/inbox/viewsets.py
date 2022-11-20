@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework.viewsets import (
     ReadOnlyModelViewSet,
     ModelViewSet,
@@ -35,3 +36,8 @@ class ResponseViewSet(ModelViewSet):
 
     def get_queryset(self):
         return Response.objects.filter(user__id=self.request.user.id)
+
+    def perform_destroy(self, instance):
+        instance.active = False
+        instance.deleted_at = datetime.now()
+        instance.save()

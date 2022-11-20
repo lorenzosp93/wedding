@@ -56,7 +56,7 @@ export default {
     return {
       menu: false,
       dropInfo: false,
-      logo: new URL("../../assets/logo_long.svg", import.meta.url).href,
+      logo: new URL("@/assets/logo_long.svg", import.meta.url).href,
     };
   },
   computed: {
