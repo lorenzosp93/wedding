@@ -174,7 +174,8 @@ export default {
         ScrollSmoother: {
           smooth: 1,
           effects: true,
-          smoothTouch: 0.1,
+          smoothTouch: 0.2,
+					normalizeScroll: true,
         }
       })
       tl
