@@ -20,12 +20,7 @@ const myApp = createApp(App)
   .use(VueAxios, axios)
   .use(i18n);
 
-ScrollTrigger.config({
-  ignoreMobileResize: true,
-});
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 myApp.config.globalProperties.$gsap = gsap;
-myApp.config.globalProperties.$ssm = ScrollSmoother;
-myApp.config.globalProperties.$str = ScrollTrigger;
 
 myApp.mount('#app');
