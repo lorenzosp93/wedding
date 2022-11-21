@@ -177,7 +177,7 @@ export default {
       this.smoother = ScrollSmoother.create({
         smooth: 1,
         effects: true,
-        ignoreMobileResize: true,
+        ignoreMobileResize: false,
         normalizeScroll: true,
         content: '#main',
         wrapper: '#app'
