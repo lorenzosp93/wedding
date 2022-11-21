@@ -179,7 +179,7 @@ export default {
         scrollTrigger: {
           trigger: 'body',
           scrub: true,
-          start: '1% top',
+          start: 'top top',
           end: 'bottom bottom',
           pin: '#envelopeContainer',
           pinSpacing: false,
