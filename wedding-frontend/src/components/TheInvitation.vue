@@ -2,7 +2,7 @@
   <div id="smooth-wrapper">
     <div id="smooth-content">
 
-      <div id="the-invitation" :class="{'h-[500vh]': loaded}" class="overflow-y-hidden">
+      <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden">
         <div class="flex max-h-screen">
           <loading-view v-if="!loaded"></loading-view>
           <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl max-h-screen top-10 sm:-top-20 lg:-top-40">
