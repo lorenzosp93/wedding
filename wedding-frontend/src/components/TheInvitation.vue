@@ -151,21 +151,27 @@ export default {
     return {
       loaded: false,
       tl: null,
+      smoother: null,
       waxSeal: new URL("@/assets/waxSeal.webp", import.meta.url).href,
     }
   },
   beforeUnmount () {
-    this.tl?.kill();
+    this.cleanup();
   },
   methods: {
+    cleanup () {
+      this.tl?.kill();
+      this.smoother?.kill();
+    },
     upsertEnvelopeAnimation () {
       this.loaded = true;
+      this.cleanup();
 
-      ScrollSmoother.create({
+      this.smoother = ScrollSmoother.create({
         smooth: 1,
         effects: true,
         smoothTouch: 0.2,
-        normalizeScroll: false,
+        normalizeScroll: true,
         ignoreMobileResize: true,
         content: '#main',
         wrapper: '#app'
