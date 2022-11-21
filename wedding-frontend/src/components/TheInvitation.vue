@@ -175,10 +175,9 @@ export default {
       this.cleanup();
 
       this.smoother = ScrollSmoother.create({
-        smooth: 1,
         effects: true,
-        ignoreMobileResize: false,
-        normalizeScroll: false,
+        ignoreMobileResize: true,
+        normalizeScroll: true,
         content: '#main',
         wrapper: '#app'
       });
@@ -186,7 +185,7 @@ export default {
         scrollTrigger: {
           trigger: '#the-invitation',
           scrub: true,
-          start: '1% top',
+          start: 'top top',
           end: 'bottom bottom',
           pin: '#envelopeContainer',
           pinSpacing: false,
@@ -209,7 +208,7 @@ export default {
           duration: 0.5,
           ease: 'none',
         }, 0.5)
-        .set('#scroller', {autoAlpha: 0}, .95);
+        .set('#scroller', {autoAlpha: 0}, .6);
       this.tl = tl;
     },
   },
