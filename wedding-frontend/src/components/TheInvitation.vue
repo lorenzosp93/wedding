@@ -152,7 +152,7 @@ export default {
     return {
       loaded: false,
       tl: null,
-      waxSeal: new URL("../assets/waxSeal.webp", import.meta.url).href,
+      waxSeal: new URL("@/assets/waxSeal.webp", import.meta.url).href,
     }
   },
   beforeUnmount () {
@@ -172,9 +172,9 @@ export default {
           pin: '#envelopeContainer',
         },
         ScrollSmoother: {
-          smooth: 2,
+          smooth: 1,
           effects: true,
-          smoothTouch: 0.2,
+          smoothTouch: 0.1,
         }
       })
       tl
