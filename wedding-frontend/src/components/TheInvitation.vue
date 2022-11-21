@@ -161,7 +161,7 @@ export default {
   methods: {
     upsertEnvelopeAnimation () {
       this.loaded = true;
-      this.$str.normalizeScroll(true);
+
       this.tl?.kill();
       const tl = this.$gsap.timeline({
         scrollTrigger: {
