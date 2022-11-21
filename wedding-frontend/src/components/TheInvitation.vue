@@ -114,7 +114,7 @@
               </g>
           </g>
       </svg>
-      <img id="waxSeal" class="absolute top-[70%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="waxSeal" aria-label="Wax seal on the envelope" @load="upsertEnvelopeAnimation">
+      <img id="waxSeal" class="absolute top-[73%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="waxSeal" aria-label="Wax seal on the envelope" @load="upsertEnvelopeAnimation">
     </div>
   </div>
   <div id="scroller" :class="{invisible: !loaded}" class="fixed bottom-5 right-5 flex">
@@ -162,9 +162,9 @@ export default {
       this.loaded = true;
 
       ScrollSmoother.create({
-        smooth: 5,
+        smooth: 1,
         effects: true,
-        smoothTouch: 0.5,
+        smoothTouch: 0.2,
         normalizeScroll: false,
         ignoreMobileResize: true,
         content: '#main',
@@ -177,6 +177,7 @@ export default {
           start: '1% top',
           end: 'bottom bottom',
           pin: '#envelopeContainer',
+          anticipatePin: 1,
         },
       })
       tl
