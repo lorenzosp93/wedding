@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios';
 import axios from 'axios';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 import App from './App.vue'
 import './index.css'
 const pinia = createPinia()
@@ -22,7 +23,9 @@ const myApp = createApp(App)
 ScrollTrigger.config({
   ignoreMobileResize: true,
 });
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 myApp.config.globalProperties.$gsap = gsap;
+myApp.config.globalProperties.$ssm = ScrollSmoother;
+myApp.config.globalProperties.$str = ScrollTrigger;
 
 myApp.mount('#app');
