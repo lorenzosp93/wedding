@@ -19,7 +19,7 @@ class Message(Serializable, HasSubject, HasContent, TimeStampable):
         return f"{self.subject}"
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['created_at']
 
 
 class Question(Serializable, HasSubject, HasContent):
