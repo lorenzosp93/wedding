@@ -178,7 +178,7 @@ export default {
         smooth: 1,
         effects: true,
         ignoreMobileResize: false,
-        normalizeScroll: true,
+        normalizeScroll: false,
         content: '#main',
         wrapper: '#app'
       });
