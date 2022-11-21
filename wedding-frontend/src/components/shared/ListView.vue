@@ -151,20 +151,24 @@ emits: ['submitResponse', 'deleteResponses'],
     objList() {
       this.responseSetup();
     },
+    $route() {
+      this.refreshActive();
+    }
   },
   mounted () {
-    this.viewDetail = !!this.$route.params.active;
-    if (this.viewDetail) {
-      let parseActive = parseInt(this.$route.params.active);
-      if (Number.isSafeInteger(parseActive)) {
-        this.setActive(parseInt(this.$route.params.active));
-      }
-    }
+    this.refreshActive();
   },
   beforeUnmount () {
     localStorage.setItem('responses', JSON.stringify(this.responses));
   },
   methods: {
+    refreshActive () {
+      this.viewDetail = !!this.$route.params.active;
+      let parseActive = parseInt(this.$route.params.active);
+      if (Number.isSafeInteger(parseActive)) {
+        this.setActive(parseInt(this.$route.params.active));
+      }
+    },
     setActive(n){
       this.$router.push(
         {
@@ -199,6 +203,7 @@ emits: ['submitResponse', 'deleteResponses'],
     },
     hideDetail () {
       this.viewDetail = false;
+      this.$route.params.active = null;
       this.$router.push({name: this.$route.name, params: {...this.$route.params}})
     },
     responseSetup () {
