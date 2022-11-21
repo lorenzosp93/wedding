@@ -1,7 +1,20 @@
 <template>
-
+<div id="scroller" :class="{invisible: !loaded}" class="absolute w-fit right-0 py-2 flex" >
+  <p>{{ $t('theinvitation.scrollDown') }}</p>
+  <svg
+class="h-7 w-7 block m-auto pt-3.5 animate-bounce fill-accent" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
+      <g>
+        <path
+          d="M34.6,228.4L472,481c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4c-13.9-24.1-44.4-32.5-68.1-18.8L500,380.9L84.9,141.2C61.2,127.5,30.8,136,16.9,160C2.9,184.1,10.9,214.7,34.6,228.4z" />
+        <path
+          d="M915.1,519L500,758.7L84.9,519c-23.7-13.7-54.2-5.2-68.1,18.8c-13.9,24.1-6,54.7,17.7,68.4L472,858.8c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4C969.2,513.8,938.8,505.4,915.1,519z" />
+      </g>
+  </svg>
+</div>
 <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden ">
   <div id="invitation-content" class="flex max-h-screen">
+    
     <loading-view v-if="!loaded"></loading-view>
     <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl max-h-screen top-10 sm:-top-20 lg:-top-40">
       <svg class="w-full h-full overflow-visible" viewBox="0 0 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -117,19 +130,6 @@
       <img id="waxSeal" class="absolute top-[73%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="waxSeal" aria-label="Wax seal on the envelope" @load="upsertEnvelopeAnimation">
     </div>
   </div>
-  <div id="scroller" :class="{invisible: !loaded}" class="fixed bottom-5 right-5 flex">
-    <p>{{ $t('theinvitation.scrollDown') }}</p>
-    <svg
-class="h-7 w-7 block m-auto pt-3.5 animate-bounce fill-accent" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
-        <g>
-          <path
-            d="M34.6,228.4L472,481c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4c-13.9-24.1-44.4-32.5-68.1-18.8L500,380.9L84.9,141.2C61.2,127.5,30.8,136,16.9,160C2.9,184.1,10.9,214.7,34.6,228.4z" />
-          <path
-            d="M915.1,519L500,758.7L84.9,519c-23.7-13.7-54.2-5.2-68.1,18.8c-13.9,24.1-6,54.7,17.7,68.4L472,858.8c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4C969.2,513.8,938.8,505.4,915.1,519z" />
-        </g>
-    </svg>
-  </div>
 </div>
 
 </template>
@@ -201,8 +201,7 @@ export default {
           y: `+=${window.innerHeight}`,
           duration: 0.5,
           ease: 'none',
-        }, 0.5)
-        .set('#scroller', {autoAlpha: 0}, 1.0)
+        }, 0.5);
       this.tl = tl;
     },
   },
