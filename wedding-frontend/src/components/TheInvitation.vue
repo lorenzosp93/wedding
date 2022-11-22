@@ -1,52 +1,26 @@
 <template>
 <div>
   <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden ">
-    <div id="invitation-content" class="flex max-h-screen">
+    <div id="invitation-content" class="flex ">
       <loading-view v-if="!loaded"></loading-view>
-      <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl max-h-screen top-10 sm:-top-20 lg:-top-40">
-        <svg class="w-full h-full overflow-visible" viewBox="0 0 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <defs>
-          <polygon id="path-1" points="1 237 24.7881718 188.473418 283.5 5.61220497e-14 542.8762 188.473418 566 237 21.245112 237"></polygon>
-          <filter id="filter-2" x="-0.5%" y="-1.2%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
-              <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
-              <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
-              <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-              <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.304769449 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-          </filter>
-          <polygon id="path-3" points="0.321195 4.11996826e-14 537.261195 4.11996826e-14 537.261195 380 1.28629342e-14 380"></polygon>
-          <filter id="filter-4" x="-0.5%" y="-0.7%" width="101.3%" height="101.8%" filterUnits="objectBoundingBox">
-              <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
-              <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
-              <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-              <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-          </filter>
-          <polygon id="path-5" points="1.000015 237.17223 283.682115 473.20623 566.217115 236.91623 566.217115 636.91663 1.000015 636.91663"></polygon>
-          <filter id="filter-6" x="-0.4%" y="-0.9%" width="101.2%" height="102.0%" filterUnits="objectBoundingBox">
-              <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
-              <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
-              <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-              <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.298978365 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-          </filter>
-          <polygon id="path-7" points="0 637 23.8302747 588.473418 283 400 542.835273 588.473418 566 636.91663 20.2809441 637"></polygon>
-          <filter id="filter-8" x="-0.5%" y="-1.2%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
-              <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
-              <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
-              <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-              <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.304769449 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-          </filter>
-      </defs>
-      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="envelope" transform="translate(1.661885, 1.729770)">
-              <g id="topFlap" class="invisible">
-                  <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                  <use fill="#EAE6D3" fill-rule="evenodd" xlink:href="#path-1"></use>
-              </g>
-              <polygon id="base" fill="#EAE6D3" points="1.338115 237.27023 566.538115 237.27023 566.538115 637.27023 1.000015 637.27023"></polygon>
-              <g id="invite" transform="translate(15.276920, 247.270230)">
-                  <g>
-                      <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
-                      <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
-                  </g>
+      <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-40 sm:-top-20">
+        <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.2%] -z-10 px-1" @load="loadImage('base')">
+        <svg class="w-full max-h-full p-3 absolute left-1/2 -translate-x-1/2 top-[33%]" viewBox="0 0 543 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <defs>
+            <polygon id="path-1" points="0.321195 4.11996826e-14 537.261195 4.11996826e-14 537.261195 380 1.28629342e-14 380"></polygon>
+            <filter id="filter-2" x="-0.5%" y="-0.7%" width="101.3%" height="101.8%" filterUnits="objectBoundingBox">
+                <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+                <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+                <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+                <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+            </filter>
+        </defs>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="invite" transform="translate(1.661885, 1.729770)">
+            <g>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
                   <text id="Daniel-Cabrera-Uscan" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" letter-spacing="0.00145161749" fill="#1F4045">
                       <tspan x="30.1843401" y="55">{{ $t('theinvitation.danielCabreraUscangaAndReginaMatos') }}</tspan>
                       <tspan x="35.5853562" y="73">{{ $t('theinvitation.canoCommunicateTheWeddingOfTheirDaughter') }}</tspan>
@@ -86,35 +60,12 @@
                       <tspan x="154.248437" y="219">{{ $t('theinvitation.basilicaDeiSantiGiovanniEPaoloAlCelio') }}</tspan>
                   </text>
               </g>
-              <g id="sideFlaps">
-                  <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
-                  <use fill="#EAE6D3" fill-rule="evenodd" xlink:href="#path-5"></use>
-              </g>
-              <g id="bottomFlap">
-                  <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
-                  <use fill="#EAE6D3" fill-rule="evenodd" xlink:href="#path-7"></use>
-              </g>
           </g>
-      </g>
         </svg>
-        <svg id="envelopeFlap" class="w-full h-full absolute top-[37.25%] origin-top" viewBox="-1 1 572 642" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <defs>
-                <polygon id="path-1" points="1.661885 237.72977 25.5342627 189.203188 285.161885 0.72977 545.456231 189.203188 568.661885 237.72977 21.9786611 237.72977"></polygon>
-                <filter id="filter-2" x="-0.5%" y="-2.0%" width="101.4%" height="103.1%" filterUnits="objectBoundingBox">
-                    <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
-                    <feOffset dx="1" dy="-1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
-                    <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-                    <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.304769449 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-                </filter>
-            </defs>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g id="envelopeFlap" transform="translate(285.161885, 119.229770) scale(1, -1) translate(-285.161885, -119.229770) ">
-                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                    <use fill="#EAE6D3" fill-rule="evenodd" xlink:href="#path-1"></use>
-                </g>
-            </g>
-        </svg>
-        <img id="waxSeal" class="absolute top-[73%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[18%] max-w-[18%]" :src="waxSeal" aria-label="Wax seal on the envelope" @load="upsertEnvelopeAnimation">
+        <img id="sideFlaps" :src="images.find(img => img.name == 'sideFlaps').url" alt="Envelope side flaps" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-10 px-0.5" @load="loadImage('sideFlaps')">
+        <img id="bottomFlap" :src="images.find(img => img.name == 'bottomFlap').url" alt="Envelope bottom flap" class="absolute aspect-auto max-w-full max-h-[60%] left-1/2 -translate-x-1/2 top-[72.5%] z-20 px-0.5" @load="loadImage('bottomFlap')">
+        <img id="envelopeFlap" class="max-w-full max-h-[60%] absolute left-1/2 -translate-x-1/2 top-[32.3%] origin-top z-30 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" aria-label="Envelope flap" @load="loadImage('envelopeFlap')">
+        <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-40" :src="images.find(img => img.name == 'waxSeal').url" aria-label="Wax seal on the envelope" @load="loadImage('waxSeal')">
       </div>
     </div>
   </div>
@@ -159,19 +110,51 @@ export default {
       loaded: false,
       tl: null,
       smoother: null,
-      waxSeal: new URL("@/assets/waxSeal.webp", import.meta.url).href,
+      images: [ 
+        {
+          name: 'waxSeal',
+          url:  new URL("@/assets/waxSeal.webp", import.meta.url).href,
+          loaded: false,
+        },
+        {
+          name: 'envelopeFlap',
+          url: new URL("@/assets/envelopeFlap.webp", import.meta.url).href,
+          loaded: false,
+        },
+        {
+          name: 'base',
+          url: new URL("@/assets/base.webp", import.meta.url).href,
+          loaded: false,
+        },
+        {
+          name: 'bottomFlap',
+          url: new URL("@/assets/bottomFlap.webp", import.meta.url).href,
+          loaded: false,
+        },
+        {
+          name: 'sideFlaps',
+          url: new URL("@/assets/sideFlaps.webp", import.meta.url).href,
+          loaded: false,
+        },
+       ]
     }
   },
   beforeUnmount () {
     this.cleanup();
   },
   methods: {
+    loadImage (img) {
+      this.images.find(image => image.name == img).loaded = true;
+      if (this.images.every(image => image.loaded)) {
+        this.loaded = true;
+        this.upsertEnvelopeAnimation();
+      }
+    },
     cleanup () {
       this.tl?.kill();
       this.smoother?.kill();
     },
     upsertEnvelopeAnimation () {
-      this.loaded = true;
       this.cleanup();
 
       this.smoother = ScrollSmoother.create({
@@ -201,9 +184,9 @@ export default {
           rotationX: 180,
           duration: 0.3,
         }, 0.2)
-        .set('#envelopeFlap', {autoAlpha: 0}, 0.5)
-        .set('#topFlap', {autoAlpha: 1}, 0.5)
-        .to('#topFlap, #sideFlaps, #bottomFlap, #base', {
+        .set('#envelopeFlap', {zIndex: -10}, 0.35)
+        // .set('#topFlap', {autoAlpha: 1}, 0.5)
+        .to('#envelopeFlap, #sideFlaps, #bottomFlap, #base', {
           y: `+=${window.innerHeight}`,
           duration: 0.5,
           ease: 'none',
