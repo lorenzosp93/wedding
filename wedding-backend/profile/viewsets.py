@@ -1,4 +1,4 @@
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from rest_framework.viewsets import ModelViewSet
 from .serializers import (
     UserProfileWriteSerializer, UserProfileSerializer
 )
@@ -7,6 +7,7 @@ from .models import (
 )
 
 WRITE_ACTIONS = ["create", "update", "partial_update", "destroy"]
+
 
 class UserProfileViewset(ModelViewSet):
     """
@@ -25,4 +26,3 @@ class UserProfileViewset(ModelViewSet):
         if self.action in WRITE_ACTIONS:
             return super().get_queryset().filter(user__id=self.request.user.id)
         return super().get_queryset().filter(user__id=self.request.user.id)
-        
