@@ -160,7 +160,7 @@ export default {
       this.smoother = ScrollSmoother.create({
         effects: true,
         ignoreMobileResize: true,
-        normalizeScroll: true,
+        normalizeScroll: false,
         content: '#main',
         wrapper: '#app'
       });
