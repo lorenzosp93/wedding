@@ -4,8 +4,8 @@
     <div id="invitation-content" class="flex ">
       <loading-view v-if="!loaded"></loading-view>
       <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-40 sm:-top-20">
-        <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.2%] -z-10 px-1" @load="loadImage('base')">
-        <svg class="w-full max-h-full p-3 absolute left-1/2 -translate-x-1/2 top-[33%]" viewBox="0 0 543 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.2%] z-0 px-1" @load="loadImage('base')">
+        <svg class="z-10 w-full max-h-full p-3 absolute left-1/2 -translate-x-1/2 top-[33%]" viewBox="0 0 543 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
           <defs>
             <polygon id="path-1" points="0.321195 4.11996826e-14 537.261195 4.11996826e-14 537.261195 380 1.28629342e-14 380"></polygon>
             <filter id="filter-2" x="-0.5%" y="-0.7%" width="101.3%" height="101.8%" filterUnits="objectBoundingBox">
@@ -62,10 +62,10 @@
               </g>
           </g>
         </svg>
-        <img id="sideFlaps" :src="images.find(img => img.name == 'sideFlaps').url" alt="Envelope side flaps" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-10 px-0.5" @load="loadImage('sideFlaps')">
-        <img id="bottomFlap" :src="images.find(img => img.name == 'bottomFlap').url" alt="Envelope bottom flap" class="absolute aspect-auto max-w-full max-h-[60%] left-1/2 -translate-x-1/2 top-[72.5%] z-20 px-0.5" @load="loadImage('bottomFlap')">
-        <img id="envelopeFlap" class="max-w-full max-h-[60%] absolute left-1/2 -translate-x-1/2 top-[32.3%] origin-top z-30 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" aria-label="Envelope flap" @load="loadImage('envelopeFlap')">
-        <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-40" :src="images.find(img => img.name == 'waxSeal').url" aria-label="Wax seal on the envelope" @load="loadImage('waxSeal')">
+        <img id="sideFlaps" :src="images.find(img => img.name == 'sideFlaps').url" alt="Envelope side flaps" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-20 px-0.5" @load="loadImage('sideFlaps')">
+        <img id="bottomFlap" :src="images.find(img => img.name == 'bottomFlap').url" alt="Envelope bottom flap" class="absolute aspect-auto max-w-full max-h-[60%] left-1/2 -translate-x-1/2 top-[72.5%] z-30 px-0.5" @load="loadImage('bottomFlap')">
+        <img id="envelopeFlap" class="max-w-full max-h-[60%] absolute left-1/2 -translate-x-1/2 top-[32.3%] origin-top z-40 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" aria-label="Envelope flap" @load="loadImage('envelopeFlap')">
+        <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-50" :src="images.find(img => img.name == 'waxSeal').url" aria-label="Wax seal on the envelope" @load="loadImage('waxSeal')">
       </div>
     </div>
   </div>
@@ -184,7 +184,7 @@ export default {
           rotationX: 180,
           duration: 0.3,
         }, 0.2)
-        .set('#envelopeFlap', {zIndex: -10}, 0.35)
+        .set('#envelopeFlap', {zIndex: 0}, 0.5)
         // .set('#topFlap', {autoAlpha: 1}, 0.5)
         .to('#envelopeFlap, #sideFlaps, #bottomFlap, #base', {
           y: `+=${window.innerHeight}`,
