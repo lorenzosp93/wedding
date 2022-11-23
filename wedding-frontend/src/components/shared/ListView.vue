@@ -3,7 +3,7 @@
   <div class=" w-11/12 mx-auto text-primary dark:text-darkPrimary">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full h-full rounded-3xl">
-      <section class="flex flex-col w-full min-h-full py-5 md:w-1/3  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
+      <section id="list-view" class="flex flex-col w-full min-h-full py-5 md:w-1/3  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
         <label class="px-3">
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
@@ -25,7 +25,7 @@
           </li>
         </ul>
       </section>
-      <section :class="{hidden: !viewDetail}" class="md:block absolute left-0 z-10 md:relative w-full mx-auto min-h-screen md:w-1/2 px-4 flex flex-col bg-neutral dark:bg-darkNeutral overflow-y-scroll">
+      <section id="detail-view" :class="{hidden: !viewDetail}" class="md:block absolute left-0 z-10 md:relative w-full mx-auto min-h-screen md:w-1/2 px-4 flex flex-col bg-neutral dark:bg-darkNeutral overflow-y-scroll">
         <div class="flex justify-between items-center border-b-2 mb-8">
           <div class="flex space-x-4 items-center">
             <div class="h-6 w-6 md:hidden" @click="hideDetail">

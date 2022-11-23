@@ -7,7 +7,8 @@
         <p class="mx-auto mt-2 font-thin">{{ $t('thehome.withLove') }}</p>
         <p class="mx-auto mt-2 font-thin">{{ $t('thehome.priscillaAndLorenzo') }}</p>
       </div>
-      <div class="flex w-fit mx-auto mt-8 bg-accent text-primary px-2 py-1 rounded-md">
+      <count-down :end-date="endDate" class="my-10"></count-down>
+      <div id="invite-link" class="flex w-fit mx-auto mt-8 bg-accent text-primary px-2 py-1 rounded-md">
         <router-link :to="{name: 'invitation'}" class="" >{{ $t('thehome.openYourInvitation') }}</router-link>
       </div>
     </div>
@@ -16,12 +17,21 @@
 
 <script>
 import profile from '@/components/mixins/profile'
+import CountDown from '@/components/shared/CountDown.vue'
 
 export default {
   name: 'TheHome',
+  components: {
+    CountDown
+  },
   mixins: [
     profile
-  ]
+  ],
+  data () {
+    return {
+      endDate: new Date('2023-10-01T14:30:00.00Z'),
+    }
+  },
 }
 </script>
 
