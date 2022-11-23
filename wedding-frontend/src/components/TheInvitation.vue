@@ -200,7 +200,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @font-face: {
+  @font-face {
     font-family: 'Tangerine';
     font-style: 'normal';
     src: local('Tangerine'), src('@/assets/Tangerine-Regular.ttf') format('truetype');
