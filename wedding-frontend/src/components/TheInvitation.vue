@@ -202,7 +202,9 @@ export default {
 <style scoped>
   @font-face {
     font-family: 'Tangerine';
-    font-style: 'normal';
-    src: local('Tangerine'), src('@/assets/Tangerine-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Tangerine'), url('@/assets/Tangerine-Regular.ttf') format('truetype');
   }
 </style>
