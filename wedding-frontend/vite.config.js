@@ -14,7 +14,9 @@ export default defineConfig({
     vueI18n({
       include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**'),
     }),
-    viteCompression(),
+    viteCompression({
+      filter: /\.(js|mjs|json|css|html|svg|webp|ttf)$/i,
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {

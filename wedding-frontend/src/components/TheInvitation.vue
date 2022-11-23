@@ -158,7 +158,7 @@ export default {
       this.cleanup();
 
       this.smoother = ScrollSmoother.create({
-        effects: true,
+        smoothTouch: 0.1,
         ignoreMobileResize: true,
         normalizeScroll: true,
         content: '#main',
@@ -200,5 +200,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
+  @font-face {
+    font-family: 'Tangerine';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Tangerine'), url('@/assets/Tangerine-Regular.ttf') format('truetype');
+  }
 </style>
