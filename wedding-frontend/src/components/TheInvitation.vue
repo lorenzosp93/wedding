@@ -200,8 +200,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @font-face {
-    font-family: 'Tangerine-Regular';
-    src: url('@/assets/Tangerine-Regular.ttf') format('ttf');
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
 </style>
