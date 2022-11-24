@@ -12,17 +12,20 @@
         <router-link :to="{name: 'invitation'}" class="" >{{ $t('thehome.openYourInvitation') }}</router-link>
       </div>
     </div>
+    <onboarding-tour></onboarding-tour>
   </div>
 </template>
 
 <script>
 import profile from '@/components/mixins/profile'
 import CountDown from '@/components/shared/CountDown.vue'
+import OnboardingTour from './shared/OnboardingTour.vue'
 
 export default {
   name: 'TheHome',
   components: {
-    CountDown
+    CountDown,
+    OnboardingTour
   },
   mixins: [
     profile
