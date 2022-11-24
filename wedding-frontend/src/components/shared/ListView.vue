@@ -213,7 +213,7 @@ emits: ['submitResponse', 'deleteResponses'],
           obj.questions.forEach(question => {
               this.responses = [...this.responses, {
               question: question.uuid,
-              option: question?.response?.option ?? (question.multi_select ? [] : null),
+              option: question?.response?.option ?? [],
               text: question?.response?.text ?? '',
               }]
           })
