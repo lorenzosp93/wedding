@@ -8,7 +8,7 @@
         <p class="mx-auto mt-2 font-thin">{{ $t('thehome.priscillaAndLorenzo') }}</p>
       </div>
       <count-down :end-date="endDate" class="my-10"></count-down>
-      <div id="invite-link" class="flex w-fit mx-auto mt-8 bg-accent text-primary px-2 py-1 rounded-md">
+      <div id="invite-link" class="flex w-fit mx-auto my-8 bg-accent text-primary px-2 py-1 rounded-md shadow-md">
         <router-link :to="{name: 'invitation'}" class="" >{{ $t('thehome.openYourInvitation') }}</router-link>
       </div>
     </div>
