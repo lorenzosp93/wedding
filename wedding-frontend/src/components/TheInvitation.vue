@@ -64,8 +64,8 @@
         </svg>
         <img id="sideFlaps" :src="images.find(img => img.name == 'sideFlaps').url" alt="Envelope side flaps" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-20 px-0.5" @load="loadImage('sideFlaps')">
         <img id="bottomFlap" :src="images.find(img => img.name == 'bottomFlap').url" alt="Envelope bottom flap" class="absolute aspect-auto max-w-full max-h-[60%] left-1/2 -translate-x-1/2 top-[72.5%] z-30 px-0.5" @load="loadImage('bottomFlap')">
-        <img id="envelopeFlap" class="max-w-full max-h-[60%] absolute left-1/2 -translate-x-1/2 top-[32.3%] origin-top z-40 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" aria-label="Envelope flap" @load="loadImage('envelopeFlap')">
-        <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-50" :src="images.find(img => img.name == 'waxSeal').url" aria-label="Wax seal on the envelope" @load="loadImage('waxSeal')">
+        <img id="envelopeFlap" class="max-w-full max-h-[60%] absolute left-1/2 -translate-x-1/2 top-[32.3%] origin-top z-40 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" :aria-label="$t('theinvitation.envelopeFlap')" @load="loadImage('envelopeFlap')">
+        <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-50" :src="images.find(img => img.name == 'waxSeal').url" :aria-label="$t('theinvitation.waxSealOn')" @load="loadImage('waxSeal')">
       </div>
     </div>
   </div>

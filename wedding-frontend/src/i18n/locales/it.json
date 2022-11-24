@@ -1,93 +1,124 @@
 {
-	"auth": {
-		"loginpage": {
-			"emailAddress": "indirizzo email",
-			"loading": "Caricamento in corso",
-			"loginPage": "Pagina di login",
-			"submit": "Sottoscrivi",
-			"thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}"
-		},
-		"loginsuccess": {
-			"loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta per il tuo link di accesso."
-		}
-	},
-	"profile": {
-		"plusone": {
-			"email": "E-mail",
-			"first_name": "Nome",
-			"last_name": "Cognome/i",
-			"loading": "Caricamento in corso",
-			"submit": "Inviare",
-			"success": "Successo!"
-		},
-		"theprofile": {
-			"email": "Email:",
-			"first_name": "Nome: ",
-			"invite": "Invita +1",
-			"last_name": "Cognome/i:",
-			"logOut": "Disconnettersi",
-			"plusOne": "+1 disponibili:",
-			"yourPlusOnes": " I tuoi +1"
-		}
-	},
-	"shared": {
-		"listview": {
-			"alreadyAnswered": "Hai già risposto a queste domande.",
-			"changeResponses": "Cambia le tue risposte",
-			"done": "Hai finito per la giornata!",
-			"loading": "Caricamento in corso",
-			"noMessage": "Impossibile trovare alcun messaggio che corrisponda alla tua ricerca.",
-			"other": "Altro:",
-			"search": "Cerca...",
-			"submit": "Invia",
-			"success": "Successo"
-		},
-		"notfound": {
-			"pageNotFound": "Pagina non trovata!"
-		},
-		"reloadpwa": {
-			"appReadyTo": " Sito pronto per funzionare offline",
-			"close": "\n          Chiudere\n        ",
-			"newContentAvailable": "Nuovi contenuti disponibili, fare clic sul pulsante di ricarica per aggiornare.",
-			"reload": "\n          Ricaricare\n        "
-		},
-		"thenavbar": {
-			"gallery": "Galleria",
-			"home": "Home",
-			"inbox": "Posta in arrivo",
-			"information": "Informazioni",
-			"openMainMenu": "Apri il menu principale",
-			"profile": "Profilo"
-		}
-	},
-	"thehome": {
-		"hi": "Ciao {a},",
-		"openYourInvitation": "Apri il tuo invito!",
-		"priscillaAndLorenzo": "Priscilla e Lorenzo",
-		"weAreDelighted": "siamo lieti di invitarti al nostro matrimonio a Roma.\n          La Città Eterna è il luogo in cui ci siamo trovati e ci siamo innamorati e ci piacerebbe che tu ti unissi a noi nella celebrazione!",
-		"withLove": "Con amore,"
-	},
-	"theinvitation": {
-		"envelope": "busta",
-		"envelopeflap": "lembo della busta",
-		"scrollDown": "Scorrere verso il basso",
-		"danielCabreraUscangaAndReginaMatos": "Daniel Cabrera Uscanga e Regina Matos",
-		"canoCommunicateTheWeddingOfTheirDaughter": "Cano partecipano il matrimonio della loro figlia",
-		"priscillaWith": "Priscilla con",
-		"renatoRSpinelliAndVincenzaAlessio": "Renato R. Spinelli e Vincenza Alessio",
-		"ruffoDiCalabriaCommunicateTheWeddingOf": "Ruffo di Calabria partecipano il matrimonio del",
-		"theirSonLorenzoWith": "loro figlio Lorenzo con",
-		"lorenzoSpinelli": "Lorenzo Spinelli",
-		"priscillaCabreraMatos": "Priscilla Cabrera Matos",
-		"sundayOct1st2023h1630": "Domenica, 1 ottobre 2023 - ore 16:30",
-		"rome": "Roma",
-		"amsterdamTheNetherlands": "Amsterdam, Paesi Bassi",
-		"witteDeWithstraat1601": "Witte de Withstraat 160-1",
-		"romeItaly": "Roma, Italia",
-		"viaEttorePetrolini11": "via Ettore Petrolini 11",
-		"pueblaMexico": "Puebla, Messico",
-		"paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
-		"888LomasDeAngelopolis": "888, Lomas de Angelopolis",
-		"basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio"
-	}
+  "auth": {
+    "loginpage": {
+      "emailAddress": "indirizzo email",
+      "loading": "Caricamento in corso",
+      "loginPage": "Pagina di login",
+      "submit": "Sottoscrivi",
+      "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}"
+    },
+    "loginsuccess": {
+      "loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta per il tuo link di accesso."
+    }
+  },
+  "profile": {
+    "plusone": {
+      "email": "E-mail",
+      "first_name": "Nome",
+      "last_name": "Cognome/i",
+      "loading": "Caricamento in corso",
+      "submit": "Inviare",
+      "success": "Successo!"
+    },
+    "theprofile": {
+      "email": "Email:",
+      "first_name": "Nome: ",
+      "invite": "Invita +1",
+      "last_name": "Cognome/i:",
+      "logOut": "Disconnettersi",
+      "plusOne": "+1 disponibili:",
+      "yourPlusOnes": " I tuoi +1"
+    }
+  },
+  "shared": {
+    "listview": {
+      "alreadyAnswered": "Hai già risposto a queste domande.",
+      "changeResponses": "Cambia le tue risposte",
+      "done": "Hai finito per la giornata!",
+      "loading": "Caricamento in corso",
+      "noMessage": "Impossibile trovare alcun messaggio che corrisponda alla tua ricerca.",
+      "other": "Altro:",
+      "search": "Cerca...",
+      "submit": "Invia",
+      "success": "Successo"
+    },
+    "notfound": {
+      "pageNotFound": "Pagina non trovata!"
+    },
+    "reloadpwa": {
+      "appReadyTo": " Sito pronto per funzionare offline",
+      "close": "\n          Chiudere\n        ",
+      "newContentAvailable": "Nuovi contenuti disponibili, fare clic sul pulsante di ricarica per aggiornare.",
+      "reload": "\n          Ricaricare\n        "
+    },
+    "thenavbar": {
+      "gallery": "Galleria",
+      "home": "Home",
+      "inbox": "Posta in arrivo",
+      "information": "Informazioni",
+      "openMainMenu": "Apri il menu principale",
+      "profile": "Profilo"
+    },
+    "tour": {
+      "next": "Continua",
+      "back": "Indietro",
+      "finish": "Fine",
+      "intro": "Benvenuti nella app per il nostro matrimonio! Qui, sarai in grado di accedere a tutte le informazioni sulle celebrazioni e unirti a noi mentre ci prepariamo per il nostro giorno speciale. Fai clic sul pulsante 'Continua' per dare una rapida occhiata in giro.",
+      "mobile-menu": "Dato che sei su un dispositivo mobile, il menu è comodamente nascosto dietro il pulsante qui sopra. Fai clic per procedere.",
+      "invite": "Dietro questo pulsante, puoi trovare la versione digitale dell'invito!",
+      "information": "In questa sezione, troverai tutte le informazioni sui festeggiamenti del matrimonio, inclusi Eventi, Viaggi, Suggerimenti e altro ancora.",
+      "inbox": {
+        "navbar": "Nella Posta in arrivo, troverai comunicazioni dagli sposi, comprese domande importanti a cui potrai rispondere direttamente dall'app.",
+        "list": "Ecco l'elenco dei messaggi attivi. Puoi anche effettuare una ricerca per trovare un messaggio precedente.",
+        "detail": "Questa è la vista di dettaglio del messaggio. Nel caso in cui il messaggio includa delle domande, sarai in grado di rispondere direttamente su questa pagina."
+      },
+      "gallery": "Nella galleria troverai le foto dei festeggiamenti.",
+      "profile": "La sezione del profilo consente di controllare le tue informazioni e di disconnettersi dall'app, se necessario."
+    },
+    "countdown": {
+      "days": "giorni",
+      "days1": "giorni",
+      "hours": "ore",
+      "hours1": "ore",
+      "minutes": "minuti",
+      "minutes1": "minuti",
+      "seconds": "secondi",
+      "seconds1": "secondi"
+    },
+    "loadingview": {
+      "loadingSpinner": "loading spinner"
+    }
+  },
+  "thehome": {
+    "hi": "Ciao {a},",
+    "openYourInvitation": "Apri il tuo invito!",
+    "priscillaAndLorenzo": "Priscilla e Lorenzo",
+    "weAreDelighted": "siamo lieti di invitarti al nostro matrimonio a Roma.\n          La Città Eterna è il luogo in cui ci siamo trovati e ci siamo innamorati e ci piacerebbe che tu ti unissi a noi nella celebrazione!",
+    "withLove": "Con amore,"
+  },
+  "theinvitation": {
+    "envelope": "busta",
+    "envelopeflap": "lembo della busta",
+    "scrollDown": "Scorrere verso il basso",
+    "danielCabreraUscangaAndReginaMatos": "Daniel Cabrera Uscanga e Regina Matos",
+    "canoCommunicateTheWeddingOfTheirDaughter": "Cano partecipano il matrimonio della loro figlia",
+    "priscillaWith": "Priscilla con",
+    "renatoRSpinelliAndVincenzaAlessio": "Renato R. Spinelli e Vincenza Alessio",
+    "ruffoDiCalabriaCommunicateTheWeddingOf": "Ruffo di Calabria partecipano il matrimonio del",
+    "theirSonLorenzoWith": "loro figlio Lorenzo con",
+    "lorenzoSpinelli": "Lorenzo Spinelli",
+    "priscillaCabreraMatos": "Priscilla Cabrera Matos",
+    "sundayOct1st2023h1630": "Domenica, 1 ottobre 2023 - ore 16:30",
+    "rome": "Roma",
+    "amsterdamTheNetherlands": "Amsterdam, Paesi Bassi",
+    "witteDeWithstraat1601": "Witte de Withstraat 160-1",
+    "romeItaly": "Roma, Italia",
+    "viaEttorePetrolini11": "via Ettore Petrolini 11",
+    "pueblaMexico": "Puebla, Messico",
+    "paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
+    "888LomasDeAngelopolis": "888, Lomas de Angelopolis",
+    "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
+    "envelopeFlap": "Envelope flap",
+    "waxSealOn": "Wax seal on the envelope"
+  }
 }

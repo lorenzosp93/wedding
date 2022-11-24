@@ -10,7 +10,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      isProduction: process.env.DEV === 'false',
+    }),
     vueI18n({
       include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**'),
     }),
@@ -61,6 +63,5 @@ export default defineConfig({
       port: 8080,
   },
   build: {
-    sourcemap: true,
   }
 })

@@ -1,93 +1,120 @@
 {
-	"auth": {
-		"loginpage": {
-			"emailAddress": "Email address",
-			"loading": "Loading",
-			"loginPage": "Login page",
-			"submit": "Submit",
-			"thereWasAn": "There was an error sending you the access code:\n {a}"
-		},
-		"loginsuccess": {
-			"loginWasSuccessful": "Login was successful, please check your inbox for your login link."
-		}
-	},
-	"profile": {
-		"plusone": {
-			"email": "Email",
-			"first_name": "First Name",
-			"last_name": "Last Name(s)",
-			"loading": "Loading",
-			"submit": "Submit",
-			"success": "Success!"
-		},
-		"theprofile": {
-			"email": "Email:",
-			"first_name": "First name: ",
-			"invite": "Invite +1",
-			"last_name": "Last name(s):",
-			"logOut": "Log out",
-			"plusOne": "Available plus ones:",
-			"yourPlusOnes": " Your plus ones "
-		}
-	},
-	"shared": {
-		"listview": {
-			"alreadyAnswered": "You have already answered these questions.",
-			"changeResponses": "Change your responses",
-			"done": "You're all done for the day!",
-			"loading": "Loading",
-			"noMessage": "Couldn't find any message that matches your search. ",
-			"other": "Other:",
-			"search": "Search...",
-			"submit": "Submit",
-			"success": "Success"
-		},
-		"notfound": {
-			"pageNotFound": "Page not found!"
-		},
-		"reloadpwa": {
-			"appReadyTo": " Website ready to work offline ",
-			"close": "\n          Close\n        ",
-			"newContentAvailable": "New content available, click on reload button to update.",
-			"reload": "\n          Reload\n        "
-		},
-		"thenavbar": {
-			"gallery": "Gallery",
-			"home": "Home",
-			"inbox": "Inbox",
-			"information": "Information",
-			"openMainMenu": "Open main menu",
-			"profile": "Profile"
-		}
-	},
-	"thehome": {
-		"hi": "Hi {a},",
-		"openYourInvitation": "\n          Open your invitation!\n        ",
-		"priscillaAndLorenzo": "Priscilla and Lorenzo",
-		"weAreDelighted": "we are delighted to invite you to our wedding in Rome.\n          The Eternal City is where we found each other and fell in love, and we would love to have you join us in the celebration!",
-		"withLove": "with love,"
-	},
-	"theinvitation": {
-		"envelope": "envelope",
-		"envelopeflap": "envelope flap",
-		"scrollDown": "\n      Scroll down\n    ",
-		"danielCabreraUscangaAndReginaMatos": "Daniel Cabrera Uscanga and Regina Matos",
-		"canoCommunicateTheWeddingOfTheirDaughter": "Cano announce the wedding of their daughter",
-		"priscillaWith": "Priscilla with",
-		"renatoRSpinelliAndVincenzaAlessio": "Renato R. Spinelli and Vincenza Alessio",
-		"ruffoDiCalabriaCommunicateTheWeddingOf": "Ruffo di Calabria announce the wedding of",
-		"theirSonLorenzoWith": "their son Lorenzo with",
-		"lorenzoSpinelli": "Lorenzo Spinelli",
-		"priscillaCabreraMatos": "Priscilla Cabrera Matos",
-		"sundayOct1st2023h1630": "Sunday, October 1 2023 - h 16:30",
-		"rome": "Rome",
-		"amsterdamTheNetherlands": "Amsterdam, the Netherlands",
-		"witteDeWithstraat1601": "Witte de Withstraat 160-1",
-		"romeItaly": "Rome, Italy",
-		"viaEttorePetrolini11": "via Ettore Petrolini 11",
-		"pueblaMexico": "Puebla, Mexico",
-		"paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
-		"888LomasDeAngelopolis": "888, Lomas de Angelopolis",
-		"basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio"
-	}
+  "auth": {
+    "loginpage": {
+      "emailAddress": "Email address",
+      "loading": "Loading",
+      "loginPage": "Login page",
+      "submit": "Submit",
+      "thereWasAn": "There was an error sending you the access code:\n {a}"
+    },
+    "loginsuccess": {
+      "loginWasSuccessful": "Login was successful, please check your inbox for your login link."
+    }
+  },
+  "profile": {
+    "plusone": {
+      "email": "Email",
+      "first_name": "First Name",
+      "last_name": "Last Name(s)",
+      "loading": "Loading",
+      "submit": "Submit",
+      "success": "Success!"
+    },
+    "theprofile": {
+      "email": "Email:",
+      "first_name": "First name: ",
+      "invite": "Invite +1",
+      "last_name": "Last name(s):",
+      "logOut": "Log out",
+      "plusOne": "Available plus ones:",
+      "yourPlusOnes": " Your plus ones "
+    }
+  },
+  "shared": {
+    "listview": {
+      "alreadyAnswered": "You have already answered these questions.",
+      "changeResponses": "Change your responses",
+      "done": "You're all done for the day!",
+      "loading": "Loading",
+      "noMessage": "Couldn't find any message that matches your search. ",
+      "other": "Other:",
+      "search": "Search...",
+      "submit": "Submit",
+      "success": "Success"
+    },
+    "notfound": {
+      "pageNotFound": "Page not found!"
+    },
+    "reloadpwa": {
+      "appReadyTo": " Website ready to work offline ",
+      "close": "\n          Close\n        ",
+      "newContentAvailable": "New content available, click on reload button to update.",
+      "reload": "\n          Reload\n        "
+    },
+    "thenavbar": {
+      "gallery": "Gallery",
+      "home": "Home",
+      "inbox": "Inbox",
+      "information": "Information",
+      "openMainMenu": "Open main menu",
+      "profile": "Profile"
+    },
+    "tour": {
+      "next": "Next",
+      "back": "Back",
+      "finish": "Finish",
+      "intro": "Welcome to our wedding App! Here, you will be able to access all information regarding the celebrations and join us as we prepare for our special day. Click the 'Next' button to have a quick look around.",
+      "mobile-menu": "Since you're on a mobile device, the menu is conveniently tucked behind the button above. Click it to proceed.",
+      "invite": "Behind this button, you can find the digital invite for the wedding!",
+      "information": "In this section, you will find all the information about the wedding celebrations, including Events, Travel, Tips and more.",
+      "inbox": {
+        "navbar": "In the Inbox, you will find communications from the bride and groom, including important questions that you will be able to answer directly on the app.",
+        "list": "Here is the list of active messages. You can even search this list if you're looking for an old message.",
+        "detail": "This is the message view. In case the message has questions, you will be able to answer them directly on this page."
+      },
+      "gallery": "In the gallery you will find the pictures from the celebration.",
+      "profile": "The profile section allows you to check your information, and log out of the app if necessary."
+    },
+    "countdown": {
+      "days": "days",
+      "hours": "hours",
+      "minutes": "minutes",
+      "seconds": "seconds"
+    },
+    "loadingview": {
+      "loadingSpinner": "loading spinner"
+    }
+  },
+  "thehome": {
+    "hi": "Hi {a},",
+    "openYourInvitation": "\n          Open your invitation!\n        ",
+    "priscillaAndLorenzo": "Priscilla and Lorenzo",
+    "weAreDelighted": "we are delighted to invite you to our wedding in Rome.\n          The Eternal City is where we found each other and fell in love, and we would love to have you join us in the celebration!",
+    "withLove": "with love,"
+  },
+  "theinvitation": {
+    "envelope": "envelope",
+    "envelopeflap": "envelope flap",
+    "scrollDown": "\n      Scroll down\n    ",
+    "danielCabreraUscangaAndReginaMatos": "Daniel Cabrera Uscanga and Regina Matos",
+    "canoCommunicateTheWeddingOfTheirDaughter": "Cano announce the wedding of their daughter",
+    "priscillaWith": "Priscilla with",
+    "renatoRSpinelliAndVincenzaAlessio": "Renato R. Spinelli and Vincenza Alessio",
+    "ruffoDiCalabriaCommunicateTheWeddingOf": "Ruffo di Calabria announce the wedding of",
+    "theirSonLorenzoWith": "their son Lorenzo with",
+    "lorenzoSpinelli": "Lorenzo Spinelli",
+    "priscillaCabreraMatos": "Priscilla Cabrera Matos",
+    "sundayOct1st2023h1630": "Sunday, October 1 2023 - h 16:30",
+    "rome": "Rome",
+    "amsterdamTheNetherlands": "Amsterdam, the Netherlands",
+    "witteDeWithstraat1601": "Witte de Withstraat 160-1",
+    "romeItaly": "Rome, Italy",
+    "viaEttorePetrolini11": "via Ettore Petrolini 11",
+    "pueblaMexico": "Puebla, Mexico",
+    "paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
+    "888LomasDeAngelopolis": "888, Lomas de Angelopolis",
+    "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
+    "envelopeFlap": "Envelope flap",
+    "waxSealOn": "Wax seal on the envelope"
+  }
 }
