@@ -216,6 +216,7 @@ export default {
                     action: () => {
                         this.dismissTour();
                         this.tour.complete();
+                        this.$router.push({name: 'home'});
                     },
                     text: this.$t('shared.tour.finish')
                     }
