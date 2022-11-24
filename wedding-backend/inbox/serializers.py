@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import (
     ModelSerializer, PrimaryKeyRelatedField,
     SerializerMethodField, ValidationError
@@ -29,10 +30,22 @@ class ResponseSerializer(ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
-        if (len(data.get('option')) == 0 and not data.get('text')):
-            raise ValidationError({
-                "text": "Text must be provided if no option is selected."
-            })
+        question = data.get('question')
+        if question and question.mandatory:
+            if question.options.count() > 0:
+                if not data.get('option') and not data.get('text'):
+                    if question.free_text:
+                        raise ValidationError({
+                            "text": _("Text must be provided if no option is selected"),
+                        })
+                    raise ValidationError({
+                        'option': _("Please choose an option"),
+                    })
+
+            elif not data.get('text'):
+                raise ValidationError({
+                    'text': _("Text must be provided"),
+                })
         return super().validate(data)
 
     def save(self, **kwargs):
