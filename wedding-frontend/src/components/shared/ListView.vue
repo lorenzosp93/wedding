@@ -71,7 +71,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
               <p>{{ question.content }}</p>
-              <ul v-if="question.options" :multiple="question.multi_select" class="w-full my-2 mx-3 bg-pale dark:bg-darkPale rounded-md">
+              <ul v-if="question.options?.length" :multiple="question.multi_select" class="w-full my-2 mx-3 bg-pale dark:bg-darkPale rounded-md">
                 <li v-for="option in question.options" :key="option.uuid" >
                   <input
                     :id="option.uuid"
@@ -87,7 +87,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               </ul>
               <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.option)" class="text-alert mx-3">{{ submitError.find(e => e.q == question.uuid)?.e.option[0] }}</p>
               <div v-if="question.free_text" class="mb-5">
-                <label for="input" class="ml-3 my-1">{{ $t('shared.listview.other') }}</label>
+                <label v-if="question.options?.length" for="input" class="ml-3 my-1">{{ $t('shared.listview.other') }}</label>
                 <input v-model="responses.find(r => r.question == question.uuid).text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 ml-3" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
                 <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.text)" class="text-alert mx-3"> {{ submitError.find(e => e.q == question.uuid)?.e.text[0] }}</p>
               </div>
