@@ -32,23 +32,23 @@ class ResponseSerializer(ModelSerializer):
     def validate(self, data):
         question = data.get('question')
         if question and question.mandatory:
-            self.validate_question(data, question)
+            self.validate_responses(data, question)
         return super().validate(data)
 
-    def validate_question(self, data, question):
+    def validate_responses(self, data, question):
         if question.options.count() > 0:
             if not data.get('option') and not data.get('text'):
                 if question.free_text:
                     raise ValidationError({
-                            "text": _("Text must be provided if no option is selected"),
-                        })
-                raise ValidationError({
-                        'option': _("Please choose an option"),
+                        "text": _("Text must be provided if no option is selected"),
                     })
+                raise ValidationError({
+                    'option': _("Please choose an option"),
+                })
         elif not data.get('text'):
             raise ValidationError({
-                    'text': _("Text must be provided"),
-                })
+                'text': _("Text must be provided"),
+            })
 
     def save(self, **kwargs):
         """Include default for read_only `user` field"""
