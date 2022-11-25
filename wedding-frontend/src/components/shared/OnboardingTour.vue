@@ -263,7 +263,7 @@ export default {
   };
   
   .shepherd-highlight {
-    @apply ring-2 ring-accent stroke-accent;
+    @apply ring-2 ring-accent text-accent stroke-accent;
   };
 
   .shepherd-header {
@@ -275,7 +275,7 @@ export default {
   };
 
   .shepherd-button-secondary {
-    @apply bg-secondary dark:bg-darkPale text-neutral !important;
+    @apply bg-secondary text-neutral !important;
   };
 
 </style>
