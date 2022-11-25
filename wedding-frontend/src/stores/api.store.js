@@ -173,21 +173,25 @@ export const useGalleryStore = defineStore({
         error: null,
         gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]"),
         galleryExpiry: Date.parse(localStorage.getItem('galleryExpiry') ?? new Date()),
+        next: null,
     }),
     actions: {
-        async getGalleryContent () {
-            if (this.gallery.length == 0 || this.galleryExpiry < Date.now()) {
+        async getGalleryContent (force=null) {
+            if (this.gallery.length == 0 || this.galleryExpiry < Date.now() || force) {
                 this.loading = true;
-                apiService.getGalleryContent().then(
+                apiService.getGalleryContent(this.next).then(
                     (response) => {
-                        this.gallery = response.data;
+                        this.gallery = [...this.gallery, ...response.data.results];
+                        this.next = response.data.next;
                         this.loading = false;
                         this.galleryExpiry = new Date()
                         this.galleryExpiry.setTime(
                             this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 60 * 1000
                         );
-                        localStorage.setItem('gallery', JSON.stringify(this.gallery));
-                        localStorage.setItem('galleryExpiry', JSON.stringify(this.galleryExpiry));
+                        if (!force) {
+                            localStorage.setItem('gallery', JSON.stringify(this.gallery));
+                            localStorage.setItem('galleryExpiry', JSON.stringify(this.galleryExpiry));
+                        }
                     }
                 ).catch(
                     error => {

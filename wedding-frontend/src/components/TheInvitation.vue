@@ -147,14 +147,14 @@ export default {
       this.images.find(image => image.name == img).loaded = true;
       if (this.images.every(image => image.loaded)) {
         this.loaded = true;
-        this.upsertEnvelopeAnimation();
+        this.setupEnvelopeAnimation();
       }
     },
     cleanup () {
       this.tl?.kill();
       this.smoother?.kill();
     },
-    upsertEnvelopeAnimation () {
+    setupEnvelopeAnimation () {
       this.cleanup();
 
       this.smoother = ScrollSmoother.create({

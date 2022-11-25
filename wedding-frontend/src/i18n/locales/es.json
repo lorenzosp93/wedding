@@ -120,5 +120,8 @@
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
     "envelopeFlap": "Envelope flap",
     "waxSealOn": "Wax seal on the envelope"
+  },
+  "thegallery": {
+    "loadMore": "Más fotos"
   }
 }
