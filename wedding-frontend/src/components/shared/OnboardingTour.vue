@@ -251,7 +251,11 @@ export default {
   @import 'shepherd.js/dist/css/shepherd.css';
 
   .shepherd-element {
-    @apply  bg-neutral dark:bg-darkNeutral rounded-lg font-serif;
+    @apply  bg-neutral dark:bg-darkNeutral rounded-lg font-serif max-w-md;
+  }
+
+  .shepherd-content {
+    @apply whitespace-pre-line;
   }
 
   .shepherd-cancel-icon {

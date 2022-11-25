@@ -70,7 +70,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
-              <p>{{ question.content }}</p>
+              <p v-html="question.content"></p>
               <ul v-if="question.options?.length" :multiple="question.multi_select" class="w-full my-2 mx-3 bg-pale dark:bg-darkPale rounded-md">
                 <li v-for="option in question.options" :key="option.uuid" >
                   <input

@@ -63,7 +63,7 @@
       "next": "Continua",
       "back": "Indietro",
       "finish": "Fine",
-      "intro": "Benvenuti nella app per il nostro matrimonio! Qui, sarai in grado di accedere a tutte le informazioni sulle celebrazioni e unirti a noi mentre ci prepariamo per il nostro giorno speciale. Fai clic sul pulsante 'Continua' per dare una rapida occhiata in giro.",
+      "intro": "Benvenuti nella app per il nostro matrimonio! Qui, sarai in grado di accedere a tutte le informazioni sulle celebrazioni e unirti a noi mentre ci prepariamo per il nostro giorno speciale. \n\n Fai clic sul pulsante 'Continua' per dare una rapida occhiata in giro.",
       "mobile-menu": "Dato che sei su un dispositivo mobile, il menu è comodamente nascosto dietro il pulsante nell'angolo. Cliccalo per procedere.",
       "invite": "Dietro questo pulsante, puoi trovare la versione digitale dell'invito!",
       "information": "In questa sezione, troverai tutte le informazioni sui festeggiamenti del matrimonio, inclusi Eventi, Viaggi, Suggerimenti e altro ancora.",
@@ -73,7 +73,7 @@
         "detail": "Questa è la vista di dettaglio del messaggio. Nel caso in cui il messaggio includa delle domande, sarai in grado di rispondere direttamente su questa pagina."
       },
       "gallery": "Nella galleria troverai le foto dei festeggiamenti.",
-      "profile": "La sezione del profilo consente di controllare le tue informazioni e di disconnettersi dall'app, se necessario."
+      "profile": "La sezione del profilo consente di controllare le tue informazioni e di disconnettersi dall'app, se necessario. \n\n Puoi anche installare l'applicazione cliccando sull'opzione 'Aggiungi alla schermata Home' sul tuo browser."
     },
     "countdown": {
       "days": "giorni",

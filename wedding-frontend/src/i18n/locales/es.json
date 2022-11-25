@@ -63,14 +63,14 @@
       "next": "Siguiente",
       "back": "Atrás",
       "finish": "Acabar",
-      "intro": "¡Bienvenido a nuestra aplicación de boda! Aquí, podrás acceder a toda la información sobre las celebraciones y unirte a nosotros mientras nos preparamos para nuestro día especial. Haz clic en el botón 'Siguiente' para echar un vistazo rápido.",
+      "intro": "¡Bienvenido a nuestra aplicación de boda! Aquí, podrás acceder a toda la información sobre las celebraciones y unirte a nosotros mientras nos preparamos para nuestro día especial. \n\n Haz clic en el botón 'Siguiente' para echar un vistazo rápido.",
       "mobile-menu": "Como estás en un dispositivo móvil, el menú está convenientemente escondido detrás del botón arriba. Hazle clic para continuar.",
       "invite": "¡Detrás de este botón, puedes encontrar la invitación digital para la boda!",
       "information": "En esta sección, encontrarás toda la información sobre las celebraciones de la boda, incluidos Eventos, Viajes, Consejos y más.",
       "inbox": {
         "navbar": "En la Bandeja de entrada, encontrarás comunicaciones de los novios, incluidas preguntas importantes que podrás responder directamente en la aplicación.",
         "list": "Aquí está la lista de mensajes activos. Incluso puedes buscar esta lista si estás buscando un mensaje antiguo.",
-        "detail": "Esta es la vista del mensaje. En caso de que el mensaje tenga preguntas, podrás responderlas directamente en esta página."
+        "detail": "Esta es la vista del mensaje. En caso de que el mensaje tenga preguntas, podrás responderlas directamente en esta página. \n\n Hasta puedes instalar esta aplicación haciendole click a la opción 'Agregar a la pantalla de inicio' de tu browser."
       },
       "gallery": "En la galería encontrarás las fotos de la celebración.",
       "profile": "La sección de perfil te permite verificar tu información y hacer logout aplicación si es necesario."
