@@ -1,21 +1,21 @@
 <template>
-      <div class="text-3xl md:text-6xl text-center flex w-full items-center justify-center dark:text-darkPale">
+      <div class="text-3xl md:text-5xl text-center flex w-full items-center justify-center dark:text-darkPale">
             <div class="text-2xl mr-1 font-extralight">in</div>
             <div class=" mx-1 p-2 rounded-lg">
                 <div class="p-1 leading-none" :x-text="$t('shared.countdown.days')">{{ days }}</div>
-                <div class="uppercase text-sm leading-none">{{ $t('shared.countdown.days') }}</div>
+                <div class="uppercase text-sm md:text-base leading-none">{{ $t('shared.countdown.days') }}</div>
             </div>
             <div class=" mx-1 p-2 rounded-lg">
                 <div class="p-1 leading-none" :x-text="$t('shared.countdown.hours')">{{ hour }}</div>
-                <div class="uppercase text-sm leading-none">{{ $t('shared.countdown.hours') }}</div>
+                <div class="uppercase text-sm md:text-base leading-none">{{ $t('shared.countdown.hours') }}</div>
             </div>
             <div class=" mx-1 p-2 rounded-lg">
                 <div class="p-1 leading-none" :x-text="$t('shared.countdown.minutes')">{{ min }}</div>
-                <div class="uppercase text-sm leading-none">{{ $t('shared.countdown.minutes') }}</div>
+                <div class="uppercase text-sm md:text-base leading-none">{{ $t('shared.countdown.minutes') }}</div>
             </div>
             <div class=" mx-1 p-2  rounded-lg">
                 <div class="p-1 leading-none" :x-text="$t('shared.countdown.seconds')">{{ sec }}</div>
-                <div class="uppercase text-sm leading-none">{{ $t('shared.countdown.seconds') }}</div>
+                <div class="uppercase text-sm md:text-base leading-none">{{ $t('shared.countdown.seconds') }}</div>
             </div>
         </div>
 </template>
