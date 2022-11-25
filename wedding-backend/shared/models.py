@@ -1,6 +1,7 @@
 "Define abstract models to be used in all apps"
 import uuid
 from PIL import Image
+from PIL.ImageOps import exif_transpose
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
@@ -9,7 +10,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
 
-THUMBNAIL_SIZE = (640, 640)
+THUMBNAIL_SIZE = 640, 640
 I18N = (
     ('en', _('English')),
     ('it', _('Italian')),
@@ -204,15 +205,20 @@ class HasPicture(models.Model):
     )
 
     def save(self) -> None:
-        if self.picture:
-            img = Image.open(self.picture)
-            img.thumbnail(THUMBNAIL_SIZE)
+        if self.picture and not self.thumbnail:
+            self.save_thumb()
+        return super(HasPicture, self).save()
+
+    def save_thumb(self):
+        with Image.open(self.picture) as img:
+            thumb = img.copy()
+            thumb = exif_transpose(thumb)
+            thumb.thumbnail(THUMBNAIL_SIZE)
             save_path = f"thumb/{self.picture.name}"
             fh = default_storage.open(save_path, "wb")
-            img.save(fh, format='png')
+            thumb.save(fh, format=self.picture.name.split('.')[-1])
             fh.close()
             self.thumbnail = save_path
-        return super(HasPicture, self).save()
 
     class Meta:
         abstract = True

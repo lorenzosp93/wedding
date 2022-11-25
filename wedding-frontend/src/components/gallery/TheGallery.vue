@@ -1,14 +1,34 @@
 <template>
-  <div class="m-auto max-w-2xl">
+  <div class="m-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
-    <div v-show="!loading" class="flex flex-wrap mx-5 my-5 p-5 bg-pale dark:bg-darkPale rounded-md">
-      <img v-for="photo in gallery" :key="photo.id" class="mx-auto max-w-[160px] shadow-md cursor-pointer" :src="photo.thumbnail" alt="Picture thumbnail" @click="activePhoto = photo">
-      <div v-if="activePhoto" class="fixed top-0 left-0 w-screen h-screen">
-        <img class="absolute max-w-[80%] max-h-[90%] top-1/2 left-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2" :src="activePhoto.picture" alt="Full-size picture">
-        <div class="absolute z-40 w-screen h-screen backdrop-blur-sm" @click="activePhoto = null" />
+    <div v-show="!loading" class="my-5 mx-3 p-3 bg-pale dark:bg-darkPale rounded-md flex flex-wrap">
+      <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
+        <div v-for="photo in gallery.filter((_,idx)=>idx%4==0)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+          <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
+        </div>
+      </div>
+      <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit max-lg:md:mt-auto">
+        <div v-for="photo in gallery.filter((_,idx)=>idx%4==1)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+          <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
+        </div>
+      </div>
+      <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
+        <div v-for="photo in gallery.filter((_,idx)=>idx%4==2)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+          <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
+        </div>
+      </div>
+      <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit max-lg:md:mb-auto">
+        <div v-for="photo in gallery.filter((_,idx)=>idx%4==3)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+          <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
+        </div>
       </div>
     </div>
-
+    <div v-if="activePhoto" class="fixed top-0 left-0 w-full h-full">
+      <div class="absolute w-fit h-fit top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 p-2 bg-secondary rounded-lg shadow-2xl">
+        <img class="max-w-[90vw] max-h-[85vh] rounded-lg" :src="activePhoto.picture" alt="Full-size picture">
+      </div>
+      <div class="absolute z-40 w-screen h-screen backdrop-blur-sm" @click="activePhoto = null" ></div>
+    </div>
   </div>
 
 </template>

@@ -16,12 +16,12 @@ INFO_TYPES = (
 )
 
 PHOTO_TYPES = (
-    (0, _('Ice-breaker')),
-    (1, _('Ceremony')),
-    (2, _('Reception')),
-    (3, _('Dinner')),
-    (4, _('Dance')),
-    (5, _('Before')),
+    (0, _('Before')),
+    (1, _('Ice-breaker')),
+    (2, _('Ceremony')),
+    (3, _('Reception')),
+    (4, _('Dinner')),
+    (5, _('Dance')),
 )
 
 # Create your models here.
@@ -39,3 +39,6 @@ class Photo(HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
     private = models.BooleanField(default=False,)
     type = models.IntegerField(choices=PHOTO_TYPES,)
+
+    class Meta:
+        ordering = ['type']
