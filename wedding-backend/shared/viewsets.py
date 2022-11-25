@@ -18,8 +18,7 @@ class PrerequisiteViewSetMixin:
         cohort = super().get_queryset()
         cohort_pre = cohort.filter(option_pre__isnull=False) \
             .values('pk', 'option_pre')
-        if cohort_pre:
-            obj_list = self.get_list_pre(user, cohort_pre)
+        obj_list = self.get_list_pre(user, cohort_pre)
         return cohort.filter(
             Q(option_pre__isnull=True)
             |
@@ -27,18 +26,19 @@ class PrerequisiteViewSetMixin:
         )
 
     def get_list_pre(self, user, cohort_pre, obj_list=[]):
-        user_options = user.response_set.values_list('option', flat=True)
-        for obj in cohort_pre:
-            pre = obj.get('option_pre')
-            if (
-                hasattr(pre, '__iter__')  # pre is iterable
-                and all(
-                    item in user_options
-                    for item in pre
-                )  # all prerequisites in pre are found in user_options
-                or pre in user_options  # single prerequisite is found in user_options
-            ):
-                obj_list = [*obj_list, obj.get('pk')]
+        if cohort_pre:
+            user_options = user.response_set.values_list('option', flat=True)
+            for obj in cohort_pre:
+                pre = obj.get('option_pre')
+                if (
+                    hasattr(pre, '__iter__')  # pre is iterable
+                    and all(
+                        item in user_options
+                        for item in pre
+                    )  # all prerequisites in pre are found in user_options
+                    or pre in user_options  # single prerequisite is found in user_options
+                ):
+                    obj_list = [*obj_list, obj.get('pk')]
         return obj_list
 
 
