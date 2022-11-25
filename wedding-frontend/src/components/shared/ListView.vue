@@ -11,9 +11,9 @@
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer" @click="setActive(idx)">
                 <div class="flex justify-between items-center">
                   <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
-                  <div class="mr-5 pl-5 text-right">
-                    <h3 class="text-lg font-semibold">{{ obj?.subject }}</h3>
-                    <div class="text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
+                  <div class="w-full mr-5 pl-5 text-right">
+                    <h3 class=" text-lg font-semibold">{{ obj?.subject }}</h3>
+                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
                   </div>
                 </div>
             </li>
