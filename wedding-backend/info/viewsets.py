@@ -5,7 +5,7 @@ from .serializers import (
     InformationSerializer, PhotoSerializer,
 )
 from .models import (
-    Information, Photo,
+    Photo,
 )
 from shared.viewsets import (
     AudienceViewSetMixin,
@@ -28,7 +28,6 @@ class InformationViewSet(
 
 
 class PhotoViewSet(ReadOnlyModelViewSet):
-    queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
     pagination_class = LimitOffsetPagination
 

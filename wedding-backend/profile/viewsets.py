@@ -15,7 +15,6 @@ class UserProfileViewset(ModelViewSet):
     actions for UserProfile entries.
 
     """
-    queryset = UserProfile.objects.all()
 
     def get_serializer_class(self):
         if self.action in WRITE_ACTIONS:
@@ -23,6 +22,4 @@ class UserProfileViewset(ModelViewSet):
         return UserProfileSerializer
 
     def get_queryset(self):
-        if self.action in WRITE_ACTIONS:
-            return super().get_queryset().filter(user__id=self.request.user.id)
-        return super().get_queryset().filter(user__id=self.request.user.id)
+        return UserProfile.objects.filter(user__id=self.request.user.id)
