@@ -62,18 +62,21 @@ class UserProfile(models.Model):
                 username=email,
             )
             if created:
-                user.first_name = first_name
-                user.last_name = last_name
-                user.email = email
-                user.save()
-                profile = UserProfile.objects.create(
+                self.setup_profile(first_name, last_name, email, user)
+            return user, created
+        return None, False
+
+    def setup_profile(self, first_name, last_name, email, user):
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.save()
+        profile = UserProfile.objects.create(
                     user=user,
                     language=self.language,
                     type=self.type,
                     parent=self.user
                 )
-            return user, created
-        return None, False
 
     def __str__(self):
         return self.user.username

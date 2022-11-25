@@ -40,7 +40,7 @@
       "other": "Otro:",
       "search": "Buscar...",
       "submit": "Enviar",
-      "success": "Éxito"
+      "success": "Éxito en enviar tus respuestas."
     },
     "notfound": {
       "pageNotFound": "¡Página no encontrada!"
@@ -64,7 +64,7 @@
       "back": "Atrás",
       "finish": "Acabar",
       "intro": "¡Bienvenido a nuestra aplicación de boda! Aquí, podrás acceder a toda la información sobre las celebraciones y unirte a nosotros mientras nos preparamos para nuestro día especial. Haz clic en el botón 'Siguiente' para echar un vistazo rápido.",
-      "mobile-menu": "Como está en un dispositivo móvil, el menú está convenientemente escondido detrás del botón de arriba. Haz clic para continuar.",
+      "mobile-menu": "Como estás en un dispositivo móvil, el menú está convenientemente escondido detrás del botón arriba. Hazle clic para continuar.",
       "invite": "¡Detrás de este botón, puedes encontrar la invitación digital para la boda!",
       "information": "En esta sección, encontrarás toda la información sobre las celebraciones de la boda, incluidos Eventos, Viajes, Consejos y más.",
       "inbox": {

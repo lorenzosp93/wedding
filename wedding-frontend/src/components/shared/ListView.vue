@@ -11,9 +11,9 @@
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer" @click="setActive(idx)">
                 <div class="flex justify-between items-center">
                   <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
-                  <div class="mr-5 pl-5">
-                    <h3 class="text-lg font-semibold">{{ obj?.subject }}</h3>
-                    <div class="text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
+                  <div class="w-full mr-5 pl-5 text-right">
+                    <h3 class=" text-lg font-semibold">{{ obj?.subject }}</h3>
+                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
                   </div>
                 </div>
             </li>
@@ -65,8 +65,8 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           <article class="my-3 leading-7 tracking-wider" v-html="activeObject?.content" />
           <form v-if="activeObject?.questions?.length && responses?.length">
             <div v-if="!activeObject?.questions.some(q => !q.response)">
-              <p class="my-5 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
-              <button class="bg-accent text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
+              <p class="my-2 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
+              <button class="bg-pale dark:bg-darkpale text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
             </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>

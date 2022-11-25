@@ -32,21 +32,23 @@ class ResponseSerializer(ModelSerializer):
     def validate(self, data):
         question = data.get('question')
         if question and question.mandatory:
-            if question.options.count() > 0:
-                if not data.get('option') and not data.get('text'):
-                    if question.free_text:
-                        raise ValidationError({
-                            "text": _("Text must be provided if no option is selected"),
-                        })
-                    raise ValidationError({
-                        'option': _("Please choose an option"),
-                    })
-
-            elif not data.get('text'):
-                raise ValidationError({
-                    'text': _("Text must be provided"),
-                })
+            self.validate_responses(data, question)
         return super().validate(data)
+
+    def validate_responses(self, data, question):
+        if question.options.count() > 0:
+            if not data.get('option') and not data.get('text'):
+                if question.free_text:
+                    raise ValidationError({
+                        "text": _("Text must be provided if no option is selected"),
+                    })
+                raise ValidationError({
+                    'option': _("Please choose an option"),
+                })
+        elif not data.get('text'):
+            raise ValidationError({
+                'text': _("Text must be provided"),
+            })
 
     def save(self, **kwargs):
         """Include default for read_only `user` field"""
@@ -59,7 +61,7 @@ class QuestionSerializer(
     TranslationSubjectMixin,
     ModelSerializer
 ):
-    def get_response(self, obj):
+    def get_formatted_response(self, obj):
         user = self.context.get('request').user
         response = Response.objects.filter(
             question=obj, user=user, active=True).first()
@@ -73,7 +75,7 @@ class QuestionSerializer(
         return None
 
     options = OptionSerializer(many=True, required=False)
-    response = SerializerMethodField("get_response")
+    response = SerializerMethodField("get_formatted_response")
 
     class Meta:
         model = Question
