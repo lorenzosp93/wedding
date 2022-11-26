@@ -22,7 +22,7 @@
         </div>
       </div>
       <div v-show="loading || next" class="relative flex w-full mx-auto min-h-[50px]">
-        <div v-show="next" class="m-auto">
+        <div v-show="next && !loading" class="m-auto">
           <svg class="h-10 w-10 block m-auto pt-3.5 animate-bounce fill-secondary dark:fill-darkNeutral" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
               <g>
                 <path
