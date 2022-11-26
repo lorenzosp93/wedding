@@ -42,7 +42,7 @@ export const useInfoStore = defineStore({
                         this.loading = false;
                         this.infosExpiry = new Date();
                         this.infosExpiry.setTime(
-                            this.infosExpiry.getTime() + INFOS_LIFETIME * 60 * 60 * 1000
+                            this.infosExpiry.getTime() + INFOS_LIFETIME * 60 * 1000
                         );
                         this.activeType = this.infos.find(info => info)?.type;
                         localStorage.setItem('infos', JSON.stringify(this.infos));
@@ -186,7 +186,7 @@ export const useGalleryStore = defineStore({
                         this.loading = false;
                         this.galleryExpiry = new Date()
                         this.galleryExpiry.setTime(
-                            this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 60 * 1000
+                            this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 1000
                         );
                         if (!force) {
                             localStorage.setItem('gallery', JSON.stringify(this.gallery));
