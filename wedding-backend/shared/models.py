@@ -205,20 +205,27 @@ class HasPicture(models.Model):
     )
 
     def save(self) -> None:
-        if self.picture and not self.thumbnail:
+        if not self.pk:
             self.save_thumb()
         return super(HasPicture, self).save()
 
     def save_thumb(self):
         with Image.open(self.picture) as img:
-            thumb = img.copy()
-            thumb = exif_transpose(thumb)
-            thumb.thumbnail(THUMBNAIL_SIZE)
+            thumb = self.create_tumb(img)
             save_path = f"thumb/{self.picture.name}"
-            fh = default_storage.open(save_path, "wb")
-            thumb.save(fh)
-            fh.close()
+            self.save_img(thumb, save_path)
             self.thumbnail = save_path
+
+    def create_tumb(self, img):
+        thumb = img.copy()
+        thumb = exif_transpose(thumb)
+        thumb.thumbnail(THUMBNAIL_SIZE)
+        return thumb
+
+    def save_img(self, img, save_path):
+        fh = default_storage.open(save_path, "wb")
+        img.save(fh)
+        fh.close()
 
     class Meta:
         abstract = True

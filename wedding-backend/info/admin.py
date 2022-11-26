@@ -6,7 +6,7 @@ from .models import Information, Photo
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'type', 'picture', 'private',)
+    list_display = ('id', 'type', 'picture', 'thumbnail', 'private',)
     list_filter = ('type', 'private',)
 
 

@@ -188,10 +188,12 @@ export const useGalleryStore = defineStore({
                         this.galleryExpiry.setTime(
                             this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 1000
                         );
-                        if (!force) {
+                        if (!force) { // set properties for persistence upon refresh
                             localStorage.setItem('gallery', JSON.stringify(this.gallery));
                             localStorage.setItem('galleryExpiry', JSON.stringify(this.galleryExpiry));
-                            localStorage.setItem('galleryNext', this.next);
+                            if (this.next) {
+                                localStorage.setItem('galleryNext', this.next);
+                            }
                         }
                     }
                 ).catch(
