@@ -7,7 +7,6 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
 
 THUMBNAIL_SIZE = 640, 640
@@ -206,25 +205,25 @@ class HasPicture(models.Model):
 
     def save(self) -> None:
         if not self.pk:
+            super(HasPicture, self).save()
             self.save_thumb()
         return super(HasPicture, self).save()
 
     def save_thumb(self):
         with Image.open(self.picture) as img:
             thumb = self.create_tumb(img)
-            save_path = f"thumb/{self.picture.name}"
+            save_path = f"thumb/{self.picture.name.split('/')[-1]}"
             self.save_img(thumb, save_path)
             self.thumbnail = save_path
 
     def create_tumb(self, img):
         thumb = img.copy()
-        thumb = exif_transpose(thumb)
         thumb.thumbnail(THUMBNAIL_SIZE)
         return thumb
 
     def save_img(self, img, save_path):
-        fh = default_storage.open(save_path, "wb")
-        img.save(fh, format='png')
+        fh = self.picture.storage.open(save_path, "wb")
+        img.save(fh)
         fh.close()
 
     class Meta:
