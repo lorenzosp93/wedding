@@ -40,5 +40,8 @@ class Photo(HasPicture):
     private = models.BooleanField(default=False,)
     type = models.IntegerField(choices=PHOTO_TYPES, default=0)
 
+    def __str__(self) -> str:
+        return f"{self.picture.name} - {self.type}"
+
     class Meta:
         ordering = ['type']
