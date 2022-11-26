@@ -224,7 +224,7 @@ class HasPicture(models.Model):
 
     def save_img(self, img, save_path):
         fh = default_storage.open(save_path, "wb")
-        img.save(fh)
+        img.save(fh, format='png')
         fh.close()
 
     class Meta:
