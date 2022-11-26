@@ -45,12 +45,6 @@
     "notfound": {
       "pageNotFound": "Pagina non trovata!"
     },
-    "reloadpwa": {
-      "appReadyTo": " Sito pronto per funzionare offline",
-      "close": "\n          Chiudere\n        ",
-      "newContentAvailable": "Nuovi contenuti disponibili, fare clic sul pulsante di ricarica per aggiornare.",
-      "reload": "\n          Ricaricare\n        "
-    },
     "thenavbar": {
       "gallery": "Galleria",
       "home": "Home",
@@ -121,7 +115,5 @@
     "envelopeFlap": "Envelope flap",
     "waxSealOn": "Wax seal on the envelope"
   },
-  "thegallery": {
-    "loadMore": "Carica altre foto"
-  }
+  "thegallery": {}
 }

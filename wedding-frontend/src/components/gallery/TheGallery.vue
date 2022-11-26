@@ -21,9 +21,18 @@
           <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
         </div>
       </div>
-      <div class="relative flex w-full mx-auto min-h-[50px]">
-        <button v-if="next && !loading" class="m-auto px-2 py-1 bg-accent test-primary rounded-md shadow-lg" @click.once="getGalleryContent(true)">{{ $t('thegallery.loadMore') }}</button>
-        <loading-view v-if="loading"></loading-view>
+      <div v-show="loading || next" class="relative flex w-full mx-auto min-h-[50px]">
+        <div v-show="next" class="m-auto">
+          <svg class="h-10 w-10 block m-auto pt-3.5 animate-bounce fill-secondary dark:fill-darkNeutral" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
+              <g>
+                <path
+                  d="M34.6,228.4L472,481c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4c-13.9-24.1-44.4-32.5-68.1-18.8L500,380.9L84.9,141.2C61.2,127.5,30.8,136,16.9,160C2.9,184.1,10.9,214.7,34.6,228.4z" />
+                <path
+                  d="M915.1,519L500,758.7L84.9,519c-23.7-13.7-54.2-5.2-68.1,18.8c-13.9,24.1-6,54.7,17.7,68.4L472,858.8c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4C969.2,513.8,938.8,505.4,915.1,519z" />
+              </g>
+          </svg>
+        </div>
+        <loading-view v-show="loading"></loading-view>
       </div>
     </div>
     <div v-if="activePhoto" class="fixed top-0 left-0 w-full h-full">
@@ -37,6 +46,7 @@
 </template>
 
 <script>
+import { debounce, throttle } from 'underscore';
 import { mapActions, mapState } from 'pinia';
 import { useGalleryStore } from '@/stores/api.store';
 import LoadingView from '@/components/shared/LoadingView.vue';
@@ -64,12 +74,28 @@ export default {
   },
   mounted () {
     this.getGalleryContent();
+    this.setupInfiniteScroll();
   },
   beforeUnmount () {
     this.tl?.kill;
   },
   methods: {
     ...mapActions(useGalleryStore, ['getGalleryContent']),
+    getMoreGalleryContent () {
+      if (this.next) {
+        this.getGalleryContent(true);
+      };
+    },
+    setupInfiniteScroll () {
+      window.onscroll = debounce(() => {
+        let condition = window.innerHeight + window.pageYOffset >= document.documentElement.offsetHeight;
+        if (condition) {
+          throttle(()=>{
+            this.getMoreGalleryContent();
+          }, 500, {leading: true})();
+        }
+      }, 300)
+    },
   },
 }
 </script>

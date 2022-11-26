@@ -71,11 +71,8 @@
   </div>
 
   <Teleport to="body">
-    <div id="scroller" :class="{invisible: !loaded}" class="fixed w-fit bottom-0 right-0 py-2 flex z-20 font-serif text-accent" >
-      <p>{{ $t('theinvitation.scrollDown') }}</p>
-      <svg
-    class="h-7 w-7 block m-auto pt-3.5 animate-bounce fill-accent" version="1.1" xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
+    <div id="scroller" :class="{invisible: !loaded}" class="fixed w-fit bottom-0 right-1/2 translate-x-1/2 py-2 flex z-20" >
+      <svg class="h-10 w-10 md:h-12 md:w-12 block pt-3.5 animate-bounce fill-accent" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
           <g>
             <path
               d="M34.6,228.4L472,481c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4c-13.9-24.1-44.4-32.5-68.1-18.8L500,380.9L84.9,141.2C61.2,127.5,30.8,136,16.9,160C2.9,184.1,10.9,214.7,34.6,228.4z" />
@@ -191,7 +188,7 @@ export default {
           duration: 0.5,
           ease: 'none',
         }, 0.5)
-        .set('#scroller', {autoAlpha: 0}, .6);
+        .set('#scroller', {autoAlpha: 0}, .5);
       this.tl = tl;
     },
   },

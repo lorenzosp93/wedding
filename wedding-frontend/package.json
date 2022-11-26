@@ -15,6 +15,7 @@
     "gsap": "file:gsap-bonus.tgz",
     "pinia": "^2.0.23",
     "shepherd.js": "^11.0.0",
+    "underscore": "^1.13.6",
     "vite": "^3.1.0",
     "vue": "^3.2.13",
     "vue-axios": "^3.4.1",
