@@ -38,7 +38,7 @@ class Information(HasPicture, HasContent, HasSubject):
 class Photo(HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
     private = models.BooleanField(default=False,)
-    type = models.IntegerField(choices=PHOTO_TYPES,)
+    type = models.IntegerField(choices=PHOTO_TYPES, default=0)
 
     class Meta:
         ordering = ['type']

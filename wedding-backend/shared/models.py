@@ -216,7 +216,7 @@ class HasPicture(models.Model):
             thumb.thumbnail(THUMBNAIL_SIZE)
             save_path = f"thumb/{self.picture.name}"
             fh = default_storage.open(save_path, "wb")
-            thumb.save(fh, format=self.picture.name.split('.')[-1])
+            thumb.save(fh)
             fh.close()
             self.thumbnail = save_path
 
