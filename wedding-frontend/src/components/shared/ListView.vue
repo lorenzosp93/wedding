@@ -62,7 +62,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           <div v-if="activeObject?.picture" class="w-full">
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
           </div>
-          <article class="my-3 leading-7 tracking-wider" v-html="activeObject?.content" />
+          <article class="my-3 leading-7 tracking-wider" v-html="activeObject?.content"></article>
           <form v-if="activeObject?.questions?.length && responses?.length">
             <div v-if="!activeObject?.questions.some(q => !q.response)">
               <p class="my-2 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>

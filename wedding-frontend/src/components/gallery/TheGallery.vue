@@ -2,22 +2,34 @@
   <div class="m-auto max-w-5xl py-5">
     <div class="mx-3 p-3 bg-pale dark:bg-darkPale rounded-md flex flex-wrap">
       <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
-        <div v-for="photo in gallery.filter((_,idx)=>idx%4==0)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+        <div
+v-for="photo in gallery.filter((_,idx)=>{
+            return idx%(breakpoint == 'sm' ? 1 : breakpoint == 'md' ? 2 : 4)==0
+          })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
           <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
         </div>
       </div>
-      <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit max-lg:md:mt-auto">
-        <div v-for="photo in gallery.filter((_,idx)=>idx%4==1)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+      <div class="flex-[50%] lg:flex-[25%] max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
+        <div
+v-for="photo in gallery.filter((_,idx)=>{
+            return idx%(breakpoint == 'sm' ? 1 : breakpoint == 'md' ? 2 : 4)==1
+          })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
           <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
         </div>
       </div>
-      <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
-        <div v-for="photo in gallery.filter((_,idx)=>idx%4==2)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+      <div class="flex-[25%] max-w-[25%] px-1.5 h-fit">
+        <div
+v-for="photo in gallery.filter((_,idx)=>{
+            return idx%(breakpoint == 'sm' ? 1 : breakpoint == 'md' ? 2 : 4)==2
+          })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
           <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
         </div>
       </div>
-      <div class="flex-[100%] sm:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit max-lg:md:mb-auto">
-        <div v-for="photo in gallery.filter((_,idx)=>idx%4==3)" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
+      <div class="flex-[25%] max-w-[25%] px-1.5 h-fit">
+        <div
+v-for="photo in gallery.filter((_,idx)=>{
+            return idx%(breakpoint == 'sm' ? 1 : breakpoint == 'md' ? 2 : 4)==3
+          })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
           <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
         </div>
       </div>
@@ -62,6 +74,13 @@ export default {
   data () {
     return {
       activePhoto: null,
+      breakpointMap: [
+        {name: 'sm', value: 640},
+        {name: 'md', value: 768},
+        {name: 'lg', value: 1024},
+        {name: 'xl', value: 1280},
+      ],
+      breakpoint: 'xl',
     }
   },
   computed: {
@@ -70,10 +89,12 @@ export default {
       'loading',
       'error',
       'next',
-    ])
+    ]),
   },
   mounted () {
     this.getGalleryContent();
+    this.setupGalleryColumns();
+    this.updateBreakpoint();
     this.setupInfiniteScroll();
   },
   beforeUnmount () {
@@ -96,6 +117,15 @@ export default {
         }
       }, 300)
     },
+    setupGalleryColumns () {
+      window.onresize = debounce(() => {
+        this.updateBreakpoint()
+      }, 100)
+    },
+    updateBreakpoint () {
+      this.breakpoint = this.breakpointMap.find(bp => bp.value >= window.innerWidth)?.name ?? 'xl';
+      console.log(this.breakpoint)
+    }
   },
 }
 </script>
