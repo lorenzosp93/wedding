@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.utils.html import strip_tags
 
 THUMBNAIL_SIZE = 640, 640
 I18N = (
@@ -261,7 +262,7 @@ class ContentString(models.Model):
     value = models.TextField()
 
     def __str__(self) -> str:
-        return f"{self.value} - {self.id}"
+        return f"{strip_tags(self.value)} - {self.id}"
 
 
 class TranslatedString(models.Model):
@@ -282,7 +283,7 @@ class TranslatedString(models.Model):
         unique_together = ['language', 'content']
 
     def __str__(self) -> str:
-        return f'{self.content.value} -> {self.get_language_display()}'
+        return f'{strip_tags(self.content.value)} -> {self.get_language_display()}'
 
 
 def get_translated_content(content: ContentString, language: str = 0) -> str:
