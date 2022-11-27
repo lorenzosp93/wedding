@@ -1,12 +1,12 @@
 <template>
-  <div class="flex py-5">
-    <div class="bg-pale dark:bg-darkPale border-2 p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-4/5 max-w-xl ">
-      <h1 class="text-lg font-bold my-2 ">{{ $t('auth.loginpage.loginPage') }}</h1>
-      <form class="flex flex-col">
-        <label class="block mx-auto my-1" for="email_input">{{ $t('auth.loginpage.emailAddress') }}</label>
+  <div class="flex py-5 px-3">
+    <div class="bg-pale dark:bg-darkPale p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-full max-w-xl shadow-lg">
+      <h1 class="text-lg font-bold dark:text-darkNeutral my-2 ">{{ $t('auth.loginpage.loginPage') }}</h1>
+      <form class="flex flex-col" @submit="handleLogin()">
+        <label class="block mx-auto my-1 dark:text-darkNeutral" for="email_input">{{ $t('auth.loginpage.emailAddress') }}</label>
         <p v-if="error?.email" class="text-alert font-bold text-sm mx-auto pb-1">{{ error.email[0] }}</p>
         <input id="email_input" v-model="email" class="block bg-neutral dark:bg-darkNeutral rounded-md mx-auto px-2 w-full max-w-xs mb-1" type="email">
-        <button v-if="!loading" class="flex border-2 border-white mx-auto my-2 px-2 py-1 rounded-lg bg-neutral dark:bg-darkNeutral" type="submit" @click.prevent="handleLogin(email)">{{ $t('auth.loginpage.submit') }}</button>
+        <button v-if="!loading" class="flex mx-auto my-2 px-2 py-1 rounded-lg bg-accent  text-primary shadow-lg" type="submit" @click.prevent="handleLogin()">{{ $t('auth.loginpage.submit') }}</button>
         <div v-if="loading" class="relative w-10 h-10 my-1 mx-auto">
           <loading-view >{{ $t('auth.loginpage.loading') }}</loading-view>
         </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import LoginService from '@/services/login.service'
+import { login } from '@/services/login.service'
 import LoadingView from '@/components/shared/LoadingView.vue';
 
 export default {
@@ -32,13 +32,10 @@ data () {
     error: null,
   }
 },
-computed: {
-},
 methods: {
-  handleLogin(email) {
+  handleLogin() {
     this.loading = true;
-    LoginService.login(email)
-    .catch((error) => {
+    login(this.email).catch((error) => {
         this.loading = false;
         this.error = error.response?.data ?? "Unable to return response";
       })

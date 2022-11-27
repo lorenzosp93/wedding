@@ -8,7 +8,7 @@
       "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}"
     },
     "loginsuccess": {
-      "loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta per il tuo link di accesso."
+      "loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta <b>(incluso la cartella di posta indesiderata)</b> per il tuo link di accesso."
     }
   },
   "profile": {

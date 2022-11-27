@@ -96,25 +96,28 @@ export default {
     this.setupInfiniteScroll();
   },
   beforeUnmount () {
-    window.removeEventListener('scroll');
-    window.removeEventListener('resize');
+    window.removeEventListener('scroll', this.scrollEventListener);
+    window.removeEventListener('resize', this.updateBreakpoint);
   },
   methods: {
     ...mapActions(useGalleryStore, ['getGalleryContent']),
     getMoreGalleryContent () {
-      if (this.next) {
+      if (this.next && !this.loading) {
         this.getGalleryContent(true);
       };
     },
     setupInfiniteScroll () {
-      window.addEventListener('scroll', debounce(() => {
+      window.addEventListener('scroll', this.scrollEventListener); 
+    },
+    scrollEventListener () {
+      debounce(() => {
         let condition = window.innerHeight + window.pageYOffset >= document.documentElement.offsetHeight;
         if (condition) {
           throttle(()=>{
             this.getMoreGalleryContent();
           }, 500, {leading: true})();
         }
-      }, 300)); 
+      }, 200)
     },
     setupGalleryColumns () {
       window.addEventListener('resize', debounce(() => {

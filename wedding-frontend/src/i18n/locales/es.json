@@ -8,7 +8,7 @@
       "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}"
     },
     "loginsuccess": {
-      "loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
+      "loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada <b>(incluso la carpeta de spam)</b> para obtener su enlace de inicio de sesión."
     }
   },
   "profile": {

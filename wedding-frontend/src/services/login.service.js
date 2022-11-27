@@ -3,23 +3,25 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
 
-class LoginService {
-  login(email) {
-    return axios
-      .post(API_URL + '/api/auth/email/', {
-        email: email
-      }, )
-      .then( response => {
-        console.log(response);
-        if(response.status == 200){
-          router.push('/login/success');
-        }
-      })
-      .catch(error => {
-        console.log(error.message);
-        throw error;
-      });
-  }
-}
+export async function login(email) {
+  return axios
+    .post(API_URL + '/api/auth/email/', {
+      email: email
+    }, )
+    .then(() => {
+      router.push({name: 'login-success', query: {email: email}});
+    })
+    .catch(error => {
+      console.log(error.message);
+      throw error;
+    })
+};
 
-export default new LoginService();
+export async function get_token (email, token) {
+  return axios
+    .get(`${API_URL}/api/shared/magic-auth/?email=${email}&token=${token}&api=1`)
+    .then(response => {
+      let token = response.data.token;
+      router.push({name: 'home', query: {token: token}});
+    })
+};

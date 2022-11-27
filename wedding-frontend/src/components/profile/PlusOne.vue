@@ -4,7 +4,7 @@
   <div
 class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2
  rounded-lg bg-pale dark:bg-darkPale ring-1 ring-accent p-3 w-full max-w-sm">
-    <form class="flex flex-wrap">
+    <form class="flex flex-wrap" @submit="setupPlusOne">
       <div v-for="field in submit" :key="field.name" class="my-1 px-5 mx-auto w-full text-start">
         <label class="w-full" :for="field.name">{{ $t('profile.plusone.' + field.name) }}</label>
         <input v-model="submit.find(x=>x.name == field.name).value" class="w-full rounded-md bg-neutral dark:bg-darkNeutral" :type="field.name == 'email' ? field.name : 'text'">

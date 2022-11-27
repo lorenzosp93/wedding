@@ -8,7 +8,7 @@
       "thereWasAn": "There was an error sending you the access code:\n {a}"
     },
     "loginsuccess": {
-      "loginWasSuccessful": "Login was successful, please check your inbox for your login link."
+      "loginWasSuccessful": "Login was successful, please check your inbox <b>(including the spam folder)</b> for your login link."
     }
   },
   "profile": {
