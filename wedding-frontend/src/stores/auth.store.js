@@ -37,6 +37,7 @@ export const useAuthStore = defineStore({
         },
         logout() {
             this.token = null;
+            this.profile = null;
             localStorage.clear();
             this.$router.push('/login')
         },

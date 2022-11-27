@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores';
 
-import TheLanding from './components/TheInvitation.vue'
 import LoginPage from './components/auth/LoginPage.vue'
 
 // Lazy load
@@ -18,7 +17,6 @@ const NotFound = () => import('./components/shared/NotFound.vue')
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        {name: 'landing', path: '/landing', component: TheLanding},
         {name: 'login', path: '/login', component: LoginPage},
         {name: 'login-success', path: '/login/success', component: LoginSuccess},
         {name: 'home', path: '/', components: {default: TheHome, TheNavbar}, },
@@ -34,10 +32,11 @@ const router = createRouter({
 router.beforeEach(async (to) => {
     // redirect to login page if not logged in and trying to access a restricted page
 
-    const publicPages = ['/landing', '/login', '/login/success'];
-    const authRequired = !publicPages.includes(to.path);
+    const publicPages = ['login', 'login-success'];
+    const authRequired = !publicPages.includes(to.name);
+
     const auth = useAuthStore();
-    const token = to.query['token'] || auth.token;
+    const token = auth.token || to.query['token'];
 
     if(!auth.profile && token){
       await auth.login(token);
@@ -45,6 +44,9 @@ router.beforeEach(async (to) => {
 
     if (authRequired && !token) {
       return '/login'
+    }
+    if (!authRequired && token) {
+      return '/home'
     }
   });
 

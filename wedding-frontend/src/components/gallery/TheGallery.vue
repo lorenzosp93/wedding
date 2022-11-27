@@ -96,8 +96,8 @@ export default {
     this.setupInfiniteScroll();
   },
   beforeUnmount () {
-    window.removeEventListener('scroll', this.scrollEventListener);
-    window.removeEventListener('resize', this.updateBreakpoint);
+    window.removeEventListener('scroll', this.scrollEventListener());
+    window.removeEventListener('resize', this.updateBreakpoint());
   },
   methods: {
     ...mapActions(useGalleryStore, ['getGalleryContent']),
@@ -107,10 +107,10 @@ export default {
       };
     },
     setupInfiniteScroll () {
-      window.addEventListener('scroll', this.scrollEventListener); 
+      window.addEventListener('scroll', this.scrollEventListener()); 
     },
     scrollEventListener () {
-      debounce(() => {
+      return debounce(() => {
         let condition = window.innerHeight + window.pageYOffset >= document.documentElement.offsetHeight;
         if (condition) {
           throttle(()=>{
@@ -120,9 +120,12 @@ export default {
       }, 200)
     },
     setupGalleryColumns () {
-      window.addEventListener('resize', debounce(() => {
+      window.addEventListener('resize', this.resizeEventListener());
+    },
+    resizeEventListener () {
+      return debounce(() => {
         this.updateBreakpoint()
-      }, 100));
+      }, 100)
     },
     updateBreakpoint () {
       this.breakpoint = this.breakpointMap.find(bp => bp.value >= window.innerWidth)?.name ?? 'xl';
