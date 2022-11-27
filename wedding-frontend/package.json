@@ -15,6 +15,7 @@
     "gsap": "file:gsap-bonus.tgz",
     "pinia": "^2.0.23",
     "shepherd.js": "^11.0.0",
+    "underscore": "^1.13.6",
     "vite": "^3.1.0",
     "vue": "^3.2.13",
     "vue-axios": "^3.4.1",
@@ -23,7 +24,6 @@
   },
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^6.0.3",
-    "vue-translation-manager": "^1.2.0",
     "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.4",
     "eslint": "^8.27.0",
@@ -34,7 +34,8 @@
     "tailwindcss": "^3.0.23",
     "terser": "^5.15.1",
     "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-pwa": "^0.13.3"
+    "vite-plugin-pwa": "^0.13.3",
+    "vue-translation-manager": "^1.2.0"
   },
   "eslintConfig": {
     "root": true,

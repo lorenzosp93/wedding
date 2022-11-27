@@ -42,7 +42,7 @@ export const useInfoStore = defineStore({
                         this.loading = false;
                         this.infosExpiry = new Date();
                         this.infosExpiry.setTime(
-                            this.infosExpiry.getTime() + INFOS_LIFETIME * 60 * 60 * 1000
+                            this.infosExpiry.getTime() + INFOS_LIFETIME * 60 * 1000
                         );
                         this.activeType = this.infos.find(info => info)?.type;
                         localStorage.setItem('infos', JSON.stringify(this.infos));
@@ -173,21 +173,28 @@ export const useGalleryStore = defineStore({
         error: null,
         gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]"),
         galleryExpiry: Date.parse(localStorage.getItem('galleryExpiry') ?? new Date()),
+        next: localStorage.getItem('galleryNext'),
     }),
     actions: {
-        async getGalleryContent () {
-            if (this.gallery.length == 0 || this.galleryExpiry < Date.now()) {
+        async getGalleryContent (force=null) {
+            if (this.gallery.length == 0 || this.galleryExpiry < Date.now() || force) {
                 this.loading = true;
-                apiService.getGalleryContent().then(
+                apiService.getGalleryContent(this.next).then(
                     (response) => {
-                        this.gallery = response.data;
+                        this.gallery = [...this.gallery, ...response.data.results];
+                        this.next = response.data.next;
                         this.loading = false;
                         this.galleryExpiry = new Date()
                         this.galleryExpiry.setTime(
-                            this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 60 * 1000
+                            this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 1000
                         );
-                        localStorage.setItem('gallery', JSON.stringify(this.gallery));
-                        localStorage.setItem('galleryExpiry', JSON.stringify(this.galleryExpiry));
+                        if (!force) { // set properties for persistence upon refresh
+                            localStorage.setItem('gallery', JSON.stringify(this.gallery));
+                            localStorage.setItem('galleryExpiry', JSON.stringify(this.galleryExpiry));
+                            if (this.next) {
+                                localStorage.setItem('galleryNext', this.next);
+                            }
+                        }
                     }
                 ).catch(
                     error => {

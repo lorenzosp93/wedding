@@ -2,6 +2,8 @@ import axios from 'axios';
 import authHeader from './authheader';
 import { useAuthStore } from '@/stores';
 
+const GALLERY_LIMIT = 16 // images per load
+
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
@@ -96,9 +98,9 @@ class ApiService {
     )
   }
   
-  async getGalleryContent() {
+  async getGalleryContent(overrideLink=null) {
     return request().get(
-      API_URL + '/api/photo/'
+      overrideLink ?? API_URL + '/api/photo/?limit=' + GALLERY_LIMIT
     )
   }
   

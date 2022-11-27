@@ -45,12 +45,6 @@
     "notfound": {
       "pageNotFound": "Page not found!"
     },
-    "reloadpwa": {
-      "appReadyTo": " Website ready to work offline ",
-      "close": "\n          Close\n        ",
-      "newContentAvailable": "New content available, click on reload button to update.",
-      "reload": "\n          Reload\n        "
-    },
     "thenavbar": {
       "gallery": "Gallery",
       "home": "Home",
@@ -63,7 +57,7 @@
       "next": "Next",
       "back": "Back",
       "finish": "Finish",
-      "intro": "Welcome to our wedding App! Here, you will be able to access all information regarding the celebrations and join us as we prepare for our special day. Click the 'Next' button to have a quick look around.",
+      "intro": "Welcome to our wedding App! Here, you will be able to access all information regarding the celebrations and join us as we prepare for our special day. \n\n Click the 'Next' button to have a quick look around.",
       "mobile-menu": "Since you're on a mobile device, the menu is conveniently tucked behind the button above. Click it to proceed.",
       "invite": "Behind this button, you can find the digital invite for the wedding!",
       "information": "In this section, you will find all the information about the wedding celebrations, including Events, Travel, Tips and more.",
@@ -73,7 +67,7 @@
         "detail": "This is the message view. In case the message has questions, you will be able to answer them directly on this page."
       },
       "gallery": "In the gallery you will find the pictures from the celebration.",
-      "profile": "The profile section allows you to check your information, and log out of the app if necessary."
+      "profile": "The profile section allows you to check your information, and log out of the app if necessary. \n\n You may also install this app by clicking on the 'Add to Home Screen' option on your browser."
     },
     "countdown": {
       "days": "days",
@@ -116,5 +110,6 @@
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
     "envelopeFlap": "Envelope flap",
     "waxSealOn": "Wax seal on the envelope"
-  }
+  },
+  "thegallery": {}
 }

@@ -3,7 +3,6 @@ from rest_framework.viewsets import (
     ReadOnlyModelViewSet,
     ModelViewSet,
 )
-from rest_framework.pagination import LimitOffsetPagination
 from shared.viewsets import (
     AudienceViewSetMixin,
     BaseGetQuerysetMixin,
@@ -23,7 +22,6 @@ class MessageViewSet(
         This ViewSet enables retrieval and listing of
         UserMessage objects
     """
-    pagination_class = LimitOffsetPagination
     serializer_class = MessageSerializer
 
 

@@ -7,8 +7,8 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
+from django.utils.html import strip_tags
 
 THUMBNAIL_SIZE = 640, 640
 I18N = (
@@ -205,20 +205,27 @@ class HasPicture(models.Model):
     )
 
     def save(self) -> None:
-        if self.picture and not self.thumbnail:
+        if not self.pk:
+            super(HasPicture, self).save()
             self.save_thumb()
         return super(HasPicture, self).save()
 
     def save_thumb(self):
         with Image.open(self.picture) as img:
-            thumb = img.copy()
-            thumb = exif_transpose(thumb)
-            thumb.thumbnail(THUMBNAIL_SIZE)
-            save_path = f"thumb/{self.picture.name}"
-            fh = default_storage.open(save_path, "wb")
-            thumb.save(fh, format=self.picture.name.split('.')[-1])
-            fh.close()
+            thumb = self.create_tumb(img)
+            save_path = f"thumb/{self.picture.name.split('/')[-1]}"
+            self.save_img(thumb, save_path)
             self.thumbnail = save_path
+
+    def create_tumb(self, img):
+        thumb = img.copy()
+        thumb.thumbnail(THUMBNAIL_SIZE)
+        return thumb
+
+    def save_img(self, img, save_path):
+        fh = self.picture.storage.open(save_path, "wb")
+        img.save(fh)
+        fh.close()
 
     class Meta:
         abstract = True
@@ -255,7 +262,7 @@ class ContentString(models.Model):
     value = models.TextField()
 
     def __str__(self) -> str:
-        return f"{self.value} - {self.id}"
+        return f"{strip_tags(self.value)} - {self.id}"
 
 
 class TranslatedString(models.Model):
@@ -276,7 +283,7 @@ class TranslatedString(models.Model):
         unique_together = ['language', 'content']
 
     def __str__(self) -> str:
-        return f'{self.content.value} -> {self.get_language_display()}'
+        return f'{strip_tags(self.content.value)} -> {self.get_language_display()}'
 
 
 def get_translated_content(content: ContentString, language: str = 0) -> str:

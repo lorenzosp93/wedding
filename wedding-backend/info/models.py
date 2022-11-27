@@ -38,7 +38,10 @@ class Information(HasPicture, HasContent, HasSubject):
 class Photo(HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
     private = models.BooleanField(default=False,)
-    type = models.IntegerField(choices=PHOTO_TYPES,)
+    type = models.IntegerField(choices=PHOTO_TYPES, default=0)
+
+    def __str__(self) -> str:
+        return f"{self.picture.name} - {self.type}"
 
     class Meta:
         ordering = ['type']
