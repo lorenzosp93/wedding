@@ -98,7 +98,8 @@ export default {
     this.setupInfiniteScroll();
   },
   beforeUnmount () {
-    this.tl?.kill;
+    window.removeEventListener('scroll');
+    window.removeEventListener('resize');
   },
   methods: {
     ...mapActions(useGalleryStore, ['getGalleryContent']),
@@ -108,24 +109,24 @@ export default {
       };
     },
     setupInfiniteScroll () {
-      window.onscroll = debounce(() => {
+      window.addEventListener('scroll', debounce(() => {
         let condition = window.innerHeight + window.pageYOffset >= document.documentElement.offsetHeight;
         if (condition) {
           throttle(()=>{
             this.getMoreGalleryContent();
           }, 500, {leading: true})();
         }
-      }, 300)
+      }, 300)); 
     },
     setupGalleryColumns () {
-      window.onresize = debounce(() => {
+      window.addEventListener('resize', debounce(() => {
         this.updateBreakpoint()
-      }, 100)
+      }, 100));
     },
     updateBreakpoint () {
       this.breakpoint = this.breakpointMap.find(bp => bp.value >= window.innerWidth)?.name ?? 'xl';
       console.log(this.breakpoint)
-    }
+    },
   },
 }
 </script>
