@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.utils.module_loading import import_string
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
@@ -19,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 @api_view(('GET',))
 @permission_classes((AllowAny,))
-def get_languages(request):
+def get_languages() -> Response:
     """
         Return supported languages
     """
@@ -28,7 +29,7 @@ def get_languages(request):
 
 @api_view(['GET', ])
 @permission_classes([AllowAny, ])
-def get_auth_token(request, *args, **kwargs):
+def get_auth_token(request: Request, *args, **kwargs) -> Response:
     """
         Function to retrieve auth token from email/mobile + OTP combination.
     """

@@ -1,3 +1,4 @@
+from typing import Optional, Union
 from rest_framework.serializers import (
     ModelSerializer, CharField, SerializerMethodField,
     Serializer, EmailField
@@ -12,7 +13,7 @@ from .models import (
 from shared.models import get_translated_content
 
 
-def translated_string(serializer, obj, field):
+def translated_string(serializer, obj, field: str) -> Optional[str]:
     profile = UserProfile.objects.get(
         user__id=serializer.context.get('request').user.id)
     content = getattr(obj, field)
@@ -22,14 +23,14 @@ def translated_string(serializer, obj, field):
 
 
 class TranslationContentMixin(ModelSerializer):
-    def translated_content(self, obj):
+    def translated_content(self, obj) -> Optional[str]:
         return translated_string(self, obj, 'content')
 
     content = SerializerMethodField('translated_content')
 
 
 class TranslationSubjectMixin(ModelSerializer):
-    def translated_subject(self, obj):
+    def translated_subject(self, obj) -> Optional[str]:
         return translated_string(self, obj, 'subject')
 
     subject = SerializerMethodField('translated_subject')

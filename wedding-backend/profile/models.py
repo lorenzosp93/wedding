@@ -1,5 +1,6 @@
 "Define abstract models to be used in all apps"
 from itertools import combinations
+from typing import Optional
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -56,7 +57,7 @@ class UserProfile(models.Model):
         related_name='childs',
     )
 
-    def setup_plus_one(self, first_name, last_name, email):
+    def setup_plus_one(self, first_name: str, last_name: str, email: str) -> tuple[Optional[User], bool]:
         if self.user.childs.count() < self.plus:
             user, created = User.objects.get_or_create(
                 username=email,
@@ -66,17 +67,17 @@ class UserProfile(models.Model):
             return user, created
         return None, False
 
-    def setup_profile(self, first_name, last_name, email, user):
+    def setup_profile(self, first_name: str, last_name: str, email: str, user: User) -> None:
         user.first_name = first_name
         user.last_name = last_name
         user.email = email
         user.save()
         profile = UserProfile.objects.create(
-                    user=user,
-                    language=self.language,
-                    type=self.type,
-                    parent=self.user
-                )
+            user=user,
+            language=self.language,
+            type=self.type,
+            parent=self.user
+        )
 
     def __str__(self):
         return self.user.username

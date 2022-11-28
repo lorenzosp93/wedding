@@ -1,5 +1,6 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.request import Request
 from rest_framework.response import Response
 from .serializers import PlusOneSerializer
 
@@ -8,7 +9,7 @@ from .serializers import PlusOneSerializer
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
-def setup_plus_one(request):
+def setup_plus_one(request: Request) -> Response:
     "View to set up a plus one for a user"
     serializer = PlusOneSerializer(data=request.data)
     if serializer.is_valid():

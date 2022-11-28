@@ -1,3 +1,4 @@
+from typing import Optional
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import (
     ModelSerializer, PrimaryKeyRelatedField,
@@ -29,13 +30,13 @@ class ResponseSerializer(ModelSerializer):
         model = Response
         fields = '__all__'
 
-    def validate(self, data):
+    def validate(self, data: dict) -> dict:
         question = data.get('question')
         if question and question.mandatory:
             self.validate_responses(data, question)
         return super().validate(data)
 
-    def validate_responses(self, data, question):
+    def validate_responses(self, data: dict, question: Question) -> None:
         if question.options.count() > 0:
             if not data.get('option') and not data.get('text'):
                 if question.free_text:
@@ -61,10 +62,13 @@ class QuestionSerializer(
     TranslationSubjectMixin,
     ModelSerializer
 ):
-    def get_formatted_response(self, obj):
+    def get_formatted_response(self, question: Question) -> Optional[dict]:
         user = self.context.get('request').user
         response = Response.objects.filter(
-            question=obj, user=user, active=True).first()
+            question=question,
+            user=user,
+            active=True,
+        ).first()
         if response:
             option_list = response.option.values_list('uuid', flat=True)
             return {

@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.db.models import QuerySet
 from rest_framework.viewsets import (
     ReadOnlyModelViewSet,
     ModelViewSet,
@@ -32,10 +33,10 @@ class ResponseViewSet(ModelViewSet):
     """
     serializer_class = ResponseSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Response]:
         return Response.objects.filter(user__id=self.request.user.id)
 
-    def perform_destroy(self, instance):
+    def perform_destroy(self, instance: Response) -> None:
         instance.active = False
         instance.deleted_at = datetime.now()
         instance.save()

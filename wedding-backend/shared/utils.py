@@ -11,7 +11,8 @@ from wedding.settings import BACKEND_HOST
 logger = logging.getLogger(__name__)
 User = get_user_model()
 
-def send_email_with_callback_token(user, email_token, **kwargs):
+
+def send_email_with_callback_token(user: User, email_token: str, **kwargs) -> bool:
     """
     Sends a Email to user.email.
 
@@ -37,7 +38,7 @@ def send_email_with_callback_token(user, email_token, **kwargs):
                 'callback_token': email_token.key,
                 'user_email': getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME),
                 'auth_url': reverse('shared:magic-auth'),
-            'site_name': BACKEND_HOST,
+                'site_name': BACKEND_HOST,
             })
             html_message = loader.render_to_string(email_html, context,)
             send_mail(
@@ -49,13 +50,14 @@ def send_email_with_callback_token(user, email_token, **kwargs):
                 html_message=html_message,)
 
         else:
-            logger.debug("Failed to send token email. Missing PASSWORDLESS_EMAIL_NOREPLY_ADDRESS.")
+            logger.debug(
+                "Failed to send token email. Missing PASSWORDLESS_EMAIL_NOREPLY_ADDRESS.")
             return False
         return True
 
     except Exception as e:
         logger.debug("Failed to send token email to user: %d."
-                  "Possibly no email on user object. Email entered was %s" %
-                  (user.id, getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME)))
+                     "Possibly no email on user object. Email entered was %s" %
+                     (user.id, getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME)))
         logger.debug(e)
         return False
