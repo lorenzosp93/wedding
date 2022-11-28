@@ -8,7 +8,9 @@
       "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}"
     },
     "loginsuccess": {
-      "loginWasSuccessful": "El inicio de sesión fue exitoso, verifique su bandeja de entrada para obtener su enlace de inicio de sesión."
+      "loginWasSuccessful": "El inicio de sesión fue exitoso, <b>verifique tu bandeja de entrada <em>(incluso la carpeta de spam)</em> para obtener tu enlace de inicio de sesión.</b>",
+      "ifYouGetYourEmail": "Si recibes tu correo en un dispositivo diferente o tienes problemas con el enlace, también puedes ingresar el código OTP a continuación.",
+      "otp": "Codigo OTP (6 dígitos)"
     }
   },
   "profile": {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-24 18:25+0100\n"
+"POT-Creation-Date: 2022-11-27 22:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,89 +18,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: wedding-backend/inbox/serializers.py:39
+#: inbox/serializers.py:43
 msgid "Text must be provided if no option is selected"
 msgstr "Occorre inserire del testo se non si sceglie alcuna opzione"
 
-#: wedding-backend/inbox/serializers.py:42
+#: inbox/serializers.py:46
 msgid "Please choose an option"
 msgstr "Scegliere una opzione"
 
-#: wedding-backend/inbox/serializers.py:47
+#: inbox/serializers.py:50
 msgid "Text must be provided"
 msgstr "Occorre fornire del testo"
 
-#: wedding-backend/info/models.py:10
+#: info/models.py:10
 msgid "Venues"
 msgstr "Località"
 
-#: wedding-backend/info/models.py:11
+#: info/models.py:11
 msgid "Food"
 msgstr "Cibo"
 
-#: wedding-backend/info/models.py:12
+#: info/models.py:12
 msgid "Attractions"
 msgstr "Attrazioni"
 
-#: wedding-backend/info/models.py:13
+#: info/models.py:13
 msgid "Tips"
 msgstr "Consigli"
 
-#: wedding-backend/info/models.py:14
+#: info/models.py:14
 msgid "Travel"
 msgstr "Viaggi"
 
-#: wedding-backend/info/models.py:15
+#: info/models.py:15
 msgid "Events"
 msgstr "Eventi"
 
-#: wedding-backend/info/models.py:19
-msgid "Ice-breaker"
-msgstr "Rompi-ghiaccio"
-
-#: wedding-backend/info/models.py:20
-msgid "Ceremony"
-msgstr "Cerimonia"
-
-#: wedding-backend/info/models.py:21
-msgid "Reception"
-msgstr "Ricevimento"
-
-#: wedding-backend/info/models.py:22
-msgid "Dinner"
-msgstr "Cena"
-
-#: wedding-backend/info/models.py:23
-msgid "Dance"
-msgstr "Ballo"
-
-#: wedding-backend/info/models.py:24
+#: info/models.py:19
 msgid "Before"
 msgstr "Prima"
 
-#: wedding-backend/shared/models.py:14
+#: info/models.py:20
+msgid "Ice-breaker"
+msgstr "Rompi-ghiaccio"
+
+#: info/models.py:21
+msgid "Ceremony"
+msgstr "Cerimonia"
+
+#: info/models.py:22
+msgid "Reception"
+msgstr "Ricevimento"
+
+#: info/models.py:23
+msgid "Dinner"
+msgstr "Cena"
+
+#: info/models.py:24
+msgid "Dance"
+msgstr "Ballo"
+
+#: shared/models.py:15
 msgid "English"
 msgstr "inglese"
 
-#: wedding-backend/shared/models.py:15
+#: shared/models.py:16
 msgid "Italian"
 msgstr "italiano"
 
-#: wedding-backend/shared/models.py:16
+#: shared/models.py:17
 msgid "Spanish"
 msgstr "spagnolo"
 
-#: wedding-backend/templates/token_email.html:5
+#: templates/token_email.html:5
 msgid "Your login link"
 msgstr "Il tuo link di accesso"
 
-#: wedding-backend/templates/token_email.html:6
+#: templates/token_email.html:6
 msgid "Please click the link below to access the invitee area."
 msgstr "Clicca il link sotto per accedere all'area per gli invitati"
 
-#: wedding-backend/templates/token_email.html:16
+#: templates/token_email.html:16
 msgid "Click here"
 msgstr "Clicca quì"
+
+#: templates/token_email.html:24
+msgid "Alternatively, you can input the following code on the login page."
+msgstr "In alternativa, puoi inserire il seguente codice nella pagina di accesso."
 
 #, fuzzy
 #~| msgid "Text must be provided"

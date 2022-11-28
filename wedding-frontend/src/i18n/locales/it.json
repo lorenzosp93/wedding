@@ -4,11 +4,13 @@
       "emailAddress": "indirizzo email",
       "loading": "Caricamento in corso",
       "loginPage": "Pagina di login",
-      "submit": "Sottoscrivi",
+      "submit": "Invia",
       "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}"
     },
     "loginsuccess": {
-      "loginWasSuccessful": "L'accesso è riuscito, controlla la tua casella di posta per il tuo link di accesso."
+      "loginWasSuccessful": "L'accesso è riuscito, <b>controlla la tua casella di posta <em>(incluso la cartella di posta indesiderata)</em> per il tuo link di accesso.</b>",
+      "ifYouGetYourEmail": "Se ricevi la posta su un altro dispositivo o hai problemi con il link, puoi anche inserire il codice OTP qui sotto.",
+      "otp": "Codice OTP (6 cifre)"
     }
   },
   "profile": {
@@ -17,7 +19,7 @@
       "first_name": "Nome",
       "last_name": "Cognome/i",
       "loading": "Caricamento in corso",
-      "submit": "Inviare",
+      "submit": "Invia",
       "success": "Successo!"
     },
     "theprofile": {
