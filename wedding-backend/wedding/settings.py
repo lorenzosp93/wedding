@@ -204,7 +204,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'shared.authentication.ExpiringTokenAuthentication',
     ],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
@@ -216,6 +216,8 @@ REST_FRAMEWORK = {
     }
 
 }
+TOKEN_EXPIRED_AFTER_SECONDS = 60 * 60 * 24 * 30  # 30 days tokens expiry
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 

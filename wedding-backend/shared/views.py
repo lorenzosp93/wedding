@@ -1,4 +1,3 @@
-from django.middleware.csrf import get_token
 from django.shortcuts import redirect
 from django.utils.module_loading import import_string
 from rest_framework.response import Response
@@ -10,7 +9,7 @@ import logging
 
 from drfpasswordless.serializers import CallbackTokenAuthSerializer
 from drfpasswordless.settings import api_settings
-from wedding.settings import FRONTEND_HOST
+from django.conf import settings
 from .models import I18N
 
 logger = logging.getLogger(__name__)
@@ -49,7 +48,7 @@ def get_auth_token(request, *args, **kwargs):
             if token_serializer.is_valid():
                 if request.query_params.get('api'):
                     return Response({'token': str(token)}, status=status.HTTP_200_OK)
-                return redirect(f"{FRONTEND_HOST}/?token={token_serializer.data.get('token')}")
+                return redirect(f"{settings.FRONTEND_HOST}/?token={token_serializer.data.get('token')}")
 
     logger.error("Couldn't log in unknown user. Errors on serializer: {}".format(
         serializer.errors))
