@@ -59,11 +59,11 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
           </div>
           <article class="my-3 leading-7 tracking-wider" v-html="activeObject?.content"></article>
+          <div v-if="activeObject?.questions.every(q => q.response) && activeObject?.questions?.length">
+            <p class="my-2 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
+            <button class="bg-pale dark:bg-darkpale text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
+          </div>
           <form v-if="activeObject?.questions?.length && responses?.length" @submit="$emit('submitResponse', responses, activeObject.uuid)">
-            <div v-if="!activeObject?.questions.some(q => !q.response)">
-              <p class="my-2 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
-              <button class="bg-pale dark:bg-darkpale text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
-            </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
               <p v-html="question.content"></p>
