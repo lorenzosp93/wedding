@@ -24,6 +24,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       workbox:{
         importScripts: ['/push-sw.js'],
+        navigateFallbackDenylist: [/\/api\//],
       },
       devOptions: {
         enabled: process.env.DEV,
