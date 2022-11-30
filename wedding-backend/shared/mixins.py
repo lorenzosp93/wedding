@@ -16,11 +16,11 @@ class TriggersNotifications(
     """Abstract mixin to trigger notification"""
     submit = models.BooleanField(default=False)
 
-    def save(self) -> None:
+    def save(self, *args, **kwargs) -> None:
         if self.submit:
             self.send_notifications()
             self.submit = False
-        super().save()
+        super().save(*args, **kwargs)
 
     def send_notifications(self) -> None:
         user_list = self.get_user_list()
