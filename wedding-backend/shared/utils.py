@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 User = get_user_model()
 
 
-def send_email_with_callback_token(user: User, email_token: str, **kwargs) -> bool:
+def send_email_with_callback_token(user: User, email_token: dict, **kwargs) -> bool:
     """
     Sends a Email to user.email.
 
@@ -47,7 +47,8 @@ def send_email_with_callback_token(user: User, email_token: str, **kwargs) -> bo
                 api_settings.PASSWORDLESS_EMAIL_NOREPLY_ADDRESS,
                 [getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME)],
                 fail_silently=False,
-                html_message=html_message,)
+                html_message=html_message,
+            )
 
         else:
             logger.debug(
