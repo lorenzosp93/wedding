@@ -155,7 +155,7 @@ export default {
                         element: '#list-view',
                         on: 'right'
                     },
-                    modalOverlayOpeningPadding: 0,
+                    modalOverlayOpeningPadding: -5,
                     buttons: [
                         {
                         action: () => {
@@ -182,7 +182,7 @@ export default {
                         element: '#detail-view',
                         on: 'left'
                     },
-                    modalOverlayOpeningPadding: 0,
+                    modalOverlayOpeningPadding: -5,
                     buttons: [
                         {
                         action: () => {
@@ -207,6 +207,9 @@ export default {
                     text: this.$t('shared.tour.inbox.pushNotification'),
                     modalOverlayOpeningPadding: -5,
                     modalOverlayOpeningRadius: 10,
+                    showOn: () => {
+                        return 'serviceWorker' in navigator && 'PushManager' in window
+                    },
                     attachTo: {
                         element: '#notification-trigger',
                         on: 'top'
