@@ -246,3 +246,9 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', "True") == "True"
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": os.environ.get('WEB_PUSH_PUBLIC_KEY'),
+    "VAPID_PRIVATE_KEY": os.environ.get('WEB_PUSH_PRIVATE_KEY'),
+    "VAPID_ADMIN_EMAIL": os.environ.get('WEB_PUSH_ADMIN_EMAIL', "me@lorenzosp.com"),
+}

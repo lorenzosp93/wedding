@@ -3,9 +3,7 @@ from itertools import combinations
 from typing import Optional
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from shared.models import Address, I18N
+from shared.models import Address, I18N, TimeStampable
 
 USER_TYPES = (
     (2, 'family'),
@@ -81,3 +79,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Keys(models.Model):
+    p256dh = models.CharField(max_length=100)
+    auth = models.CharField(max_length=30)
+
+
+class Subscription(TimeStampable):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    endpoint = models.URLField()
+    keys = models.OneToOneField(Keys, on_delete=models.CASCADE, null=True)

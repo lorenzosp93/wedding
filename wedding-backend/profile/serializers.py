@@ -1,13 +1,15 @@
 from typing import Optional, Union
 from rest_framework.serializers import (
     ModelSerializer, CharField, SerializerMethodField,
-    Serializer, EmailField
+    Serializer, EmailField, RelatedField
 )
 from shared.serializers import (
     AddressSerializer,
     UserSerializer,
 )
 from .models import (
+    Keys,
+    Subscription,
     UserProfile
 )
 from shared.models import get_translated_content
@@ -71,3 +73,25 @@ class PlusOneSerializer(Serializer):
     email = EmailField()
     first_name = CharField()
     last_name = CharField()
+
+
+class KeysSerializer(ModelSerializer):
+    class Meta:
+        model = Keys
+        fields = '__all__'
+
+
+class SubscriptionSerializer(ModelSerializer):
+    keys = KeysSerializer()
+
+    class Meta:
+        model = Subscription
+        fields = ['endpoint', 'keys']
+
+    def create(self, validated_data):
+        keys_data = validated_data.pop('keys')
+        user = self.context.get('request').user
+        keys = Keys.objects.create(**keys_data)
+        subscription = Subscription.objects.create(
+            user=user, keys=keys, **validated_data)
+        return subscription

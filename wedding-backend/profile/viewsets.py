@@ -1,10 +1,11 @@
 from rest_framework.viewsets import ModelViewSet
 from django.db.models import QuerySet
 from .serializers import (
-    UserProfileWriteSerializer, UserProfileSerializer
+    UserProfileWriteSerializer, UserProfileSerializer, SubscriptionSerializer
 )
 from .models import (
-    UserProfile
+    UserProfile,
+    Subscription,
 )
 
 WRITE_ACTIONS = ["create", "update", "partial_update", "destroy"]
@@ -24,3 +25,10 @@ class UserProfileViewset(ModelViewSet):
 
     def get_queryset(self) -> QuerySet[UserProfile]:
         return UserProfile.objects.filter(user__id=self.request.user.id)
+
+
+class SubscriptionViewset(ModelViewSet):
+    serializer_class = SubscriptionSerializer
+
+    def get_queryset(self) -> QuerySet[Subscription]:
+        return Subscription.objects.filter(user_id=self.request.user.id)

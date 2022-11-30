@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-27 22:40+0100\n"
+"POT-Creation-Date: 2022-11-30 17:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,75 +18,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: inbox/serializers.py:43
+#: inbox/serializers.py:44
 msgid "Text must be provided if no option is selected"
 msgstr "Se debe proporcionar texto si no se selecciona ninguna opción"
 
-#: inbox/serializers.py:46
+#: inbox/serializers.py:47
 msgid "Please choose an option"
 msgstr "Por favor selecciona una opción"
 
-#: inbox/serializers.py:50
+#: inbox/serializers.py:51
 msgid "Text must be provided"
 msgstr "Se debe proporcionar texto"
 
-#: info/models.py:10
+#: info/models.py:11
 msgid "Venues"
 msgstr "Lugares"
 
-#: info/models.py:11
+#: info/models.py:12
 msgid "Food"
 msgstr "Comida"
 
-#: info/models.py:12
+#: info/models.py:13
 msgid "Attractions"
 msgstr "Attracciónes"
 
-#: info/models.py:13
+#: info/models.py:14
 msgid "Tips"
 msgstr "Consejos"
 
-#: info/models.py:14
+#: info/models.py:15
 msgid "Travel"
 msgstr "Viaje"
 
-#: info/models.py:15
+#: info/models.py:16
 msgid "Events"
 msgstr "Eventos"
 
-#: info/models.py:19
+#: info/models.py:20
 msgid "Before"
 msgstr "Antes"
 
-#: info/models.py:20
+#: info/models.py:21
 msgid "Ice-breaker"
 msgstr "Rompehielos"
 
-#: info/models.py:21
+#: info/models.py:22
 msgid "Ceremony"
 msgstr "Ceremonia"
 
-#: info/models.py:22
+#: info/models.py:23
 msgid "Reception"
 msgstr "Recepción"
 
-#: info/models.py:23
+#: info/models.py:24
 msgid "Dinner"
 msgstr "Cena"
 
-#: info/models.py:24
+#: info/models.py:25
 msgid "Dance"
 msgstr "Baile"
 
-#: shared/models.py:15
+#: shared/mixins.py:36
+#, python-format
+msgid "There is a new message for you: %(subject)s"
+msgstr "Hay un nuevo mensaje por ti: %(subject)s"
+
+#: shared/models.py:14
 msgid "English"
 msgstr "Inglés"
 
-#: shared/models.py:16
+#: shared/models.py:15
 msgid "Italian"
 msgstr "Italiano"
 
-#: shared/models.py:17
+#: shared/models.py:16
 msgid "Spanish"
 msgstr "Español"
 
@@ -106,7 +111,9 @@ msgstr "Click aquí"
 
 #: templates/token_email.html:24
 msgid "Alternatively, you can input the following code on the login page."
-msgstr "Alternativamente, puedes ingresar el siguiente código en la página de inicio de sesión."
+msgstr ""
+"Alternativamente, puedes ingresar el siguiente código en la página de inicio "
+"de sesión."
 
 #, fuzzy
 #~| msgid "Text must be provided"

@@ -98,16 +98,19 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         </div>
       </section>
     </main>
+    <push-subscribe></push-subscribe>
   </div> 
 </template>
 
 <script>
 import LoadingView from '@/components/shared/LoadingView.vue';
+import PushSubscribe from './PushSubscribe.vue';
 
 export default {
   name: 'ListView',
   components: {
-    LoadingView
+    LoadingView,
+    PushSubscribe,
   },
   props: {
     objList: {type: Array},

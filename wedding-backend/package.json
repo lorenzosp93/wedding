@@ -2,5 +2,8 @@
   "dependencies": {
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0"
+  },
+  "devDependencies": {
+    "workbox-sw": "^6.5.4"
   }
 }

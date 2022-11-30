@@ -1,7 +1,6 @@
 "Define abstract models to be used in all apps"
 import uuid
 from PIL import Image
-from PIL.ImageOps import exif_transpose
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
