@@ -207,6 +207,7 @@ export default {
                     text: this.$t('shared.tour.inbox.pushNotification'),
                     modalOverlayOpeningPadding: -5,
                     modalOverlayOpeningRadius: 10,
+                    canClickTarget: false,
                     showOn: () => {
                         return 'serviceWorker' in navigator && 'PushManager' in window
                     },
