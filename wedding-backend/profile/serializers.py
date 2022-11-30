@@ -1,7 +1,7 @@
 from typing import Optional, Union
 from rest_framework.serializers import (
     ModelSerializer, CharField, SerializerMethodField,
-    Serializer, EmailField, RelatedField
+    Serializer, EmailField,
 )
 from shared.serializers import (
     AddressSerializer,

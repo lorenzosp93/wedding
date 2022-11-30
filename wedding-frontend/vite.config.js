@@ -27,7 +27,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/\/api\//],
       },
       devOptions: {
-        enabled: process.env.DEV,
+        enabled: true,
       },
       includeAssets: [
           'favicon.ico',
@@ -65,6 +65,6 @@ export default defineConfig({
       port: 8080,
   },
   build: {
-    sourcemap: false,
+    sourcemap: true,
   }
 })

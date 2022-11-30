@@ -1,6 +1,6 @@
 
 import json
-from pywebpush import webpush
+from pywebpush import webpush, WebPushException
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
@@ -40,12 +40,15 @@ class TriggersNotifications(
 
     def send_notifications_for_subscriptions(self, subscriptions:models.QuerySet[Subscription], payload:dict) -> None:
         for subscription in subscriptions:
-            webpush(
-                SubscriptionSerializer(subscription).data,
-                json.dumps(payload),
-                vapid_private_key=WEBPUSH_SETTINGS.get('VAPID_PRIVATE_KEY'),
-                vapid_claims={"sub": f"mailto:{WEBPUSH_SETTINGS.get('VAPID_ADMIN_EMAIL')}"},
-            )
+            try:
+                webpush(
+                    SubscriptionSerializer(subscription).data,
+                    json.dumps(payload),
+                    vapid_private_key=WEBPUSH_SETTINGS.get('VAPID_PRIVATE_KEY'),
+                    vapid_claims={"sub": f"mailto:{WEBPUSH_SETTINGS.get('VAPID_ADMIN_EMAIL')}"},
+                )
+            except WebPushException:
+                subscription.delete()
 
     def get_subscriptions(self, user_list:list[str]) -> models.QuerySet[Subscription]:
         return Subscription.objects.filter(user__pk__in=user_list)

@@ -6,7 +6,7 @@ COPY gsap-bonus.tgz ./
 RUN npm install
 COPY . .
 ARG ENV_MODE=staging
-RUN npm run build --mode=${ENV_MODE}
+RUN npm run build -- --mode=${ENV_MODE}
 
 # production stage
 FROM nginx:stable-alpine as production-stage
