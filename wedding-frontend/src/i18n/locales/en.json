@@ -66,7 +66,8 @@
       "inbox": {
         "navbar": "In the Inbox, you will find communications from the bride and groom, including important questions that you will be able to answer directly on the app.",
         "list": "Here is the list of active messages. You can even search this list if you're looking for an old message.",
-        "detail": "This is the message view. In case the message has questions, you will be able to answer them directly on this page."
+        "detail": "This is the message view. In case the message has questions, you will be able to answer them directly on this page.",
+        "pushNotification": "Clicking on this button, you can opt in to be notified any time there is a new message or information available!"
       },
       "gallery": "In the gallery you will find the pictures from the celebration.",
       "profile": "The profile section allows you to check your information, and log out of the app if necessary. \n\n You may also install this app by clicking on the 'Add to Home Screen' option on your browser."

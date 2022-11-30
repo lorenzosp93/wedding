@@ -3,8 +3,8 @@
   <div class=" w-11/12 mx-auto text-primary dark:text-darkPrimary">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full h-full rounded-3xl">
-      <section id="list-view" class="flex flex-col w-full min-h-full py-5 md:w-1/3  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
-        <label class="px-3">
+      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-1/2 lg:w-2/5  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
+        <label>
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
         <ul class="mt-6">
@@ -67,7 +67,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
               <p v-html="question.content"></p>
-              <ul v-if="question.options?.length" :multiple="question.multi_select" class="w-full my-2 mx-3 bg-pale dark:bg-darkPale rounded-md">
+              <ul v-if="question.options?.length" :multiple="question.multi_select" class="w-full my-2 bg-pale dark:bg-darkPale rounded-md">
                 <li v-for="option in question.options" :key="option.uuid" >
                   <input
                     :id="option.uuid"
@@ -81,10 +81,10 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   <label :for="option.uuid" class="ml-3">{{ option.content }}</label>
                 </li>
               </ul>
-              <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.option)" class="text-alert mx-3">{{ submitError.find(e => e.q == question.uuid)?.e.option[0] }}</p>
+              <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.option)" class="text-alert">{{ submitError.find(e => e.q == question.uuid)?.e.option[0] }}</p>
               <div v-if="question.free_text" class="mb-5">
-                <label v-if="question.options?.length" for="input" class="ml-3 my-1">{{ $t('shared.listview.other') }}</label>
-                <input v-model="responses.find(r => r.question == question.uuid).text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 ml-3" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
+                <label v-if="question.options?.length" for="input" class="my-1">{{ $t('shared.listview.other') }}</label>
+                <input v-model="responses.find(r => r.question == question.uuid).text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
                 <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.text)" class="text-alert mx-3"> {{ submitError.find(e => e.q == question.uuid)?.e.text[0] }}</p>
               </div>
               <p v-if="question.uuid == submitError?.find(e => e.q == question.uuid && e.e?.non_field_errors)">{{ submitError.find(e => e.q == question)?.e.non_field_errors[0] }}</p>

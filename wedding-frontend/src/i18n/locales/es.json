@@ -66,7 +66,8 @@
       "inbox": {
         "navbar": "En la Bandeja de entrada, encontrarás comunicaciones de los novios, incluidas preguntas importantes que podrás responder directamente en la aplicación.",
         "list": "Aquí está la lista de mensajes activos. Incluso puedes buscar esta lista si estás buscando un mensaje antiguo.",
-        "detail": "Esta es la vista del mensaje. En caso de que el mensaje tenga preguntas, podrás responderlas directamente en esta página. \n\n Hasta puedes instalar esta aplicación haciendole click a la opción 'Agregar a la pantalla de inicio' de tu browser."
+        "detail": "Esta es la vista del mensaje. En caso de que el mensaje tenga preguntas, podrás responderlas directamente en esta página. \n\n Hasta puedes instalar esta aplicación haciendole click a la opción 'Agregar a la pantalla de inicio' de tu browser.",
+        "pushNotification": "Al hacer clic en este botón, puedes optar por recibir una notificación cada vez que haya un nuevo mensaje o información disponible."
       },
       "gallery": "En la galería encontrarás las fotos de la celebración.",
       "profile": "La sección de perfil te permite verificar tu información y hacer logout aplicación si es necesario."

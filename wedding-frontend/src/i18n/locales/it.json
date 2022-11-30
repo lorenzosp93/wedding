@@ -66,7 +66,8 @@
       "inbox": {
         "navbar": "Nella Posta in arrivo, troverai comunicazioni dagli sposi, comprese domande importanti a cui potrai rispondere direttamente dall'app.",
         "list": "Ecco l'elenco dei messaggi attivi. Puoi anche effettuare una ricerca per trovare un messaggio precedente.",
-        "detail": "Questa è la vista di dettaglio del messaggio. Nel caso in cui il messaggio includa delle domande, sarai in grado di rispondere direttamente su questa pagina."
+        "detail": "Questa è la vista di dettaglio del messaggio. Nel caso in cui il messaggio includa delle domande, sarai in grado di rispondere direttamente su questa pagina.",
+        "pushNotification": "Facendo clic su questo pulsante, puoi scegliere di essere avvisato ogni volta che c'è un nuovo messaggio o informazione disponibile!"
       },
       "gallery": "Nella galleria troverai le foto dei festeggiamenti.",
       "profile": "La sezione del profilo consente di controllare le tue informazioni e di disconnettersi dall'app, se necessario. \n\n Puoi anche installare l'applicazione cliccando sull'opzione 'Aggiungi alla schermata Home' sul tuo browser."
