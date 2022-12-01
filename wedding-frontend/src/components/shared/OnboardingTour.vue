@@ -1,6 +1,6 @@
 <template>
-    <div class="fixed bottom-0 right-0 p-3  fill-secondary dark:fill-darkPale">
-        <button id="tour-trigger" @click="tour.start()">
+    <div id="tour-trigger" class="fixed bottom-0 right-0 p-3 z-50 fill-secondary dark:fill-darkPale" aria-label="tour button">
+        <button @click="tour.start">
             <svg class="w-6 md:w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2.033 16.01c.564-1.789 1.632-3.932 1.821-4.474.273-.787-.211-1.136-1.74.209l-.34-.64c1.744-1.897 5.335-2.326 4.113.613-.763 1.835-1.309 3.074-1.621 4.03-.455 1.393.694.828 1.819-.211.153.25.203.331.356.619-2.498 2.378-5.271 2.588-4.408-.146zm4.742-8.169c-.532.453-1.32.443-1.761-.022-.441-.465-.367-1.208.164-1.661.532-.453 1.32-.442 1.761.022.439.466.367 1.209-.164 1.661z"/>
             </svg>
@@ -63,6 +63,12 @@ export default {
             steps: [{
                     id: 'intro',
                     text: this.$t('shared.tour.intro'),
+                    attachTo: {
+                        element: '#tour-trigger',
+                        on: 'top',
+                    },
+                    modalOverlayOpeningPadding: -5,
+                    modalOverlayOpeningRadius: 10,
                     buttons: [
                         {
                         action: () => {
@@ -149,12 +155,12 @@ export default {
                         element: '#list-view',
                         on: 'right'
                     },
-                    modalOverlayOpeningPadding: 0,
+                    modalOverlayOpeningPadding: -5,
                     buttons: [
                         {
                         action: () => {
                             this.$router.push({name: 'home'}).then(
-                            () =>  {return this.tour.back()}
+                                () =>  {return this.tour.back()}
                             )
                         },
                         secondary: true,
@@ -163,7 +169,7 @@ export default {
                         {
                         action: () => {
                             this.$router.push({name: 'inbox', params: {active: 0}}).then(
-                            () => {return this.tour.next()}
+                                () => {return this.tour.next()}
                             )
                         },
                         text: this.$t('shared.tour.next')
@@ -176,12 +182,12 @@ export default {
                         element: '#detail-view',
                         on: 'left'
                     },
-                    modalOverlayOpeningPadding: 0,
+                    modalOverlayOpeningPadding: -5,
                     buttons: [
                         {
                         action: () => {
                             this.$router.push({name: 'inbox', params: {active: null}}).then(
-                            () => {return this.tour.back()}
+                                () => {return this.tour.back()}
                             )
                         },
                         secondary: true,
@@ -189,11 +195,26 @@ export default {
                         },
                         {
                         action: () => {
-                            return this.tour.next()
+                            this.$router.push({name: 'inbox', params: {active: null}}).then(
+                                () => {return this.tour.next()}
+                            )
                         },
                         text: this.$t('shared.tour.next')
                         }
                     ],
+                },{
+                    id: 'pushNotification',
+                    text: this.$t('shared.tour.inbox.pushNotification'),
+                    modalOverlayOpeningPadding: -5,
+                    modalOverlayOpeningRadius: 10,
+                    canClickTarget: false,
+                    showOn: () => {
+                        return 'serviceWorker' in navigator && 'PushManager' in window
+                    },
+                    attachTo: {
+                        element: '#notification-trigger',
+                        on: 'top'
+                    },
                 },{
                     id: 'gallery',
                     text: this.$t('shared.tour.gallery'),

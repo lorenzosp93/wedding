@@ -3,7 +3,7 @@
   <nav id="the-navbar" class="px-3 py-2">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
       <router-link to="/" class="">
-          <img class="h-12" :src="logo" aria-label="P & L logo">
+          <img class="h-12 w-48" :src="logo" aria-label="P & L logo">
       </router-link>
       <button id="menu-toggle" type="button" class="z-20 inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:ring-1 ring-secondary" aria-controls="navbar-default" aria-expanded="false" @click="toggleMenu">
         <span class="sr-only">{{ $t('shared.thenavbar.openMainMenu') }}</span>

@@ -46,7 +46,7 @@ export const useInfoStore = defineStore({
                         );
                         this.activeType = this.infos.find(info => info)?.type;
                         localStorage.setItem('infos', JSON.stringify(this.infos));
-                        localStorage.setItem('infosExpiry', JSON.stringify(this.infosExpiry));
+                        localStorage.setItem('infosExpiry', this.infosExpiry.toJSON());
                     }
                 ).catch(
                     error => {
@@ -190,7 +190,7 @@ export const useGalleryStore = defineStore({
                         );
                         if (!force) { // set properties for persistence upon refresh
                             localStorage.setItem('gallery', JSON.stringify(this.gallery));
-                            localStorage.setItem('galleryExpiry', JSON.stringify(this.galleryExpiry));
+                            localStorage.setItem('galleryExpiry', this.galleryExpiry.toJSON());
                             if (this.next) {
                                 localStorage.setItem('galleryNext', this.next);
                             }

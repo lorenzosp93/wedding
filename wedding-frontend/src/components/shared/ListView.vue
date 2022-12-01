@@ -3,8 +3,8 @@
   <div class=" w-11/12 mx-auto text-primary dark:text-darkPrimary">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full h-full rounded-3xl">
-      <section id="list-view" class="flex flex-col w-full min-h-full py-5 md:w-1/3  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
-        <label class="px-3">
+      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-1/2 lg:w-2/5  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
+        <label>
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
         <ul class="mt-6">
@@ -43,16 +43,12 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             <ul class="flex text-primary dark:text-darkPrimary space-x-4 cursor-pointer">
               <li v-show="active != 0" class="w-6 h-6 rotate-90" @click="setActive(active - 1)">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
                 </svg>
               </li>
               <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6 rotate-90" @click="setActive(active + 1)">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </li>
             </ul>
@@ -63,15 +59,15 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
           </div>
           <article class="my-3 leading-7 tracking-wider" v-html="activeObject?.content"></article>
+          <div v-if="activeObject?.questions?.every(q => q.response) && activeObject?.questions?.length">
+            <p class="my-2 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
+            <button class="bg-pale dark:bg-darkpale text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
+          </div>
           <form v-if="activeObject?.questions?.length && responses?.length" @submit="$emit('submitResponse', responses, activeObject.uuid)">
-            <div v-if="!activeObject?.questions.some(q => !q.response)">
-              <p class="my-2 text-accent" >{{ $t('shared.listview.alreadyAnswered') }}</p>
-              <button class="bg-pale dark:bg-darkpale text-primary rounded-md px-2 py-1 mx-auto my-3" @click.prevent="$emit('deleteResponses', activeObject.uuid)">{{ $t('shared.listview.changeResponses') }}</button>
-            </div>
             <div v-for="(question, idx) in activeObject?.questions" :key="question.uuid">
               <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
               <p v-html="question.content"></p>
-              <ul v-if="question.options?.length" :multiple="question.multi_select" class="w-full my-2 mx-3 bg-pale dark:bg-darkPale rounded-md">
+              <ul v-if="question.options?.length" :multiple="question.multi_select" class="w-full my-2 bg-pale dark:bg-darkPale rounded-md">
                 <li v-for="option in question.options" :key="option.uuid" >
                   <input
                     :id="option.uuid"
@@ -85,10 +81,10 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   <label :for="option.uuid" class="ml-3">{{ option.content }}</label>
                 </li>
               </ul>
-              <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.option)" class="text-alert mx-3">{{ submitError.find(e => e.q == question.uuid)?.e.option[0] }}</p>
+              <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.option)" class="text-alert">{{ submitError.find(e => e.q == question.uuid)?.e.option[0] }}</p>
               <div v-if="question.free_text" class="mb-5">
-                <label v-if="question.options?.length" for="input" class="ml-3 my-1">{{ $t('shared.listview.other') }}</label>
-                <input v-model="responses.find(r => r.question == question.uuid).text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 ml-3" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
+                <label v-if="question.options?.length" for="input" class="my-1">{{ $t('shared.listview.other') }}</label>
+                <input v-model="responses.find(r => r.question == question.uuid).text" type="text" class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1" :readonly="question.response" :required="question.mandatory && question.options.length == 0" >
                 <p v-if="submitError?.find(e => e.q == question.uuid && e.e?.text)" class="text-alert mx-3"> {{ submitError.find(e => e.q == question.uuid)?.e.text[0] }}</p>
               </div>
               <p v-if="question.uuid == submitError?.find(e => e.q == question.uuid && e.e?.non_field_errors)">{{ submitError.find(e => e.q == question)?.e.non_field_errors[0] }}</p>
@@ -102,16 +98,19 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         </div>
       </section>
     </main>
+    <push-subscribe></push-subscribe>
   </div> 
 </template>
 
 <script>
 import LoadingView from '@/components/shared/LoadingView.vue';
+import PushSubscribe from './PushSubscribe.vue';
 
 export default {
   name: 'ListView',
   components: {
-    LoadingView
+    LoadingView,
+    PushSubscribe,
   },
   props: {
     objList: {type: Array},
@@ -180,26 +179,19 @@ emits: ['submitResponse', 'deleteResponses'],
       this.viewDetail = true;
     },
     removeHtml (value) {
-    const div = document.createElement('div')
-    div.innerHTML = value
-    const text = div.textContent || div.innerText || ''
-    return text
+      const div = document.createElement('div')
+      div.innerHTML = value
+      const text = div.textContent || div.innerText || ''
+      return text
     },
     truncate (value, length) {
-    if (!value) return "";
-    value = value.toString();
-    if (value.length > length) {
-        return value.substring(0, length) + "...";
-    } else {
-        return value;
-    }
-    },
-    formattedDate (date) {
-    date = new Date(date);
-    const yyyy = date.getYear() + 1900;
-    const mm = date.getMonth() + 1;
-    const dd = date.getDate();
-    return `${yyyy}.${mm}.${dd}`
+      if (!value) return "";
+      value = value.toString();
+      if (value.length > length) {
+          return value.substring(0, length) + "...";
+      } else {
+          return value;
+      }
     },
     hideDetail () {
       this.viewDetail = false;

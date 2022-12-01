@@ -170,6 +170,7 @@ Temporary Items
 pyvenv.cfg
 .env
 .venv
+env-dev/
 env/
 venv/
 ENV/

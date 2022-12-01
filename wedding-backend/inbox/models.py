@@ -6,8 +6,31 @@ from shared.models import (
 )
 from profile.models import audience_types
 
+class Response(Serializable, TimeStampable):
+    "Model to capture the response from a specific user"
+    question = models.ForeignKey(
+        'Question',
+        on_delete=models.CASCADE,
+        related_name='responses'
+    )
+    option = models.ManyToManyField(
+        'Option',
+        blank=True,
+    )
+    text = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+    deleted_at = models.DateTimeField(default=None, null=True, blank=True)
 
-class Message(Serializable, HasSubject, HasContent, TimeStampable):
+    def __str__(self):
+        return f"{self.user}'s reply to {self.question.subject}"
+
+    class Meta:
+        unique_together = ['question', 'user', 'active', 'deleted_at']
+
+from shared.mixins import TriggersNotifications
+
+class Message(TriggersNotifications, Serializable, HasSubject, HasContent, TimeStampable):
     "Model to define generic messages to users"
     option_pre = models.ManyToManyField('Option', blank=True)
     audience = models.IntegerField(
@@ -48,26 +71,3 @@ class Option(Serializable, HasContent):
 
     def __str__(self) -> str:
         return f"{self.question} - {self.content}"
-
-
-class Response(Serializable, TimeStampable):
-    "Model to capture the response from a specific user"
-    question = models.ForeignKey(
-        Question,
-        on_delete=models.CASCADE,
-        related_name='responses'
-    )
-    option = models.ManyToManyField(
-        Option,
-        blank=True,
-    )
-    text = models.TextField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    deleted_at = models.DateTimeField(default=None, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.user}'s reply to {self.question.subject}"
-
-    class Meta:
-        unique_together = ['question', 'user', 'active', 'deleted_at']

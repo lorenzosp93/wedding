@@ -20,12 +20,14 @@ export default defineConfig({
       filter: /\.(js|mjs|json|css|html|svg|webp|ttf)$/i,
     }),
     VitePWA({
+      strategies: 'generateSW',
       registerType: 'autoUpdate',
-      workbox: {
+      workbox:{
+        importScripts: ['/push-sw.js'],
         navigateFallbackDenylist: [/\/api\//],
       },
       devOptions: {
-        enabled: process.env.DEV === 'true',
+        enabled: true,
       },
       includeAssets: [
           'favicon.ico',
@@ -63,5 +65,6 @@ export default defineConfig({
       port: 8080,
   },
   build: {
+    sourcemap: true,
   }
 })

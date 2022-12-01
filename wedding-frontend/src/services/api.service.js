@@ -2,6 +2,7 @@ import axios from 'axios';
 import authHeader from './authheader';
 import { useAuthStore } from '@/stores';
 
+export const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
 const GALLERY_LIMIT = 16 // images per load
 
 function getCookie(name) {
@@ -19,7 +20,6 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-export const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
 export function getCSRFHeader() {
   return {'X-CSRFToken': getCookie('csrftoken')}
 }

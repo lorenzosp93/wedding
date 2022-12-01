@@ -39,11 +39,24 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.9.0
+        if: ${{ github.ref_name == 'master' }}
         with:
           context: ./wedding-frontend
           platforms: linux/arm64/v8
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:${{ github.ref_name }}
+          build-args: |
+            ENV_MODE=production
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2.9.0
+        if: ${{ github.ref_name == 'develop' }}
+        with:
+          context: ./wedding-frontend
+          platforms: linux/arm64/v8
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:${{ github.ref_name }}
+          build-args: |
+            ENV_MODE=staging
 
   deploy:
     runs-on: ubuntu-latest

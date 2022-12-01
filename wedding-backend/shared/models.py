@@ -1,7 +1,6 @@
 "Define abstract models to be used in all apps"
 import uuid
 from PIL import Image
-from PIL.ImageOps import exif_transpose
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
@@ -51,7 +50,7 @@ class Named(models.Model):
             self.slug = slugify(self.name)
         super().save(**kwargs)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     class Meta:
@@ -94,7 +93,7 @@ class Datable(models.Model):
         self.start_date_validation()
         super().save(**kwargs)
 
-    def end_date_validation(self):
+    def end_date_validation(self) -> None:
         if self.end_date <= self.start_date:
             raise ValidationError(
                 "End date: %(end)s cannot be before start date: %(start)s",
@@ -217,12 +216,12 @@ class HasPicture(models.Model):
             self.save_img(thumb, save_path)
             self.thumbnail = save_path
 
-    def create_tumb(self, img):
+    def create_tumb(self, img: Image) -> Image:
         thumb = img.copy()
         thumb.thumbnail(THUMBNAIL_SIZE)
         return thumb
 
-    def save_img(self, img, save_path):
+    def save_img(self, img: Image, save_path: str) -> None:
         fh = self.picture.storage.open(save_path, "wb")
         img.save(fh)
         fh.close()

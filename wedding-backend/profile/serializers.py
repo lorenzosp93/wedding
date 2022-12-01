@@ -1,18 +1,21 @@
+from typing import Optional, Union
 from rest_framework.serializers import (
     ModelSerializer, CharField, SerializerMethodField,
-    Serializer, EmailField
+    Serializer, EmailField,
 )
 from shared.serializers import (
     AddressSerializer,
     UserSerializer,
 )
 from .models import (
+    Keys,
+    Subscription,
     UserProfile
 )
 from shared.models import get_translated_content
 
 
-def translated_string(serializer, obj, field):
+def translated_string(serializer, obj, field: str) -> Optional[str]:
     profile = UserProfile.objects.get(
         user__id=serializer.context.get('request').user.id)
     content = getattr(obj, field)
@@ -22,14 +25,14 @@ def translated_string(serializer, obj, field):
 
 
 class TranslationContentMixin(ModelSerializer):
-    def translated_content(self, obj):
+    def translated_content(self, obj) -> Optional[str]:
         return translated_string(self, obj, 'content')
 
     content = SerializerMethodField('translated_content')
 
 
 class TranslationSubjectMixin(ModelSerializer):
-    def translated_subject(self, obj):
+    def translated_subject(self, obj) -> Optional[str]:
         return translated_string(self, obj, 'subject')
 
     subject = SerializerMethodField('translated_subject')
@@ -70,3 +73,25 @@ class PlusOneSerializer(Serializer):
     email = EmailField()
     first_name = CharField()
     last_name = CharField()
+
+
+class KeysSerializer(ModelSerializer):
+    class Meta:
+        model = Keys
+        fields = '__all__'
+
+
+class SubscriptionSerializer(ModelSerializer):
+    keys = KeysSerializer()
+
+    class Meta:
+        model = Subscription
+        fields = ['endpoint', 'keys']
+
+    def create(self, validated_data):
+        keys_data = validated_data.pop('keys')
+        user = self.context.get('request').user
+        keys = Keys.objects.create(**keys_data)
+        subscription = Subscription.objects.create(
+            user=user, keys=keys, **validated_data)
+        return subscription

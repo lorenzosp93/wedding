@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.pagination import LimitOffsetPagination
 from .serializers import (
@@ -31,5 +31,5 @@ class PhotoViewSet(ReadOnlyModelViewSet):
     serializer_class = PhotoSerializer
     pagination_class = LimitOffsetPagination
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Photo]:
         return Photo.objects.filter(Q(tag__id=self.request.user.id) | Q(private=False))
