@@ -52,7 +52,6 @@ ingress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
     - host: www.priscillalorenzo.com
       paths:
@@ -108,5 +107,5 @@ database:
   name: django
 
 redis:
-  host: "redis-wedding"
+  host: "redis-wedding-master"
   port: 6379

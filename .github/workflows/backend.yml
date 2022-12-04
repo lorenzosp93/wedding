@@ -121,7 +121,7 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Rollout deploy
         if: ${{ github.ref_name == 'master' }}
-        run: kubectl rollout restart deploy wedding -n wedding
+        run: kubectl rollout restart deploy wedding -n wedding && kubectl rollout restart deploy wedding-worker -n wedding
       - name: Rollout deploy stage
         if: ${{ github.ref_name == 'develop' }}
-        run: kubectl rollout restart deploy wedding -n wedding-stg
+        run: kubectl rollout restart deploy wedding -n wedding-stg && kubectl rollout restart deploy wedding-worker -n wedding-stg

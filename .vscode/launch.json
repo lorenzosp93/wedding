@@ -26,6 +26,16 @@
             ],
             "django": true,
             "justMyCode": false,
+        },
+        {
+            "name": "Python: Celery",
+            "module": "celery",
+            "console": "integratedTerminal",
+            "args": [
+                "worker",
+                "--app=wedding",
+                "--loglevel=INFO",
+            ],
             "preLaunchTask": "redis"
         },
         {

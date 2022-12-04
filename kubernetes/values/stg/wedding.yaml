@@ -27,10 +27,12 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -50,18 +52,18 @@ ingress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
     - host: stg.priscillalorenzo.com
       paths:
         - path: /api
           pathType: Prefix
-  tls: 
+  tls:
     - secretName: stg.priscillalorenzo.com-tls
       hosts:
         - stg.priscillalorenzo.com
-  
-resources: {}
+
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -92,18 +94,18 @@ tolerations: []
 affinity: {}
 
 configMap:
-  debug: 'False'
-  emailTo: 'info@priscillalorenzo.com'
-  djangoHost: 'priscillalorenzo.com'
-  frontendHost: 'https://stg.priscillalorenzo.com'
-  backendHost: 'https://stg.priscillalorenzo.com'
+  debug: "False"
+  emailTo: "info@priscillalorenzo.com"
+  djangoHost: "priscillalorenzo.com"
+  frontendHost: "https://stg.priscillalorenzo.com"
+  backendHost: "https://stg.priscillalorenzo.com"
 
 database:
-  host: 'postgres-wedding-stg'
+  host: "postgres-wedding-stg"
   port: 5432
   engine: django.db.backends.postgresql
   name: django
 
 redis:
-  host: 'redis-wedding-stg'
+  host: "redis-wedding-master"
   port: 6379
