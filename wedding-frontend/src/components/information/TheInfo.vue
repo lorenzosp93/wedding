@@ -11,7 +11,7 @@
 <script>
 import { mapActions, mapState} from 'pinia';
 import { useInfoStore } from '@/stores/api.store';
-import ListView from '@/components/shared/ListView.vue';
+import ListView from '@/components/shared/list/ListView.vue';
 
 export default {
   name: 'TheInfo',

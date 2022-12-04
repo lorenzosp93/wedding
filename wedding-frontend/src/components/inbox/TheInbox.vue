@@ -22,7 +22,7 @@
 <script>
 import { useInboxStore } from '@/stores/api.store'
 import { mapActions, mapState} from 'pinia'
-import ListView from '@/components/shared/ListView.vue'
+import ListView from '@/components/shared/list/ListView.vue'
 
 export default {
   name: 'TheInbox',
