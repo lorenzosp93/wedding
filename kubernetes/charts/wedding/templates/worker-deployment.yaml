@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "wedding.fullname" . }}-worker"
+  labels:
+    app: "{{ include "wedding.fullname" . }}-worker"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ include "wedding.fullname" . }}-worker"
+  template:
+    metadata:
+      labels:
+        app: "{{ include "wedding.fullname" . }}-worker"
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: {{ include "wedding.fullname" . }}
+          command: [ 'celery', '-A', 'wedding', 'worker', '-l', 'INFO' ]
+          envFrom:
+            - secretRef:
+                name: wedding
+            - configMapRef:
+                name: wedding

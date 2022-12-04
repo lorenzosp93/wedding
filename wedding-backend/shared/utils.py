@@ -1,12 +1,12 @@
 import logging
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from django.template import loader
 from django.utils.translation import activate
 from django.urls import reverse
 from drfpasswordless.settings import api_settings
 from drfpasswordless.utils import inject_template_context
 from wedding.settings import BACKEND_HOST
+from wedding.tasks import send_email
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
@@ -31,23 +31,25 @@ def send_email_with_callback_token(user: User, email_token: dict, **kwargs) -> b
             email_html = kwargs.get('email_html',
                                     api_settings.PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME)
 
+            email = user.email
             # activate user language
             activate(user.profile.language)
             # Inject context if user specifies.
             context = inject_template_context({
                 'callback_token': email_token.key,
-                'user_email': getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME),
+                'user_email': email,
                 'auth_url': reverse('shared:magic-auth'),
                 'site_name': BACKEND_HOST,
             })
             html_message = loader.render_to_string(email_html, context,)
-            send_mail(
-                email_subject,
-                email_plaintext % email_token.key,
-                api_settings.PASSWORDLESS_EMAIL_NOREPLY_ADDRESS,
-                [getattr(user, api_settings.PASSWORDLESS_USER_EMAIL_FIELD_NAME)],
-                fail_silently=False,
+
+            send_email.delay(
+                user_email=email,
+                token=email_token.key,
+                subject=email_subject,
+                plaintext=email_plaintext,
                 html_message=html_message,
+                email_from=api_settings.PASSWORDLESS_EMAIL_NOREPLY_ADDRESS,
             )
 
         else:

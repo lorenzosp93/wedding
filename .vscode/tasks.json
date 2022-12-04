@@ -61,6 +61,13 @@
 			"label": "vuejs: build",
 			"detail": "vite build",
 			"isBackground": false
+		},
+		{
+			"type": "shell",
+			"command": "redis-server",
+			"problemMatcher": [],
+			"label": "redis",
+			"isBackground": true
 		}
 	]
 }

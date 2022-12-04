@@ -1,13 +1,11 @@
 
-import json
-from pywebpush import webpush, WebPushException
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from inbox.models import Response
 from profile.models import Subscription
-from profile.serializers import SubscriptionSerializer
-from wedding.settings import WEBPUSH_SETTINGS, FRONTEND_HOST
+from wedding.settings import FRONTEND_HOST
+from wedding.tasks import send_notifications_for_subscriptions
 
 
 class TriggersNotifications(
@@ -26,7 +24,7 @@ class TriggersNotifications(
         user_list = self.get_user_list()
         subscriptions = self.get_subscriptions(user_list)
         payload = self.build_payload()
-        self.send_notifications_for_subscriptions(subscriptions, payload)
+        send_notifications_for_subscriptions.delay([*subscriptions.values_list('pk', flat=True)], payload)
 
     def build_payload(self) -> dict:
         payload = {
@@ -37,18 +35,6 @@ class TriggersNotifications(
             }
         }
         return payload
-
-    def send_notifications_for_subscriptions(self, subscriptions:models.QuerySet[Subscription], payload:dict) -> None:
-        for subscription in subscriptions:
-            try:
-                webpush(
-                    SubscriptionSerializer(subscription).data,
-                    json.dumps(payload),
-                    vapid_private_key=WEBPUSH_SETTINGS.get('VAPID_PRIVATE_KEY'),
-                    vapid_claims={"sub": f"mailto:{WEBPUSH_SETTINGS.get('VAPID_ADMIN_EMAIL')}"},
-                )
-            except WebPushException:
-                subscription.delete()
 
     def get_subscriptions(self, user_list:list[str]) -> models.QuerySet[Subscription]:
         return Subscription.objects.filter(user__pk__in=user_list)

@@ -15,4 +15,6 @@ data:
   DJANGO_HOST: {{ .Values.configMap.djangoHost }}
   FRONTEND_HOST: {{ .Values.configMap.frontendHost }}
   BACKEND_HOST: {{ .Values.configMap.backendHost }}
+  REDIS_HOST: {{ .Values.redis.host }}
+  REDIS_PORT: {{ .Values.redis.port }}
 

@@ -182,7 +182,6 @@ export default {
           duration: 0.3,
         }, 0.2)
         .set('#envelopeFlap', {zIndex: 0}, 0.5)
-        // .set('#topFlap', {autoAlpha: 1}, 0.5)
         .to('#envelopeFlap, #sideFlaps, #bottomFlap, #base', {
           y: `+=${window.innerHeight}`,
           duration: 0.5,

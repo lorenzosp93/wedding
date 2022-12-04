@@ -25,7 +25,8 @@
                 "runserver"
             ],
             "django": true,
-            "justMyCode": false
+            "justMyCode": false,
+            "preLaunchTask": "redis"
         },
         {
             "name": "Docker: Python - Django",
