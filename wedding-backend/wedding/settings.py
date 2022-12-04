@@ -227,7 +227,7 @@ FRONTEND_HOST = os.environ.get('FRONTEND_HOST', 'http://localhost:8080')
 
 PASSWORDLESS_AUTH = {
     'PASSWORDLESS_AUTH_TYPES': ['EMAIL', ],
-    'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': os.environ.get('EMAIL_TO', 'me@lorenzosp.com'),
+    'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': os.environ.get('EMAIL_TO', 'info@priscillalorenzo.com'),
     'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': "token_email.html",
     'PASSWORDLESS_REGISTER_NEW_USERS': True,
     'PASSWORDLESS_EMAIL_SUBJECT': f"[{HOST}] Login",
@@ -236,7 +236,7 @@ PASSWORDLESS_AUTH = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_TO = os.environ.get('EMAIL_TO', 'me@lorenzosp.com')
+EMAIL_TO = os.environ.get('EMAIL_TO', 'info@priscillalorenzo.com')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
@@ -252,3 +252,19 @@ WEBPUSH_SETTINGS = {
     "VAPID_PRIVATE_KEY": os.environ.get('WEB_PUSH_PRIVATE_KEY'),
     "VAPID_ADMIN_EMAIL": os.environ.get('WEB_PUSH_ADMIN_EMAIL', "me@lorenzosp.com"),
 }
+
+REDIS_HOST =  os.environ.get('REDIS_HOST', 'localhost')
+REDIS_USER =  os.environ.get('REDIS_USER', '')
+REDIS_PASS = os.environ.get('REDIS_PASSWORD', '')
+REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
+REDIS_DB = 0
+
+REDIS_AUTH = f'{REDIS_USER}:{REDIS_PASS}@' if REDIS_PASS else ''
+
+CELERY_BROKER_URL =  f"redis://{REDIS_AUTH}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Amsterdam'
+

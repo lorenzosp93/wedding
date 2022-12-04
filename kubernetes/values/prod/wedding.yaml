@@ -1,17 +1,19 @@
-# Default values for postgres.
+# Default values for helm.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+name: wedding
 
-replicaCount: 1
+replicaCount: 2
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  name: wedding
+  repository: lorenzosp93
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "master"
 
 imagePullSecrets: []
-nameOverride: "wedding"
+nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
@@ -25,10 +27,12 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -37,27 +41,30 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 5432
-  internalPort: 5432
+  type: NodePort
+  port: 8000
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
-    - host: chart-example.local
+    - host: www.priscillalorenzo.com
       paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+        - path: /api
+          pathType: Prefix
+  tls:
+    - secretName: www.priscillalorenzo.com-tls
+      hosts:
+        - www.priscillalorenzo.com
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -69,10 +76,15 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+livenessProbe:
+  enabled: false
+  path: /api/health/
+  initialDelaySeconds: 60
+
 autoscaling:
   enabled: true
   minReplicas: 2
-  maxReplicas: 5
+  maxReplicas: 6
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
 
@@ -82,8 +94,19 @@ tolerations: []
 
 affinity: {}
 
-persistentVolume:
-  storage: 8Gi
-  
+configMap:
+  debug: "False"
+  emailTo: "info@priscillalorenzo.com"
+  djangoHost: "priscillalorenzo.com"
+  frontendHost: "https://www.priscillalorenzo.com"
+  backendHost: "https://www.priscillalorenzo.com"
+
 database:
+  host: "postgres-wedding"
+  port: 5432
+  engine: django.db.backends.postgresql
   name: django
+
+redis:
+  host: "redis-wedding"
+  port: 6379
