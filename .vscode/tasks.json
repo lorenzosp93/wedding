@@ -67,7 +67,7 @@
 			"command": "redis-server",
 			"problemMatcher": [],
 			"label": "redis",
-			"isBackground": true
+			"isBackground": false
 		}
 	]
 }

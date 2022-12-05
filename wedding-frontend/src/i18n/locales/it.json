@@ -56,6 +56,7 @@
       "profile": "Profilo"
     },
     "tour": {
+      "confirmCancel": "Sei sicuro di voler annullare il tour? Puoi sempre accedervi facendo clic sul pulsante (i) nella pagina Home.",
       "next": "Continua",
       "back": "Indietro",
       "finish": "Fine",
