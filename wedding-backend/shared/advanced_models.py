@@ -49,7 +49,7 @@ class HasAudience(HasUserList):
 
 class TriggersNotifications(
     HasSubject,
-    HasUserList,
+    HasUserList
 ):
     """Abstract mixin to trigger notification"""
     submit = models.BooleanField(default=False)
