@@ -31,6 +31,9 @@ class HasPrerequisiteOptions(HasUserList):
             for option in self.option_pre.all()  # type: ignore
         ]))
 
+    class Meta:
+        abstract = True
+
 
 class Response(Serializable, TimeStampable):
     "Model to capture the response from a specific user"

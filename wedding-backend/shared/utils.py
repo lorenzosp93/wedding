@@ -44,7 +44,7 @@ def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwa
             html_message = loader.render_to_string(email_html, context,)
 
             send_email.delay(
-                recipient_list=[email],
+            recipient_list=[email],
                 subject=email_subject,
                 message=email_plaintext % email_token.key,
                 html_message=html_message,
