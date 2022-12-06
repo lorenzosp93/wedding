@@ -25,7 +25,7 @@
                 "runserver"
             ],
             "django": true,
-            "justMyCode": false,
+            "preLaunchTask": "redis"
         },
         {
             "name": "Python: Celery",
@@ -35,8 +35,7 @@
                 "worker",
                 "--app=wedding",
                 "--loglevel=INFO",
-            ],
-            "preLaunchTask": "redis"
+            ]
         },
         {
             "name": "Docker: Python - Django",
