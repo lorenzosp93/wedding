@@ -39,7 +39,8 @@ class HasAudience(HasUserList):
     def get_users(self) -> models.QuerySet[User]:
         return super().get_users().annotate(
             audience_mod=self.audience % models.F(
-                'profile__type')  # type: ignore
+                'profile__type'
+            )
         ).filter(audience_mod=0)
 
     class Meta:
@@ -60,7 +61,7 @@ class TriggersNotifications(
         super().save(*args, **kwargs)
 
     def send_notifications(self) -> None:
-        users = super().get_users()
+        users = self.get_users()
         subscriptions = self.get_subscriptions(
             [*users.values_list('pk', flat=True)]
         )

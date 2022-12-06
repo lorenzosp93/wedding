@@ -9,13 +9,11 @@ from .models import (
 )
 from shared.viewsets import (
     AudienceViewSetMixin,
-    BaseGetQuerysetMixin,
 )
 
 
 class InformationViewSet(
     AudienceViewSetMixin,
-    BaseGetQuerysetMixin,
     ReadOnlyModelViewSet,
 ):
     """

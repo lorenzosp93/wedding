@@ -8,7 +8,12 @@ from .models import (
 )
 
 
-class PrerequisiteViewSetMixin:
+class BaseGetQuerysetMixin:
+    def get_queryset(self):
+        return self.serializer_class.Meta.model.objects.all()
+
+
+class PrerequisiteViewSetMixin(BaseGetQuerysetMixin):
     def get_queryset(self):
         """
         Logic to correctly return messages with no prerequisites and messages
@@ -27,7 +32,9 @@ class PrerequisiteViewSetMixin:
 
     def get_list_pre(self, user, cohort_pre, obj_list=[]):
         if cohort_pre:
-            user_options = user.response_set.values_list('option', flat=True)
+            user_options = user.response_set.filter(
+                active=True,
+            ).values_list('option', flat=True)
             for obj in cohort_pre:
                 pre = obj.get('option_pre')
                 if (
@@ -42,17 +49,12 @@ class PrerequisiteViewSetMixin:
         return obj_list
 
 
-class AudienceViewSetMixin:
+class AudienceViewSetMixin(BaseGetQuerysetMixin):
     def get_queryset(self):
         user = self.request.user
         return super().get_queryset() \
             .annotate(audience_mod=F('audience') % user.profile.type) \
             .filter(audience_mod=0)
-
-
-class BaseGetQuerysetMixin:
-    def get_queryset(self):
-        return self.serializer_class.Meta.model.objects.all()
 
 
 class SettingsViewSet(ReadOnlyModelViewSet):

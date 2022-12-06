@@ -6,7 +6,6 @@ from rest_framework.viewsets import (
 )
 from shared.viewsets import (
     AudienceViewSetMixin,
-    BaseGetQuerysetMixin,
     PrerequisiteViewSetMixin
 )
 from .serializers import MessageSerializer, ResponseSerializer
@@ -16,7 +15,6 @@ from .models import Response
 class MessageViewSet(
     PrerequisiteViewSetMixin,
     AudienceViewSetMixin,
-    BaseGetQuerysetMixin,
     ReadOnlyModelViewSet,
 ):
     """
