@@ -1,10 +1,36 @@
+from itertools import chain
+from django.apps import apps
 from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
     Serializable, TimeStampable,
     HasContent, HasSubject,
 )
-from profile.models import audience_types
+from shared.advanced_models import (
+    HasAudience, HasUserList,
+    TriggersNotifications,
+)
+
+
+class HasPrerequisiteOptions(HasUserList):
+    option_pre = models.ManyToManyField(
+        'Option', blank=True
+    )
+
+    def get_users(self) -> models.QuerySet[User]:
+        if self.option_pre.count() > 0:  # type: ignore
+            return super().get_users().filter(
+                pk__in=self.get_user_list_pre()
+            )
+        return User.objects.all()
+
+    def get_user_list_pre(self) -> list[str]:
+        return list(chain.from_iterable([
+            [*apps.get_model('inbox', 'Response').objects.filter(option=option)
+             .values_list('user__pk', flat=True)]
+            for option in self.option_pre.all()  # type: ignore
+        ]))
+
 
 class Response(Serializable, TimeStampable):
     "Model to capture the response from a specific user"
@@ -28,15 +54,9 @@ class Response(Serializable, TimeStampable):
     class Meta:
         unique_together = ['question', 'user', 'active', 'deleted_at']
 
-from shared.mixins import TriggersNotifications
 
-class Message(TriggersNotifications, Serializable, HasSubject, HasContent, TimeStampable):
+class Message(TriggersNotifications,  HasPrerequisiteOptions, HasAudience, Serializable, HasContent, TimeStampable):
     "Model to define generic messages to users"
-    option_pre = models.ManyToManyField('Option', blank=True)
-    audience = models.IntegerField(
-        choices=audience_types,
-        default=30,
-    )
 
     def __str__(self) -> str:
         return f"{self.subject}"
