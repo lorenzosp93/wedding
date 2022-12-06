@@ -1,4 +1,7 @@
 from django.db.models import Q, F
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from .serializers import (
     SettingsSerializer
@@ -6,7 +9,13 @@ from .serializers import (
 from .models import (
     SiteSetting
 )
+from wedding.settings import CACHE_TTL
 
+class CachedViewsetMixin:
+    @method_decorator(cache_page(CACHE_TTL))
+    @method_decorator(vary_on_headers("Authorization"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 class BaseGetQuerysetMixin:
     def get_queryset(self):
