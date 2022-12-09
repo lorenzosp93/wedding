@@ -3,24 +3,14 @@
   <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden ">
     <div id="invitation-content" class="flex ">
       <loading-view v-if="!loaded"></loading-view>
-      <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-40 sm:-top-20">
-        <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.2%] z-0 px-1" @load="loadImage('base')">
+      <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-40 sm:-top-20 px-1">
+        <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-0 px-0.5" @load="loadImage('base')">
+        <img id="letterBase" :src="images.find(img => img.name == 'letterBase').url" alt="Invitation base" class="max-w-[95%] max-h-[95%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[37%] z-10 px-1" @load="loadImage('letterBase')">
         <svg class="z-10 w-full max-h-full p-3 absolute left-1/2 -translate-x-1/2 top-[33%]" viewBox="0 0 543 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <defs>
-            <polygon id="path-1" points="0.321195 4.11996826e-14 537.261195 4.11996826e-14 537.261195 380 1.28629342e-14 380"></polygon>
-            <filter id="filter-2" x="-0.5%" y="-0.7%" width="101.3%" height="101.8%" filterUnits="objectBoundingBox">
-                <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
-                <feOffset dx="1" dy="1" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
-                <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-                <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
-            </filter>
+        <defs>
         </defs>
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g id="invite" transform="translate(1.661885, 1.729770)">
-            <g>
-                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
-            </g>
                   <text id="Daniel-Cabrera-Uscan" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" letter-spacing="0.00145161749" fill="#1F4045">
                       <tspan x="30.1843401" y="55">{{ $t('theinvitation.danielCabreraUscangaAndReginaMatos') }}</tspan>
                       <tspan x="35.5853562" y="73">{{ $t('theinvitation.canoCommunicateTheWeddingOfTheirDaughter') }}</tspan>
@@ -64,7 +54,7 @@
         </svg>
         <img id="sideFlaps" :src="images.find(img => img.name == 'sideFlaps').url" alt="Envelope side flaps" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-20 px-0.5" @load="loadImage('sideFlaps')">
         <img id="bottomFlap" :src="images.find(img => img.name == 'bottomFlap').url" alt="Envelope bottom flap" class="absolute aspect-auto max-w-full max-h-[60%] left-1/2 -translate-x-1/2 top-[72.5%] z-30 px-0.5" @load="loadImage('bottomFlap')">
-        <img id="envelopeFlap" class="max-w-full max-h-[60%] absolute left-1/2 -translate-x-1/2 top-[32.3%] origin-top z-40 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" :aria-label="$t('theinvitation.envelopeFlap')" @load="loadImage('envelopeFlap')">
+        <img id="envelopeFlap" class="max-w-full max-h-[59.35%] absolute left-1/2 -translate-x-1/2 top-[32.6%] origin-top z-40 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" :aria-label="$t('theinvitation.envelopeFlap')" @load="loadImage('envelopeFlap')">
         <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-50" :src="images.find(img => img.name == 'waxSeal').url" :aria-label="$t('theinvitation.waxSealOn')" @load="loadImage('waxSeal')">
       </div>
     </div>
@@ -131,6 +121,11 @@ export default {
         {
           name: 'sideFlaps',
           url: new URL("@/assets/sideFlaps.webp", import.meta.url).href,
+          loaded: false,
+        },
+        {
+          name: 'letterBase',
+          url: new URL("@/assets/letterBase.webp", import.meta.url).href,
           loaded: false,
         },
        ]
