@@ -39,6 +39,17 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      redis:
+        image: "redis:latest"
+        ports:
+          - 6379:6379
+    env:
+      DATABASE_NAME: ${{ matrix.database-name }}
+      DATABASE_USERNAME: ${{ matrix.database-user }}
+      DATABASE_PASSWORD: ${{ matrix.database-password }}
+      DATABASE_HOST: ${{ matrix.database-host }}
+      DATABASE_PORT: ${{ matrix.database-port }}
+      DB_ENGINE: django.db.backends.postgresql
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -49,26 +60,8 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Setup test database
-        env:
-          POSTGRES_DB_NAME: ${{ matrix.database-name }}
-          POSTGRES_USER: ${{ matrix.database-user }}
-          POSTGRES_PASSWORD: ${{ matrix.database-password }}
-          POSTGRES_DB_HOST: ${{ matrix.database-host }}
-          POSTGRES_DB_PORT: ${{ matrix.database-port }}
-          POSTGRES_DB: ${{ matrix.database-name }}
-        run: |
-          export DATABASE_URL=postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-          export SECRET_KEY=test-secret-key
-          export DEBUG=1
       - name: Run migrations
         run: |
-          export DATABASE_URL=postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-          export SECRET_KEY=test-secret-key
-          export DEBUG=1
-          export ALLOWED_HOSTS=localhost
-          export GITHUB_WORKFLOW=True
-          export MODE=workflow
           python manage.py makemigrations
           python manage.py migrate
           python manage.py migrate --run-syncdb
@@ -76,13 +69,6 @@ jobs:
       - name: Run Tests
         run: |
           python manage.py test
-        env:
-          DATABASE_URL: postgres://${{ matrix.database-user }}:${{ matrix.database-password }}@${{ matrix.database-host }}:${{ matrix.database-port }}/${{ matrix.database-name }}
-          SECRET_KEY: test-secret-key
-          DEBUG: 1
-          ALLOWED_HOSTS: localhost
-          GITHUB_WORKFLOW: True
-          MODE: workflow
 
   build:
     runs-on: ubuntu-latest
