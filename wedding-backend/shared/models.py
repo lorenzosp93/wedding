@@ -90,16 +90,15 @@ class Datable(models.Model):
         "Override save method to validate end date"
         if self.end_date:
             self.end_date_validation()
-        self.start_date_validation()
         super().save(**kwargs)
 
     def end_date_validation(self) -> None:
-        if self.end_date <= self.start_date:
+        if self.end_date and self.end_date <= self.start_date:
             raise ValidationError(
                 "End date: %(end)s cannot be before start date: %(start)s",
                 params={"end": self.end_date, "start": self.start_date},
             )
-        elif self.end_date > timezone.now().date():
+        elif self.end_date and self.end_date > timezone.now().date():
             raise ValidationError(
                 "End date: %(end)s cannot be in the future",
                 params={"end": self.end_date},
@@ -216,12 +215,12 @@ class HasPicture(models.Model):
             self.save_img(thumb, save_path)
             self.thumbnail = save_path
 
-    def create_tumb(self, img: Image) -> Image:
+    def create_tumb(self, img: Image.Image) -> Image.Image:
         thumb = img.copy()
         thumb.thumbnail(THUMBNAIL_SIZE)
         return thumb
 
-    def save_img(self, img: Image, save_path: str) -> None:
+    def save_img(self, img: Image.Image, save_path: str) -> None:
         fh = self.picture.storage.open(save_path, "wb")
         img.save(fh)
         fh.close()
@@ -261,7 +260,7 @@ class ContentString(models.Model):
     value = models.TextField()
 
     def __str__(self) -> str:
-        return f"{strip_tags(self.value)} - {self.id}"
+        return f"{strip_tags(self.value)} - {self.id}"  # type: ignore
 
 
 class TranslatedString(models.Model):
@@ -282,12 +281,12 @@ class TranslatedString(models.Model):
         unique_together = ['language', 'content']
 
     def __str__(self) -> str:
-        return f'{strip_tags(self.content.value)} -> {self.get_language_display()}'
+        return f'{strip_tags(self.content.value)} -> {self.language}'
 
 
-def get_translated_content(content: ContentString, language: str = 0) -> str:
+def get_translated_content(content: ContentString, language: str = 'en') -> str:
     "Helper function to return the translated string for a given content and language"
-    if (translated_str := content.translated_strings.filter(language=language).first()):
+    if (translated_str := content.translated_strings.filter(language=language).first()):  # type: ignore
         return translated_str.t9n
     return content.value
 
@@ -315,3 +314,4 @@ class HasSubject(models.Model):
 
     class Meta:
         abstract = True
+

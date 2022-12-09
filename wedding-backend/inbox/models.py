@@ -1,42 +1,44 @@
+from itertools import chain
+from django.apps import apps
 from django.db import models
 from django.contrib.auth.models import User
 from shared.models import (
     Serializable, TimeStampable,
     HasContent, HasSubject,
 )
-from profile.models import audience_types
+from shared.advanced_models import (
+    HasAudience, HasUserList,
+    TriggersNotifications,
+)
 
-class Response(Serializable, TimeStampable):
-    "Model to capture the response from a specific user"
-    question = models.ForeignKey(
-        'Question',
-        on_delete=models.CASCADE,
-        related_name='responses'
-    )
-    option = models.ManyToManyField(
-        'Option',
-        blank=True,
-    )
-    text = models.TextField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    deleted_at = models.DateTimeField(default=None, null=True, blank=True)
 
-    def __str__(self):
-        return f"{self.user}'s reply to {self.question.subject}"
+class HasPrerequisiteOptions(HasUserList):
+    option_pre = models.ManyToManyField(
+        'Option', blank=True
+    )
+
+    def get_users(self) -> models.QuerySet[User]:
+        if self.option_pre.count() > 0:  # type: ignore
+            return super().get_users().filter(
+                pk__in=self.get_user_list_pre()
+            )
+        return super().get_users()
+
+    def get_user_list_pre(self) -> list[str]:
+        return list(chain.from_iterable([
+            [*apps.get_model('inbox', 'Response').objects.filter(
+                option=option,
+                active=True,
+            ).values_list('user__pk', flat=True)]
+            for option in self.option_pre.all()  # type: ignore
+        ]))
 
     class Meta:
-        unique_together = ['question', 'user', 'active', 'deleted_at']
+        abstract = True
 
-from shared.mixins import TriggersNotifications
 
-class Message(TriggersNotifications, Serializable, HasSubject, HasContent, TimeStampable):
+class Message(TriggersNotifications,  HasPrerequisiteOptions, HasAudience, Serializable, HasContent, TimeStampable):
     "Model to define generic messages to users"
-    option_pre = models.ManyToManyField('Option', blank=True)
-    audience = models.IntegerField(
-        choices=audience_types,
-        default=30,
-    )
 
     def __str__(self) -> str:
         return f"{self.subject}"
@@ -71,3 +73,26 @@ class Option(Serializable, HasContent):
 
     def __str__(self) -> str:
         return f"{self.question} - {self.content}"
+
+
+class Response(Serializable, TimeStampable):
+    "Model to capture the response from a specific user"
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name='responses'
+    )
+    option = models.ManyToManyField(
+        Option,
+        blank=True,
+    )
+    text = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+    deleted_at = models.DateTimeField(default=None, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user}'s reply to {self.question.subject}"
+
+    class Meta:
+        unique_together = ['question', 'user', 'active', 'deleted_at']

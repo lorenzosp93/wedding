@@ -122,7 +122,7 @@ DATABASES = {
         'NAME': os.getenv('DATABASE_NAME', 'db.sqlite3'),
         'USER': os.getenv('DATABASE_USERNAME'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST'),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
         'PORT': os.getenv('DATABASE_PORT', 5432)
     }
 }
@@ -253,18 +253,34 @@ WEBPUSH_SETTINGS = {
     "VAPID_ADMIN_EMAIL": os.environ.get('WEB_PUSH_ADMIN_EMAIL', "me@lorenzosp.com"),
 }
 
-REDIS_HOST =  os.environ.get('REDIS_HOST', 'localhost')
-REDIS_USER =  os.environ.get('REDIS_USER', '')
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_USER = os.environ.get('REDIS_USER', '')
 REDIS_PASS = os.environ.get('REDIS_PASSWORD', '')
 REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
-REDIS_DB = 0
+REDIS_TASK_DB = 0
+REDIS_CACHE_DB = 1
 
 REDIS_AUTH = f'{REDIS_USER}:{REDIS_PASS}@' if REDIS_PASS else ''
 
-CELERY_BROKER_URL =  f"redis://{REDIS_AUTH}{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
+CELERY_BROKER_URL = f"redis://{REDIS_AUTH}{REDIS_HOST}:{REDIS_PORT}/{REDIS_TASK_DB}"
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Amsterdam'
 
+REDIS_CACHE_URL = f"redis://{REDIS_AUTH}{REDIS_HOST}:{REDIS_PORT}/{REDIS_CACHE_DB}"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_CACHE_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+CACHE_TTL = 60 * 60  # 1 hour

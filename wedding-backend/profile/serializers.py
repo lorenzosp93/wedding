@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional
 from rest_framework.serializers import (
     ModelSerializer, CharField, SerializerMethodField,
     Serializer, EmailField,

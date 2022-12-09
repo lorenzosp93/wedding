@@ -9,13 +9,13 @@ from .models import (
 )
 from shared.viewsets import (
     AudienceViewSetMixin,
-    BaseGetQuerysetMixin,
+    CachedViewsetMixin
 )
 
 
 class InformationViewSet(
+    CachedViewsetMixin,
     AudienceViewSetMixin,
-    BaseGetQuerysetMixin,
     ReadOnlyModelViewSet,
 ):
     """
@@ -27,7 +27,10 @@ class InformationViewSet(
     serializer_class = InformationSerializer
 
 
-class PhotoViewSet(ReadOnlyModelViewSet):
+class PhotoViewSet(
+    CachedViewsetMixin,
+    ReadOnlyModelViewSet,
+):
     serializer_class = PhotoSerializer
     pagination_class = LimitOffsetPagination
 

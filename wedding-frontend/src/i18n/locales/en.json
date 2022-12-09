@@ -56,6 +56,7 @@
       "profile": "Profile"
     },
     "tour": {
+      "confirmCancel": "Are you sure you want to cancel the tour? You can always access it again by clicking on the (i) button in the homepage.",
       "next": "Next",
       "back": "Back",
       "finish": "Finish",

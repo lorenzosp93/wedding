@@ -27,15 +27,15 @@ export default {
         setupTour () {
             this.tour = new this.$shepherd.Tour({
             useModalOverlay: true,
+            confirmCancel: true,
+            confirmCancelMessage: this.$t('shared.tour.confirmCancel'),
+            keyboardNavigation: false,
             defaultStepOptions: {
-                keyboardNavigation: false,
+                title: false,
                 arrow: false,
                 modalOverlayOpeningPadding: 5,
                 modalOverlayOpeningRadius: 5,
-                title: false,
                 canClickTarget: false,
-                modalContainer: '#app',
-                stepsContainer: '#app',
                 scrollTo: {
                     behavior: 'smooth',
                     block: 'center',
@@ -207,7 +207,7 @@ export default {
                     text: this.$t('shared.tour.inbox.pushNotification'),
                     modalOverlayOpeningPadding: -5,
                     modalOverlayOpeningRadius: 10,
-                    canClickTarget: false,
+                    canClickTarget: true,
                     showOn: () => {
                         return 'serviceWorker' in navigator && 'PushManager' in window
                     },

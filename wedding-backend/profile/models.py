@@ -1,5 +1,4 @@
 "Define abstract models to be used in all apps"
-from itertools import combinations
 from typing import Optional
 from django.db import models
 from django.contrib.auth.models import User
@@ -10,18 +9,6 @@ USER_TYPES = (
     (3, 'friend'),
     (5, 'colleague'),
 )  # index should be prime number!
-
-audience_types = [
-    *USER_TYPES,
-    *list(
-        (a*b, f"{dict(USER_TYPES)[a]} & {dict(USER_TYPES)[b]}")
-        for (a, b) in combinations(
-            [idx for (idx, _) in USER_TYPES],
-            r=2
-        )
-    ),
-    (30, 'all')
-]
 
 
 class UserProfile(models.Model):
@@ -56,7 +43,7 @@ class UserProfile(models.Model):
     )
 
     def setup_plus_one(self, first_name: str, last_name: str, email: str) -> tuple[Optional[User], bool]:
-        if self.user.childs.count() < self.plus:
+        if self.user.childs.count() < self.plus:  # type: ignore
             user, created = User.objects.get_or_create(
                 username=email,
             )

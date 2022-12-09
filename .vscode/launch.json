@@ -25,8 +25,17 @@
                 "runserver"
             ],
             "django": true,
-            "justMyCode": false,
             "preLaunchTask": "redis"
+        },
+        {
+            "name": "Python: Celery",
+            "module": "celery",
+            "console": "integratedTerminal",
+            "args": [
+                "worker",
+                "--app=wedding",
+                "--loglevel=INFO",
+            ]
         },
         {
             "name": "Docker: Python - Django",

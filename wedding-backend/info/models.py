@@ -4,8 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from shared.models import (
     HasPicture, HasContent, HasSubject
 )
-from shared.mixins import TriggersNotifications
-from profile.models import audience_types
+from shared.advanced_models import (
+    TriggersNotifications, HasAudience,
+)
 
 INFO_TYPES = (
     (0, _('Venues')),
@@ -28,9 +29,8 @@ PHOTO_TYPES = (
 # Create your models here.
 
 
-class Information(TriggersNotifications, HasPicture, HasContent, HasSubject):
+class Information(TriggersNotifications, HasAudience, HasPicture, HasContent, HasSubject):
     type = models.IntegerField(choices=INFO_TYPES,)
-    audience = models.IntegerField(choices=audience_types, default=30)
 
     def __str__(self) -> str:
         return f"{self.subject}"
