@@ -1,34 +1,10 @@
 <template>
   <div class="m-auto max-w-5xl py-5">
     <div class="mx-3 p-3 bg-pale dark:bg-darkPale rounded-md flex flex-wrap">
-      <div class="flex-[100%] md:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
+      <div v-for="col in 4" :key="col" class="flex-[100%] md:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
         <div
 v-for="photo in gallery.filter((_,idx)=>{
-            return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4)==0
-          })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
-          <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
-        </div>
-      </div>
-      <div class="flex-[50%] lg:flex-[25%] max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
-        <div
-v-for="photo in gallery.filter((_,idx)=>{
-            return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4)==1
-          })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
-          <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
-        </div>
-      </div>
-      <div class="flex-[25%] max-w-[25%] px-1.5 h-fit">
-        <div
-v-for="photo in gallery.filter((_,idx)=>{
-            return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4)==2
-          })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
-          <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
-        </div>
-      </div>
-      <div class="flex-[25%] max-w-[25%] px-1.5 h-fit">
-        <div
-v-for="photo in gallery.filter((_,idx)=>{
-            return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4)==3
+            return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4)==col
           })" :key="photo.id" class="mx-auto w-full cursor-pointer py-1.5" @click="activePhoto = photo">
           <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="shadow-lg w-full">
         </div>
