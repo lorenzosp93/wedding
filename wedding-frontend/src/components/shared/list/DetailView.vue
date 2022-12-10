@@ -87,6 +87,9 @@ export default {
         active: {type: Number},
         searchedList: {type: Array[Object]},
         responses: {type: Array[Object]},
+        submitLoading: {type: Boolean},
+        submitError: {type:Object},
+        submitSuccess: {type: Boolean},
     },
     emits: [
         'hideDetail',

@@ -29,11 +29,15 @@
         },
         {
             "name": "Python: Celery",
+            "type": "python",
+            "request": "launch",
             "module": "celery",
             "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/wedding-backend",
             "args": [
+                "--app",
+                "wedding",
                 "worker",
-                "--app=wedding",
                 "--loglevel=INFO",
             ]
         },
