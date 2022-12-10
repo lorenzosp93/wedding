@@ -1,5 +1,5 @@
 <template>
-  <div id="main" class="min-h-screen bg-neutral dark:bg-darkNeutral text-primary dark:text-darkPrimary font-serif bg-[url('@/assets/backdrop.webp')] bg-repeat-y bg-scroll bg-contain">
+  <div id="main">
     <router-view name="TheNavbar"></router-view>
     <router-view></router-view>
   </div>
