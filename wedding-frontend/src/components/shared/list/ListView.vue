@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class=" w-11/12 mx-auto text-primary dark:text-darkPrimary">
+  <div class=" w-11/12 mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full h-full rounded-3xl">
       <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-1/2 lg:w-2/5  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
