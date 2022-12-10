@@ -104,7 +104,7 @@ export default {
       }, 100)
     },
     updateBreakpoint () {
-      this.breakpoint = this.breakpointMap.find(bp => bp.value >= window.innerWidth)?.name ?? 'xl';
+      this.breakpoint = this.breakpointMap.find(bp => bp.value >= window.outerWidth)?.name ?? 'xl';
     },
   },
 }

@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col max-w-2xl mx-auto">
+  <div class="flex flex-col max-w-xl mx-auto bg-neutral dark:bg-darkNeutral">
     <div class="w-full overflow-auto px-5">
-      <table v-if="!!profile" id="mainTable" class="table-auto mx-auto my-5 text-right py-3 px-5">
+      <table v-if="!!profile" id="mainTable" class="table-auto mx-auto my-5 text-right py-3 px-5 w-full">
         <tbody class="">
           <tr>
             <td>{{ $t('profile.theprofile.first_name') }}</td>
