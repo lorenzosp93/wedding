@@ -217,7 +217,7 @@ REST_FRAMEWORK = {
 }
 if not DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = (
-        "rest_framework.renderers.JSONRenderer"
+        "rest_framework.renderers.JSONRenderer",
     )
 TOKEN_EXPIRED_AFTER_SECONDS = 60 * 60 * 24 * 30  # 30 days tokens expiry
 
