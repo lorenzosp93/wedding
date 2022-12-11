@@ -202,7 +202,7 @@ class HasPicture(models.Model):
     )
 
     def save(self) -> None:
-        if not self.pk:
+        if not self.pk and self.picture:
             super(HasPicture, self).save()
             self.save_thumb()
         return super(HasPicture, self).save()

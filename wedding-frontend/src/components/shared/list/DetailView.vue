@@ -1,24 +1,22 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
     <article>
-        <header class="flex justify-between items-center border-b-2 mb-8">
-            <div class="flex space-x-4 items-center">
+        <header id="object-header" class="flex justify-between items-center border-b-2 mb-8">
             <div class="h-6 w-6 md:hidden" @click="$emit('hideDetail')">
                 <arrow-left-icon class="h-6 w-6" />
             </div>
-            <div class="flex flex-col">
+            <div id="header-title" class="flex w-full">
                 <h3 class="font-semibold text-2xl py-5">{{ activeObject?.subject }}</h3>
             </div>
-            </div>
             <div>
-            <ul class="flex text-primary dark:text-darkPrimary space-x-4 cursor-pointer">
-                <li v-show="active != 0" class="w-6 h-6" @click="$emit('setActive', (active - 1))">
-                    <arrow-up-icon class="h-6 w-6" />
-                </li>
-                <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6" @click="$emit('setActive', (active + 1))">
-                    <arrow-down-icon class="h-6 w-6" />
-                </li>
-            </ul>
+                <ul class="flex text-primary dark:text-darkPrimary space-x-4 cursor-pointer order-last">
+                    <li v-show="active != 0" class="w-6 h-6" @click="$emit('setActive', (active - 1))">
+                        <arrow-up-icon class="h-6 w-6" />
+                    </li>
+                    <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6 order-last" @click="$emit('setActive', (active + 1))">
+                        <arrow-down-icon class="h-6 w-6" />
+                    </li>
+                </ul>
             </div>
         </header>
         <section v-if="activeObject?.picture" id="object-picture" class="w-full">
