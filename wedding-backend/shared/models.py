@@ -86,11 +86,10 @@ class Datable(models.Model):
         null=True,
     )
 
-    def save(self, **kwargs):  # pylint: disable=W0221
-        "Override save method to validate end date"
+    def clean(self) -> None:
+        super().clean()
         if self.end_date:
             self.end_date_validation()
-        super().save(**kwargs)
 
     def end_date_validation(self) -> None:
         if self.end_date and self.end_date <= self.start_date:
@@ -314,4 +313,3 @@ class HasSubject(models.Model):
 
     class Meta:
         abstract = True
-

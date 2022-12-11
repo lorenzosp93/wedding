@@ -1,7 +1,12 @@
 from django.contrib import admin
-from .models import Information, Photo
+from .models import Information, Photo, InformationWidget
 
 # Register your models here.
+
+
+class InformationWidgetInline(admin.TabularInline):
+    model = InformationWidget
+    extra = 1
 
 
 @admin.register(Photo)
@@ -15,3 +20,4 @@ class InformationAdmin(admin.ModelAdmin):
     list_display = ('id', 'subject', 'type', 'audience', 'content',)
     list_editable = ('subject', 'type', 'audience', 'content',)
     list_filter = ('type', 'audience',)
+    inlines = [InformationWidgetInline]
