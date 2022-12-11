@@ -2,7 +2,7 @@
 <template>
     <article>
         <header id="object-header" class="flex justify-between items-center border-b-2 mb-8">
-            <div class="h-6 w-6 md:hidden" @click="$emit('hideDetail')">
+            <div class="h-6 w-6 mr-2 md:hidden" @click="$emit('hideDetail')">
                 <arrow-left-icon class="h-6 w-6" />
             </div>
             <div id="header-title" class="flex w-full">
@@ -23,7 +23,7 @@
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
         </section>
         <section id="object-content" class="my-3 leading-7 tracking-wider" v-html="activeObject?.content"></section>
-        <widgets-view v-if="activeObject?.widget" :active-object="activeObject"></widgets-view>
+        <widgets-view v-if="activeObject?.widget?.length && loadWidgets" :active-object="activeObject"></widgets-view>
         <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
     </article>
 </template>
@@ -59,6 +59,7 @@ export default {
     ],
     data () {
         return {
+            loadWidgets: false,
         }
     },
     mounted () {
@@ -69,7 +70,8 @@ export default {
             if (event.key == "ArrowLeft" && this.active > 0) {
                 this.$emit('setActive', this.active - 1)
             }
-        })
+        });
+        this.loadWidgets = true;
     }
 }
 
