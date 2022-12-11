@@ -29,7 +29,7 @@
             </ul>
             </div>
         </header>
-        <section v-if="activeObject?.picture" class="w-full">
+        <section v-if="activeObject?.picture" id="object-picture" class="w-full">
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
         </section>
         <section id="object-content" class="my-3 leading-7 tracking-wider" v-html="activeObject?.content"></section>
