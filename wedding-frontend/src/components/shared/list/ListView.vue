@@ -2,8 +2,8 @@
 <template>
   <div class=" w-11/12 mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
-    <main v-show="!loading" class="flex w-full h-full rounded-3xl">
-      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-1/2 lg:w-2/5  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
+    <main v-show="!loading" class="flex w-full h-full">
+      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-[40%]  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
         <label>
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
@@ -13,7 +13,7 @@
                   <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
                   <div class="w-full mr-5 pl-5 text-right">
                     <h3 class=" text-lg font-semibold">{{ obj?.subject }}</h3>
-                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 50) }}</div>
+                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 40) }}</div>
                   </div>
                 </div>
             </li>
@@ -25,7 +25,7 @@
           </li>
         </ul>
       </section>
-      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" class="md:block absolute left-0 z-10 md:relative w-full mx-auto min-h-screen md:w-1/2 px-4 flex flex-col bg-neutral dark:bg-darkNeutral overflow-y-scroll" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
+      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" class="md:block absolute left-0 z-10 md:relative w-full mx-auto min-h-screen md:w-[60%] px-4 flex flex-col bg-neutral dark:bg-darkNeutral overflow-y-scroll" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
     </main>
     <push-subscribe></push-subscribe>
   </div> 

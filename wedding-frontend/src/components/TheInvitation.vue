@@ -61,15 +61,8 @@
   </div>
 
   <Teleport to="body">
-    <div id="scroller" :class="{invisible: !loaded}" class="fixed w-fit bottom-0 right-1/2 translate-x-1/2 py-2 flex z-20" >
-      <svg class="h-10 w-10 md:h-12 md:w-12 block pt-3.5 animate-bounce fill-accent" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" xml:space="preserve">
-          <g>
-            <path
-              d="M34.6,228.4L472,481c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4c-13.9-24.1-44.4-32.5-68.1-18.8L500,380.9L84.9,141.2C61.2,127.5,30.8,136,16.9,160C2.9,184.1,10.9,214.7,34.6,228.4z" />
-            <path
-              d="M915.1,519L500,758.7L84.9,519c-23.7-13.7-54.2-5.2-68.1,18.8c-13.9,24.1-6,54.7,17.7,68.4L472,858.8c8.8,5.1,18.5,7.1,28,6.4c9.5,0.7,19.2-1.3,28-6.4l437.4-252.6c23.7-13.7,31.6-44.3,17.7-68.4C969.2,513.8,938.8,505.4,915.1,519z" />
-          </g>
-      </svg>
+    <div id="scroller" :class="{invisible: !loaded}" class="fixed w-fit bottom-0 right-1/2 translate-x-1/2 py-2 flex z-20 cursor-pointer" @click="scrollToBottom">
+      <chevron-double-down-icon class="h-10 w-10 md:h-12 md:w-12 pt-3.5 animate-bounce stroke-accent stroke-2"/>
     </div>
 
   </Teleport>
@@ -84,13 +77,15 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import LoadingView from '@/components/shared/LoadingView.vue'
+import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export default {
   name: 'TheInvitation',
   components: {
-    LoadingView
+    LoadingView,
+    ChevronDoubleDownIcon,
   },
   data () {
     return {
@@ -184,6 +179,9 @@ export default {
         }, 0.5)
         .set('#scroller', {autoAlpha: 0}, .5);
       this.tl = tl;
+    },
+    scrollToBottom () {
+      window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})
     },
   },
 }
