@@ -214,8 +214,11 @@ REST_FRAMEWORK = {
         'anon': '20/minute',
         'user': '50/minute',
     }
-
 }
+if not DEBUG:
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = (
+        "rest_framework.renderers.JSONRenderer"
+    )
 TOKEN_EXPIRED_AFTER_SECONDS = 60 * 60 * 24 * 30  # 30 days tokens expiry
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
