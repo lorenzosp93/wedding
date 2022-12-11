@@ -4,11 +4,7 @@
         <header class="flex justify-between items-center border-b-2 mb-8">
             <div class="flex space-x-4 items-center">
             <div class="h-6 w-6 md:hidden" @click="$emit('hideDetail')">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
-                </svg>
+                <arrow-left-icon class="h-6 w-6" />
             </div>
             <div class="flex flex-col">
                 <h3 class="font-semibold text-2xl py-5">{{ activeObject?.subject }}</h3>
@@ -16,15 +12,11 @@
             </div>
             <div>
             <ul class="flex text-primary dark:text-darkPrimary space-x-4 cursor-pointer">
-                <li v-show="active != 0" class="w-6 h-6 rotate-90" @click="$emit('setActive', (active - 1))">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
-                </svg>
+                <li v-show="active != 0" class="w-6 h-6" @click="$emit('setActive', (active - 1))">
+                    <arrow-up-icon class="h-6 w-6" />
                 </li>
-                <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6 rotate-90" @click="$emit('setActive', (active + 1))">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6" @click="$emit('setActive', (active + 1))">
+                    <arrow-down-icon class="h-6 w-6" />
                 </li>
             </ul>
             </div>
@@ -33,16 +25,23 @@
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
         </section>
         <section id="object-content" class="my-3 leading-7 tracking-wider" v-html="activeObject?.content"></section>
+        <widgets-view v-if="activeObject?.widget" :active-object="activeObject"></widgets-view>
         <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
     </article>
 </template>
 
 <script>
 import QuestionView from './QuestionView.vue';
+import WidgetsView from './WidgetsView.vue';
+import { ArrowLeftIcon, ArrowUpIcon, ArrowDownIcon } from '@heroicons/vue/24/outline';
 
 export default {
     components: {
         QuestionView,
+        WidgetsView,
+        ArrowDownIcon,
+        ArrowLeftIcon,
+        ArrowUpIcon,
     },
     props: {
         viewDetail: { type: Boolean, default: false},
