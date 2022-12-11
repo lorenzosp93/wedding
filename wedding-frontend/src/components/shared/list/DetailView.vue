@@ -6,14 +6,14 @@
                 <arrow-left-icon class="h-6 w-6" />
             </div>
             <div id="header-title" class="flex w-full">
-                <h3 class="font-semibold text-2xl py-5">{{ activeObject?.subject }}</h3>
+                <h3 class="font-semibold text-2xl py-5 mr-1">{{ activeObject?.subject }}</h3>
             </div>
             <div>
-                <ul class="flex text-primary dark:text-darkPrimary ml-2 space-x-4 cursor-pointer order-last">
-                    <li v-show="active != 0" class="w-6 h-6" @click="$emit('setActive', (active - 1))">
+                <ul class="flex text-primary dark:text-darkPrimary ml-1 space-x-4 cursor-pointer order-last">
+                    <li :class="{'invisible cursor-none': !(active != 0)}" class="w-6 h-6" @click="$emit('setActive', (active - 1))">
                         <arrow-up-icon class="h-6 w-6" />
                     </li>
-                    <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6" @click="$emit('setActive', (active + 1))">
+                    <li :class="{'invisible cursor-none': !(active != searchedList?.length - 1 && searchedList?.length)}" class="w-6 h-6" @click="$emit('setActive', (active + 1))">
                         <arrow-down-icon class="h-6 w-6" />
                     </li>
                 </ul>
