@@ -9,11 +9,11 @@
                 <h3 class="font-semibold text-2xl py-5">{{ activeObject?.subject }}</h3>
             </div>
             <div>
-                <ul class="flex text-primary dark:text-darkPrimary space-x-4 cursor-pointer order-last">
+                <ul class="flex text-primary dark:text-darkPrimary ml-2 space-x-4 cursor-pointer order-last">
                     <li v-show="active != 0" class="w-6 h-6" @click="$emit('setActive', (active - 1))">
                         <arrow-up-icon class="h-6 w-6" />
                     </li>
-                    <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6 order-last" @click="$emit('setActive', (active + 1))">
+                    <li v-show="active != searchedList?.length - 1 && searchedList?.length" class="w-6 h-6" @click="$emit('setActive', (active + 1))">
                         <arrow-down-icon class="h-6 w-6" />
                     </li>
                 </ul>
