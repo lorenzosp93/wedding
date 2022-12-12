@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Install system requirements
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends build-essential libpq-dev \
+  && apt-get install -y --no-install-recommends build-essential libpq-dev gettext \
   && rm -rf /var/lib/apt/lists
 
 # Install pip requirements
