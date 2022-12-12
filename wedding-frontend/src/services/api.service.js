@@ -20,6 +20,7 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
 export function getCSRFHeader() {
   return {'X-CSRFToken': getCookie('csrftoken')}
 }

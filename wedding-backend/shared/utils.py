@@ -1,7 +1,7 @@
 import logging
 from django.contrib.auth.models import User
 from django.template import loader
-from django.utils.translation import activate
+from django.utils.translation import override
 from django.urls import reverse
 from drfpasswordless.settings import api_settings
 from drfpasswordless.utils import inject_template_context
@@ -33,18 +33,18 @@ def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwa
 
             email = user.email
             # activate user language
-            activate(user.profile.language)  # type: ignore
-            # Inject context if user specifies.
-            context = inject_template_context({
-                'callback_token': email_token.key,
-                'user_email': email,
-                'auth_url': reverse('shared:magic-auth'),
-                'site_name': BACKEND_HOST,
-            })
-            html_message = loader.render_to_string(email_html, context,)
+            with override(user.profile.language):  # type: ignore
+                # Inject context if user specifies.
+                context = inject_template_context({
+                    'callback_token': email_token.key,
+                    'user_email': email,
+                    'auth_url': reverse('shared:magic-auth'),
+                    'site_name': BACKEND_HOST,
+                })
+                html_message = loader.render_to_string(email_html, context,)
 
             send_email.delay(
-            recipient_list=[email],
+                recipient_list=[email],
                 subject=email_subject,
                 message=email_plaintext % email_token.key,
                 html_message=html_message,

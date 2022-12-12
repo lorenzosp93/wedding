@@ -39,10 +39,10 @@ export default {
     },
     computed: {
         calendarWidget () {
-            return this.activeObject.widget.find(w => w.type == 'Calendar')?.content
+            return this.activeObject.widget.find(w => w.type == 'calendar')?.content
         },
         mapsWidget () {
-            return this.activeObject.widget.find(w => w.type == 'Maps')?.content
+            return this.activeObject.widget.find(w => w.type == 'maps')?.content
         }
     },
     methods: {

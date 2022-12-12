@@ -29,8 +29,8 @@ PHOTO_TYPES = (
 )
 
 WIDGET_TYPES = (
-    (0, _('Calendar')),
-    (1, _('Maps')),
+    (0, 'calendar'),
+    (1, 'maps'),
 )
 
 # Create your models here.
