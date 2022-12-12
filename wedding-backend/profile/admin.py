@@ -1,14 +1,15 @@
 import csv
 from django import forms
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import path
-from .models import UserProfile, User
+from .models import UserProfile
 
 # Register your models here.
 
-admin.site.unregister(User)
+admin.site.unregister(get_user_model())
 
 
 @admin.register(UserProfile)
@@ -85,7 +86,7 @@ class CsvImportForm(forms.Form):
     )
 
 
-@admin.register(User)
+@admin.register(get_user_model())
 class UserAdmin(admin.ModelAdmin):
     change_list_template = "profile/user_admin.html"
     list_display = ('username', 'first_name', 'last_name', 'profile')
@@ -125,8 +126,8 @@ class UserAdmin(admin.ModelAdmin):
         return reader
 
     def create_users_from_csv(self, reader: list[dict]) -> None:
-        User.objects.bulk_create([
-            User(
+        get_user_model().objects.bulk_create([
+            get_user_model()(
                 first_name=row.get('first_name'),
                 last_name=row.get('last_name'),
                 email=row.get('email'),
@@ -135,7 +136,7 @@ class UserAdmin(admin.ModelAdmin):
         ])
         UserProfile.objects.bulk_create([
             UserProfile(
-                user=User.objects.get(username=row.get('email')),
+                user=get_user_model().objects.get(username=row.get('email')),
                 language=row.get('language'),
                 plus=row.get('plus')
             ) for row in reader

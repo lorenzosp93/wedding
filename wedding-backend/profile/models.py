@@ -1,8 +1,9 @@
 "Define abstract models to be used in all apps"
-from typing import Optional
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from shared.models import Address, I18N, TimeStampable
+from wedding.settings import AUTH_USER_MODEL
 
 USER_TYPES = (
     (2, 'family'),
@@ -14,7 +15,7 @@ USER_TYPES = (
 class UserProfile(models.Model):
     "Model to extend the built-in Django user with additional fields"
     user = models.OneToOneField(
-        User,
+        AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='profile'
     )
@@ -35,16 +36,16 @@ class UserProfile(models.Model):
     )
     plus = models.IntegerField(default=0)
     parent = models.ForeignKey(
-        User,
+        AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
         related_name='childs',
     )
 
-    def setup_plus_one(self, first_name: str, last_name: str, email: str) -> tuple[Optional[User], bool]:
+    def setup_plus_one(self, first_name: str, last_name: str, email: str) -> tuple[User | None, bool]:
         if self.user.childs.count() < self.plus:  # type: ignore
-            user, created = User.objects.get_or_create(
+            user, created = get_user_model().objects.get_or_create(
                 username=email,
             )
             if created:
@@ -74,6 +75,6 @@ class Keys(models.Model):
 
 
 class Subscription(TimeStampable):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     endpoint = models.URLField()
     keys = models.OneToOneField(Keys, on_delete=models.CASCADE, null=True)

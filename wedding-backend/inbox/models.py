@@ -2,6 +2,7 @@ from itertools import chain
 from django.apps import apps
 from django.db import models
 from django.contrib.auth.models import User
+from wedding.settings import AUTH_USER_MODEL
 from shared.models import (
     Serializable, TimeStampable,
     HasContent, HasSubject,
@@ -87,7 +88,7 @@ class Response(Serializable, TimeStampable):
         blank=True,
     )
     text = models.TextField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     deleted_at = models.DateTimeField(default=None, null=True, blank=True)
 

@@ -1,6 +1,6 @@
 from operator import truediv
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .models import UserProfile
 
 # Create your tests here.
@@ -10,9 +10,9 @@ class TestProfileModels(TestCase):
     def setUp(self):
         username = 'someuser'
         email = 'some@email.com'
-        self.user = User.objects.create_user(
+        self.user = get_user_model().objects.create(
             username=username,
-            email=email
+            email=email,
         )
         self.profile = UserProfile.objects.create(user=self.user)
         self.profile.language = 'it'
@@ -33,7 +33,7 @@ class TestProfileModels(TestCase):
             email='someother@email.com',
         )
         self.assertTrue(created)
-        self.assertIsInstance(self.plus_one, User)
+        self.assertIsInstance(self.plus_one, get_user_model())
         self.assertEqual(self.plus_one.email, 'someother@email.com')
         self.assertEqual(
             self.plus_one.profile,

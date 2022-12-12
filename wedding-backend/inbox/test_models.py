@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from shared.models import ContentString
 from profile.models import UserProfile
 from .models import Message, Response, Option, Question
@@ -11,7 +11,7 @@ class TestInboxModels(TestCase):
     """
 
     def setUp(self):
-        self.user = User.objects.create(username="TestUser")
+        self.user = get_user_model().objects.create(username="TestUser")
         UserProfile.objects.create(
             user=self.user,
             type=2,  # family
@@ -29,7 +29,7 @@ class TestInboxModels(TestCase):
             question=self.question,
             content=ContentString.objects.create(value='opt1')
         )
-        self.new_user = User.objects.create(username="NewTestUser")
+        self.new_user = get_user_model().objects.create(username="NewTestUser")
         UserProfile.objects.create(
             user=self.new_user,
             type=3,  # friend
