@@ -23,7 +23,9 @@ spec:
         - image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default "latest" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: {{ include "wedding.fullname" . }}
-          command: [ 'celery', '-A', 'wedding', 'worker', '-l', 'INFO' ]
+          args:
+            - docker/start.sh
+            - worker
           envFrom:
             - secretRef:
                 name: wedding

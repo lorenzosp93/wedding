@@ -54,6 +54,6 @@ spec:
               - name: Accept
                 value: application/json
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: 10
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             {{- end }}
 
