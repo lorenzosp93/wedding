@@ -1,3 +1,4 @@
+# type: ignore
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.urls import reverse

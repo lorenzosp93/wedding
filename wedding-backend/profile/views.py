@@ -1,3 +1,4 @@
+# type: ignore
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.request import Request
@@ -18,7 +19,7 @@ def setup_plus_one(request: Request) -> Response:
         user, created = user.profile.setup_plus_one(
             data['first_name'],
             data['last_name'],
-            data['email']
+            data['email'],
         )
         if (user is not None) & created:
             return Response(

@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-from shared.models import Address, I18N, TimeStampable
+from shared.models import I18N, TimeStampable
 from wedding.settings import AUTH_USER_MODEL
 
 USER_TYPES = (
@@ -28,12 +28,6 @@ class UserProfile(models.Model):
         choices=USER_TYPES,
         default=2,
     )
-    address = models.ForeignKey(
-        Address,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
     plus = models.IntegerField(default=0)
     parent = models.ForeignKey(
         AUTH_USER_MODEL,
@@ -49,8 +43,9 @@ class UserProfile(models.Model):
                 username=email,
             )
             if created:
-                self.setup_profile(first_name, last_name, email, user)
-            return user, created
+                self.setup_profile(first_name, last_name,
+                                   email, user)  # type: ignore
+            return user, created  # type: ignore
         return None, False
 
     def setup_profile(self, first_name: str, last_name: str, email: str, user: User) -> None:
@@ -58,7 +53,7 @@ class UserProfile(models.Model):
         user.last_name = last_name
         user.email = email
         user.save()
-        profile = UserProfile.objects.create(
+        UserProfile.objects.create(
             user=user,
             language=self.language,
             type=self.type,
