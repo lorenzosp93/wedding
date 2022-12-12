@@ -3,7 +3,6 @@ Django settings for wedding project.
 """
 
 import os
-from django.utils.translation import gettext_lazy as _
 
 AUTH_USER_MODEL = 'auth.User'
 
@@ -235,7 +234,6 @@ PASSWORDLESS_AUTH = {
     'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': os.environ.get('EMAIL_TO', 'info@priscillalorenzo.com'),
     'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': "token_email.html",
     'PASSWORDLESS_REGISTER_NEW_USERS': True,
-    'PASSWORDLESS_EMAIL_SUBJECT': _('Here is your login link for ') + HOST if HOST else 'local',
     'PASSWORDLESS_EMAIL_CALLBACK': 'shared.utils.send_email_with_callback_token',
     'PASSWORDLESS_REGISTER_NEW_USERS': False,
 }
