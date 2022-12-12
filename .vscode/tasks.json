@@ -7,7 +7,7 @@
 			"platform": "python",
 			"dockerBuild": {
 				"tag": "wedding:develop",
-				"dockerfile": "${workspaceFolder}/wedding-backend/Dockerfile",
+				"dockerfile": "${workspaceFolder}/wedding-backend/docker/Dockerfile",
 				"context": "${workspaceFolder}/wedding-backend",
 				"pull": true
 			},

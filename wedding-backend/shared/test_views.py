@@ -1,7 +1,8 @@
+# type: ignore
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils.module_loading import import_string
 from drfpasswordless.settings import api_settings
 from drfpasswordless.utils import create_callback_token_for_user
@@ -19,8 +20,8 @@ class TestSharedViews(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.email = 'some@email.com'
-        user = User.objects.create_user(
-            'test_user',
+        user = get_user_model().objects.create(
+            username='test_user',
             email=self.email
         )
         token_creator = import_string(

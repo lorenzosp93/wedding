@@ -1,7 +1,8 @@
 from itertools import chain
 from django.apps import apps
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser
+from wedding.settings import AUTH_USER_MODEL
 from shared.models import (
     Serializable, TimeStampable,
     HasContent, HasSubject,
@@ -17,7 +18,7 @@ class HasPrerequisiteOptions(HasUserList):
         'Option', blank=True
     )
 
-    def get_users(self) -> models.QuerySet[User]:
+    def get_users(self) -> models.QuerySet[AbstractBaseUser]:
         if self.option_pre.count() > 0:  # type: ignore
             return super().get_users().filter(
                 pk__in=self.get_user_list_pre()
@@ -87,7 +88,7 @@ class Response(Serializable, TimeStampable):
         blank=True,
     )
     text = models.TextField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     deleted_at = models.DateTimeField(default=None, null=True, blank=True)
 

@@ -1,17 +1,17 @@
 from rest_framework.serializers import (
     ModelSerializer
 )
+from django.contrib.auth import get_user_model
 from .models import (
     SiteSetting,
     Attachment,
     Address,
-    User,
 )
 
 
 class UserSerializer(ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = [
             'username',
             'first_name',

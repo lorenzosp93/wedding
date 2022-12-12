@@ -19,7 +19,7 @@ class MessageViewSet(
 ):
     """
         This ViewSet enables retrieval and listing of
-        UserMessage objects
+        Message objects
     """
     serializer_class = MessageSerializer
 

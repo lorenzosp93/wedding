@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.contrib.auth import get_user_model
 from rest_framework.reverse import reverse
 from rest_framework.test import force_authenticate
 from .models import (
@@ -11,7 +12,7 @@ from .models import (
 from .serializers import MessageSerializer
 from .viewsets import MessageViewSet
 from shared.models import ContentString
-from profile.models import UserProfile, User
+from profile.models import UserProfile
 
 # Create your tests here.
 
@@ -19,7 +20,7 @@ from profile.models import UserProfile, User
 class TestInboxViewsets(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(username='testuser')
+        self.user = get_user_model().objects.create(username='testuser')
         UserProfile.objects.create(user=self.user)
         self.message = Message.objects.create(
             subject=ContentString.objects.create(value='something'),
@@ -54,7 +55,7 @@ class TestInboxViewsets(TestCase):
             context={'request': self.request}
         ).to_representation(new_message)
         self.assertNotIn(serialized_obj, response.data)
-        new_user = User.objects.create(username='new')
+        new_user = get_user_model().objects.create(username='new')
         UserProfile.objects.create(user=new_user, type=3)
         new_request = self.factory.get(reverse('inbox:message-list'))
         force_authenticate(new_request, new_user)
@@ -78,7 +79,7 @@ class TestInboxViewsets(TestCase):
             context={'request': self.request}
         ).to_representation(new_message)
         self.assertIn(serialized_obj, response.data)
-        new_user = User.objects.create(username='new')
+        new_user = get_user_model().objects.create(username='new')
         UserProfile.objects.create(user=new_user)
         new_request = self.factory.get(reverse('inbox:message-list'))
         force_authenticate(new_request, new_user)

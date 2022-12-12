@@ -10,7 +10,7 @@ admin.site.register(Attachment)
 class TranslatedStringInline(admin.TabularInline):
     model = TranslatedString
     extra = 2
-    max_num = 3
+    max_num = 2
 
 
 @admin.register(ContentString)

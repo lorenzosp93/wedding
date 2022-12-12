@@ -4,6 +4,7 @@ Django settings for wedding project.
 
 import os
 
+AUTH_USER_MODEL = 'auth.User'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -214,8 +215,11 @@ REST_FRAMEWORK = {
         'anon': '20/minute',
         'user': '50/minute',
     }
-
 }
+if not DEBUG:
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = (
+        "rest_framework.renderers.JSONRenderer",
+    )
 TOKEN_EXPIRED_AFTER_SECONDS = 60 * 60 * 24 * 30  # 30 days tokens expiry
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -230,7 +234,6 @@ PASSWORDLESS_AUTH = {
     'PASSWORDLESS_EMAIL_NOREPLY_ADDRESS': os.environ.get('EMAIL_TO', 'info@priscillalorenzo.com'),
     'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': "token_email.html",
     'PASSWORDLESS_REGISTER_NEW_USERS': True,
-    'PASSWORDLESS_EMAIL_SUBJECT': f"[{HOST}] Login",
     'PASSWORDLESS_EMAIL_CALLBACK': 'shared.utils.send_email_with_callback_token',
     'PASSWORDLESS_REGISTER_NEW_USERS': False,
 }

@@ -51,6 +51,7 @@ jobs:
         uses: docker/build-push-action@v2.9.0
         if: ${{ github.ref_name == 'develop' }}
         with:
+          file: ./wedding-frontend/docker/Dockerfile
           context: ./wedding-frontend
           platforms: linux/arm64/v8
           push: true

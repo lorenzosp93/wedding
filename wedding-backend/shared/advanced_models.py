@@ -1,8 +1,8 @@
-from typing import Any
 from itertools import combinations
 from django.db import models
 from django.apps import apps
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from wedding.tasks import send_notifications_for_subscriptions
 from wedding.settings import FRONTEND_HOST
@@ -23,8 +23,8 @@ audience_types = [
 
 
 class HasUserList(models.Model):
-    def get_users(self) -> models.QuerySet[User]:
-        return User.objects.all()
+    def get_users(self) -> models.QuerySet[AbstractBaseUser]:
+        return get_user_model().objects.all()
 
     class Meta:
         abstract = True
@@ -36,7 +36,7 @@ class HasAudience(HasUserList):
         default=30,
     )
 
-    def get_users(self) -> models.QuerySet[User]:
+    def get_users(self) -> models.QuerySet[AbstractBaseUser]:
         return super().get_users().annotate(
             audience_mod=self.audience % models.F(
                 'profile__type'
@@ -78,7 +78,7 @@ class TriggersNotifications(
             }
         }
 
-    def get_subscriptions(self, user_list: list[str]) -> models.QuerySet[Any]:
+    def get_subscriptions(self, user_list: list[str]) -> models.QuerySet:
         return apps.get_model('profile', 'Subscription') \
                    .objects.filter(user__pk__in=user_list)
 

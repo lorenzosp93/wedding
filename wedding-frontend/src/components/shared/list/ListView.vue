@@ -101,6 +101,9 @@ emits: ['submitResponse', 'deleteResponses'],
       }
     },
     setActive(n){
+      if (n < 0) {
+        n = 0;
+      }
       this.$router.push(
         {
           name: this.$route.name,

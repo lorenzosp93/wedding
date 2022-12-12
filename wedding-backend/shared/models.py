@@ -6,8 +6,8 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
 from django.utils.html import strip_tags
+from wedding.settings import AUTH_USER_MODEL
 
 THUMBNAIL_SIZE = 640, 640
 I18N = (
@@ -167,7 +167,7 @@ class Authorable(models.Model):
     "Abstract model to describe the author"
     active = models.BooleanField(default=True)
     created_by = models.ForeignKey(
-        User,
+        AUTH_USER_MODEL,
         verbose_name="Created by",
         on_delete=models.CASCADE,
         related_name="%(app_label)s_%(class)s_related_creator",
@@ -175,7 +175,7 @@ class Authorable(models.Model):
         editable=False,
     )
     modified_by = models.ForeignKey(
-        User,
+        AUTH_USER_MODEL,
         verbose_name="Last modified by",
         on_delete=models.CASCADE,
         related_name="%(app_label)s_%(class)s_related_modifier",

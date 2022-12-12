@@ -20,6 +20,7 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+
 export function getCSRFHeader() {
   return {'X-CSRFToken': getCookie('csrftoken')}
 }
@@ -45,20 +46,6 @@ export function request(post=false){
 }
 
 class ApiService {
-
-  async updateAddress(address1, address2, city, postalCode, provinceOrState, country) {
-    
-    return request(true).post(
-      API_URL + '/api/user/profile/', { address: {
-          address1,
-          address2,
-          city,
-          postalCode,
-          provinceOrState,
-          country,
-        }},
-    );
-  }
 
   async setupPlusOne(email, first_name, last_name){
     return request(true).post(
