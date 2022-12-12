@@ -19,7 +19,7 @@
                     <tr>{{ mapsWidget?.country }}</tr>
                 </table>
             </div>
-            <iframe v-if="mapsWidget?.src" class="w-full my-2 md:my-auto md:w-1/2 ml-auto aspect-square rounded-md" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
+            <iframe v-if="mapsWidget?.src" class="w-[90%] my-3 md:my-auto md:w-[40%] max-md:mx-auto md:ml-auto aspect-square rounded-md" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
         </div>
     </section>
 </template>
