@@ -25,6 +25,7 @@ releases:
     chart: bitnami/redis
     values:
       - ./values/prod/redis.yaml
+
   - name: ingress-controller
     namespace: default
     chart: ingress-nginx/ingress-nginx
@@ -37,7 +38,7 @@ releases:
     values:
       - ./values/stg/wedding.yaml
   - name: frontend
-    namespace: wedding
+    namespace: wedding-stg
     chart: bitnami/nginx
     values:
       - ./values/stg/frontend.yaml
@@ -47,7 +48,7 @@ releases:
     values:
       - ./values/stg/postgres.yaml
   - name: redis-wedding-stg
-    namespace: wedding
+    namespace: wedding-stg
     chart: bitnami/redis
     values:
       - ./values/stg/redis.yaml
