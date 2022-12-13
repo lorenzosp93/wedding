@@ -31,19 +31,3 @@ spec:
                 name: wedding
             - configMapRef:
                 name: wedding
-          startupProbe:
-            exec:
-              command:
-                - python
-                - manage.py
-                - health_check
-            initialDelaySeconds: 60
-            periodSeconds: 30
-          livenessProbe:
-            exec:
-              command:
-                - python
-                - manage.py
-                - health_check
-            initialDelaySeconds: 60
-            periodSeconds: 60
