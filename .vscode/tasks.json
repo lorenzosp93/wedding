@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"type": "docker-build",
-			"label": "docker-build",
+			"label": "docker-build: backend",
 			"platform": "python",
 			"dockerBuild": {
 				"tag": "wedding:develop",
@@ -14,7 +14,21 @@
 			"problemMatcher": [],
 			"group": {
 				"kind": "build",
-				"isDefault": true
+				"isDefault": false
+			}
+		},
+		{
+			"type": "docker-build",
+			"label": "docker-build: frontend",
+			"dockerBuild": {
+				"tag": "wedding-frontend:develop",
+				"dockerfile": "${workspaceFolder}/wedding-frontend/docker/Dockerfile",
+				"context": "${workspaceFolder}/wedding-frontend",
+			},
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": false
 			}
 		},
 		{
