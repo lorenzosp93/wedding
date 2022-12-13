@@ -25,6 +25,7 @@ releases:
     chart: bitnami/redis
     values:
       - ./values/prod/redis.yaml
+
   - name: ingress-controller
     namespace: default
     chart: ingress-nginx/ingress-nginx

@@ -15,7 +15,6 @@ if [ "$PROCESS_TYPE" = "server" ]; then
             --reload \
             --bind 0.0.0.0:8000 \
             --workers 2 \
-            --worker-class eventlet \
             --log-level DEBUG \
             --access-logfile "-" \
             --error-logfile "-" \
@@ -24,7 +23,6 @@ if [ "$PROCESS_TYPE" = "server" ]; then
         gunicorn \
             --bind 0.0.0.0:8000 \
             --workers 2 \
-            --worker-class eventlet \
             --log-level DEBUG \
             --access-logfile "-" \
             --error-logfile "-" \
