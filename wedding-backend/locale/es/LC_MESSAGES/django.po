@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-12 18:15+0100\n"
+"POT-Creation-Date: 2022-12-13 09:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,6 +95,12 @@ msgstr "Italiano"
 msgid "Spanish"
 msgstr "Español"
 
+#: shared/utils.py:35
+#, fuzzy, python-format
+#| msgid "Here is your login link for "
+msgid "Here is your login link for %(host)s"
+msgstr "Tu enlace de acceso para %(host)s"
+
 #: templates/token_email.html:5
 msgid "Your login link"
 msgstr "Tu enlace de acceso"
@@ -114,10 +120,6 @@ msgid "Alternatively, you can input the following code on the login page."
 msgstr ""
 "Alternativamente, puedes ingresar el siguiente código en la página de inicio "
 "de sesión."
-
-#: wedding/settings.py:238
-msgid "Here is your login link for "
-msgstr "Tu enlace de acceso para "
 
 #, fuzzy
 #~| msgid "Text must be provided"
