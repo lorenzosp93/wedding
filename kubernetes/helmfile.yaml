@@ -47,7 +47,7 @@ releases:
     chart: ./charts/postgres
     values:
       - ./values/stg/postgres.yaml
-  - name: redis-wedding-stg
+  - name: redis-wedding
     namespace: wedding-stg
     chart: bitnami/redis
     values:

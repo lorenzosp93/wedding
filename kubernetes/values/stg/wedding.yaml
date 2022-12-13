@@ -81,13 +81,23 @@ startupProbe:
   initialDelaySeconds: 60
   periodSeconds: 30
   failureThreshold: 5
+  timeoutSeconds: 5
+
+readinessProbe:
+  enabled: true
+  path: /api/health/
+  initialDelaySeconds: 90
+  periodSeconds: 90
+  failureThreshold: 3
+  timeoutSeconds: 5
 
 livenessProbe:
   enabled: true
-  path: /api/health/
-  initialDelaySeconds: 60
-  periodSeconds: 60
+  path: /api/api-auth/login/
+  initialDelaySeconds: 90
+  periodSeconds: 90
   failureThreshold: 3
+  timeoutSeconds: 3
 
 autoscaling:
   enabled: false
@@ -116,5 +126,5 @@ database:
   name: django
 
 redis:
-  host: "redis-wedding-stg-master"
+  host: "redis-wedding-master"
   port: 6379
