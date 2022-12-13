@@ -22,7 +22,7 @@
         <section v-if="activeObject?.picture" id="object-picture" class="w-full">
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
         </section>
-        <section id="object-content" class="my-3 leading-7 tracking-wider prose" v-html="activeObject?.content"></section>
+        <section id="object-content" class="my-3 prose dark:prose-invert" v-html="activeObject?.content"></section>
         <widgets-view v-if="activeObject?.widget?.length && loadWidgets" :active-object="activeObject"></widgets-view>
         <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
     </article>
