@@ -97,8 +97,7 @@ msgid "Spanish"
 msgstr "spagnolo"
 
 #: shared/utils.py:35
-#, fuzzy, python-format
-#| msgid "Here is your login link for "
+#, python-format
 msgid "Here is your login link for %(host)s"
 msgstr "Il tuo link di accesso per %(host)s"
 
