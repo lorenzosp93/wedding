@@ -108,5 +108,5 @@ database:
   name: django
 
 redis:
-  host: "redis-wedding-master"
+  host: "redis-wedding-stg-master"
   port: 6379
