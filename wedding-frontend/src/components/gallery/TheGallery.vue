@@ -27,7 +27,7 @@ v-for="photo in gallery.filter((_,idx)=>{
       <div class="absolute w-fit h-fit top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 p-2 bg-secondary rounded-lg shadow-2xl">
         <img class="max-w-[90vw] max-h-[85vh] rounded-lg" :src="activePhoto.picture" alt="Full-size picture">
       </div>
-      <div class="absolute z-40 w-screen h-screen backdrop-blur-sm" @click="activePhoto = null" ></div>
+      <div class="absolute z-40 w-screen h-screen backdrop-blur-sm cursor-pointer" @click="activePhoto = null" ></div>
     </div>
   </div>
 

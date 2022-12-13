@@ -1,17 +1,19 @@
 <template>
     <section id="object-widgets">
         <Teleport to="#header-title">
-            <a v-if="calendarWidget" :href="`data:text/calendar;base64,${createICalBase64()}`" class="my-auto ml-auto px-2 py-1 shadow-lg rounded-md bg-accent w-fit text-primary flex cursor-pointer">
-                <calendar-icon class="h-6 w-6" />
-                <plus-icon class="h-6 w-6" />
+            <a v-if="calendarWidget" :href="`data:text/calendar;base64,${createICalBase64()}`" class="my-auto ml-auto px-2 py-1 shadow-lg rounded-md bg-accent w-fit text-primary font-semibold flex cursor-pointer whitespace-nowrap">
+                <calendar-icon class="h-6 w-6 my-auto" />
+                <time class="hidden lg:block px-2 my-auto">{{ dateForDisplay('full') }}</time>
+                <time class="hidden md:max-lg:block px-2 my-auto">{{ dateForDisplay('medium') }}</time>
+                <plus-icon class="h-6 w-6 my-auto" />
             </a>
 
         </Teleport>
 
-        <div v-if="mapsWidget" class="bg-pale dark:bg-darkPale dark:text-darkNeutral rounded-md shadow-lg p-3 w-full block md:flex my-3">
+        <div v-if="mapsWidget" class="bg-pale dark:bg-darkPale dark:text-darkNeutral rounded-md shadow-lg p-3 w-full block sm:flex my-3">
             <div id="location-table" class="flex">
                 <map-pin-icon class="h-6 w-6" />
-                <table class="mx-1 mb-auto">
+                <table class="mx-1 mb-auto font-semibold">
                     <tr>{{ mapsWidget?.address1 }}</tr>
                     <tr>{{ mapsWidget?.address2 }}</tr>
                     <tr>{{ mapsWidget?.city }}</tr>
@@ -19,7 +21,7 @@
                     <tr>{{ mapsWidget?.country }}</tr>
                 </table>
             </div>
-            <iframe v-if="mapsWidget?.src" class="w-[90%] my-3 md:my-auto md:w-[40%] max-md:mx-auto md:ml-auto aspect-square rounded-md" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
+            <iframe v-if="mapsWidget?.src" class="w-full mt-3 sm:my-auto sm:w-[40%] max-sm:mx-auto sm:ml-auto aspect-square rounded-md shadow-lg" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
         </div>
     </section>
 </template>
@@ -27,6 +29,7 @@
 <script>
 import { CalendarIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline'
 import { createEvent } from 'ics'
+import i18n from '@/i18n'
 
 export default {
     components: {
@@ -43,7 +46,7 @@ export default {
         },
         mapsWidget () {
             return this.activeObject.widget.find(w => w.type == 'maps')?.content
-        }
+        },
     },
     methods: {
         createICalBase64 () {
@@ -70,6 +73,12 @@ export default {
                 return window.btoa(value)
             });
         },
+        dateForDisplay (format='full') {
+            const start = this.calendarWidget?.start
+            if (!start) {return null};
+            const date = new Date(Date.parse(...start))
+            return date.toLocaleDateString(i18n.global.locale.value, {dateStyle: format})
+        }
     },
 }
 </script>
