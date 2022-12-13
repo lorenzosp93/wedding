@@ -74,9 +74,11 @@ export default {
             });
         },
         dateForDisplay (format='full') {
-            const start = this.calendarWidget?.start
+            let start = this.calendarWidget?.start
+            start = [...start] // shallow copy
             if (!start) {return null};
-            const date = new Date(Date.parse(...start))
+            start[1] -= 1 // months are 0-indexed
+            const date = new Date(...start)
             return date.toLocaleDateString(i18n.global.locale.value, {dateStyle: format})
         }
     },
