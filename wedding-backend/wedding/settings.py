@@ -70,9 +70,13 @@ INSTALLED_APPS = [
     'profile',
     'wedding',
     'storages',
-    'health_check',                             # required
-    'health_check.db',                          # stock Django health checkers
+    'health_check',
+    'health_check.db',
     'health_check.cache',
+    'health_check.storage',
+    'health_check.contrib.celery',
+    'health_check.contrib.celery_ping',
+    'health_check.contrib.redis',
     'rest_framework',
     'rest_framework.authtoken',
     'drfpasswordless',

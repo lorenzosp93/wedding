@@ -75,11 +75,19 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
 
+startupProbe:
+  enabled: true
+  path: /api/health/
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 5
+
 livenessProbe:
   enabled: true
   path: /api/health/
-  initialDelaySeconds: 30
-  periodSeconds: 30
+  initialDelaySeconds: 60
+  periodSeconds: 60
+  failureThreshold: 3
 
 autoscaling:
   enabled: false
