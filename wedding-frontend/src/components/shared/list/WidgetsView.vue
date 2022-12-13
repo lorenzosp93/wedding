@@ -3,8 +3,12 @@
         <Teleport to="#header-title">
             <a v-if="calendarWidget" :href="`data:text/calendar;base64,${createICalBase64()}`" class="my-auto ml-auto px-2 py-1 shadow-lg rounded-md bg-accent w-fit text-primary font-semibold flex cursor-pointer whitespace-nowrap">
                 <calendar-icon class="h-6 w-6 my-auto" />
-                <time class="hidden lg:block px-2 my-auto">{{ dateForDisplay('full') }}</time>
-                <time class="hidden md:max-lg:block px-2 my-auto">{{ dateForDisplay('medium') }}</time>
+                <time class="hidden lg:block px-2 my-auto">
+                    {{ dateForDisplay('full') }}
+                </time>
+                <time class="hidden md:max-lg:block px-2 my-auto">
+                    {{ dateForDisplay('medium') }}
+                </time>
                 <plus-icon class="h-6 w-6 my-auto" />
             </a>
 
@@ -52,6 +56,7 @@ export default {
         createICalBase64 () {
             const event = {
                 start: this.calendarWidget.start, // [2018, 5, 30, 6, 30],
+                startInputType: 'utc', // provide dates in UTC
                 duration: this.calendarWidget?.duration ?? {hours: 2},
                 title: this.activeObject.subject,
                 description: this.calendarWidget?.description,

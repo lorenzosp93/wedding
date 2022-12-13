@@ -22,13 +22,14 @@
         <section v-if="activeObject?.picture" id="object-picture" class="w-full">
             <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
         </section>
-        <section id="object-content" class="my-3 prose dark:prose-invert" v-html="activeObject?.content"></section>
+        <section id="object-content" class="my-3 prose dark:prose-invert lg:prose-lg" v-html="markdown"></section>
         <widgets-view v-if="activeObject?.widget?.length && loadWidgets" :active-object="activeObject"></widgets-view>
         <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
     </article>
 </template>
 
 <script>
+import { marked } from 'marked';
 import QuestionView from './QuestionView.vue';
 import WidgetsView from './WidgetsView.vue';
 import { ArrowLeftIcon, ArrowUpIcon, ArrowDownIcon } from '@heroicons/vue/24/outline';
@@ -60,6 +61,11 @@ export default {
     data () {
         return {
             loadWidgets: false,
+        }
+    },
+    computed: {
+        markdown () {
+            return marked.parse(this.activeObject?.content ?? '')
         }
     },
     mounted () {

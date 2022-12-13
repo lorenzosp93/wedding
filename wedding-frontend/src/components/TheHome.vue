@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col">
     <div class="mx-auto">
-      <div class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-md ">
-        <p class="mx-auto mt-2">{{ $t('thehome.hi', { 'a': profile?.user.first_name }) }}</p>
-        <p class="mx-auto mt-2 font-thin">{{ $t('thehome.weAreDelighted') }}</p>
-        <p class="mx-auto mt-2 font-thin">{{ $t('thehome.withLove') }}</p>
-        <p class="mx-auto mt-2 font-thin">{{ $t('thehome.priscillaAndLorenzo') }}</p>
+      <div class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-md prose lg:prose-lg">
+        <p class="mx-auto">{{ $t('thehome.hi', { 'a': profile?.user.first_name }) }}</p>
+        <p class="mx-auto">{{ $t('thehome.weAreDelighted') }}</p>
+        <p class="mx-auto">{{ $t('thehome.withLove') }} <br>
+        {{ $t('thehome.priscillaAndLorenzo') }}</p>
       </div>
       <count-down :end-date="endDate" class="my-10"></count-down>
       <div id="invite-link" class="flex w-fit mx-auto my-8 bg-accent text-primary px-2 py-1 rounded-md shadow-md">
