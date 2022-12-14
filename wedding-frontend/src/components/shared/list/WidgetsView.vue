@@ -1,12 +1,12 @@
 <template>
-    <section id="object-widgets">
+    <section id="object-widgets" class="px-3">
         <Teleport to="#header-title">
             <a v-if="calendarWidget" :href="`data:text/calendar;base64,${createICalBase64()}`" class="my-auto ml-auto px-2 py-1 shadow-lg rounded-md bg-accent w-fit text-primary font-semibold flex cursor-pointer whitespace-nowrap">
                 <calendar-icon class="h-6 w-6 my-auto" />
-                <time class="hidden lg:block px-2 my-auto">
+                <time class="hidden @xl:block px-2 my-auto">
                     {{ dateForDisplay('full') }}
                 </time>
-                <time class="hidden md:max-lg:block px-2 my-auto">
+                <time class="hidden @md:block @xl:hidden px-2 my-auto">
                     {{ dateForDisplay('medium') }}
                 </time>
                 <plus-icon class="h-6 w-6 my-auto" />
@@ -14,7 +14,7 @@
 
         </Teleport>
 
-        <div v-if="mapsWidget" class="bg-pale dark:bg-darkPale dark:text-darkNeutral rounded-md shadow-lg p-3 w-full block sm:flex my-3">
+        <div v-if="mapsWidget" class="bg-pale dark:bg-darkPale dark:text-darkNeutral rounded-md shadow-lg p-3 w-full @sm:flex my-3">
             <div id="location-table" class="flex">
                 <map-pin-icon class="h-6 md:h-7 w-6 md:w-7" />
                 <table class="mx-1 mb-auto font-semibold">
@@ -25,7 +25,7 @@
                     <tr>{{ mapsWidget?.country }}</tr>
                 </table>
             </div>
-            <iframe v-if="mapsWidget?.src" class="w-full mt-3 sm:my-auto sm:w-[40%] max-sm:mx-auto sm:ml-auto aspect-square rounded-md shadow-lg" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
+            <iframe v-if="mapsWidget?.src" class="w-full mt-3 @sm:my-auto @sm:w-[50%] @md:w-[40%] mx-auto @sm:mx-0 @sm:ml-auto aspect-square rounded-md shadow-lg" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
         </div>
     </section>
 </template>

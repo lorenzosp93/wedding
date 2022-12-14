@@ -9,7 +9,7 @@ module.exports = {
         '102.5': '1.025',
       },
       screens:{
-        'short': { 'raw': '(max-height: 720px)' },
+        'short': { 'raw': '(max-height: 640px)' },
         'tall': { 'raw': '(min-height: 1080px)' },
       }
     },
@@ -32,5 +32,6 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
+    require('@tailwindcss/container-queries'),
   ],
 }

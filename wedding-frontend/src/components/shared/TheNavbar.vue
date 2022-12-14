@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/require-prop-types -->
 <template>
   <nav id="the-navbar" class="px-3 py-3 bg-neutral dark:bg-darkNeutral">
-    <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="container flex flex-wrap justify-between items-center mx-auto max-w-4xl">
       <router-link to="/" class="">
           <img class="h-12 w-48" :src="logo" aria-label="P & L logo">
       </router-link>
