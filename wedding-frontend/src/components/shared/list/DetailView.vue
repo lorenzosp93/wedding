@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-    <article>
-        <header id="object-header" class="flex justify-between items-center border-b-2 mb-8">
+    <article class="max-h-[85vh] md:block absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-4 flex flex-col bg-neutral dark:bg-darkNeutral ">
+        <header id="object-header" class="flex justify-between items-center border-b-2 mb-1">
             <div class="h-6 w-6 mr-2 md:hidden" @click="$emit('hideDetail')">
                 <arrow-left-icon class="h-6 w-6" />
             </div>
@@ -19,13 +19,15 @@
                 </ul>
             </div>
         </header>
-        <section v-if="activeObject?.picture" id="object-picture" class="w-full">
-            <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
-        </section>
-        <section id="object-content" class="my-3 prose dark:prose-invert lg:prose-lg" v-html="markdown"></section>
-        <widgets-view v-if="activeObject?.widget?.length && loadWidgets" :active-object="activeObject"></widgets-view>
-        <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
-    </article>
+        <article class="h-full overflow-y-scroll pt-3">
+            <section v-if="activeObject?.picture" id="object-picture" class="w-full">
+                <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
+            </section>
+            <section id="object-content" class="my-3 prose dark:prose-invert lg:prose-lg" v-html="markdown"></section>
+            <widgets-view v-if="activeObject?.widget?.length && loadWidgets" :active-object="activeObject"></widgets-view>
+            <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
+            </article>
+        </article>
 </template>
 
 <script>

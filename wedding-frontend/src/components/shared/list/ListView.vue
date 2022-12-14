@@ -3,7 +3,7 @@
   <div class=" w-11/12 mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full h-full">
-      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
+      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll max-h-[90vh]">
         <label>
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
@@ -25,7 +25,7 @@
           </li>
         </ul>
       </section>
-      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" class="md:block absolute left-0 z-10 md:relative w-full mx-auto min-h-screen md:w-[60%] lg:w-[65%] px-4 flex flex-col bg-neutral dark:bg-darkNeutral overflow-y-scroll" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
+      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
     </main>
     <push-subscribe></push-subscribe>
   </div> 

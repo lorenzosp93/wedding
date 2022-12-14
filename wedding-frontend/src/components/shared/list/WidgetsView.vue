@@ -16,7 +16,7 @@
 
         <div v-if="mapsWidget" class="bg-pale dark:bg-darkPale dark:text-darkNeutral rounded-md shadow-lg p-3 w-full block sm:flex my-3">
             <div id="location-table" class="flex">
-                <map-pin-icon class="h-6 w-6" />
+                <map-pin-icon class="h-6 md:h-7 w-6 md:w-7" />
                 <table class="mx-1 mb-auto font-semibold">
                     <tr>{{ mapsWidget?.address1 }}</tr>
                     <tr>{{ mapsWidget?.address2 }}</tr>
