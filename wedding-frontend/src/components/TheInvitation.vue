@@ -158,7 +158,6 @@ export default {
           start: 'top top',
           end: 'bottom bottom',
           pin: '#envelopeContainer',
-          pinSpacing: false,
           anticipatePin: 1,
         },
       })
