@@ -11,43 +11,43 @@
         </defs>
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g id="invite" transform="translate(1.661885, 1.729770)">
-                  <text id="Daniel-Cabrera-Uscan" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" letter-spacing="0.00145161749" fill="#1F4045">
-                      <tspan x="135.75" text-anchor="middle" y="55">{{ $t('theinvitation.danielCabreraUscangaAndReginaMatos') }}</tspan>
-                      <tspan x="135.75" text-anchor="middle" y="73">{{ $t('theinvitation.canoCommunicateTheWeddingOfTheirDaughter') }}</tspan>
-                      <tspan x="135.75" text-anchor="middle" y="91">{{ $t('theinvitation.priscillaWith') }}</tspan>
+                  <text id="Daniel-Cabrera-Uscan" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
+                      <tspan x="25%" text-anchor="middle" y="55">{{ $t('theinvitation.danielCabreraUscangaAndReginaMatos') }}</tspan>
+                      <tspan x="25%" text-anchor="middle" y="73">{{ $t('theinvitation.canoCommunicateTheWeddingOfTheirDaughter') }}</tspan>
+                      <tspan x="25%" text-anchor="middle" y="91">{{ $t('theinvitation.priscillaWith') }}</tspan>
                   </text>
-                  <text id="Renato-R.-Spinelli-e" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" letter-spacing="0.00145161749" fill="#1F4045">
-                      <tspan x="407.25" text-anchor="middle" y="55">{{ $t('theinvitation.renatoRSpinelliAndVincenzaAlessio') }}</tspan>
-                      <tspan x="407.25" text-anchor="middle" y="73">{{ $t('theinvitation.ruffoDiCalabriaCommunicateTheWeddingOf') }}</tspan>
-                      <tspan x="407.25" text-anchor="middle" y="91">{{ $t('theinvitation.theirSonLorenzoWith') }}</tspan>
+                  <text id="Renato-R.-Spinelli-e" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
+                      <tspan x="75%" text-anchor="middle" y="55">{{ $t('theinvitation.renatoRSpinelliAndVincenzaAlessio') }}</tspan>
+                      <tspan x="75%" text-anchor="middle" y="73">{{ $t('theinvitation.ruffoDiCalabriaCommunicateTheWeddingOf') }}</tspan>
+                      <tspan x="75%" text-anchor="middle" y="91">{{ $t('theinvitation.theirSonLorenzoWith') }}</tspan>
                   </text>
-                  <text id="Lorenzo-Spinelli" font-family="Tangerine-Regular, Tangerine" font-size="21" font-weight="normal" letter-spacing="0.00169355374" fill="#1F4045">
-                      <tspan x="135.75" text-anchor="middle" y="145">{{ $t('theinvitation.lorenzoSpinelli') }}</tspan>
+                  <text id="Lorenzo-Spinelli" font-family="Tangerine-Regular, Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
+                      <tspan x="25%" text-anchor="middle" y="145">{{ $t('theinvitation.lorenzoSpinelli') }}</tspan>
                   </text>
-                  <text id="Priscilla-Cabrera-Ma" font-family="Tangerine-Regular, Tangerine" font-size="21" font-weight="normal" letter-spacing="0.00169355374" fill="#1F4045">
-                      <tspan x="407.25" text-anchor="middle" y="145">{{ $t('theinvitation.priscillaCabreraMatos') }}</tspan>
+                  <text id="Priscilla-Cabrera-Ma" font-family="Tangerine-Regular, Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
+                      <tspan x="75%" text-anchor="middle" y="145">{{ $t('theinvitation.priscillaCabreraMatos') }}</tspan>
                   </text>
-                  <text id="Domenica,-1-ottobre" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
-                      <tspan x="271.5" text-anchor="middle" y="193">{{ $t('theinvitation.sundayOct1st2023h1630') }}</tspan>
+                  <text id="Domenica,-1-ottobre" font-family="Tangerine-Regular, Tangerine" font-size="16" font-weight="normal" fill="#1F4045">
+                      <tspan x="50%" text-anchor="middle" y="193">{{ $t('theinvitation.sundayOct1st2023h1630') }}</tspan>
                   </text>
-                  <text id="Roma" font-family="Tangerine-Regular, Tangerine" font-size="16" font-weight="normal" letter-spacing="0.00129032666" fill="#1F4045">
-                      <tspan x="271.5" text-anchor="middle" y="244">{{ $t('theinvitation.rome') }}</tspan>
+                  <text id="Roma" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
+                      <tspan x="50%" text-anchor="middle" y="244">{{ $t('theinvitation.rome') }}</tspan>
                   </text>
-                  <text id="Amsterdam,-the-Nethe" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
-                      <tspan x="271.5" text-anchor="middle"  y="310">{{ $t('theinvitation.amsterdamTheNetherlands') }}</tspan>
-                      <tspan x="271.5" text-anchor="middle" y="325">{{ $t('theinvitation.witteDeWithstraat1601') }}</tspan>
+                  <text id="Amsterdam,-the-Nethe" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" fill="#1F4045">
+                      <tspan x="50%" text-anchor="middle"  y="310">{{ $t('theinvitation.amsterdamTheNetherlands') }}</tspan>
+                      <tspan x="50%" text-anchor="middle" y="325">{{ $t('theinvitation.witteDeWithstraat1601') }}</tspan>
                   </text>
-                  <text id="Roma,-Italia-via-Ett" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
-                      <tspan x="470" text-anchor="middle" y="338.5">{{ $t('theinvitation.romeItaly') }}</tspan>
-                      <tspan x="470" text-anchor="middle" y="353">{{ $t('theinvitation.viaEttorePetrolini11') }}</tspan>
+                  <text id="Roma,-Italia-via-Ett" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" fill="#1F4045">
+                      <tspan x="86.5%" text-anchor="middle" y="338.5">{{ $t('theinvitation.romeItaly') }}</tspan>
+                      <tspan x="86.5%" text-anchor="middle" y="353">{{ $t('theinvitation.viaEttorePetrolini11') }}</tspan>
                   </text>
-                  <text id="Puebla,-Messico-Pase" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" letter-spacing="0.00112903583" fill="#1F4045">
-                      <tspan x="73" text-anchor="middle" y="331">{{ $t('theinvitation.pueblaMexico') }}</tspan>
-                      <tspan x="73" text-anchor="middle" y="346">{{ $t('theinvitation.paseoToscana165Cluster') }}</tspan>
-                      <tspan x="73" text-anchor="middle" y="361">{{ $t('theinvitation.888LomasDeAngelopolis') }}</tspan>
+                  <text id="Puebla,-Messico-Pase" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" fill="#1F4045">
+                      <tspan x="13.5%" text-anchor="middle" y="331">{{ $t('theinvitation.pueblaMexico') }}</tspan>
+                      <tspan x="13.5%" text-anchor="middle" y="346">{{ $t('theinvitation.paseoToscana165Cluster') }}</tspan>
+                      <tspan x="13.5%" text-anchor="middle" y="361">{{ $t('theinvitation.888LomasDeAngelopolis') }}</tspan>
                   </text>
-                  <text id="Basilica-dei-Santi-G" font-family="Tangerine-Regular, Tangerine" font-size="21" font-weight="normal" letter-spacing="0.00169355374" fill="#1F4045">
-                      <tspan x="271.5" text-anchor="middle" y="219">{{ $t('theinvitation.basilicaDeiSantiGiovanniEPaoloAlCelio') }}</tspan>
+                  <text id="Basilica-dei-Santi-G" font-family="Tangerine-Regular, Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
+                      <tspan x="50%" text-anchor="middle" y="219">{{ $t('theinvitation.basilicaDeiSantiGiovanniEPaoloAlCelio') }}</tspan>
                   </text>
               </g>
           </g>
