@@ -20,7 +20,7 @@
             </div>
         </header>
         <article class="pt-3 flex-auto overflow-y-scroll">
-            <section v-if="activeObject?.picture" id="object-picture" class="w-full @md:max-w-[60%] float-left px-3 mb-3">
+            <section v-if="activeObject?.picture" id="object-picture" class="w-full @md:max-w-[60%] float-right px-3 mb-3">
                 <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
             </section>
             <section id="object-content" class="my-3 prose dark:prose-invert" v-html="markdown"></section>

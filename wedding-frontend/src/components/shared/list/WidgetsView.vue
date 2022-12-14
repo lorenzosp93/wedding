@@ -15,30 +15,32 @@
         </Teleport>
 
         <div v-if="mapsWidget" class="bg-pale dark:bg-darkPale dark:text-darkNeutral rounded-md shadow-lg p-3 w-full @sm:flex my-3">
-            <div id="location-table" class="flex">
-                <map-pin-icon class="h-6 md:h-7 w-6 md:w-7" />
-                <table class="mx-1 mb-auto font-semibold">
-                    <tr>{{ mapsWidget?.address1 }}</tr>
+            <div id="location-table" class="flex @sm:pl-3">
+                <table class="mx-1 mb-auto">
+                    <tr>
+                        <map-icon class="h-6 w-6 float-left mr-1" />
+                        {{ mapsWidget?.address1 }}
+                    </tr>
                     <tr>{{ mapsWidget?.address2 }}</tr>
                     <tr>{{ mapsWidget?.city }}</tr>
                     <tr>{{ mapsWidget?.postalCode }}</tr>
                     <tr>{{ mapsWidget?.country }}</tr>
                 </table>
             </div>
-            <iframe v-if="mapsWidget?.src" class="w-full mt-3 @sm:my-auto @sm:w-[50%] @md:w-[40%] mx-auto @sm:mx-0 @sm:ml-auto aspect-square rounded-md shadow-lg" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
+            <iframe v-if="mapsWidget?.src" class="w-full mt-3 @sm:my-auto @sm:w-[50%] @md:w-[40%] mx-auto @sm:mx-0 @sm:mr-auto @sm:order-first aspect-square rounded-md shadow-lg" :src="mapsWidget.src" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
         </div>
     </section>
 </template>
 
 <script>
-import { CalendarIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline'
+import { CalendarIcon, MapIcon, PlusIcon } from '@heroicons/vue/24/outline'
 import { createEvent } from 'ics'
 import i18n from '@/i18n'
 
 export default {
     components: {
         CalendarIcon,
-        MapPinIcon,
+        MapIcon,
         PlusIcon,
     },
     props: {
