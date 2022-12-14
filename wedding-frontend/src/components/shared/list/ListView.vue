@@ -3,7 +3,7 @@
   <div class=" w-11/12 mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full">
-      <section id="list-view" class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh] overflow-y-scroll">
+      <section id="list-view" class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full max-md:max-h-[75vh] max-h-[82.5vh] short:max-h-[70vh] overflow-y-scroll">
         <label>
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>

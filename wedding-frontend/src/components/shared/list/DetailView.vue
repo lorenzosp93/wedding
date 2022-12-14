@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-    <article class="md:block absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh] overflow-y-scroll">
+    <article class="md:block absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-md:max-h-[75vh] max-h-[82.5vh] short:max-h-[70vh] overflow-y-scroll">
         <header id="object-header" class="flex justify-between items-center border-b-2 mb-1">
             <div class="h-6 w-6 mr-2 md:hidden" @click="$emit('hideDetail')">
                 <arrow-left-icon class="h-6 w-6" />
