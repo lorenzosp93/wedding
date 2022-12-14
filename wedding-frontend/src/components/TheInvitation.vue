@@ -145,7 +145,7 @@ export default {
       this.cleanup();
 
       this.smoother = ScrollSmoother.create({
-        smoothTouch: 0.1,
+        // smoothTouch: 0.1,
         ignoreMobileResize: true,
         normalizeScroll: true,
         content: '#main',
