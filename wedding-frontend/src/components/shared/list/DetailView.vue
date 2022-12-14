@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-    <article class="md:block absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-4 flex flex-col bg-neutral dark:bg-darkNeutral max-h-[82.5vh] short:max-h-[65vh]">
-        <header id="object-header" class="flex flex-initial justify-between items-center border-b-2 mb-1">
+    <article class="md:block absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh] overflow-y-scroll">
+        <header id="object-header" class="flex justify-between items-center border-b-2 mb-1">
             <div class="h-6 w-6 mr-2 md:hidden" @click="$emit('hideDetail')">
                 <arrow-left-icon class="h-6 w-6" />
             </div>
@@ -19,7 +19,7 @@
                 </ul>
             </div>
         </header>
-        <article class="max-h-full flex-auto overflow-y-scroll pt-3">
+        <article class="pt-3 overflow-y-scroll">
             <section v-if="activeObject?.picture" id="object-picture" class="w-full px-3">
                 <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
             </section>
