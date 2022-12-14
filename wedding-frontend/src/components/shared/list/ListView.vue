@@ -2,12 +2,12 @@
 <template>
   <div class=" w-11/12 mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
-    <main v-show="!loading" class="flex w-full h-full">
-      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll max-h-[90vh]">
+    <main v-show="!loading" class="flex w-full">
+      <section id="list-view" class="flex flex-col w-full py-5 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[65vh]">
         <label>
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
-        <ul class="mt-6">
+        <ul class="mt-1  overflow-y-scroll">
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer" @click="setActive(idx)">
                 <div class="flex justify-between items-center">
                   <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
