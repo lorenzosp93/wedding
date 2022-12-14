@@ -13,7 +13,7 @@
                   <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
                   <div class="w-full mr-5 pl-5 text-right">
                     <h3 class=" text-lg font-semibold">{{ obj?.subject }}</h3>
-                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 40) }}</div>
+                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ listItemContent(obj?.content, 40) }}</div>
                   </div>
                 </div>
             </li>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { marked } from 'marked';
 import LoadingView from '@/components/shared/LoadingView.vue';
 import PushSubscribe from '@/components/shared/PushSubscribe.vue';
 import DetailView from './DetailView.vue';
@@ -127,6 +128,9 @@ emits: ['submitResponse', 'deleteResponses'],
       } else {
           return value;
       }
+    },
+    listItemContent(content, chars=40) {
+      return content ? this.removeHtml(marked.parse(this.truncate(content, chars))) : null
     },
     hideDetail () {
       this.viewDetail = false;
