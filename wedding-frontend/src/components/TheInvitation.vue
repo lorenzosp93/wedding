@@ -3,13 +3,13 @@
   <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden">
     <div id="invitation-content" class="flex ">
       <loading-view v-if="!loaded"></loading-view>
-      <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-40 sm:-top-24 px-1">
+      <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-20 sm:-top-24 short:-top-28 px-1">
         <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-0 px-0.5" @load="loadImage('base')">
         <img id="letterBase" :src="images.find(img => img.name == 'letterBase').url" alt="Invitation base" class="max-w-[95%] max-h-[95%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[37%] z-10 px-1" @load="loadImage('letterBase')">
         <svg class="z-10 w-full max-h-full p-3 absolute left-1/2 -translate-x-1/2 top-[33%]" viewBox="0 0 543 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
         </defs>
-        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Page-1">
           <g id="invite" transform="translate(1.661885, 1.729770)">
                   <text id="Daniel-Cabrera-Uscan" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
                       <tspan x="25%" text-anchor="middle" y="55">{{ $t('theinvitation.danielCabreraUscangaAndReginaMatos') }}</tspan>
