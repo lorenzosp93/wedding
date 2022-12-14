@@ -1,7 +1,7 @@
 <template>
 <div>
-  <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden">
-    <div id="invitation-content" class="flex ">
+  <div id="the-invitation" :class="{'h-[200vh]': loaded}" class="overflow-y-hidden  bg-neutral dark:bg-darkNeutral">
+    <div id="invitation-content" class="flex">
       <loading-view v-if="!loaded"></loading-view>
       <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-20 sm:-top-24 short:-top-28 px-1">
         <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-0 px-0.5" @load="loadImage('base')">
@@ -11,43 +11,35 @@
         </defs>
         <g id="Page-1">
           <g id="invite" transform="translate(1.661885, 1.729770)">
-                  <text id="Daniel-Cabrera-Uscan" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
+                  <text font-family="Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
                       <tspan x="25%" text-anchor="middle" y="55">{{ $t('theinvitation.danielCabreraUscangaAndReginaMatos') }}</tspan>
                       <tspan x="25%" text-anchor="middle" y="73">{{ $t('theinvitation.canoCommunicateTheWeddingOfTheirDaughter') }}</tspan>
                       <tspan x="25%" text-anchor="middle" y="91">{{ $t('theinvitation.priscillaWith') }}</tspan>
-                  </text>
-                  <text id="Renato-R.-Spinelli-e" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
                       <tspan x="75%" text-anchor="middle" y="55">{{ $t('theinvitation.renatoRSpinelliAndVincenzaAlessio') }}</tspan>
                       <tspan x="75%" text-anchor="middle" y="73">{{ $t('theinvitation.ruffoDiCalabriaCommunicateTheWeddingOf') }}</tspan>
                       <tspan x="75%" text-anchor="middle" y="91">{{ $t('theinvitation.theirSonLorenzoWith') }}</tspan>
                   </text>
-                  <text id="Lorenzo-Spinelli" font-family="Tangerine-Regular, Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
+                  <text font-family="Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
                       <tspan x="25%" text-anchor="middle" y="145">{{ $t('theinvitation.lorenzoSpinelli') }}</tspan>
-                  </text>
-                  <text id="Priscilla-Cabrera-Ma" font-family="Tangerine-Regular, Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
                       <tspan x="75%" text-anchor="middle" y="145">{{ $t('theinvitation.priscillaCabreraMatos') }}</tspan>
                   </text>
-                  <text id="Domenica,-1-ottobre" font-family="Tangerine-Regular, Tangerine" font-size="16" font-weight="normal" fill="#1F4045">
+                  <text font-family="Tangerine" font-size="16" font-weight="normal" fill="#1F4045">
                       <tspan x="50%" text-anchor="middle" y="193">{{ $t('theinvitation.sundayOct1st2023h1630') }}</tspan>
                   </text>
-                  <text id="Roma" font-family="Tangerine-Regular, Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
+                  <text font-family="Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
+                      <tspan x="50%" text-anchor="middle" y="219">{{ $t('theinvitation.basilicaDeiSantiGiovanniEPaoloAlCelio') }}</tspan>
+                  </text>
+                  <text font-family="Tangerine" font-size="18" font-weight="normal" fill="#1F4045">
                       <tspan x="50%" text-anchor="middle" y="244">{{ $t('theinvitation.rome') }}</tspan>
                   </text>
-                  <text id="Amsterdam,-the-Nethe" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" fill="#1F4045">
+                  <text font-family="Tangerine" font-size="14" font-weight="normal" fill="#1F4045">
                       <tspan x="50%" text-anchor="middle"  y="310">{{ $t('theinvitation.amsterdamTheNetherlands') }}</tspan>
                       <tspan x="50%" text-anchor="middle" y="325">{{ $t('theinvitation.witteDeWithstraat1601') }}</tspan>
-                  </text>
-                  <text id="Roma,-Italia-via-Ett" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" fill="#1F4045">
                       <tspan x="86.5%" text-anchor="middle" y="338.5">{{ $t('theinvitation.romeItaly') }}</tspan>
                       <tspan x="86.5%" text-anchor="middle" y="353">{{ $t('theinvitation.viaEttorePetrolini11') }}</tspan>
-                  </text>
-                  <text id="Puebla,-Messico-Pase" font-family="Tangerine-Regular, Tangerine" font-size="14" font-weight="normal" fill="#1F4045">
                       <tspan x="13.5%" text-anchor="middle" y="331">{{ $t('theinvitation.pueblaMexico') }}</tspan>
                       <tspan x="13.5%" text-anchor="middle" y="346">{{ $t('theinvitation.paseoToscana165Cluster') }}</tspan>
                       <tspan x="13.5%" text-anchor="middle" y="361">{{ $t('theinvitation.888LomasDeAngelopolis') }}</tspan>
-                  </text>
-                  <text id="Basilica-dei-Santi-G" font-family="Tangerine-Regular, Tangerine" font-size="23" font-weight="normal" fill="#1F4045">
-                      <tspan x="50%" text-anchor="middle" y="219">{{ $t('theinvitation.basilicaDeiSantiGiovanniEPaoloAlCelio') }}</tspan>
                   </text>
               </g>
           </g>
@@ -145,7 +137,6 @@ export default {
       this.cleanup();
 
       this.smoother = ScrollSmoother.create({
-        // smoothTouch: 0.1,
         ignoreMobileResize: true,
         normalizeScroll: true,
         content: '#main',
