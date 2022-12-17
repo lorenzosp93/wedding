@@ -74,6 +74,7 @@ class Photo(HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
     private = models.BooleanField(default=False,)
     type = models.IntegerField(choices=PHOTO_TYPES, default=0)
+    caption = models.TextField(null=True, blank=True,)    
 
     def __str__(self) -> str:
         return f"{self.picture.name} - {self.type}"
