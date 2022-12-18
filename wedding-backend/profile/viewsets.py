@@ -1,4 +1,6 @@
+from typing import Type
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.serializers import ModelSerializer
 from django.db.models import QuerySet
 from .serializers import (
     UserProfileWriteSerializer, UserProfileSerializer, SubscriptionSerializer
@@ -18,17 +20,17 @@ class UserProfileViewset(ModelViewSet):
 
     """
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> Type[ModelSerializer]:
         if self.action in WRITE_ACTIONS:
             return UserProfileWriteSerializer
         return UserProfileSerializer
 
     def get_queryset(self) -> QuerySet[UserProfile]:
-        return UserProfile.objects.filter(user__id=self.request.user.id)
+        return UserProfile.objects.filter(user__pk=self.request.user.pk)
 
 
 class SubscriptionViewset(ModelViewSet):
     serializer_class = SubscriptionSerializer
 
     def get_queryset(self) -> QuerySet[Subscription]:
-        return Subscription.objects.filter(user_id=self.request.user.id)
+        return Subscription.objects.filter(user_pk=self.request.user.pk)

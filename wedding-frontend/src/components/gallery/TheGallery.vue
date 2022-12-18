@@ -4,8 +4,8 @@
       <div v-for="col in 4" :key="col" class="flex-[100%] md:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit">
         <div v-for="photo in gallery.filter((_,idx)=>{ return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4) == col - 1 })" :key="photo.id" class="mx-auto w-full cursor-pointer my-3 rounded-md overflow-hidden shadow-lg" @click="activePhoto = photo">
           <img :src="photo.thumbnail" :alt="`Picture ${photo.id} thumbnail`" class="w-full">
-          <div v-if="photo?.caption" class="bg-neutral dark:bg-darkNeutral px-3 py-3">
-            {{ photo.caption }}
+          <div v-if="photo?.content" class="bg-neutral dark:bg-darkNeutral px-3 py-3">
+            {{ photo.content }}
           </div>
         </div>
       </div>

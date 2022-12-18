@@ -35,4 +35,4 @@ class PhotoViewSet(
     pagination_class = LimitOffsetPagination
 
     def get_queryset(self) -> QuerySet[Photo]:
-        return Photo.objects.filter(Q(tag__id=self.request.user.id) | Q(private=False))
+        return Photo.objects.filter(Q(tag__pk=self.request.user.pk) | Q(private=False))

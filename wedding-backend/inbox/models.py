@@ -14,7 +14,7 @@ from shared.advanced_models import (
 
 
 class HasPrerequisiteOptions(HasUserList):
-    option_pre = models.ManyToManyField(
+    option_pre: models.Field = models.ManyToManyField(
         'Option', blank=True
     )
 
@@ -50,27 +50,33 @@ class Message(TriggersNotifications,  HasPrerequisiteOptions, HasAudience, Seria
 
 class Question(Serializable, HasSubject, HasContent):
     "Model to define questions for users"
-    message = models.ForeignKey(
+    message: models.Field = models.ForeignKey(
         Message,
         on_delete=models.CASCADE,
         related_name='questions',
     )
-    multi_select = models.BooleanField(default=False)
-    free_text = models.BooleanField(default=False)
-    mandatory = models.BooleanField(default=True)
+    multi_select: models.Field = models.BooleanField(default=False)
+    free_text: models.Field  = models.BooleanField(default=False)
+    mandatory: models.Field  = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return f"{self.message} - {self.subject}"
+
+    class Meta:
+        ...
 
 
 class Option(Serializable, HasContent):
     """Model to define selectable options for questions - 'Other' 
     option is omitted for SingleSelectOther or MultiSelectOther questions"""
-    question = models.ForeignKey(
+    question: models.Field  = models.ForeignKey(
         Question,
         on_delete=models.CASCADE,
         related_name='options',
     )
+
+    class Meta:
+        ...
 
     def __str__(self) -> str:
         return f"{self.question} - {self.content}"
@@ -78,21 +84,21 @@ class Option(Serializable, HasContent):
 
 class Response(Serializable, TimeStampable):
     "Model to capture the response from a specific user"
-    question = models.ForeignKey(
+    question: models.Field  = models.ForeignKey(
         Question,
         on_delete=models.CASCADE,
         related_name='responses'
     )
-    option = models.ManyToManyField(
+    option: models.Field  = models.ManyToManyField(
         Option,
         blank=True,
     )
-    text = models.TextField(null=True, blank=True)
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    deleted_at = models.DateTimeField(default=None, null=True, blank=True)
+    text: models.Field  = models.TextField(null=True, blank=True)
+    user: models.Field  = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    active: models.Field  = models.BooleanField(default=True)
+    deleted_at: models.Field  = models.DateTimeField(default=None, null=True, blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.user}'s reply to {self.question.subject}"
 
     class Meta:

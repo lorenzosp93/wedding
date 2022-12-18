@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from shared.models import (
-    HasPicture, HasContent, HasSubject, ContentString,
+    HasPicture, HasContent, HasSubject,
 )
 from shared.advanced_models import (
     TriggersNotifications, HasAudience,
@@ -37,28 +37,30 @@ WIDGET_TYPES = (
 
 
 class Information(TriggersNotifications, HasAudience, HasPicture, HasContent, HasSubject):
-    type = models.IntegerField(choices=INFO_TYPES,)
+    type: models.Field = models.IntegerField(choices=INFO_TYPES,)
 
     def __str__(self) -> str:
         return f"{self.subject}"
+    
+    class Meta:
+        ...
 
 
-def validate_json(value):
+def validate_json(value: str) -> None:
     try:
         json.loads(value)
     except ValueError:
         raise ValidationError("Please enter a valid JSON string")
-    return value
 
 
 class InformationWidget(models.Model):
-    info = models.ForeignKey(
+    info: models.Field = models.ForeignKey(
         Information,
         on_delete=models.CASCADE,
         related_name='widget'
     )
-    type = models.IntegerField(choices=WIDGET_TYPES,)
-    content = models.TextField(validators=[validate_json])
+    type: models.Field = models.IntegerField(choices=WIDGET_TYPES,)
+    content: models.Field = models.TextField(validators=[validate_json])
 
     def get_content_dict(self) -> dict:
         return json.loads(self.content)
@@ -70,11 +72,10 @@ class InformationWidget(models.Model):
         unique_together = ['info', 'type']
 
 
-class Photo(HasPicture):
-    tag = models.ManyToManyField(User, blank=True,)
-    private = models.BooleanField(default=False,)
-    type = models.IntegerField(choices=PHOTO_TYPES, default=0)
-    caption = models.ForeignKey(ContentString, on_delete=models.SET_NULL, null=True, blank=True,)    
+class Photo(HasPicture, HasContent):
+    tag: models.Field = models.ManyToManyField(User, blank=True,)
+    private: models.Field = models.BooleanField(default=False,)
+    type: models.Field  = models.IntegerField(choices=PHOTO_TYPES, default=0)
 
     def __str__(self) -> str:
         return f"{self.picture.name} - {self.type}"
