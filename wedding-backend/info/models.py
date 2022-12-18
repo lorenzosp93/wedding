@@ -60,13 +60,17 @@ class InformationWidget(models.Model):
         related_name='widget'
     )
     type: models.Field = models.IntegerField(choices=WIDGET_TYPES,)
-    content: models.Field = models.TextField(validators=[validate_json])
+    content: models.Field = models.TextField(validators=[validate_json,])
 
     def get_content_dict(self) -> dict:
         return json.loads(self.content)
 
     def __str__(self) -> str:
         return f"{self.type} - {self.info}"
+    
+    def save(self, **kwargs) -> None:
+        self.full_clean()
+        return super().save(**kwargs)
 
     class Meta:
         unique_together = ['info', 'type']

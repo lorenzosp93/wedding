@@ -1,5 +1,4 @@
 "Define abstract models to be used in all apps"
-from typing import Self
 import uuid
 from PIL import Image
 from django.db import models
@@ -207,7 +206,8 @@ class HasPicture(models.Model):
 
     def save(self, **kwargs) -> None:
         if not self.pk and self.picture:
-            super(HasPicture, self).save()
+            super(HasPicture, self).save(**kwargs)
+            kwargs.pop('force_insert')
             self.save_thumb()
         return super(HasPicture, self).save(**kwargs)
 
