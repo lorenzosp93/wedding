@@ -1,6 +1,6 @@
 from typing import Type
 from django.db.models import Q, F
-from django.http import HttpRequest
+from django.http.request import HttpRequest
 from django.http.response import HttpResponseBase
 from rest_framework.request import Request
 from django.db.models import QuerySet
@@ -24,9 +24,9 @@ class CachedViewsetMixin(ViewSet):
     def dispatch(self, request: HttpRequest, *args: list, **kwargs: dict) -> HttpResponseBase:
         return super().dispatch(request, *args, **kwargs)
 
-class BaseGetQuerysetMixin:
+class BaseGetQuerysetMixin(ViewSet):
     serializer_class: Type[ModelSerializer]
-    request: Request | HttpRequest
+
     def get_queryset(self) -> QuerySet:
         return self.serializer_class.Meta.model.objects.all()
 

@@ -32,7 +32,7 @@ class ResponseViewSet(ModelViewSet):
     serializer_class = ResponseSerializer
 
     def get_queryset(self) -> QuerySet[Response]:
-        return Response.objects.filter(user__id=self.request.user.id)
+        return Response.objects.filter(user__pk=self.request.user.pk)
 
     def perform_destroy(self, instance: Response) -> None:
         instance.active = False
