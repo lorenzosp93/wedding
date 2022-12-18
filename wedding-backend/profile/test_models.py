@@ -34,16 +34,17 @@ class TestProfileModels(TestCase):
         )
         self.assertTrue(created)
         self.assertIsInstance(self.plus_one, get_user_model())
-        self.assertEqual(self.plus_one.email, 'someother@email.com')
-        self.assertEqual(
-            self.plus_one.profile,
-            UserProfile.objects.get(user=self.plus_one)
-        )
-        self.assertEqual(
-            self.plus_one.profile.language,
-            self.profile.language
-        )
-        self.assertEqual(
-            self.plus_one.profile.parent,
-            self.user
-        )
+        if self.plus_one:
+            self.assertEqual(self.plus_one.email, 'someother@email.com')
+            self.assertEqual(
+                self.plus_one.profile,
+                UserProfile.objects.get(user=self.plus_one)
+            )
+            self.assertEqual(
+                self.plus_one.profile.language,
+                self.profile.language
+            )
+            self.assertEqual(
+                self.plus_one.profile.parent,
+                self.user
+            )
