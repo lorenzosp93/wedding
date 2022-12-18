@@ -33,7 +33,7 @@ def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwa
             # activate user language
             with override(user.profile.language):  # type: ignore
                 email_subject: str = _('Here is your login link for %(host)s') % {
-                    'host': HOST
+                    'host': HOST,
                 }
                 # Inject context if user specifies.
                 context = inject_template_context({
