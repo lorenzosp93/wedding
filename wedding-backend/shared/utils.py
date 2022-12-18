@@ -1,5 +1,5 @@
 import logging
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.template import loader
 from django.utils.translation import override, gettext_lazy as _
 from django.urls import reverse
@@ -12,7 +12,7 @@ from wedding.tasks import send_email
 logger = logging.getLogger(__name__)
 
 
-def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwargs) -> bool:
+def send_email_with_callback_token(user: AbstractUser, email_token: CallbackToken, **kwargs: str) -> bool:
     """
     Sends a Email to user.email.
 
@@ -33,7 +33,7 @@ def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwa
             # activate user language
             with override(user.profile.language):  # type: ignore
                 email_subject: str = _('Here is your login link for %(host)s') % {
-                    'host': HOST
+                    'host': HOST,
                 }
                 # Inject context if user specifies.
                 context = inject_template_context({
@@ -43,7 +43,6 @@ def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwa
                     'site_name': BACKEND_HOST,
                 })
                 html_message = loader.render_to_string(email_html, context,)
-
             send_email.delay(
                 recipient_list=[email],
                 subject=email_subject,
@@ -60,6 +59,6 @@ def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwa
     except Exception as e:
         logger.debug("Failed to send token email to user: %d."
                      "Possibly no email on user object. Email entered was %s" %
-                     (user.id, user.email))  # type: ignore
+                     (user.pk, user.email))  # type: ignore
         logger.debug(e)
         return False

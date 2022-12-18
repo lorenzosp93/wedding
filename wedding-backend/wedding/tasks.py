@@ -1,13 +1,23 @@
 import json
-from celery import shared_task
+from smtplib import SMTPConnectError, SMTPServerDisconnected
 from django.apps import apps
 from django.core.mail import send_mail
 from pywebpush import webpush, WebPushException
 from wedding.settings import WEBPUSH_SETTINGS, EMAIL_TO
 from profile.serializers import SubscriptionSerializer
+from wedding.celery import app
 
 
-@shared_task
+@app.task(
+    ignore_result=True,
+    autoretry_for=(
+        SMTPConnectError,
+        SMTPServerDisconnected,
+    ),
+    retry_kwargs={'max_retries': 3},
+    retry_backoff=True,
+    default_retry_delay=15
+)
 def send_email(
     recipient_list: list[str],
     subject: str,
@@ -24,7 +34,9 @@ def send_email(
     )
 
 
-@shared_task
+@app.task(
+    ignore_result=True,
+)
 def send_notifications_for_subscriptions(subscriptions_list: list[str], payload: dict) -> None:
     subscriptions = apps.get_model(
         'profile', 'Subscription').objects.filter(pk__in=subscriptions_list)

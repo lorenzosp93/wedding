@@ -1,6 +1,8 @@
+from django.http import HttpRequest
+from django.db.models import Model
 from rest_framework.serializers import (
     ModelSerializer, CharField, SerializerMethodField,
-    Serializer, EmailField,
+    Serializer, EmailField, BaseSerializer
 )
 from shared.serializers import (
     AddressSerializer,
@@ -14,24 +16,26 @@ from .models import (
 from shared.models import get_translated_content
 
 
-def translated_string(serializer, obj, field: str) -> str | None:
-    profile = UserProfile.objects.get(
-        user__id=serializer.context.get('request').user.id)
-    content = getattr(obj, field)
-    if content:
-        return get_translated_content(content, profile.language)
+def translated_string(serializer: BaseSerializer, obj: Model, field: str) -> str | None:
+    request: HttpRequest | None = serializer.context.get('request')
+    if request:
+        profile = UserProfile.objects.get(
+            user__pk=request.user.pk)
+        content = getattr(obj, field)
+        if content:
+            return get_translated_content(content, profile.language)
     return None
 
 
 class TranslationContentMixin(ModelSerializer):
-    def translated_content(self, obj) -> str | None:
+    def translated_content(self, obj: Model) -> str | None:
         return translated_string(self, obj, 'content')
 
     content = SerializerMethodField('translated_content')
 
 
 class TranslationSubjectMixin(ModelSerializer):
-    def translated_subject(self, obj) -> str | None:
+    def translated_subject(self, obj: Model) -> str | None:
         return translated_string(self, obj, 'subject')
 
     subject = SerializerMethodField('translated_subject')
@@ -87,10 +91,13 @@ class SubscriptionSerializer(ModelSerializer):
         model = Subscription
         fields = ['endpoint', 'keys']
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict) -> Subscription | None:
         keys_data = validated_data.pop('keys')
-        user = self.context.get('request').user
-        keys = Keys.objects.create(**keys_data)
-        subscription = Subscription.objects.create(
-            user=user, keys=keys, **validated_data)
-        return subscription
+        request: HttpRequest | None = self.context.get('request')
+        if request:
+            user = request.user
+            keys = Keys.objects.create(**keys_data)
+            subscription = Subscription.objects.create(
+                user=user, keys=keys, **validated_data)
+            return subscription
+        return None

@@ -19,7 +19,7 @@ from profile.models import UserProfile
 
 class TestInboxViewsets(TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.user = get_user_model().objects.create(username='testuser')
         UserProfile.objects.create(user=self.user)
         self.message = Message.objects.create(
@@ -38,14 +38,14 @@ class TestInboxViewsets(TestCase):
         self.request = self.factory.get(reverse('inbox:message-list'))
         force_authenticate(self.request, self.user)
 
-    def test_queryset_audience_all(self):
+    def test_queryset_audience_all(self) -> None:
         response = MessageViewSet.as_view({'get': 'list'})(self.request)
         serialized_obj = MessageSerializer(
             context={'request': self.request}
         ).to_representation(self.message)
         self.assertIn(serialized_obj, response.data)
 
-    def test_queryset_audience_not_in(self):
+    def test_queryset_audience_not_in(self) -> None:
         new_message = Message.objects.create(
             subject=ContentString.objects.create(value='2'),
             audience=15
@@ -62,7 +62,7 @@ class TestInboxViewsets(TestCase):
         new_response = MessageViewSet.as_view({'get': 'list'})(new_request)
         self.assertIn(serialized_obj, new_response.data)
 
-    def test_prerequisite_message(self):
+    def test_prerequisite_message(self) -> None:
         response = Response.objects.create(
             question=self.question,
             user=self.user,

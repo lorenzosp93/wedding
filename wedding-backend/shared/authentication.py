@@ -2,12 +2,13 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import AuthenticationFailed
 
 
-def is_token_expired(token):
+def is_token_expired(token: Token) -> bool:
     min_age = timezone.now() - timedelta(
         seconds=settings.TOKEN_EXPIRED_AFTER_SECONDS)
     expired = token.created < min_age
@@ -26,7 +27,7 @@ class ExpiringTokenAuthentication(TokenAuthentication):
     https://stackoverflow.com/questions/14567586
     """
 
-    def authenticate_credentials(self, key):
+    def authenticate_credentials(self, key: str) -> tuple[AbstractBaseUser, Token]:
         try:
             token = Token.objects.get(key=key)
         except Token.DoesNotExist:

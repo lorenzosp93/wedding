@@ -1,4 +1,6 @@
 "Define abstract models to be used in all apps"
+from io import BytesIO
+import os
 import uuid
 from PIL import Image
 from django.db import models
@@ -6,8 +8,10 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.html import strip_tags
-from wedding.settings import AUTH_USER_MODEL
+from wedding.settings import AUTH_USER_MODEL, MEDIA_URL, BASE_DIR
+
 
 THUMBNAIL_SIZE = 640, 640
 I18N = (
@@ -19,17 +23,17 @@ I18N = (
 
 class Address(models.Model):
     "Model to capture an address from a user"
-    address1 = models.TextField(max_length=128)
-    address2 = models.TextField(max_length=128, null=True, blank=True)
-    city = models.CharField(max_length=20)
-    postal_code = models.CharField(max_length=10)
-    province_or_state = models.CharField(max_length=10, null=True, blank=True)
-    country = models.CharField(max_length=20)
+    address1: models.Field = models.TextField(max_length=128)
+    address2: models.Field  = models.TextField(max_length=128, null=True, blank=True)
+    city: models.Field  = models.CharField(max_length=20)
+    postal_code: models.Field  = models.CharField(max_length=10)
+    province_or_state: models.Field  = models.CharField(max_length=10, null=True, blank=True)
+    country: models.Field  = models.CharField(max_length=20)
 
 
 class Serializable(models.Model):
     "Abstract model to define an uuid based id field"
-    uuid = models.UUIDField(
+    uuid: models.Field  = models.UUIDField(
         primary_key=True,
         editable=False,
         default=uuid.uuid4,
@@ -41,10 +45,10 @@ class Serializable(models.Model):
 
 class Named(models.Model):
     "Abstract model to define names and slug behavior"
-    name = models.CharField(max_length=90, unique=True)
-    slug = models.SlugField(max_length=100, editable=False)
+    name: models.Field  = models.CharField(max_length=90, unique=True)
+    slug: models.Field  = models.SlugField(max_length=100, editable=False)
 
-    def save(self, **kwargs):  # pylint: disable=W0221
+    def save(self, **kwargs) -> None:
         "Override save method to create slug from name"
         if not self.slug:
             self.slug = slugify(self.name)
@@ -59,12 +63,12 @@ class Named(models.Model):
 
 class TimeStampable(models.Model):
     "Abstract model to define timestamps for the entries"
-    created_at = models.DateTimeField(
+    created_at: models.Field = models.DateTimeField(
         verbose_name="Created date",
         auto_now_add=True,
         editable=False,
     )
-    modified_at = models.DateTimeField(
+    modified_at: models.Field  = models.DateTimeField(
         verbose_name="Last modified date",
         auto_now=True,
         editable=False,
@@ -77,10 +81,10 @@ class TimeStampable(models.Model):
 
 class Datable(models.Model):
     "Abstract model to define dates for the entries"
-    start_date = models.DateTimeField(
+    start_date: models.Field = models.DateTimeField(
         verbose_name="Start date"
     )
-    end_date = models.DateTimeField(
+    end_date: models.Field  = models.DateTimeField(
         verbose_name="End date",
         blank=True,
         null=True,
@@ -108,18 +112,18 @@ class Datable(models.Model):
 
 
 class Location(Named,):
-    url = models.URLField(blank=True, null=True)
-    latitude = models.DecimalField(
+    url: models.Field  = models.URLField(blank=True, null=True)
+    latitude: models.Field  = models.DecimalField(
         max_digits=17, decimal_places=15, blank=True, null=True)
-    longitude = models.DecimalField(
+    longitude: models.Field  = models.DecimalField(
         max_digits=17, decimal_places=15, blank=True, null=True)
-    address = models.ForeignKey(
+    address: models.Field  = models.ForeignKey(
         Address, on_delete=models.SET_NULL, blank=True, null=True)
 
 
 class Localizable(models.Model):
     "Abstract model to define locations"
-    location = models.ForeignKey(
+    location: models.Field  = models.ForeignKey(
         Location,
         on_delete=models.SET_NULL,
         null=True,
@@ -132,7 +136,7 @@ class Localizable(models.Model):
 
 class Described(models.Model):
     "Abstract model to define descriptions"
-    description = models.TextField(
+    description: models.Field  = models.TextField(
         blank=True,
         null=True,
     )
@@ -143,15 +147,18 @@ class Described(models.Model):
 
 class Attachment(Named, Serializable):
     "Concrete model to define attachments"
-    file = models.FileField(
+    file: models.Field  = models.FileField(
         upload_to='attachments/',
         verbose_name="File",
     )
 
+    class Meta:
+        ...
+
 
 class Attachable(models.Model):
     "Abstract model to allow attachments"
-    attachments = models.ManyToManyField(
+    attachments: models.Field  = models.ManyToManyField(
         Attachment,
         verbose_name="attachment",
         related_name="%(app_label)s_%(class)s_related",
@@ -165,8 +172,8 @@ class Attachable(models.Model):
 
 class Authorable(models.Model):
     "Abstract model to describe the author"
-    active = models.BooleanField(default=True)
-    created_by = models.ForeignKey(
+    active: models.Field  = models.BooleanField(default=True)
+    created_by: models.Field  = models.ForeignKey(
         AUTH_USER_MODEL,
         verbose_name="Created by",
         on_delete=models.CASCADE,
@@ -174,7 +181,7 @@ class Authorable(models.Model):
         related_query_name="%(app_label)s_%(class)s_created",
         editable=False,
     )
-    modified_by = models.ForeignKey(
+    modified_by: models.Field  = models.ForeignKey(
         AUTH_USER_MODEL,
         verbose_name="Last modified by",
         on_delete=models.CASCADE,
@@ -189,40 +196,48 @@ class Authorable(models.Model):
 
 class HasPicture(models.Model):
     "Abstract class to capture a picture"
-    picture = models.ImageField(
+    picture: models.Field  = models.ImageField(
         upload_to="pictures/",
         blank=True,
         null=True,
     )
-    thumbnail = models.ImageField(
+    thumbnail: models.Field  = models.ImageField(
         upload_to="thumb/",
         blank=True,
         null=True,
         editable=False,
     )
 
-    def save(self) -> None:
+    def save(self, *args, **kwargs) -> None:
         if not self.pk and self.picture:
-            super(HasPicture, self).save()
             self.save_thumb()
-        return super(HasPicture, self).save()
+        return super(HasPicture, self).save(*args,**kwargs)
 
-    def save_thumb(self):
+    def save_thumb(self) -> None:
         with Image.open(self.picture) as img:
-            thumb = self.create_tumb(img)
-            save_path = f"thumb/{self.picture.name.split('/')[-1]}"
-            self.save_img(thumb, save_path)
-            self.thumbnail = save_path
+            thumb = self.create_thumb(img)
+            save_path = f"{os.path.split(self.picture.name)[1]}"
+            suf = self.save_img(thumb, save_path)
+            self.thumbnail.save(save_path, suf, save=False)
 
-    def create_tumb(self, img: Image.Image) -> Image.Image:
+    def create_thumb(self, img: Image.Image) -> Image.Image:
         thumb = img.copy()
-        thumb.thumbnail(THUMBNAIL_SIZE)
+        thumb.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
         return thumb
 
-    def save_img(self, img: Image.Image, save_path: str) -> None:
-        fh = self.picture.storage.open(save_path, "wb")
-        img.save(fh)
-        fh.close()
+    def save_img(self, img: Image.Image, save_path: str) -> SimpleUploadedFile:
+        with BytesIO() as io:
+            img.save(
+                io,
+                quality=90,
+                optimize=True,
+                format='png'
+            )
+            io.seek(0)
+            return SimpleUploadedFile(
+                save_path,
+                content=io.read(),
+            )
 
     class Meta:
         abstract = True
@@ -231,32 +246,32 @@ class HasPicture(models.Model):
 class SingletonBaseModel(models.Model):
     "Abstract class to implement the singleton design pattern"
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.pk = 1
         super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        pass
+    def delete(self, *args, **kwargs) -> None:
+        ...
 
     class Meta:
         abstract = True
 
     @classmethod
-    def load(cls):
+    def load(cls) -> models.Model:
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
 
 
 class SiteSetting(SingletonBaseModel):
     "Concrete model for the settings for the website"
-    about_text = models.TextField()
+    about_text: models.Field = models.TextField()
 
 
 class ContentString(models.Model):
     """
         Model to define a string of content
     """
-    value = models.TextField()
+    value: models.Field  = models.TextField()
 
     def __str__(self) -> str:
         return f"{strip_tags(self.value)} - {self.id}"  # type: ignore
@@ -264,13 +279,13 @@ class ContentString(models.Model):
 
 class TranslatedString(models.Model):
     "Model to define translations for a `ContentString`"
-    language = models.CharField(
+    language: models.Field  = models.CharField(
         choices=I18N,
         max_length=2,
         default='en',
     )
-    t9n = models.TextField()
-    content = models.ForeignKey(
+    t9n: models.Field  = models.TextField()
+    content: models.Field  = models.ForeignKey(
         ContentString,
         on_delete=models.CASCADE,
         related_name='translated_strings'
@@ -292,7 +307,7 @@ def get_translated_content(content: ContentString, language: str = 'en') -> str:
 
 class HasContent(models.Model):
     "Abstract class to define content"
-    content = models.ForeignKey(
+    content: models.Field  = models.ForeignKey(
         ContentString,
         on_delete=models.CASCADE,
         null=True,
@@ -305,7 +320,7 @@ class HasContent(models.Model):
 
 class HasSubject(models.Model):
     "Abstract class to define subject content"
-    subject = models.ForeignKey(
+    subject: models.Field  = models.ForeignKey(
         ContentString,
         on_delete=models.CASCADE,
         related_name='%(class)s_subject'

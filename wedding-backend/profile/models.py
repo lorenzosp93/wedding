@@ -14,22 +14,22 @@ USER_TYPES = (
 
 class UserProfile(models.Model):
     "Model to extend the built-in Django user with additional fields"
-    user = models.OneToOneField(
+    user: models.Field = models.OneToOneField(
         AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='profile'
     )
-    language = models.CharField(
+    language: models.Field  = models.CharField(
         choices=I18N,
         default='en',
         max_length=2,
     )
-    type = models.IntegerField(
+    type: models.Field  = models.IntegerField(
         choices=USER_TYPES,
         default=2,
     )
-    plus = models.IntegerField(default=0)
-    parent = models.ForeignKey(
+    plus: models.Field  = models.IntegerField(default=0)
+    parent: models.Field  = models.ForeignKey(
         AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True,
@@ -60,16 +60,16 @@ class UserProfile(models.Model):
             parent=self.user
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.user.username
 
 
 class Keys(models.Model):
-    p256dh = models.CharField(max_length=100)
-    auth = models.CharField(max_length=30)
+    p256dh: models.Field  = models.CharField(max_length=100)
+    auth: models.Field  = models.CharField(max_length=30)
 
 
 class Subscription(TimeStampable):
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    endpoint = models.URLField()
-    keys = models.OneToOneField(Keys, on_delete=models.CASCADE, null=True)
+    user: models.Field  = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    endpoint: models.Field  = models.URLField()
+    keys: models.Field  = models.OneToOneField(Keys, on_delete=models.CASCADE, null=True)

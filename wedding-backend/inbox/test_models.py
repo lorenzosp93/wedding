@@ -10,7 +10,7 @@ class TestInboxModels(TestCase):
         Class to test inbox models.
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.user = get_user_model().objects.create(username="TestUser")
         UserProfile.objects.create(
             user=self.user,
@@ -40,7 +40,7 @@ class TestInboxModels(TestCase):
             audience=15,  # friends & colleagues
         )
 
-    def test_has_audience_user_list(self):
+    def test_has_audience_user_list(self) -> None:
         message_user_list = self.message.get_users()
         new_message_user_list = self.new_message.get_users()
         self.assertIn(self.user, message_user_list)
@@ -48,7 +48,7 @@ class TestInboxModels(TestCase):
         self.assertIn(self.new_user, new_message_user_list)
         self.assertNotIn(self.user, new_message_user_list)
 
-    def test_option_prereq_user_list(self):
+    def test_option_prereq_user_list(self) -> None:
         self.message.option_pre.add(self.option)
         response = Response.objects.create(
             user=self.new_user,

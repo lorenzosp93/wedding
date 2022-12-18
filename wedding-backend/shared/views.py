@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.utils.module_loading import import_string
 from rest_framework.request import Request
@@ -29,7 +30,7 @@ def get_languages() -> Response:
 
 @api_view(['GET', ])
 @permission_classes([AllowAny, ])
-def get_auth_token(request: Request, *args, **kwargs) -> Response:
+def get_auth_token(request: Request, *args: list, **kwargs: dict) -> Response | HttpResponseRedirect:
     """
         Function to retrieve auth token from email/mobile + OTP combination.
     """

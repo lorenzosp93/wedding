@@ -173,7 +173,7 @@ export const useGalleryStore = defineStore({
         error: null,
         gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]"),
         galleryExpiry: Date.parse(localStorage.getItem('galleryExpiry') ?? new Date()),
-        next: null,
+        next: localStorage.getItem('galleryNext'),
     }),
     actions: {
         async getGalleryContent (force=null) {
@@ -191,6 +191,7 @@ export const useGalleryStore = defineStore({
                         if (!force) { // set properties for persistence upon refresh
                             localStorage.setItem('gallery', JSON.stringify(this.gallery));
                             localStorage.setItem('galleryExpiry', this.galleryExpiry.toJSON());
+                            localStorage.setItem('galleryNext', this.next);
                         }
                     }
                 ).catch(

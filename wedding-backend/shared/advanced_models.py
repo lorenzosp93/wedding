@@ -12,7 +12,7 @@ from .models import HasSubject
 audience_types = [
     *USER_TYPES,
     *list(
-        (a*b, f"{dict(USER_TYPES)[a]} & {dict(USER_TYPES)[b]}")  # type: ignore
+        (a*b, f"{dict(USER_TYPES)[a]} & {dict(USER_TYPES)[b]}")
         for (a, b) in combinations(
             [idx for (idx, _) in USER_TYPES],
             r=2
@@ -31,7 +31,7 @@ class HasUserList(models.Model):
 
 
 class HasAudience(HasUserList):
-    audience = models.IntegerField(
+    audience: models.Field = models.IntegerField(
         choices=audience_types,
         default=30,
     )
@@ -52,7 +52,7 @@ class TriggersNotifications(
     HasUserList
 ):
     """Abstract mixin to trigger notification"""
-    submit = models.BooleanField(default=False)
+    submit: models.Field = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs) -> None:
         if self.submit:

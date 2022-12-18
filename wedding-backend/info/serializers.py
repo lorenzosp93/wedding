@@ -1,5 +1,5 @@
 from rest_framework.serializers import (
-    ModelSerializer, CharField, DictField, RelatedField
+    ModelSerializer, CharField, DictField,
 )
 from .models import (
     Information, Photo, InformationWidget
@@ -24,7 +24,7 @@ class InformationSerializer(
     type = CharField(source="get_type_display")
     widget = InformationWidgetSerializer(many=True, required=False)
 
-    def to_representation(self, instance):
+    def to_representation(self, instance: Information) -> dict:
         return super().to_representation(instance)
 
     class Meta:
@@ -35,7 +35,10 @@ class InformationSerializer(
         ]
 
 
-class PhotoSerializer(ModelSerializer):
+class PhotoSerializer(
+    TranslationContentMixin,
+    ModelSerializer,
+):
     class Meta:
         model = Photo
-        fields = ['picture', 'thumbnail', 'id']
+        fields = ['picture', 'thumbnail', 'content', 'id']

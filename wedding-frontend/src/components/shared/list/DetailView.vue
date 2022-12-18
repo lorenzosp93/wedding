@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-    <article>
-        <header id="object-header" class="flex justify-between items-center border-b-2 mb-8">
+    <article class="@container md:flex absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh]">
+        <header id="object-header" class="flex flex-initial justify-between items-center border-b-2 mb-1">
             <div class="h-6 w-6 mr-2 md:hidden" @click="$emit('hideDetail')">
                 <arrow-left-icon class="h-6 w-6" />
             </div>
@@ -19,16 +19,19 @@
                 </ul>
             </div>
         </header>
-        <section v-if="activeObject?.picture" id="object-picture" class="w-full">
-            <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
-        </section>
-        <section id="object-content" class="my-3 prose dark:prose-invert" v-html="activeObject?.content"></section>
-        <widgets-view v-if="activeObject?.widget?.length && loadWidgets" :active-object="activeObject"></widgets-view>
-        <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
-    </article>
+        <article class="pt-3 flex-auto overflow-y-scroll">
+            <section v-if="activeObject?.picture" id="object-picture" class="w-full @md:max-w-[60%] float-right px-3 mb-3">
+                <img :src="activeObject?.picture" alt="Information article picture" class="rounded-lg shadow-md" >
+            </section>
+            <section id="object-content" class="my-3 prose dark:prose-invert" v-html="markdown"></section>
+            <widgets-view v-if="activeObject?.widget?.length && loadWidgets" :active-object="activeObject"></widgets-view>
+            <question-view v-if="activeObject?.questions?.length" :active-object="activeObject" :responses="responses" :submit-loading="submitLoading" :submit-error="submitError" :submit-success="submitSuccess" @submit-response="$emit('submitResponse', responses)" @delete-responses="$emit('deleteResponses', response)" ></question-view>
+            </article>
+        </article>
 </template>
 
 <script>
+import { marked } from 'marked';
 import QuestionView from './QuestionView.vue';
 import WidgetsView from './WidgetsView.vue';
 import { ArrowLeftIcon, ArrowUpIcon, ArrowDownIcon } from '@heroicons/vue/24/outline';
@@ -60,6 +63,11 @@ export default {
     data () {
         return {
             loadWidgets: false,
+        }
+    },
+    computed: {
+        markdown () {
+            return marked.parse(this.activeObject?.content ?? '')
         }
     },
     mounted () {

@@ -17,7 +17,7 @@ class TestSharedViews(TestCase):
     Class to test the shared views
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.factory = RequestFactory()
         self.email = 'some@email.com'
         user = get_user_model().objects.create(
@@ -29,7 +29,7 @@ class TestSharedViews(TestCase):
         (self.authToken, _) = token_creator(user)
         self.otp = create_callback_token_for_user(user, 'email', 'AUTH')
 
-    def test_get_auth_token(self):
+    def test_get_auth_token(self) -> None:
         request = self.factory.get(
             f"{reverse('shared:magic-auth')}?email={self.email}&token={self.otp}"
         )

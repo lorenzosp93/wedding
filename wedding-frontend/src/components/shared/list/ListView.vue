@@ -2,18 +2,18 @@
 <template>
   <div class=" w-11/12 mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
-    <main v-show="!loading" class="flex w-full h-full">
-      <section id="list-view" class="flex flex-col w-full min-h-full py-5 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full overflow-y-scroll">
+    <main v-show="!loading" class="flex w-full">
+      <section id="list-view" class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh] overflow-y-auto">
         <label>
           <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
-        <ul class="mt-6">
+        <ul class="mt-1 overflow-y-scroll">
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer" @click="setActive(idx)">
                 <div class="flex justify-between items-center">
                   <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
                   <div class="w-full mr-5 pl-5 text-right">
                     <h3 class=" text-lg font-semibold">{{ obj?.subject }}</h3>
-                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ truncate(removeHtml(obj?.content), 40) }}</div>
+                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ listItemContent(obj?.content, 40) }}</div>
                   </div>
                 </div>
             </li>
@@ -25,13 +25,14 @@
           </li>
         </ul>
       </section>
-      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" class="md:block absolute left-0 z-10 md:relative w-full mx-auto min-h-screen md:w-[60%] lg:w-[65%] px-4 flex flex-col bg-neutral dark:bg-darkNeutral overflow-y-scroll" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
+      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
     </main>
     <push-subscribe></push-subscribe>
   </div> 
 </template>
 
 <script>
+import { marked } from 'marked';
 import LoadingView from '@/components/shared/LoadingView.vue';
 import PushSubscribe from '@/components/shared/PushSubscribe.vue';
 import DetailView from './DetailView.vue';
@@ -127,6 +128,9 @@ emits: ['submitResponse', 'deleteResponses'],
       } else {
           return value;
       }
+    },
+    listItemContent(content, chars=40) {
+      return content ? this.removeHtml(marked.parse(this.truncate(content, chars))) : null
     },
     hideDetail () {
       this.viewDetail = false;

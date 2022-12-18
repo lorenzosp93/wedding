@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/require-prop-types -->
 <template>
   <nav id="the-navbar" class="px-3 py-3 bg-neutral dark:bg-darkNeutral">
-    <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="container flex flex-wrap justify-between items-center mx-auto max-w-4xl">
       <router-link to="/" class="">
           <img class="h-12 w-48" :src="logo" aria-label="P & L logo">
       </router-link>
@@ -21,8 +21,8 @@
                 <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': dropInfo, 'rotate-0': !dropInfo}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
               </div>
               <ul class="md:absolute md:left-1/2 md:-translate-x-1/2 md:top-5 bg-neutral dark:bg-darkNeutral flex flex-col md:flex-row z-30 md:transition-none" style="transition: max-height 0.4s, opacity 0.2s ease-in;" :class="{'invisible opacity-0 max-h-0': !dropInfo, 'opacity-100 max-h-52': dropInfo}">
-                <li v-for="type in infoTypes" :key="type" class="pl-5 py-1 md:py-2 rounded-lg" >
-                  <router-link :to="{name: 'info', params: {infoType: type}}" class=" hover:text-accent child" @click="{activateType(type); dropInfo = false}" >
+                <li v-for="type in infoTypes" :key="type" class="pl-5 pt-1 pb-1 md:pb-0 rounded-lg" >
+                  <router-link :to="{name: 'info', params: {infoType: type}}" class=" hover:text-accent child" @click="activateType(type)" >
                     {{ type }}
                   </router-link>
                 </li>
