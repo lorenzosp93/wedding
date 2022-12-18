@@ -1,5 +1,5 @@
 <template>
-    <div id="tour-trigger" class="fixed bottom-0 right-0 p-3 z-50 fill-secondary dark:fill-darkPale" >
+    <div id="tour-trigger" class="absolute bottom-0 right-0 p-3 fill-secondary dark:fill-darkPale" >
         <button aria-label="tour button" class="p-1 bg-neutral dark:bg-darkNeutral rounded-md" @click="tour.start">
             <information-circle-icon class="h-6 w-6 md:h-7 md:w-7" />
         </button>
