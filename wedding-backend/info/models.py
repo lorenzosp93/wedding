@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from shared.models import (
-    HasPicture, HasContent, HasSubject
+    HasPicture, HasContent, HasSubject, ContentString,
 )
 from shared.advanced_models import (
     TriggersNotifications, HasAudience,
@@ -74,7 +74,7 @@ class Photo(HasPicture):
     tag = models.ManyToManyField(User, blank=True,)
     private = models.BooleanField(default=False,)
     type = models.IntegerField(choices=PHOTO_TYPES, default=0)
-    caption = models.TextField(null=True, blank=True,)    
+    caption = models.ForeignKey(ContentString, on_delete=models.SET_NULL, null=True, blank=True,)    
 
     def __str__(self) -> str:
         return f"{self.picture.name} - {self.type}"
