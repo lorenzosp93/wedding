@@ -1,5 +1,5 @@
 <template>
-    <div id="tour-trigger" class="absolute bottom-0 right-0 p-3 fill-secondary dark:fill-darkPale" >
+    <div id="tour-trigger" class="absolute bottom-0 right-0 p-3" >
         <button aria-label="tour button" class="p-1 bg-neutral dark:bg-darkNeutral rounded-md" @click="tour.start">
             <information-circle-icon class="h-6 w-6 md:h-7 md:w-7" />
         </button>
@@ -66,10 +66,6 @@ export default {
             steps: [{
                     id: 'intro',
                     text: this.$t('shared.tour.intro'),
-                    attachTo: {
-                        element: '#tour-trigger',
-                        on: 'top',
-                    },
                     modalOverlayOpeningPadding: -5,
                     modalOverlayOpeningRadius: 10,
                     buttons: [
@@ -206,9 +202,9 @@ export default {
                         }
                     ],
                 },{
-                    id: 'pushNotification',
+                    id: 'push-subscribe',
                     text: this.$t('shared.tour.inbox.pushNotification'),
-                    modalOverlayOpeningPadding: -5,
+                    modalOverlayOpeningPadding: -3,
                     modalOverlayOpeningRadius: 10,
                     canClickTarget: true,
                     showOn: () => {
@@ -218,6 +214,23 @@ export default {
                         element: '#notification-trigger',
                         on: 'top'
                     },
+                    buttons: [
+                        {
+                        action: () => {
+                            return this.tour.back()
+                        },
+                        secondary: true,
+                        text: this.$t('shared.tour.back')
+                        },
+                        {
+                        action: () => {
+                            this.$router.push({name: 'inbox', params: {active: null}}).then(
+                                () => {return this.tour.next()}
+                            )
+                        },
+                        text: this.$t('shared.tour.next')
+                        }
+                    ],
                 },{
                     id: 'gallery',
                     text: this.$t('shared.tour.gallery'),

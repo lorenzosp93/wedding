@@ -1,12 +1,12 @@
 <!-- eslint-disable no-useless-escape -->
 <template>
-<div v-if="checkTechnology">
-    <div id="notification-trigger" class="absolute bottom-0 right-0 p-3 z-50 fill-secondary dark:fill-darkPale">
-        <button aria-label="notifications button" class="bg-neutral dark:bg-darkNeutral p-1 rounded-md" @click="askPermission">
-          <bell-alert-icon class="h-6 w-6 md:h-7 md:w-7" />
-        </button>
-    </div>
-</div>
+  <div v-if="checkTechnology" class="flex">
+      <div id="notification-trigger" class="p-2">
+          <button aria-label="notifications button" class="bg-neutral dark:bg-darkNeutral p-1 rounded-md" @click="askPermission">
+            <bell-alert-icon class="h-6 w-6 md:h-7 md:w-7" />
+          </button>
+      </div>
+  </div>
 </template>
 <script>
 // https://web.dev/push-notifications-subscribing-a-user/

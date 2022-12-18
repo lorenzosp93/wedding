@@ -1,11 +1,12 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class=" w-11/12 mx-auto max-w-5xl">
+  <div class="w-full mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full">
       <section id="list-view" class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh] overflow-y-auto">
-        <label>
-          <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
+        <label class="flex">
+          <push-subscribe></push-subscribe>
+          <input v-model="search" class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
         <ul class="mt-1 overflow-y-scroll">
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer" @click="setActive(idx)">
@@ -18,16 +19,15 @@
                 </div>
             </li>
           <li v-if="searchedList?.length == 0 && objList.length">
-            <p>{{ $t('shared.listview.noMessage') }}</p>
+            <p class="p-3">{{ $t('shared.listview.noMessage') }}</p>
           </li>
           <li v-if="!objList.length">
-            <p>{{ $t('shared.listview.done') }}</p>
+            <p class="p-3">{{ $t('shared.listview.done') }}</p>
           </li>
         </ul>
       </section>
       <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
     </main>
-    <push-subscribe></push-subscribe>
   </div> 
 </template>
 

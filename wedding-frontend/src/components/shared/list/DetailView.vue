@@ -2,7 +2,7 @@
 <template>
     <article class="@container md:flex absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh]">
         <header id="object-header" class="flex flex-initial justify-between items-center border-b-2 mb-1">
-            <div class="h-6 w-6 mr-2 md:hidden" @click="$emit('hideDetail')">
+            <div class="p-1 mr-2 md:hidden" @click="$emit('hideDetail')">
                 <arrow-left-icon class="h-6 w-6" />
             </div>
             <div id="header-title" class="w-full flex py-3">
@@ -10,10 +10,10 @@
             </div>
             <div>
                 <ul class="flex text-primary dark:text-darkPrimary ml-1 space-x-4 order-last">
-                    <li :class="{'invisible cursor-none': !(active != 0)}" class="w-6 h-6 cursor-pointer" @click="$emit('setActive', (active - 1))">
+                    <li :class="{'invisible cursor-none': !(active != 0)}" class="p-1 cursor-pointer" @click="$emit('setActive', (active - 1))">
                         <arrow-up-icon class="h-6 w-6" />
                     </li>
-                    <li :class="{'invisible cursor-none': !(active != searchedList?.length - 1 && searchedList?.length)}" class="w-6 h-6 cursor-pointer" @click="$emit('setActive', (active + 1))">
+                    <li :class="{'invisible cursor-none': !(active != searchedList?.length - 1 && searchedList?.length)}" class="p-1 cursor-pointer" @click="$emit('setActive', (active + 1))">
                         <arrow-down-icon class="h-6 w-6" />
                     </li>
                 </ul>

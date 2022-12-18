@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col">
     <div class="mx-auto">
-      <div class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-md prose lg:prose-lg">
+      <div class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-md prose">
         <p class="mx-auto">{{ $t('thehome.hi', { 'a': profile?.user.first_name }) }}</p>
         <p class="mx-auto">{{ $t('thehome.weAreDelighted') }}</p>
         <p class="mx-auto">{{ $t('thehome.withLove') }} <br>
