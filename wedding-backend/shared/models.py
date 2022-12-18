@@ -45,7 +45,7 @@ class Named(models.Model):
     name: models.Field  = models.CharField(max_length=90, unique=True)
     slug: models.Field  = models.SlugField(max_length=100, editable=False)
 
-    def save(self, **kwargs) -> None:  # pylint: disable=W0221
+    def save(self, **kwargs) -> None:
         "Override save method to create slug from name"
         if not self.slug:
             self.slug = slugify(self.name)
@@ -149,6 +149,9 @@ class Attachment(Named, Serializable):
         verbose_name="File",
     )
 
+    class Meta:
+        ...
+
 
 class Attachable(models.Model):
     "Abstract model to allow attachments"
@@ -237,7 +240,7 @@ class SingletonBaseModel(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs) -> None:
-        pass
+        ...
 
     class Meta:
         abstract = True
