@@ -86,7 +86,6 @@ export const useInboxStore = defineStore({
                     (response) => {
                         this.inboxLoading = false;
                         this.inbox = response.data;
-                        this.responseSetup();
                     }
                 ).catch(
                     error => {

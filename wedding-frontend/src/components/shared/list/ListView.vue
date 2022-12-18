@@ -88,6 +88,7 @@ emits: ['submitResponse', 'deleteResponses'],
     }
   },
   mounted () {
+    this.responseSetup();
     this.refreshActive();
   },
   beforeUnmount () {
