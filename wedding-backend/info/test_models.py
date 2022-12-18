@@ -11,14 +11,14 @@ from .models import Information, InformationWidget, Photo
 class TestInfo(TestCase):
     @staticmethod
     def get_image_file(
-        name:str='test.png',
-        ext:str='png',
-        size:tuple[int, int]=(1000, 1000),
-        color:tuple[int, int, int]=(256, 0, 0)
+        name:str='test.webp',
+        ext:str='webp',
+        size:tuple[int, int]=(720, 720),
+        color:tuple[int, int, int]=(0, 0, 0)
     ) -> SimpleUploadedFile:
         file_obj = BytesIO()
-        with Image.new("RGB", size=size, color=color) as image:
-            image.save(file_obj, ext)
+        with Image.new("RGB", size=size, color=color) as img:
+            img.save(file_obj, format=ext, quality=10, optimize=True)
         file_obj.seek(0)
         return SimpleUploadedFile(content=file_obj.read(), name=name)
 
@@ -36,15 +36,15 @@ class TestInfo(TestCase):
             type=0,
             content=self.content_json,
         )
+
+    def test_photo_thumbnail(self) -> None:
         self.photo = Photo.objects.create(
             type=0,
             picture=self.get_image_file(),
         )
-
-    def test_photo_thumbnail(self) -> None:
-        with Image.open(self.photo.thumbnail) as loaded:
-            self.assertIsInstance(loaded, Image.Image)
-            self.assertEqual(loaded.size, THUMBNAIL_SIZE)
+        with Image.open(self.photo.thumbnail) as thumb:
+            self.assertIsInstance(thumb, Image.Image)
+            self.assertEqual(thumb.size, THUMBNAIL_SIZE)
     
     def test_info_widget(self) -> None:
         self.assertEqual(

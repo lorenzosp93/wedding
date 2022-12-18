@@ -1,4 +1,6 @@
 "Define abstract models to be used in all apps"
+from io import BytesIO
+import os
 import uuid
 from PIL import Image
 from django.db import models
@@ -6,8 +8,10 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.html import strip_tags
-from wedding.settings import AUTH_USER_MODEL
+from wedding.settings import AUTH_USER_MODEL, MEDIA_URL, BASE_DIR
+
 
 THUMBNAIL_SIZE = 640, 640
 I18N = (
@@ -204,29 +208,36 @@ class HasPicture(models.Model):
         editable=False,
     )
 
-    def save(self, **kwargs) -> None:
+    def save(self, *args, **kwargs) -> None:
         if not self.pk and self.picture:
-            super(HasPicture, self).save(**kwargs)
-            kwargs.pop('force_insert')
             self.save_thumb()
-        return super(HasPicture, self).save(**kwargs)
+        return super(HasPicture, self).save(*args,**kwargs)
 
     def save_thumb(self) -> None:
         with Image.open(self.picture) as img:
-            thumb = self.create_tumb(img)
-            save_path = f"thumb/{self.picture.name.split('/')[-1]}"
-            self.save_img(thumb, save_path)
-            self.thumbnail = save_path
+            thumb = self.create_thumb(img)
+            save_path = f"{os.path.split(self.picture.name)[1]}"
+            suf = self.save_img(thumb, save_path)
+            self.thumbnail.save(save_path, suf, save=False)
 
-    def create_tumb(self, img: Image.Image) -> Image.Image:
+    def create_thumb(self, img: Image.Image) -> Image.Image:
         thumb = img.copy()
-        thumb.thumbnail(THUMBNAIL_SIZE)
+        thumb.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
         return thumb
 
-    def save_img(self, img: Image.Image, save_path: str) -> None:
-        fh = self.picture.storage.open(save_path, "wb")
-        img.save(fh)
-        fh.close()
+    def save_img(self, img: Image.Image, save_path: str) -> SimpleUploadedFile:
+        with BytesIO() as io:
+            img.save(
+                io,
+                quality=90,
+                optimize=True,
+                format='png'
+            )
+            io.seek(0)
+            return SimpleUploadedFile(
+                save_path,
+                content=io.read(),
+            )
 
     class Meta:
         abstract = True
