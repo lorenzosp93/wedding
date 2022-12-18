@@ -12,7 +12,7 @@ from wedding.tasks import send_email
 logger = logging.getLogger(__name__)
 
 
-def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwargs) -> bool:
+def send_email_with_callback_token(user: User, email_token: CallbackToken, **kwargs: str) -> bool:
     """
     Sends a Email to user.email.
 
