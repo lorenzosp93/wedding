@@ -204,7 +204,7 @@ export default {
                 },{
                     id: 'push-subscribe',
                     text: this.$t('shared.tour.inbox.pushNotification'),
-                    modalOverlayOpeningPadding: -3,
+                    modalOverlayOpeningPadding: -4,
                     modalOverlayOpeningRadius: 10,
                     canClickTarget: true,
                     showOn: () => {
