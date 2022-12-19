@@ -4,8 +4,8 @@
     <div id="invitation-content" class="flex">
       <loading-view v-if="!loaded"></loading-view>
       <div id="envelopeContainer" :class="{invisible: !loaded}" class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-20 sm:-top-24 short:-top-28 px-1">
-        <img id="base" :src="images.find(img => img.name == 'base').url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-0 px-0.5" @load="loadImage('base')">
-        <img id="letterBase" :src="images.find(img => img.name == 'letterBase').url" alt="Invitation base" class="max-w-[95%] max-h-[95%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[37%] z-10 px-1" @load="loadImage('letterBase')">
+        <img id="base" :src="images.find(img => img.name == 'base')?.url" alt="Envelope base" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-0 px-0.5" @load="loadImage('base')">
+        <img id="letterBase" :src="images.find(img => img.name == 'letterBase')?.url" alt="Invitation base" class="max-w-[95%] max-h-[95%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[37%] z-10 px-1" @load="loadImage('letterBase')">
         <svg class="z-10 w-full max-h-full p-3 absolute left-1/2 -translate-x-1/2 top-[33%]" viewBox="0 0 543 384" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
         </defs>
@@ -44,10 +44,10 @@
               </g>
           </g>
         </svg>
-        <img id="sideFlaps" :src="images.find(img => img.name == 'sideFlaps').url" alt="Envelope side flaps" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-20 px-0.5" @load="loadImage('sideFlaps')">
-        <img id="bottomFlap" :src="images.find(img => img.name == 'bottomFlap').url" alt="Envelope bottom flap" class="absolute aspect-auto max-w-full max-h-[59.35%] left-1/2 -translate-x-1/2 top-[73%] z-30 px-0.5" @load="loadImage('bottomFlap')">
-        <img id="envelopeFlap" class="max-w-full max-h-[59.35%] absolute left-1/2 -translate-x-1/2 top-[32.6%] origin-top z-40 px-0.5" :src="images.find(img => img.name == 'envelopeFlap').url" :aria-label="$t('theinvitation.envelopeFlap')" @load="loadImage('envelopeFlap')">
-        <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-50" :src="images.find(img => img.name == 'waxSeal').url" :aria-label="$t('theinvitation.waxSealOn')" @load="loadImage('waxSeal')">
+        <img id="sideFlaps" :src="images.find(img => img.name == 'sideFlaps')?.url" alt="Envelope side flaps" class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-20 px-0.5" @load="loadImage('sideFlaps')">
+        <img id="bottomFlap" :src="images.find(img => img.name == 'bottomFlap')?.url" alt="Envelope bottom flap" class="absolute aspect-auto max-w-full max-h-[59.35%] left-1/2 -translate-x-1/2 top-[73%] z-30 px-0.5" @load="loadImage('bottomFlap')">
+        <img id="envelopeFlap" class="max-w-full max-h-[59.35%] absolute left-1/2 -translate-x-1/2 top-[32.6%] origin-top z-40 px-0.5" :src="images.find(img => img.name == 'envelopeFlap')?.url" :aria-label="$t('theinvitation.envelopeFlap')" @load="loadImage('envelopeFlap')">
+        <img id="waxSeal" class="absolute top-[88%] -translate-y-1/2 left-1/2 -translate-x-1/2 max-h-[25%] max-w-[25%] z-50" :src="images.find(img => img.name == 'waxSeal')?.url" :aria-label="$t('theinvitation.waxSealOn')" @load="loadImage('waxSeal')">
       </div>
     </div>
   </div>
@@ -64,7 +64,8 @@
 
 </template>
   
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -73,7 +74,13 @@ import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-export default {
+type ImageDef = {
+  name: string;
+  url: string;
+  loaded: boolean;
+};
+
+export default defineComponent({
   name: 'TheInvitation',
   components: {
     LoadingView,
@@ -81,9 +88,9 @@ export default {
   },
   data () {
     return {
-      loaded: false,
-      tl: null,
-      smoother: null,
+      loaded: false as Boolean,
+      tl: null as GSAPTimeline | null,
+      smoother: null as ScrollSmoother | null,
       images: [ 
         {
           name: 'waxSeal',
@@ -115,15 +122,18 @@ export default {
           url: new URL("@/assets/letterBase.webp", import.meta.url).href,
           loaded: false,
         },
-       ]
+      ] as Array<ImageDef>
     }
   },
   beforeUnmount () {
     this.cleanup();
   },
   methods: {
-    loadImage (img) {
-      this.images.find(image => image.name == img).loaded = true;
+    loadImage (img:string) {
+      const image = this.images.find(image => image.name == img)
+      if (image) {
+        image.loaded = true;
+      }
       if (this.images.every(image => image.loaded)) {
         this.loaded = true;
         this.setupEnvelopeAnimation();
@@ -174,7 +184,7 @@ export default {
       window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})
     },
   },
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

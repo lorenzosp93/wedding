@@ -8,12 +8,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mapActions, mapState} from 'pinia';
-import { useInfoStore } from '@/stores/api.store';
+import { useInfoStore } from '@/stores/api.store.js';
 import ListView from '@/components/shared/list/ListView.vue';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'TheInfo',
   components: {
     ListView
@@ -35,7 +36,7 @@ export default {
   mounted () {
     this.getInfo();
     if (!this.activeType) {
-      this.activateType(this.$route.params.infoType)
+      this.activateType(this.$route.params.infoType as string)
     }
   },
   methods: {
@@ -44,7 +45,7 @@ export default {
       'activateType',
     ]),
   },
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

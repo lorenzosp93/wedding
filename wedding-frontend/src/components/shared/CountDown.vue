@@ -20,8 +20,10 @@
         </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'CountDown',
   props : {
     endDate : {  // pass date object till when you want to run the timer
@@ -38,24 +40,24 @@ export default {
   data () {
     return{
       now : new Date(),
-      timer : null
+      timer : undefined as undefined | NodeJS.Timer,
     }
   },
   computed:{
     days () {
-      let d = Math.trunc((this.endDate - this.now) / 1000 / 3600 / 24);
+      let d = Math.trunc((this.endDate.valueOf() - this.now.valueOf()) / 1000 / 3600 / 24);
       return d>9?d:'0'+d;
     },
     hour () {
-      let h = Math.trunc((this.endDate - this.now) / 1000 / 3600) % 24;
+      let h = Math.trunc((this.endDate.valueOf() - this.now.valueOf()) / 1000 / 3600) % 24;
       return h>9?h:'0'+h;
     },
     min () {
-      let m = Math.trunc((this.endDate - this.now) / 1000 / 60) % 60;
+      let m = Math.trunc((this.endDate.valueOf() - this.now.valueOf()) / 1000 / 60) % 60;
       return m>9?m:'0'+m;
     },
     sec () {
-      let s = Math.trunc((this.endDate - this.now)/1000) % 60
+      let s = Math.trunc((this.endDate.valueOf() - this.now.valueOf())/1000) % 60
       return s>9?s:'0'+s;
     }
   },
@@ -81,7 +83,7 @@ export default {
   beforeUnmount () {
     clearInterval(this.timer)
   },
-}
+})
 
 </script>
 

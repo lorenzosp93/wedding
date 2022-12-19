@@ -22,7 +22,7 @@ export default defineConfig({
     VitePWA({
       strategies: 'generateSW',
       registerType: 'autoUpdate',
-      workbox:{
+      workbox: {
         importScripts: ['/push-sw.js'],
         navigateFallbackDenylist: [/\/api\//],
       },
@@ -30,10 +30,10 @@ export default defineConfig({
         enabled: true,
       },
       includeAssets: [
-          'favicon.ico',
-          'favicon-16x16.ico',
-          'favicon-32x32.ico',
-          'apple-touch-icon.png',
+        'favicon.ico',
+        'favicon-16x16.ico',
+        'favicon-32x32.ico',
+        'apple-touch-icon.png',
       ],
       manifest: {
         name: 'Priscilla & Lorenzo - wedding app',
@@ -57,12 +57,12 @@ export default defineConfig({
     })
   ],
   resolve: {
-      alias: {
-          "@": fileURLToPath(new URL('./src', import.meta.url)),
-      },
+    alias: {
+      "@": fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   server: {
-      port: 8080,
+    port: 8080,
   },
   build: {
     sourcemap: true,

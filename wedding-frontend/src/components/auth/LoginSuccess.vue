@@ -18,36 +18,38 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import LoadingView from '@/components/shared/LoadingView.vue'
-import { get_token } from '@/services/login.service'
+import { get_token } from '@/services/login.service.js'
+import type { AxiosError } from 'axios'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'LoginSuccess',
   components: {
     LoadingView
   },
   data () {
     return {
-      email: null,
-      token: '',
-      loading: null,
-      error: null,
+      email: '' as string,
+      token: '' as string,
+      loading: false as boolean,
+      error: null as any,
     }
   },
   mounted () {
-    this.email = this.$route.query.email;
+    this.email = this.$route.query.email as string;
   },
   methods: {
     getToken () {
       this.loading = true;
-      get_token(this.email, this.token).then().catch(error => {
+      get_token(this.email, this.token).then().catch((error:AxiosError,) => {
         this.loading = false;
-        this.error = error.response?.data ?? "Unable to log you in"
+        this.error = error.response?.data ?? "Unable to log you in";
       })
     },
   },
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -10,17 +10,18 @@
 
 </template>
   
-  <script>
-  export default {
-    name: 'LoadingView',
-    data () {
-      return {
-        logo: new URL("@/assets/logo.svg", import.meta.url).href,
-      };
-    },
-  }
-  </script>
-  
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
-  </style>
+<script lang="ts">
+import { defineComponent } from 'vue';
+export default defineComponent({
+  name: 'LoadingView',
+  data () {
+    return {
+      logo: new URL("@/assets/logo.svg", import.meta.url).href,
+    };
+  },
+})
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+</style>

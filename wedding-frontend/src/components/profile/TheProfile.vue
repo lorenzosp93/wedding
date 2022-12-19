@@ -21,7 +21,7 @@
               <p class="my-auto ml-auto">{{ profile.plus }} </p>
               <div v-if="profile?.plus - profile?.childs?.length" class="ml-auto mr-2">
                 <button  class="rounded-md bg-pale dark:bg-darkPale py-1 px-2" @click="togglePlusOne">{{ $t('profile.theprofile.invite') }} </button>
-                <plus-one v-if="showPlusOne" :toggle="togglePlusOne" />
+                <plus-one v-if="showPlusOne" @toggle="togglePlusOne" />
               </div>
             </td>
           </tr>
@@ -44,7 +44,7 @@
                   <th>{{ $t('profile.theprofile.last_name') }}</th>
                 </thead>
                 <tbody>
-                  <tr v-for="child in profile?.childs" :key="child.uuid">
+                  <tr v-for="child in profile?.childs" :key="child.id">
                     <td>{{ child.user.email}}</td>
                     <td>{{ child.user.first_name}}</td>
                     <td>{{ child.user.last_name}}</td>
@@ -61,11 +61,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import PlusOne from './PlusOne.vue'
 import profile from '@/components/mixins/profile'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   
   name: 'TheProfile',
   components: { 
@@ -86,7 +87,7 @@ export default {
       this.showPlusOne = !this.showPlusOne;
     }
   }
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

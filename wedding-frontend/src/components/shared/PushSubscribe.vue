@@ -1,4 +1,3 @@
-<!-- eslint-disable no-useless-escape -->
 <template>
   <div v-if="checkTechnology" class="flex">
       <div id="notification-trigger" class="p-2">
@@ -8,19 +7,21 @@
       </div>
   </div>
 </template>
-<script>
+
+<script lang="ts">
 // https://web.dev/push-notifications-subscribing-a-user/
 import { request, API_URL } from '@/services/api.service'
 import { BellAlertIcon } from '@heroicons/vue/24/outline'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'PushSubscribe',
   components: {
     BellAlertIcon,
   },
   data () {
     return{
-      pushSubscription: null,
+      pushSubscription: undefined as PushSubscription | undefined,
     }
   },
   computed:{
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     publishSubscription() {
-      request(true).post(`${API_URL}/api/user/subscription/`, this.pushSubscription.toJSON())
+      request(true).post(`${API_URL}/api/user/subscription/`, this.pushSubscription?.toJSON())
     },
     askPermission() {
       return new Promise((resolve, reject) => {
@@ -51,19 +52,19 @@ export default {
     subscribeUserToPush() {
       return navigator.serviceWorker
         .getRegistration()
-        .then((registration) => {
+        .then((registration:ServiceWorkerRegistration | undefined) => {
           const subscribeOptions = {
             userVisibleOnly: true,
             applicationServerKey: this.urlBase64ToUint8Array(import.meta.env.VITE_APP_KEY),
           };
-          return registration.pushManager.subscribe(subscribeOptions);
+          return registration?.pushManager.subscribe(subscribeOptions);
         })
-        .then((pushSubscription) => {
+        .then((pushSubscription:PushSubscription | undefined) => {
           this.pushSubscription = pushSubscription;
           this.publishSubscription();
         });
     },
-    urlBase64ToUint8Array(base64String) {
+    urlBase64ToUint8Array(base64String:string):Uint8Array {
         var padding = '='.repeat((4 - base64String.length % 4) % 4);
         var base64 = (base64String + padding)
             .replace(/-/g, '+')
@@ -78,7 +79,7 @@ export default {
         return outputArray;
     }
   },
-}
+})
 
 </script>
 

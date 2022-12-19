@@ -32,37 +32,39 @@
     </section>
 </template>
 
-<script>
+<script lang="ts">
 import { CalendarIcon, MapIcon, PlusIcon } from '@heroicons/vue/24/outline'
-import { createEvent } from 'ics'
-import i18n from '@/i18n'
+import { createEvent, type EventStatus, type EventAttributes } from 'ics'
+import i18n from '@/i18n/index.js'
+import { defineComponent, Teleport, type PropType } from 'vue'
+import { WidgetType, type Widget, type ListObject } from '@/models/listObjects.interface'
 
-export default {
+export default defineComponent({
     components: {
         CalendarIcon,
         MapIcon,
         PlusIcon,
     },
     props: {
-        activeObject: {type: Object},
+        activeObject: {type: Object as PropType<ListObject>},
     },
     computed: {
         calendarWidget () {
-            return this.activeObject.widget.find(w => w.type == 'calendar')?.content
+            return this.activeObject?.widget?.find((w: Widget) => w.type == WidgetType.calendar)?.content
         },
         mapsWidget () {
-            return this.activeObject.widget.find(w => w.type == 'maps')?.content
+            return this.activeObject?.widget?.find((w: Widget) => w.type == WidgetType.maps)?.content
         },
     },
     methods: {
         createICalBase64 () {
-            const event = {
-                start: this.calendarWidget.start, // [2018, 5, 30, 6, 30],
+            const event: EventAttributes = {
+                start: this.calendarWidget?.start ?? [2030, 1, 1], // [2018, 5, 30, 6, 30],
                 startInputType: 'utc', // provide dates in UTC
                 duration: this.calendarWidget?.duration ?? {hours: 2},
-                title: this.activeObject.subject,
+                title: this.activeObject?.subject,
                 description: this.calendarWidget?.description,
-                location: this.activeObject?.location,
+                location: this.calendarWidget?.location,
                 url: import.meta.url,
                 geo: this.calendarWidget?.geo, //{ lat: 40.0095, lon: 105.2669 },
                 status: this.calendarWidget?.status ?? "CONFIRMED",
@@ -80,16 +82,16 @@ export default {
                 return window.btoa(value)
             });
         },
-        dateForDisplay (format='full') {
-            let start = this.calendarWidget?.start
-            start = [...start] // shallow copy
+        dateForDisplay (format: "full" | "long" | "medium" | "short" = "full") {
+            let start = this.calendarWidget?.start as number[]
+            start = [...start as number[]] // shallow copy
             if (!start) {return null};
             start[1] -= 1 // months are 0-indexed
-            const date = new Date(...start)
+            const date = new Date(...(start as []))
             return date.toLocaleDateString(i18n.global.locale.value, {dateStyle: format})
         }
     },
-}
+})
 </script>
 
 <style scoped>
