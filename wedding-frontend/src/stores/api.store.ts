@@ -1,4 +1,6 @@
+import type { Gallery, Information, Message, Photo, Question, Response, ResponseErrors } from '@/models/listObjects.interface';
 import apiService from '@/services/api.service';
+import type { AxiosError, AxiosResponse } from 'axios';
 import { defineStore } from 'pinia';
 
 const INFOS_LIFETIME = 60 // minutes
@@ -8,22 +10,24 @@ export const useInfoStore = defineStore({
     id: 'info',
     state: () => ({
         // initialize state from local storage to enable user to stay logged in
-        infos: JSON.parse(localStorage.getItem('infos') ?? "[]"), 
-        loading: false,
-        error: null,
-        infosExpiry: Date.parse(localStorage.getItem('infosExpiry') ?? new Date()),
-        activeType: null,
+        infos: JSON.parse(localStorage.getItem('infos') ?? "[]") as Information[],
+        loading: false as boolean,
+        error: undefined as AxiosError | undefined,
+        infosExpiry: Date.parse(
+            localStorage.getItem('infosExpiry') ?? ''
+        ) as number,
+        activeType: undefined as string | undefined,
     }),
     getters: {
-        infosActiveType: (state) => {
+        infosActiveType: (state): Information[] => {
             return state.infos.filter(info => {
                 return (
                     info.type == state.activeType
                 )
             })
         },
-        infoTypes: (state) => {
-            var infoTypes = [];
+        infoTypes: (state): string[] => {
+            var infoTypes: string[] = [];
             state.infos.forEach(info => {
                 if (!infoTypes.includes(info?.type)) {
                     infoTypes = [...infoTypes, info?.type];
@@ -33,92 +37,93 @@ export const useInfoStore = defineStore({
         },
     },
     actions: {
-        async getInfo () {
+        async getInfo(): Promise<AxiosResponse<Information[]> | void> {
             if (this.infos.length == 0 || this.infosExpiry < Date.now()) {
                 this.loading = true;
                 apiService.getInfoContent().then(
-                    (response) => {
+                    (response: AxiosResponse<Information[]>) => {
                         this.infos = response.data;
                         this.loading = false;
-                        this.infosExpiry = new Date();
-                        this.infosExpiry.setTime(
-                            this.infosExpiry.getTime() + INFOS_LIFETIME * 60 * 1000
+                        let infosExpiry = new Date();
+                        infosExpiry.setTime(
+                            infosExpiry.getTime() + INFOS_LIFETIME * 60 * 1000
                         );
+                        this.infosExpiry = infosExpiry.valueOf();
                         this.activeType = this.infos.find(info => info)?.type;
                         localStorage.setItem('infos', JSON.stringify(this.infos));
-                        localStorage.setItem('infosExpiry', this.infosExpiry.toJSON());
+                        localStorage.setItem('infosExpiry', this.infosExpiry.toString());
                     }
                 ).catch(
-                    error => {
+                    (error: AxiosError) => {
                         this.loading = false;
-                        console.log(error)
+                        console.log(error);
                         this.error = error;
                     }
                 );
             }
         },
-        activateType (type) {
+        activateType(type: string) {
             this.activeType = type;
         },
 
     },
 });
 
+
 export const useInboxStore = defineStore({
     id: 'inbox',
     state: () => ({
-        inbox: [],
-        inboxLoading: false,
-        responses: [],
-        error: null,
-        submitLoading: false,
-        submitSuccess: false,
-        submitError: null,
-        deleteLoading: false,
-        deleteSuccess: false,
-        deleteError: null,
+        inbox: [] as Message[],
+        inboxLoading: false as boolean,
+        responses: [] as Array<Response>,
+        error: undefined as AxiosError | undefined,
+        submitLoading: false as boolean,
+        submitSuccess: false as boolean,
+        submitError: undefined as Array<ResponseErrors> | undefined,
+        deleteLoading: false as boolean,
+        deleteSuccess: false as boolean,
+        deleteError: undefined as Array<ResponseErrors> | undefined,
     }),
     actions: {
-        async getInbox(force) {
-            if(this.inbox.length == 0 || force){
+        async getInbox(force: boolean = false): Promise<AxiosResponse<Message[]> | void> {
+            if (this.inbox.length == 0 || force) {
                 this.inboxLoading = true;
                 apiService.getInboxContent().then(
-                    (response) => {
+                    (response: AxiosResponse<Message[]>) => {
                         this.inboxLoading = false;
                         this.inbox = response.data;
-                        this.responseSetup();
                     }
                 ).catch(
-                    error => {
+                    (error: AxiosError) => {
                         this.inboxLoading = false;
                         this.error = error;
                     }
                 )
             }
         },
-        async submitResponse (responses, activeUuid) {
-            var calls = [];
+        async submitResponse(responses: Response[], activeUuid: string) {
+            var calls: Promise<AxiosResponse>[] = [];
             let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.submitLoading = true;
             responses.forEach(
                 response => {
-                    if(activeMessage.questions.some(q => q.uuid == response.question && !q.response)){
+                    if (activeMessage?.questions.some(q => q.uuid == response.question && !q.response)) {
                         calls = [...calls, apiService.postInboxResponse(
-                            response.question,
-                            Array.isArray(response.option) ? response.option : response.option ? [response.option] : null,
+                            response.question ?? '',
+                            Array.isArray(response.option) ? response.option : response.option ? [response.option] : '',
                             response.text,
-                        )];    
+                        )];
                     }
                 }
             )
-            Promise.allSettled(calls).then(responses => {
+            Promise.allSettled(calls).then((responses: PromiseSettledResult<AxiosResponse>[]) => {
                 this.submitLoading = false;
-                responses.forEach((response, idx) => {
+                responses.forEach((response: PromiseSettledResult<AxiosResponse>, idx: number) => {
                     if (response.status == 'rejected') {
                         this.submitError = [
                             ...(this.submitError ?? []),
                             {
-                                q: activeMessage.questions[idx].uuid,
+                                q: activeMessage?.questions[idx].uuid ?? '',
                                 e: response.reason.response.data
                             }
                         ];
@@ -126,20 +131,20 @@ export const useInboxStore = defineStore({
                 })
                 if (responses.every(response => response.status == 'fulfilled')) {
                     this.submitSuccess = true;
-                    this.submitError = null;
+                    this.submitError = undefined;
                 }
                 this.getInbox(true);
             });
         },
-        async deleteResponses (activeUuid) {
-            var calls = [];
+        async deleteResponses(activeUuid: string): Promise<AxiosResponse | void> {
+            var calls: Promise<AxiosResponse>[] = [];
             let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.deleteLoading = true;
             this.submitSuccess = false;
-            activeMessage.questions.forEach(
+            activeMessage?.questions.forEach(
                 question => {
                     calls = [...calls, apiService.deleteInboxResponse(
-                        question.response.uuid
+                        question.response?.uuid ?? ''
                     )];
                 }
             );
@@ -150,7 +155,7 @@ export const useInboxStore = defineStore({
                         this.deleteError = [
                             ...(this.deleteError ?? []),
                             {
-                                q: activeMessage.questions[idx].uuid,
+                                q: activeMessage?.questions[idx].uuid ?? '',
                                 e: response.reason.response.data
                             }
                         ];
@@ -158,7 +163,7 @@ export const useInboxStore = defineStore({
                 })
                 if (responses.every(response => response.status == 'fulfilled')) {
                     this.deleteSuccess = true;
-                    this.deleteError = null;
+                    this.deleteError = undefined;
                 }
                 this.getInbox(true);
             });
@@ -169,33 +174,36 @@ export const useInboxStore = defineStore({
 export const useGalleryStore = defineStore({
     id: 'gallery',
     state: () => ({
-        loading: false,
-        error: null,
-        gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]"),
-        galleryExpiry: Date.parse(localStorage.getItem('galleryExpiry') ?? new Date()),
-        next: localStorage.getItem('galleryNext'),
+        loading: false as boolean,
+        error: undefined as AxiosError | undefined | null,
+        gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]") as Photo[],
+        galleryExpiry: Date.parse(
+            localStorage.getItem('galleryExpiry') ?? ''
+        ) as number,
+        next: localStorage.getItem('galleryNext') as string | null,
     }),
     actions: {
-        async getGalleryContent (force=null) {
+        async getGalleryContent(force: boolean = false): Promise<AxiosResponse<Gallery> | void> {
             if (this.gallery.length == 0 || this.galleryExpiry < Date.now() || force) {
                 this.loading = true;
                 apiService.getGalleryContent(this.next).then(
-                    (response) => {
+                    (response: AxiosResponse<Gallery>) => {
                         this.gallery = [...this.gallery, ...response.data.results];
                         this.next = response.data.next;
                         this.loading = false;
-                        this.galleryExpiry = new Date()
-                        this.galleryExpiry.setTime(
-                            this.galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 1000
+                        let galleryExpiry = new Date();
+                        galleryExpiry.setTime(
+                            galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 1000
                         );
+                        this.galleryExpiry = galleryExpiry.valueOf();
                         if (!force) { // set properties for persistence upon refresh
                             localStorage.setItem('gallery', JSON.stringify(this.gallery));
-                            localStorage.setItem('galleryExpiry', this.galleryExpiry.toJSON());
-                            localStorage.setItem('galleryNext', this.next);
+                            localStorage.setItem('galleryExpiry', this.galleryExpiry.toString());
+                            localStorage.setItem('galleryNext', this.next ?? '');
                         }
                     }
                 ).catch(
-                    error => {
+                    (error: AxiosError) => {
                         this.error = error;
                     }
                 )

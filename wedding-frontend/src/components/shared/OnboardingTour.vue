@@ -1,13 +1,14 @@
 <template>
-    <div id="tour-trigger" class="absolute bottom-0 right-0 p-3 fill-secondary dark:fill-darkPale" >
-        <button aria-label="tour button" class="p-1 bg-neutral dark:bg-darkNeutral rounded-md" @click="tour.start">
+    <div v-show="tour" id="tour-trigger" class="absolute bottom-0 right-0 p-3" >
+        <button aria-label="tour button" class="p-1 bg-neutral dark:bg-darkNeutral rounded-md" @click="tour?.start">
             <information-circle-icon class="h-6 w-6 md:h-7 md:w-7" />
         </button>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { InformationCircleIcon } from '@heroicons/vue/24/outline';
+import Shepherd from 'shepherd.js';
 
 export default {
     name: 'OnboardingTour',
@@ -16,25 +17,25 @@ export default {
     },
     data () {
         return {
-            tour: null,
+            tour: undefined as undefined | Shepherd.Tour,
         }
     },
     created() {
         this.setupTour();
-        this.tour.on('cancel', this.dismissTour);
+        this.tour?.on('cancel', this.dismissTour);
     },
     mounted () {
         this.startTour();
     },
     methods: {
         setupTour () {
-            this.tour = new this.$shepherd.Tour({
+            this.tour = new Shepherd.Tour({
             useModalOverlay: true,
             confirmCancel: true,
             confirmCancelMessage: this.$t('shared.tour.confirmCancel'),
             keyboardNavigation: false,
             defaultStepOptions: {
-                title: false,
+                title: undefined,
                 arrow: false,
                 modalOverlayOpeningPadding: 5,
                 modalOverlayOpeningRadius: 5,
@@ -46,37 +47,32 @@ export default {
                 buttons: [
                 {
                     action: () => {
-                    return this.tour.back();
+                    return this.tour?.back();
                     },
                     secondary: true,
                     text: this.$t('shared.tour.back')
                 },
                 {
                     action: () => {
-                    return this.tour.next();
+                    return this.tour?.next();
                     },
                     text: this.$t('shared.tour.next')
                 }
                 ],
                 cancelIcon: {
-                class: 'fill-primary',
                 enabled: true,
                 },
             },
             steps: [{
                     id: 'intro',
                     text: this.$t('shared.tour.intro'),
-                    attachTo: {
-                        element: '#tour-trigger',
-                        on: 'top',
-                    },
                     modalOverlayOpeningPadding: -5,
                     modalOverlayOpeningRadius: 10,
                     buttons: [
                         {
                         action: () => {
                             this.$router.push({name: 'home'}).then( () => {
-                                return this.tour.next()
+                                return this.tour?.next()
                             })
                         },
                         text: this.$t('shared.tour.next')
@@ -100,11 +96,11 @@ export default {
                     },
                     canClickTarget: true,
                     showOn: () => {
-                        return window.innerWidth < 768 && window.getComputedStyle(document.getElementById('navbar-default')).visibility == 'hidden'
+                        return window.innerWidth < 768  && window.getComputedStyle(document.getElementById('navbar-default') ?? new Element()).visibility == 'hidden'
                     },
                     buttons: [{
                         action: () => {
-                            return this.tour.back();
+                            return this.tour?.back();
                         },
                         secondary: true,
                         text: this.$t('shared.tour.back')
@@ -133,18 +129,18 @@ export default {
                     buttons: [
                         {
                         action: () => {
-                            return this.tour.back();
+                            return this.tour?.back();
                         },
                         secondary: true,
                         text: this.$t('shared.tour.back')
                         },
                         {
                         action: () => {
-                            this.tour.hide();
+                            this.tour?.hide();
                             this.$router.push({name: 'inbox'}).then(
                             () => {
-                                this.tour.show('inbox-navbar');
-                                return this.tour.next();
+                                this.tour?.show('inbox-navbar');
+                                return this.tour?.next();
                             }
                             )
                         },
@@ -163,7 +159,7 @@ export default {
                         {
                         action: () => {
                             this.$router.push({name: 'home'}).then(
-                                () =>  {return this.tour.back()}
+                                () =>  {return this.tour?.back()}
                             )
                         },
                         secondary: true,
@@ -172,7 +168,7 @@ export default {
                         {
                         action: () => {
                             this.$router.push({name: 'inbox', params: {active: 0}}).then(
-                                () => {return this.tour.next()}
+                                () => {return this.tour?.next()}
                             )
                         },
                         text: this.$t('shared.tour.next')
@@ -190,7 +186,7 @@ export default {
                         {
                         action: () => {
                             this.$router.push({name: 'inbox', params: {active: null}}).then(
-                                () => {return this.tour.back()}
+                                () => {return this.tour?.back()}
                             )
                         },
                         secondary: true,
@@ -199,16 +195,16 @@ export default {
                         {
                         action: () => {
                             this.$router.push({name: 'inbox', params: {active: null}}).then(
-                                () => {return this.tour.next()}
+                                () => {return this.tour?.next()}
                             )
                         },
                         text: this.$t('shared.tour.next')
                         }
                     ],
                 },{
-                    id: 'pushNotification',
+                    id: 'push-subscribe',
                     text: this.$t('shared.tour.inbox.pushNotification'),
-                    modalOverlayOpeningPadding: -5,
+                    modalOverlayOpeningPadding: -4,
                     modalOverlayOpeningRadius: 10,
                     canClickTarget: true,
                     showOn: () => {
@@ -218,6 +214,23 @@ export default {
                         element: '#notification-trigger',
                         on: 'top'
                     },
+                    buttons: [
+                        {
+                        action: () => {
+                            this.$router.push({name: 'inbox', params: {active: 0}}).then(
+                                () => {return this.tour?.back()}
+                            )
+                        },
+                        secondary: true,
+                        text: this.$t('shared.tour.back')
+                        },
+                        {
+                        action: () => {
+                            return this.tour?.next()
+                        },
+                        text: this.$t('shared.tour.next')
+                        }
+                    ],
                 },{
                     id: 'gallery',
                     text: this.$t('shared.tour.gallery'),
@@ -238,7 +251,7 @@ export default {
                     buttons: [
                         {
                         action: () => {
-                            return this.tour.back();
+                            return this.tour?.back();
                         },
                         secondary: true,
                         text: this.$t('shared.tour.back')
@@ -246,7 +259,7 @@ export default {
                         {
                         action: () => {
                             this.dismissTour();
-                            this.tour.complete();
+                            this.tour?.complete();
                             this.$router.push({name: 'home'});
                         },
                         text: this.$t('shared.tour.finish')
@@ -264,7 +277,7 @@ export default {
         },
         startTour () {
             if(!localStorage.getItem('shepherd-tour')) {
-                this.tour.start();
+                this.tour?.start();
             }
         }
     }

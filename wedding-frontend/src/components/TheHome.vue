@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col">
     <div class="mx-auto">
-      <div class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-md prose lg:prose-lg">
-        <p class="mx-auto">{{ $t('thehome.hi', { 'a': profile?.user.first_name }) }}</p>
+      <div class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-md prose">
+        <p class="mx-auto">{{ $t('thehome.hi', { 'a': profile?.user?.first_name }) }}</p>
         <p class="mx-auto">{{ $t('thehome.weAreDelighted') }}</p>
         <p class="mx-auto">{{ $t('thehome.withLove') }} <br>
         {{ $t('thehome.priscillaAndLorenzo') }}</p>
@@ -16,12 +16,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import profile from '@/components/mixins/profile'
 import CountDown from '@/components/shared/CountDown.vue'
 import OnboardingTour from './shared/OnboardingTour.vue'
 
-export default {
+export default defineComponent({
   name: 'TheHome',
   components: {
     CountDown,
@@ -35,7 +36,7 @@ export default {
       endDate: new Date('2023-10-01T14:30:00.00Z'),
     }
   },
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

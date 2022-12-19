@@ -19,19 +19,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useInboxStore } from '@/stores/api.store'
 import { mapActions, mapState} from 'pinia'
 import ListView from '@/components/shared/list/ListView.vue'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'TheInbox',
   components: {
     ListView,
-  },
-  data () {
-    return {
-    }
   },
   computed: {
     ...mapState(useInboxStore, [
@@ -56,7 +53,7 @@ export default {
       'deleteResponses',
     ]),
   },
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

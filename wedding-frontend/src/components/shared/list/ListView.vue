@@ -1,11 +1,12 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class=" w-11/12 mx-auto max-w-5xl">
+  <div class="w-full mx-auto max-w-5xl">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full">
       <section id="list-view" class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%]  bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh] overflow-y-auto">
-        <label>
-          <input v-model="search" class="rounded-lg p-4 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
+        <label class="flex">
+          <push-subscribe></push-subscribe>
+          <input v-model.trim="search" class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral" :placeholder="$t('shared.listview.search')" />
         </label>
         <ul class="mt-1 overflow-y-scroll">
           <li v-for="(obj, idx) in searchedList" :key="obj.uuid" class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer" @click="setActive(idx)">
@@ -13,32 +14,32 @@
                   <img v-if="obj?.thumbnail" class="max-w-[40%] ml-5 rounded-md shadow-lg" :src="obj.thumbnail" alt="Information article thumbnail">
                   <div class="w-full mr-5 pl-5 text-right">
                     <h3 class=" text-lg font-semibold">{{ obj?.subject }}</h3>
-                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ listItemContent(obj?.content, 40) }}</div>
+                    <div class="-full text-md italic text-secondary dark:text-darkSecondary" >{{ listItemContent(obj?.content ?? '', 40) }}</div>
                   </div>
                 </div>
             </li>
-          <li v-if="searchedList?.length == 0 && objList.length">
-            <p>{{ $t('shared.listview.noMessage') }}</p>
+          <li v-if="searchedList?.length == 0 && objList?.length">
+            <p class="p-3">{{ $t('shared.listview.noMessage') }}</p>
           </li>
-          <li v-if="!objList.length">
-            <p>{{ $t('shared.listview.done') }}</p>
+          <li v-if="!objList?.length">
+            <p class="p-3">{{ $t('shared.listview.done') }}</p>
           </li>
         </ul>
       </section>
-      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject.uuid)"></detail-view>
+      <detail-view id="detail-view" :active="active" :active-object="activeObject" :searched-list="searchedList" :responses="responses" :class="{hidden: !viewDetail}" @hide-detail="hideDetail" @set-active="setActive" @submit-response="(response) => $emit('submitResponse', response, activeObject?.uuid)" @delete-responses="(response) => $emit('deleteResponses', activeObject?.uuid)"></detail-view>
     </main>
-    <push-subscribe></push-subscribe>
   </div> 
 </template>
 
-<script>
+<script lang="ts">
 import { marked } from 'marked';
 import LoadingView from '@/components/shared/LoadingView.vue';
 import PushSubscribe from '@/components/shared/PushSubscribe.vue';
 import DetailView from './DetailView.vue';
+import { defineComponent } from 'vue';
+import type { ResponseErrors,  ListObject, Response } from '@/models/listObjects.interface';
 
-
-export default {
+export default defineComponent({
   name: 'ListView',
   components: {
     LoadingView,
@@ -46,37 +47,37 @@ export default {
     PushSubscribe,
   },
   props: {
-    objList: {type: Array},
+    objList: {type: Array<ListObject>},
     loading: {type: Boolean},
     error: {type: Object},
     submitLoading: {type: Boolean},
-    submitError: {type:Object},
+    submitError: {type:Array<ResponseErrors>},
     submitSuccess: {type: Boolean},
     deleteLoading: {type: Boolean},
-    deleteError: {type: Object},
+    deleteError: {type: Array<ResponseErrors>},
     deleteSuccess: {type: Boolean},
   },
 emits: ['submitResponse', 'deleteResponses'],
   data () {
     return {
-      active: 0,
-      viewDetail: false,
-      responses: JSON.parse(localStorage.getItem('responses') ?? "[]"),
-      search: '',
+      active: 0 as number,
+      viewDetail: false as boolean,
+      responses: JSON.parse(localStorage.getItem('responses') ?? "[]") as Array<Response>,
+      search: '' as string,
     };
   },
   computed: {
-    searchedList () {
+    searchedList (): Array<ListObject> | undefined {
         if (!this.search) {
             return this.objList
         }
-        return this.objList.filter(obj => {
+        return this.objList?.filter(obj => {
             return (obj?.subject + obj?.content).toLowerCase()
             .search(this.search.toLowerCase()) != -1
         })
     },
-    activeObject () {
-      return this.objList ? this.objList[this.active] : null
+    activeObject (): ListObject | undefined {
+      return this.objList ? this.objList[this.active] : undefined
     },
   },
   watch: {
@@ -88,6 +89,7 @@ emits: ['submitResponse', 'deleteResponses'],
     }
   },
   mounted () {
+    this.responseSetup();
     this.refreshActive();
   },
   beforeUnmount () {
@@ -96,31 +98,31 @@ emits: ['submitResponse', 'deleteResponses'],
   methods: {
     refreshActive () {
       this.viewDetail = !!this.$route.params.active;
-      let parseActive = parseInt(this.$route.params.active);
+      let parseActive = parseInt(this.$route.params.active as string);
       if (Number.isSafeInteger(parseActive)) {
-        this.setActive(parseInt(this.$route.params.active));
+        this.setActive(parseInt(this.$route.params.active as string));
       }
     },
-    setActive(n){
+    setActive(n:number){
       if (n < 0) {
         n = 0;
       }
       this.$router.push(
         {
-          name: this.$route.name,
+          name: this.$route.name ?? undefined,
           params: {...this.$route.params, active: `${n}`},
         }
       )
       this.active = n;
       this.viewDetail = true;
     },
-    removeHtml (value) {
+    removeHtml (value:string):string {
       const div = document.createElement('div')
       div.innerHTML = value
       const text = div.textContent || div.innerText || ''
       return text
     },
-    truncate (value, length) {
+    truncate (value:string, length:number):string {
       if (!value) return "";
       value = value.toString();
       if (value.length > length) {
@@ -129,30 +131,33 @@ emits: ['submitResponse', 'deleteResponses'],
           return value;
       }
     },
-    listItemContent(content, chars=40) {
-      return content ? this.removeHtml(marked.parse(this.truncate(content, chars))) : null
+    listItemContent(content:string, chars:number=40):string {
+      return content ? this.removeHtml(marked.parse(this.truncate(content, chars))) : ''
     },
     hideDetail () {
       this.viewDetail = false;
-      this.$route.params.active = null;
-      this.$router.push({name: this.$route.name, params: {...this.$route.params}})
+      this.$route.params.active = '';
+      this.$router.push({
+        name: this.$route.name ?? undefined,
+        params: {...this.$route.params},
+      })
     },
     responseSetup () {
-      this.responses = [];
-      this.objList.forEach(obj => {
+      this.responses = new Array<Response>();
+      this.objList?.forEach(obj => {
         if (obj.questions?.length){
           obj.questions.forEach(question => {
               this.responses = [...this.responses, {
-              question: question.uuid,
-              option: question?.response?.option ?? [],
-              text: question?.response?.text ?? '',
+                question: question.uuid,
+                option: question?.response?.option ?? [],
+                text: question?.response?.text ?? '',
               }]
           })
         }
       })
     },
   }
-}
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
