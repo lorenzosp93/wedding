@@ -10,7 +10,7 @@
         </div>
       </div>
       <div v-show="loading || next" class="relative flex w-full mx-auto min-h-[50px]">
-        <div v-show="next && !loading" class="m-auto">
+        <div v-show="next && !loading" @click="getMoreGalleryContent" class="m-auto cursor-pointer">
           <chevron-double-down-icon class="h-10 w-10 md:h-12 md:w-12 pt-3.5 animate-bounce stroke-accent stroke-2"/>
         </div>
         <loading-view v-show="loading"></loading-view>
