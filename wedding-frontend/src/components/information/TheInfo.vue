@@ -1,54 +1,44 @@
 <template>
   <div>
-    <list-view
-      :obj-list="infosActiveType"
-      :loading="loading"
-      :error="error"
-    />
+    <list-view :obj-list="infosActiveType" :loading="loading" :error="error" />
   </div>
 </template>
 
 <script lang="ts">
-import { mapActions, mapState} from 'pinia';
-import { useInfoStore } from '@/stores/api.store.js';
-import ListView from '@/components/shared/list/ListView.vue';
-import { defineComponent } from 'vue';
+import { mapActions, mapState } from "pinia";
+import { useInfoStore } from "@/stores/api.store.js";
+import ListView from "@/components/shared/list/ListView.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'TheInfo',
+  name: "TheInfo",
   components: {
-    ListView
+    ListView,
   },
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
   computed: {
     ...mapState(useInfoStore, [
-      'infos',
-      'activeType',
-      'infosActiveType',
-      'infoTypes',
-      'loading',
-      'error',
+      "infos",
+      "activeType",
+      "infosActiveType",
+      "infoTypes",
+      "loading",
+      "error",
     ]),
   },
-  mounted () {
+  mounted() {
     this.getInfo();
     if (!this.activeType) {
-      this.activateType(this.$route.params.infoType as string)
+      this.activateType(this.$route.params.infoType as string);
     }
   },
   methods: {
-    ...mapActions(useInfoStore, [
-      'getInfo',
-      'activateType',
-    ]),
+    ...mapActions(useInfoStore, ["getInfo", "activateType"]),
   },
-})
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+<style scoped></style>
