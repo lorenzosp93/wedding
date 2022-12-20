@@ -12,7 +12,10 @@
 
 <script lang="ts">
 import { InformationCircleIcon } from "@heroicons/vue/24/outline";
+import { useNotificationStore } from "@/stores/notification.store";
 import Shepherd from "shepherd.js";
+
+const notificationStore = useNotificationStore();
 
 export default {
   name: "OnboardingTour",
@@ -231,7 +234,11 @@ export default {
             modalOverlayOpeningRadius: 10,
             canClickTarget: true,
             showOn: () => {
-              return "serviceWorker" in navigator && "PushManager" in window;
+              return (
+                "serviceWorker" in navigator &&
+                "PushManager" in window &&
+                !notificationStore.isSubscribed
+              );
             },
             attachTo: {
               element: "#notification-trigger",
