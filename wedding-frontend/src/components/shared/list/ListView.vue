@@ -16,29 +16,12 @@
           />
         </label>
         <ul class="mt-1 overflow-y-scroll">
-          <li
+          <list-item
             v-for="(obj, idx) in searchedList"
             :key="obj.uuid"
-            class="py-5 border-b px-3 transition hover:bg-pale hover:dark:bg-darkPale cursor-pointer"
             @click="setActive(idx)"
-          >
-            <div class="flex justify-between items-center">
-              <img
-                v-if="obj?.thumbnail"
-                class="max-w-[40%] ml-5 rounded-md shadow-lg"
-                :src="obj.thumbnail"
-                alt="Information article thumbnail"
-              />
-              <div class="w-full mr-5 pl-5 text-right">
-                <h3 class="text-lg font-semibold">{{ obj?.subject }}</h3>
-                <div
-                  class="-full text-md italic text-secondary dark:text-darkSecondary"
-                >
-                  {{ listItemContent(obj?.content ?? "", 40) }}
-                </div>
-              </div>
-            </div>
-          </li>
+            :obj="obj"
+          />
           <li v-if="searchedList?.length == 0 && objList?.length">
             <p class="p-3">{{ $t("shared.listview.noMessage") }}</p>
           </li>
@@ -68,16 +51,17 @@
 </template>
 
 <script lang="ts">
-import { marked } from "marked";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import PushSubscribe from "@/components/shared/PushSubscribe.vue";
 import DetailView from "./DetailView.vue";
-import { defineComponent } from "vue";
+import ListItem from "./ui/ListItem.vue";
+import { defineComponent, type PropType } from "vue";
 import type {
   ResponseErrors,
   ListObject,
   Response,
 } from "@/models/listObjects.interface";
+import type { AxiosError } from "axios";
 
 export default defineComponent({
   name: "ListView",
@@ -85,11 +69,12 @@ export default defineComponent({
     LoadingView,
     DetailView,
     PushSubscribe,
+    ListItem,
   },
   props: {
     objList: { type: Array<ListObject> },
     loading: { type: Boolean },
-    error: { type: Object },
+    error: { type: Object as PropType<AxiosError> },
     submitLoading: { type: Boolean },
     submitError: { type: Array<ResponseErrors> },
     submitSuccess: { type: Boolean },
@@ -158,26 +143,6 @@ export default defineComponent({
       });
       this.active = n;
       this.viewDetail = true;
-    },
-    removeHtml(value: string): string {
-      const div = document.createElement("div");
-      div.innerHTML = value;
-      const text = div.textContent || div.innerText || "";
-      return text;
-    },
-    truncate(value: string, length: number): string {
-      if (!value) return "";
-      value = value.toString();
-      if (value.length > length) {
-        return value.substring(0, length) + "...";
-      } else {
-        return value;
-      }
-    },
-    listItemContent(content: string, chars: number = 40): string {
-      return content
-        ? this.removeHtml(marked.parse(this.truncate(content, chars)))
-        : "";
     },
     hideDetail() {
       this.viewDetail = false;

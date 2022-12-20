@@ -1,7 +1,7 @@
 <template>
   <div v-show="tour" id="tour-trigger" class="absolute bottom-0 right-0 p-3">
     <button
-      aria-label="tour button"
+      :aria-label="$t('shared.onboardingtour.tourButton')"
       class="p-1 bg-neutral dark:bg-darkNeutral rounded-md"
       @click="tour?.start"
     >

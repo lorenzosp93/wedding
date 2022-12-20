@@ -2,7 +2,7 @@
   <div v-if="checkTechnology" class="flex">
     <div id="notification-trigger" class="p-2">
       <button
-        aria-label="notifications button"
+        :aria-label="$t('shared.pushsubscribe.notificationsButton')"
         class="bg-neutral dark:bg-darkNeutral p-1 rounded-md"
         @click="askPermission"
       >

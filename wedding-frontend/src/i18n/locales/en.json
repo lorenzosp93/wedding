@@ -24,12 +24,12 @@
     },
     "theprofile": {
       "email": "Email:",
-      "first_name": "First name: ",
+      "first_name": "First name:",
       "invite": "Invite +1",
       "last_name": "Last name(s):",
       "logOut": "Log out",
       "plusOne": "Available plus ones:",
-      "yourPlusOnes": " Your plus ones "
+      "yourPlusOnes": "Your plus ones"
     }
   },
   "shared": {
@@ -38,7 +38,7 @@
       "changeResponses": "Change your responses",
       "done": "You're all done for the day!",
       "loading": "Loading",
-      "noMessage": "Couldn't find any message that matches your search. ",
+      "noMessage": "Couldn't find any message that matches your search.",
       "other": "Other:",
       "search": "Search...",
       "submit": "Submit",
@@ -81,11 +81,25 @@
     },
     "loadingview": {
       "loadingSpinner": "loading spinner"
+    },
+    "list": {
+      "ui": {
+        "listitem": {
+          "youAlreadyReplied": "You already replied to this message.",
+          "youStillHavent": "You still haven't replied to this message."
+        }
+      }
+    },
+    "onboardingtour": {
+      "tourButton": "tour button"
+    },
+    "pushsubscribe": {
+      "notificationsButton": "notifications button"
     }
   },
   "thehome": {
     "hi": "Hi {a},",
-    "openYourInvitation": "\n          Open your invitation!\n        ",
+    "openYourInvitation": "Open your invitation!",
     "priscillaAndLorenzo": "Priscilla and Lorenzo",
     "weAreDelighted": "we are delighted to invite you to our wedding in Rome.\n          The Eternal City is where we found each other and fell in love, and we would love to have you join us in the celebration!",
     "withLove": "with love,"
@@ -93,7 +107,7 @@
   "theinvitation": {
     "envelope": "envelope",
     "envelopeflap": "envelope flap",
-    "scrollDown": "\n      Scroll down\n    ",
+    "scrollDown": "Scroll down",
     "danielCabreraUscangaAndReginaMatos": "Daniel Cabrera Uscanga and Regina Matos Cano",
     "canoCommunicateTheWeddingOfTheirDaughter": "announce the wedding of their",
     "priscillaWith": "daughter Priscilla with",
