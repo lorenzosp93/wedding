@@ -52,7 +52,7 @@
 import { defineComponent } from "vue";
 import { login } from "@/services/login.service";
 import LoadingView from "@/components/shared/LoadingView.vue";
-import type { AxiosError, AxiosResponse } from "axios";
+import type { AxiosError } from "axios";
 
 export default defineComponent({
   name: "LoginPage",

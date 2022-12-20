@@ -73,3 +73,7 @@ class Subscription(TimeStampable):
     user: models.Field  = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     endpoint: models.Field  = models.URLField()
     keys: models.Field  = models.OneToOneField(Keys, on_delete=models.CASCADE, null=True)
+    user_agent: models.Field = models.TextField()
+
+    class Meta:
+        unique_together = ['user', 'user_agent', 'endpoint']

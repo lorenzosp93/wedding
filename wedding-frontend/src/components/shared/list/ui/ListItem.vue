@@ -1,12 +1,6 @@
 <template>
   <li class="py-5 border-b px-3 transition cursor-pointer">
     <div class="flex justify-between items-center">
-      <img
-        v-if="obj?.thumbnail"
-        class="max-w-[40%] ml-5 rounded-md shadow-lg"
-        :src="obj.thumbnail"
-        alt="Information article thumbnail"
-      />
       <div class="w-full mr-5 pl-5 text-left">
         <h3 class="text-lg font-semibold">{{ obj?.subject }}</h3>
         <div
@@ -15,6 +9,12 @@
           {{ listItemContent(obj?.content ?? "", 40) }}
         </div>
       </div>
+      <img
+        v-if="obj?.thumbnail"
+        class="max-w-[40%] ml-5 rounded-md shadow-lg"
+        :src="obj.thumbnail"
+        alt="Information article thumbnail"
+      />
       <div v-if="hasResponses" class="group float-left relative mb-auto">
         <chat-bubble-left-right-icon class="w-6 h-6 stroke-secondary">
         </chat-bubble-left-right-icon>

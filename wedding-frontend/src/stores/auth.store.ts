@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
-import { API_URL, request } from '@/services/api.service'
-import i18n from '@/i18n';
+import { API_URL, axiosInstanceFactory } from '@/services/api.service'
 import type { Profile } from '@/models/auth.interface';
 import type { AxiosError, AxiosResponse } from 'axios';
+import i18n from '@/i18n';
 import router from '@/router';
+import { useNotificationStore } from '@/stores/notification.store'
+
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -19,7 +21,7 @@ export const useAuthStore = defineStore({
             // update pinia state
             this.token = token;
             this.loading = true;
-            await request().get(API_URL + '/api/user/profile/').then((response: AxiosResponse<Profile[]>) => {
+            await axiosInstanceFactory().get(API_URL + '/api/user/profile/').then((response: AxiosResponse<Profile[]>) => {
                 let profile = response.data.find((d: Profile) => d);
                 this.profile = profile;
                 this.loading = false;
@@ -30,6 +32,8 @@ export const useAuthStore = defineStore({
                     i18n.global.locale.value = this.profile.language;
                     localStorage.setItem('lang', this.profile.language);
                 }
+                const notificationStore = useNotificationStore();
+                notificationStore.checkIsSubscribed();
             }).catch(
                 (error: AxiosError) => {
                     this.loading = false;

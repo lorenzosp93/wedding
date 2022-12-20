@@ -26,7 +26,7 @@ export function getCSRFHeader(): RawAxiosRequestHeaders {
   return { 'X-CSRFToken': getCookie('csrftoken') }
 }
 
-export function request(post: boolean = false): AxiosInstance {
+export function axiosInstanceFactory(post: boolean = false): AxiosInstance {
   var headers = { ...authHeader() };
   headers = post ? { ...headers, ...getCSRFHeader() } : headers;
   const request = axios.create({
@@ -49,7 +49,7 @@ export function request(post: boolean = false): AxiosInstance {
 class ApiService {
 
   async setupPlusOne(email: string, first_name: string, last_name: string): Promise<AxiosResponse> {
-    return request(true).post(
+    return axiosInstanceFactory(true).post(
       API_URL + '/api/user/setup-plus-one/',
       {
         email,
@@ -60,11 +60,11 @@ class ApiService {
   }
 
   async getInboxContent(): Promise<AxiosResponse<Message[]>> {
-    return request().get(API_URL + '/api/inbox/message/')
+    return axiosInstanceFactory().get(API_URL + '/api/inbox/message/')
   }
 
   async postInboxResponse(question: string, option: string[] | string, text: string = ""): Promise<AxiosResponse> {
-    return request(true).post(
+    return axiosInstanceFactory(true).post(
       API_URL + '/api/inbox/response/',
       {
         "question": question,
@@ -75,19 +75,19 @@ class ApiService {
   }
 
   async deleteInboxResponse(response: string): Promise<AxiosResponse> {
-    return request().delete(
+    return axiosInstanceFactory().delete(
       `${API_URL}/api/inbox/response/${response}/`
     )
   }
 
   async getInfoContent(): Promise<AxiosResponse<Information[]>> {
-    return request().get(
+    return axiosInstanceFactory().get(
       API_URL + '/api/info/'
     )
   }
 
   async getGalleryContent(overrideLink: string | null = null): Promise<AxiosResponse<Gallery>> {
-    return request().get(
+    return axiosInstanceFactory().get(
       overrideLink ?? API_URL + '/api/photo/?limit=' + GALLERY_LIMIT
     )
   }

@@ -33,4 +33,7 @@ class SubscriptionViewset(ModelViewSet):
     serializer_class = SubscriptionSerializer
 
     def get_queryset(self) -> QuerySet[Subscription]:
-        return Subscription.objects.filter(user_pk=self.request.user.pk)
+        return Subscription.objects.filter(
+            user__pk=self.request.user.pk,
+            user_agent=self.request.META.get('HTTP_USER_AGENT')
+        )

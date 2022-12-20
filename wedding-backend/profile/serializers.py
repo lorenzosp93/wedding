@@ -95,9 +95,18 @@ class SubscriptionSerializer(ModelSerializer):
         keys_data = validated_data.pop('keys')
         request: HttpRequest | None = self.context.get('request')
         if request:
+            user_agent: str = self.get_user_agent(request)
             user = request.user
             keys = Keys.objects.create(**keys_data)
             subscription = Subscription.objects.create(
-                user=user, keys=keys, **validated_data)
+                user=user,
+                user_agent=user_agent,
+                keys=keys,
+                **validated_data,
+            )
             return subscription
         return None
+    
+    @staticmethod
+    def get_user_agent(request: HttpRequest) -> str:
+        return request.META.get('HTTP_USER_AGENT', '')
