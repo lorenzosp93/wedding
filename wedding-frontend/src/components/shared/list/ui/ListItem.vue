@@ -19,7 +19,7 @@
         <chat-bubble-left-right-icon class="w-6 h-6 stroke-secondary">
         </chat-bubble-left-right-icon>
         <span
-          class="absolute w-48 -left-52 top-1/2 -translate-y-1/2 hidden group-hover:flex z-50 bg-pale dark:bg-darkPale px-2 py-1 rounded-md shadow-lg h-fit before:content-[''] before:absolute before:top-1/2 before:left-[100%] before:-translate-y-1/2 before:border-8 before:border-pale dark:before:border-darkPale dark:before:border-r-transparent before:border-r-transparent dark:before:border-y-transparent before:border-y-transparent select-none"
+          class="absolute w-48 -left-52 top-1/2 -translate-y-1/2 hidden group-hover:flex bg-pale dark:bg-darkPale px-2 py-1 rounded-md shadow-lg h-fit before:content-[''] before:absolute before:top-1/2 before:left-[100%] before:-translate-y-1/2 before:border-8 before:border-pale dark:before:border-darkPale dark:before:border-r-transparent before:border-r-transparent dark:before:border-y-transparent before:border-y-transparent select-none"
           >{{ $t("shared.list.ui.listitem.youAlreadyReplied") }}</span
         >
       </div>
@@ -30,7 +30,7 @@
         <chat-bubble-left-icon class="w-6 h-6 stroke-accent">
         </chat-bubble-left-icon>
         <span
-          class="absolute w-48 -left-52 top-1/2 -translate-y-1/2 hidden group-hover:flex z-50 bg-pale dark:bg-darkPale px-2 py-1 rounded-md shadow-lg h-fit before:content-[''] before:absolute before:top-1/2 before:left-[100%] before:-translate-y-1/2 before:border-8 before:border-pale dark:before:border-darkPale dark:before:border-r-transparent before:border-r-transparent dark:before:border-y-transparent before:border-y-transparent select-none"
+          class="absolute w-48 -left-52 top-1/2 -translate-y-1/2 hidden group-hover:flex bg-pale dark:bg-darkPale px-2 py-1 rounded-md shadow-lg h-fit before:content-[''] before:absolute before:top-1/2 before:left-[100%] before:-translate-y-1/2 before:border-8 before:border-pale dark:before:border-darkPale dark:before:border-r-transparent before:border-r-transparent dark:before:border-y-transparent before:border-y-transparent select-none"
           >{{ $t("shared.list.ui.listitem.youStillHavent") }}</span
         >
       </div>
