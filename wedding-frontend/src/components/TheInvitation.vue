@@ -173,7 +173,7 @@ export default defineComponent({
         }, 0.2)
         .set('#envelopeFlap', {zIndex: 0}, 0.5)
         .to('#envelopeFlap, #sideFlaps, #bottomFlap, #base', {
-          y: `+=${window.innerHeight}`,
+          y: `+=${window.outerHeight}`,
           duration: 0.5,
           ease: 'none',
         }, 0.5)
