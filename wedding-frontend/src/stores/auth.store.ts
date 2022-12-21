@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia';
 import apiService from '@/services/api.service'
-import type { Profile, User } from '@/models/auth.interface';
+import type { Profile, User, UserError } from '@/models/auth.interface';
 import type { AxiosError, AxiosResponse } from 'axios';
 import i18n from '@/i18n';
 import router from '@/router';
 import { useNotificationStore } from '@/stores/notification.store'
+
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -14,6 +15,7 @@ export const useAuthStore = defineStore({
         profile: JSON.parse(localStorage.getItem('profile') ?? 'null') as Profile | undefined,
         loading: false as boolean,
         error: undefined as AxiosError | undefined,
+        registerError: undefined as UserError | undefined,
     }),
     actions: {
         async login(token: string) {
@@ -50,10 +52,12 @@ export const useAuthStore = defineStore({
         register (user: User) {
             this.loading = true;
             apiService.registerUser(user).then((response: AxiosResponse) => {
+                this.loading = false;
                 router.push('/login');
-            }).catch((error: AxiosError) => {
+            }).catch((error: AxiosError<UserError> ) => {
+                this.loading = false;
                 console.log(error);
-                this.error = error;
+                this.registerError = error?.response?.data;
             })
         }
     }

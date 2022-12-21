@@ -11,6 +11,13 @@
       "loginWasSuccessful": "Login was successful, please <b>check your inbox <em>(including the spam folder)</em> for your login link.</b>",
       "ifYouGetYourEmail": "If you get your mail in a different device or you're having trouble with the link, you can also enter the OTP code below.",
       "otp": "OTP code (6 digits)"
+    },
+    "registerpage": {
+      "registerPage": "\n        Register Page\n      ",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "welcomeToThe": "\n        Welcome to the registration page. Please enter your data as it appears\n        on the message that you received, and the email that you would like to\n        use to login.\n      "
     }
   },
   "profile": {
