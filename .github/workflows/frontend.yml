@@ -5,6 +5,7 @@ on:
     branches: [master, develop]
     paths:
       - "wedding-frontend/**"
+      - ".github/workflows/frontend.yml"
 
 jobs:
   test:
