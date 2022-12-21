@@ -116,11 +116,11 @@ export const useInboxStore = defineStore({
             responses.forEach(
                 response => {
                     if (activeMessage?.questions.some(q => q.uuid == response.question && !q.response)) {
-                        calls = [...calls, apiService.postInboxResponse(
-                            response.question ?? '',
-                            Array.isArray(response.option) ? response.option : response.option ? [response.option] : '',
-                            response.text,
-                        )];
+                        calls = [...calls, apiService.postInboxResponse({
+                            question: response.question ?? '',
+                            option: Array.isArray(response.option) ? response.option : response.option ? [response.option] : '',
+                            text: response.text,
+                        })];
                     }
                 }
             )

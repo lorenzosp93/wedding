@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia';
-import { API_URL, axiosInstanceFactory } from '@/services/api.service'
-import type { Profile } from '@/models/auth.interface';
+import apiService from '@/services/api.service'
+import type { Profile, User } from '@/models/auth.interface';
 import type { AxiosError, AxiosResponse } from 'axios';
 import i18n from '@/i18n';
 import router from '@/router';
 import { useNotificationStore } from '@/stores/notification.store'
-
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -21,7 +20,7 @@ export const useAuthStore = defineStore({
             // update pinia state
             this.token = token;
             this.loading = true;
-            await axiosInstanceFactory().get(API_URL + '/api/user/profile/').then((response: AxiosResponse<Profile[]>) => {
+            apiService.getUserProfile().then((response: AxiosResponse<Profile[]>) => {
                 let profile = response.data.find((d: Profile) => d);
                 this.profile = profile;
                 this.loading = false;
@@ -42,11 +41,20 @@ export const useAuthStore = defineStore({
                 }
             )
         },
-        logout() {
+        logout () {
             this.token = '';
             this.profile = undefined;
             localStorage.clear();
-            router.push('/login')
+            router.push('/login');
         },
+        register (user: User) {
+            this.loading = true;
+            apiService.registerUser(user).then((response: AxiosResponse) => {
+                router.push('/login');
+            }).catch((error: AxiosError) => {
+                console.log(error);
+                this.error = error;
+            })
+        }
     }
 });

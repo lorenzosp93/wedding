@@ -93,12 +93,7 @@ export default defineComponent({
   methods: {
     setupPlusOne() {
       this.loading = true;
-      console.log(this.submit);
-      ApiService.setupPlusOne(
-        this.submit.email,
-        this.submit.first_name,
-        this.submit.last_name
-      ).then(
+      ApiService.setupPlusOne(this.submit).then(
         (response) => {
           if (response.status == 200) {
             this.error = null;

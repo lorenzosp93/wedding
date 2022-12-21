@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { API_URL, axiosInstanceFactory } from '@/services/api.service'
+import apiService, { API_URL, axiosInstanceFactory } from '@/services/api.service'
 import type { AxiosError, AxiosResponse } from 'axios';
 import type { Subscription } from '@/models/listObjects.interface';
 
@@ -13,9 +13,7 @@ export const useNotificationStore = defineStore({
   }),
   actions: {
     checkIsSubscribed () {
-      axiosInstanceFactory().get(
-        `${API_URL}/api/user/subscription/`
-      ).then((response: AxiosResponse<Subscription[] | null>) => {
+      apiService.getUserSubscription().then((response: AxiosResponse<Subscription[]>) => {
         this.isSubscribed = !!response.data?.length;
         localStorage.setItem('notificationSubscribed', this.isSubscribed.toString())
       }).catch((error: AxiosError) => {
@@ -59,8 +57,7 @@ export const useNotificationStore = defineStore({
         });
     },
     async publishSubscription() {
-      axiosInstanceFactory(true).post(
-        `${API_URL}/api/user/subscription/`,
+      apiService.postUserSubscription(
         this.pushSubscription?.toJSON()
       ).then(() => {
         this.isSubscribed = true;
