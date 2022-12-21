@@ -1,5 +1,9 @@
+from django.utils.translation import gettext_lazy as _
+from django.forms import ValidationError
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.http import HttpRequest
 from django.db.models import Model
+from django.contrib.auth import get_user_model
 from rest_framework.serializers import (
     ModelSerializer, CharField, SerializerMethodField,
     Serializer, EmailField, BaseSerializer
@@ -110,3 +114,37 @@ class SubscriptionSerializer(ModelSerializer):
     @staticmethod
     def get_user_agent(request: HttpRequest) -> str:
         return request.META.get('HTTP_USER_AGENT', '')
+
+class RegisterUserSerializer(ModelSerializer):
+    user: AbstractBaseUser | None = None
+
+    def validate(self, attrs: dict[str, str]) -> dict[str, str]:
+        try:
+            self.user = self.Meta.model.objects.get(
+                first_name=attrs.get('first_name', '').strip(),
+                last_name=attrs.get('last_name', '').strip(),
+            )
+        except:
+            raise ValidationError({
+                "non_field_errors": _(
+                    """First and Last Name not found in invitee list,
+                    did you write it correcly?"""
+                )
+            })
+        if isinstance(self.user, AbstractUser) and self.user.email != '':
+            if self.user.email != attrs.get('email', ''):
+                raise ValidationError({
+                    "email": _("""A user was already set up for this invitee with a different email""")
+                })
+            raise ValidationError({
+                "non_field_errors": _("""A user was already set up for this invitee""")
+            }, code='302')
+        return super().validate(attrs)
+
+    class Meta:
+        model = get_user_model()
+        fields = [
+            'first_name',
+            'last_name',
+            'email'
+        ]
