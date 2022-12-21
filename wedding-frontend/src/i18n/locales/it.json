@@ -1,16 +1,24 @@
 {
   "auth": {
     "loginpage": {
-      "emailAddress": "indirizzo email",
+      "emailAddress": "Indirizzo email",
       "loading": "Caricamento in corso",
       "loginPage": "Pagina di login",
       "submit": "Invia",
-      "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}"
+      "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}",
+      "pleaseEnterYour": "Inserisci la tua e -mail per ricevere un link o un codice di accesso."
     },
     "loginsuccess": {
       "loginWasSuccessful": "L'accesso è riuscito, <b>controlla la tua casella di posta <em>(incluso la cartella di posta indesiderata)</em> per il tuo link di accesso.</b>",
       "ifYouGetYourEmail": "Se ricevi la posta su un altro dispositivo o hai problemi con il link, puoi anche inserire il codice OTP qui sotto.",
       "otp": "Codice OTP (6 cifre)"
+    },
+    "registerpage": {
+      "registerPage": "Pagina di registrazione",
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "email": "Email",
+      "welcomeToThe": "Benvenuto alla pagina di registrazione. Inserisci i tuoi dati come appaiono nel messaggio che hai ricevuto, e la mail che vorresti usare per fare login."
     }
   },
   "profile": {
@@ -75,16 +83,26 @@
     },
     "countdown": {
       "days": "giorni",
-      "days1": "giorni",
       "hours": "ore",
-      "hours1": "ore",
       "minutes": "minuti",
-      "minutes1": "minuti",
-      "seconds": "secondi",
-      "seconds1": "secondi"
+      "seconds": "secondi"
     },
     "loadingview": {
-      "loadingSpinner": "loading spinner"
+      "loadingSpinner": "caricamento"
+    },
+    "list": {
+      "ui": {
+        "listitem": {
+          "youAlreadyReplied": "Hai già risposto a questo messaggio.",
+          "youStillHavent": "Non hai ancora risposto a questo messaggio."
+        }
+      }
+    },
+    "onboardingtour": {
+      "tourButton": "pulsante tour"
+    },
+    "pushsubscribe": {
+      "notificationsButton": "pulsante delle notifiche"
     }
   },
   "thehome": {
@@ -116,8 +134,7 @@
     "paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
     "888LomasDeAngelopolis": "888, Lomas de Angelopolis",
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
-    "envelopeFlap": "Envelope flap",
-    "waxSealOn": "Wax seal on the envelope"
-  },
-  "thegallery": {}
+    "envelopeFlap": "Lembo della busta",
+    "waxSealOn": "Sigillo di cera sulla busta"
+  }
 }

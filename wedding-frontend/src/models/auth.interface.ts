@@ -26,3 +26,10 @@ export interface User {
     last_name: string;
     email: string;
 }
+
+export interface UserError {
+    first_name: string[];
+    last_name: string[];
+    email: string[];
+    non_field_errors: string[];
+};

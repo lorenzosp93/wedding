@@ -1,16 +1,24 @@
 {
   "auth": {
     "loginpage": {
-      "emailAddress": "Dirección de correo electrónico",
+      "emailAddress": "Login",
       "loading": "Cargando",
       "loginPage": "Página de inicio de sesión",
       "submit": "Enviar",
-      "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}"
+      "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}",
+      "pleaseEnterYour": "Ingrese su correo electrónico para recibir un enlace o código de inicio de sesión."
     },
     "loginsuccess": {
       "loginWasSuccessful": "El inicio de sesión fue exitoso, <b>verifique tu bandeja de entrada <em>(incluso la carpeta de spam)</em> para obtener tu enlace de inicio de sesión.</b>",
       "ifYouGetYourEmail": "Si recibes tu correo en un dispositivo diferente o tienes problemas con el enlace, también puedes ingresar el código OTP a continuación.",
       "otp": "Codigo OTP (6 dígitos)"
+    },
+    "registerpage": {
+      "registerPage": "Página de registración",
+      "firstName": "Nombre",
+      "lastName": "Apellido(s)",
+      "email": "Email",
+      "welcomeToThe": "Bienvenido a la página de registro. Ingrese sus datos como aparecen en el mensaje que recibió y el correo electrónico que desea usar para iniciar sesión."
     }
   },
   "profile": {
@@ -24,12 +32,12 @@
     },
     "theprofile": {
       "email": "Correo electrónico:",
-      "first_name": "Nombre: ",
+      "first_name": "Nombre:",
       "invite": "Invitar +1",
       "last_name": "Apellido(s):",
       "logOut": "Cerrar sesión",
       "plusOne": "+1 disponbiles:",
-      "yourPlusOnes": " Tus +1"
+      "yourPlusOnes": "Tus +1"
     }
   },
   "shared": {
@@ -75,16 +83,26 @@
     },
     "countdown": {
       "days": "días",
-      "days1": "días",
       "hours": "horas",
-      "hours1": "horas",
       "minutes": "minutos",
-      "minutes1": "minutos",
-      "seconds": "segundos",
-      "seconds1": "segundos"
+      "seconds": "segundos"
     },
     "loadingview": {
-      "loadingSpinner": "loading spinner"
+      "loadingSpinner": "carga"
+    },
+    "list": {
+      "ui": {
+        "listitem": {
+          "youAlreadyReplied": "Ya respondiste a este mensaje.",
+          "youStillHavent": "Todavía no has respondido a este mensaje."
+        }
+      }
+    },
+    "onboardingtour": {
+      "tourButton": "botón de recorrido"
+    },
+    "pushsubscribe": {
+      "notificationsButton": "boton de notificaciones"
     }
   },
   "thehome": {
@@ -116,8 +134,7 @@
     "paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
     "888LomasDeAngelopolis": "888, Lomas de Angelópolis",
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
-    "envelopeFlap": "Envelope flap",
-    "waxSealOn": "Wax seal on the envelope"
-  },
-  "thegallery": {}
+    "envelopeFlap": "Solapa de sobre",
+    "waxSealOn": "Sello de cera en el sobre"
+  }
 }

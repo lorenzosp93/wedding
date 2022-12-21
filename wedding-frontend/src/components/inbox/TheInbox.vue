@@ -13,50 +13,47 @@
       @submit-response="submitResponse"
       @delete-responses="deleteResponses"
     >
-    <template #search>
-    </template>
+      <template #search> </template>
     </list-view>
   </div>
 </template>
 
 <script lang="ts">
-import { useInboxStore } from '@/stores/api.store'
-import { mapActions, mapState} from 'pinia'
-import ListView from '@/components/shared/list/ListView.vue'
-import { defineComponent } from 'vue'
+import { useInboxStore } from "@/stores/api.store";
+import { mapActions, mapState } from "pinia";
+import ListView from "@/components/shared/list/ListView.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'TheInbox',
+  name: "TheInbox",
   components: {
     ListView,
   },
   computed: {
     ...mapState(useInboxStore, [
-      'inbox',
-      'inboxLoading',
-      'error',
-      'submitLoading',
-      'submitSuccess',
-      'submitError',
-      'deleteLoading',
-      'deleteSuccess',
-      'deleteError',
+      "inbox",
+      "inboxLoading",
+      "error",
+      "submitLoading",
+      "submitSuccess",
+      "submitError",
+      "deleteLoading",
+      "deleteSuccess",
+      "deleteError",
     ]),
   },
-  mounted () {
+  mounted() {
     this.getInbox();
   },
   methods: {
     ...mapActions(useInboxStore, [
-      'getInbox',
-      'submitResponse',
-      'deleteResponses',
+      "getInbox",
+      "submitResponse",
+      "deleteResponses",
     ]),
   },
-})
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+<style scoped></style>

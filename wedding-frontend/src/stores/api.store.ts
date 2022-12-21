@@ -3,8 +3,8 @@ import apiService from '@/services/api.service';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { defineStore } from 'pinia';
 
-const INFOS_LIFETIME = 60 // minutes
-const GALLERY_LIFETIME = 60 // minutes
+const INFOS_TTL = 60 // minutes
+const GALLERY_TTL = 60 // minutes
 
 export const useInfoStore = defineStore({
     id: 'info',
@@ -42,16 +42,7 @@ export const useInfoStore = defineStore({
                 this.loading = true;
                 apiService.getInfoContent().then(
                     (response: AxiosResponse<Information[]>) => {
-                        this.infos = response.data;
-                        this.loading = false;
-                        let infosExpiry = new Date();
-                        infosExpiry.setTime(
-                            infosExpiry.getTime() + INFOS_LIFETIME * 60 * 1000
-                        );
-                        this.infosExpiry = infosExpiry.valueOf();
-                        this.activeType = this.infos.find(info => info)?.type;
-                        localStorage.setItem('infos', JSON.stringify(this.infos));
-                        localStorage.setItem('infosExpiry', this.infosExpiry.toString());
+                        this.handleResponse(response);
                     }
                 ).catch(
                     (error: AxiosError) => {
@@ -65,7 +56,24 @@ export const useInfoStore = defineStore({
         activateType(type: string) {
             this.activeType = type;
         },
-
+        handleResponse(response: AxiosResponse<Information[]>) {
+            this.infos = response.data;
+            this.loading = false;
+            this.setExpiry();
+            this.activeType = this.infos.find(info => info)?.type;
+            this.persistInfo();
+        },
+        persistInfo() {
+            localStorage.setItem('infos', JSON.stringify(this.infos));
+            localStorage.setItem('infosExpiry', this.infosExpiry.toString());
+        },
+        setExpiry() {
+            let infosExpiry = new Date();
+            infosExpiry.setTime(
+                infosExpiry.getTime() + INFOS_TTL * 60 * 1000
+            );
+            this.infosExpiry = infosExpiry.valueOf();
+        }
     },
 });
 
@@ -108,11 +116,11 @@ export const useInboxStore = defineStore({
             responses.forEach(
                 response => {
                     if (activeMessage?.questions.some(q => q.uuid == response.question && !q.response)) {
-                        calls = [...calls, apiService.postInboxResponse(
-                            response.question ?? '',
-                            Array.isArray(response.option) ? response.option : response.option ? [response.option] : '',
-                            response.text,
-                        )];
+                        calls = [...calls, apiService.postInboxResponse({
+                            question: response.question ?? '',
+                            option: Array.isArray(response.option) ? response.option : response.option ? [response.option] : '',
+                            text: response.text,
+                        })];
                     }
                 }
             )
@@ -188,19 +196,7 @@ export const useGalleryStore = defineStore({
                 this.loading = true;
                 apiService.getGalleryContent(this.next).then(
                     (response: AxiosResponse<Gallery>) => {
-                        this.gallery = [...this.gallery, ...response.data.results];
-                        this.next = response.data.next;
-                        this.loading = false;
-                        let galleryExpiry = new Date();
-                        galleryExpiry.setTime(
-                            galleryExpiry.getTime() + GALLERY_LIFETIME * 60 * 1000
-                        );
-                        this.galleryExpiry = galleryExpiry.valueOf();
-                        if (!force) { // set properties for persistence upon refresh
-                            localStorage.setItem('gallery', JSON.stringify(this.gallery));
-                            localStorage.setItem('galleryExpiry', this.galleryExpiry.toString());
-                            localStorage.setItem('galleryNext', this.next ?? '');
-                        }
+                        this.handleResponse(response, force);
                     }
                 ).catch(
                     (error: AxiosError) => {
@@ -209,5 +205,31 @@ export const useGalleryStore = defineStore({
                 )
             }
         },
-    }
+        handleResponse(response: AxiosResponse<Gallery>, force: boolean): void {
+            let gallery = new Set([...this.gallery, ...response.data.results]);
+            this.gallery = Array.from(gallery);
+            this.next = response.data.next;
+            this.loading = false;
+            this.setExpiry();
+            this.persistGallery(force);
+        },
+        persistGallery(force: boolean): void {
+            if (!force) { // set properties for persistence upon refresh
+                localStorage.setItem('gallery', JSON.stringify(this.gallery));
+                localStorage.setItem('galleryExpiry', this.galleryExpiry.toString());
+                localStorage.setItem('galleryNext', this.next ?? '');
+            }
+        },
+        setExpiry(): void {
+            let galleryExpiry = new Date();
+            galleryExpiry.setTime(
+                galleryExpiry.getTime() + GALLERY_TTL * 60 * 1000
+            );
+            this.galleryExpiry = galleryExpiry.valueOf();
+        },
+    },
 })
+
+
+
+

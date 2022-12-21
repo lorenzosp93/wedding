@@ -5,13 +5,16 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
-from django.urls import URLPattern, URLResolver, path
-from .models import UserProfile
+from django.urls import URLPattern, path
+from .models import UserProfile, Subscription
 
 # Register your models here.
 
 admin.site.unregister(get_user_model())
 
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'endpoint',)
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):

@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-13 09:18+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2022-12-21 13:48+0000\n"
+"PO-Revision-Date: 2022-12-21 14:50+0100\n"
+"Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
+"Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: inbox/serializers.py:44
 msgid "Text must be provided if no option is selected"
@@ -24,11 +24,11 @@ msgstr "Se debe proporcionar texto si no se selecciona ninguna opción"
 
 #: inbox/serializers.py:47
 msgid "Please choose an option"
-msgstr "Por favor selecciona una opción"
+msgstr "Por favor, seleccione una opción"
 
 #: inbox/serializers.py:51
 msgid "Text must be provided"
-msgstr "Se debe proporcionar texto"
+msgstr "Debe facilitarse el texto"
 
 #: info/models.py:14
 msgid "Venues"
@@ -40,7 +40,7 @@ msgstr "Comida"
 
 #: info/models.py:16
 msgid "Attractions"
-msgstr "Attracciónes"
+msgstr "Atracciones"
 
 #: info/models.py:17
 msgid "Tips"
@@ -78,20 +78,61 @@ msgstr "Cena"
 msgid "Dance"
 msgstr "Baile"
 
+#: profile/serializers.py:130
+msgid ""
+"First and Last Name not found in invitee list,\n"
+"                    did you write it correcly?"
+msgstr ""
+"No se encuentra el nombre y apellidos en la lista de invitados,\n"
+"                    ¿lo has escrito correctamente?"
+
+#: profile/serializers.py:140
+msgid "A user was already set up for this invitee with a different email"
+msgstr ""
+"Ya se ha configurado un usuario para este invitado con una dirección de "
+"correo electrónico diferente"
+
+#: profile/views.py:25
+msgid "An error occurred creating your profile, please try again later."
+msgstr ""
+"Se ha producido un error al crear su perfil, inténtelo de nuevo más tarde."
+
+#: profile/views.py:29
+msgid "Profile created successfully, please proceed with login."
+msgstr "Perfil creado con éxito, por favor proceda con el inicio de sesión."
+
+#: profile/views.py:33
+msgid "Profile already exists, please proceed with login."
+msgstr "El perfil ya existe, por favor proceda con el inicio de sesión."
+
+#: profile/views.py:57
+#, python-format
+msgid "User %(email)s created"
+msgstr "Usuario %(email)s creado"
+
+#: profile/views.py:62
+#, python-format
+msgid "User %(email)s exists already"
+msgstr "El usuario %(email)s ya existe"
+
+#: profile/views.py:66
+msgid "No plus-one available"
+msgstr "No hay plus-one disponible"
+
 #: shared/advanced_models.py:75
 #, python-format
 msgid "There is a new message for you: %(subject)s"
 msgstr "Hay un nuevo mensaje por ti: %(subject)s"
 
-#: shared/models.py:14
+#: shared/models.py:19
 msgid "English"
 msgstr "Inglés"
 
-#: shared/models.py:15
+#: shared/models.py:20
 msgid "Italian"
 msgstr "Italiano"
 
-#: shared/models.py:16
+#: shared/models.py:21
 msgid "Spanish"
 msgstr "Español"
 

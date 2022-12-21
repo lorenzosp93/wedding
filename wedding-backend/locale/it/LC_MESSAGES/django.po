@@ -3,21 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-13 09:18+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2022-12-21 13:48+0000\n"
+"PO-Revision-Date: 2022-12-21 14:49+0100\n"
+"Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
+"Language-Team: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
+"X-Generator: Poedit 3.2.2\n"
 
 #: inbox/serializers.py:44
 msgid "Text must be provided if no option is selected"
@@ -25,11 +24,11 @@ msgstr "Occorre inserire del testo se non si sceglie alcuna opzione"
 
 #: inbox/serializers.py:47
 msgid "Please choose an option"
-msgstr "Scegliere una opzione"
+msgstr "Scegliere un'opzione"
 
 #: inbox/serializers.py:51
 msgid "Text must be provided"
-msgstr "Occorre fornire del testo"
+msgstr "Il testo deve essere fornito"
 
 #: info/models.py:14
 msgid "Venues"
@@ -79,22 +78,60 @@ msgstr "Cena"
 msgid "Dance"
 msgstr "Ballo"
 
+#: profile/serializers.py:130
+msgid ""
+"First and Last Name not found in invitee list,\n"
+"                    did you write it correcly?"
+msgstr ""
+"Il nome e il cognome non sono stati trovati nell'elenco degli invitati,\n"
+"                    l'hai scritto correttamente?"
+
+#: profile/serializers.py:140
+msgid "A user was already set up for this invitee with a different email"
+msgstr "Per questo invitato è già stato impostato un utente con un'email diversa"
+
+#: profile/views.py:25
+msgid "An error occurred creating your profile, please try again later."
+msgstr "Si è verificato un errore nella creazione del profilo, riprovare più tardi."
+
+#: profile/views.py:29
+msgid "Profile created successfully, please proceed with login."
+msgstr "Profilo creato con successo, procedere con il login."
+
+#: profile/views.py:33
+msgid "Profile already exists, please proceed with login."
+msgstr "Il profilo esiste già, procedere con il login."
+
+#: profile/views.py:57
+#, python-format
+msgid "User %(email)s created"
+msgstr "Utente %(email)s creato"
+
+#: profile/views.py:62
+#, python-format
+msgid "User %(email)s exists already"
+msgstr "L'utente %(email)s esiste già"
+
+#: profile/views.py:66
+msgid "No plus-one available"
+msgstr "Non è disponibile il plus-one"
+
 #: shared/advanced_models.py:75
 #, python-format
 msgid "There is a new message for you: %(subject)s"
 msgstr "C'è un nuovo messaggio per te: %(subject)s"
 
-#: shared/models.py:14
+#: shared/models.py:19
 msgid "English"
-msgstr "inglese"
+msgstr "Inglese"
 
-#: shared/models.py:15
+#: shared/models.py:20
 msgid "Italian"
-msgstr "italiano"
+msgstr "Italiano"
 
-#: shared/models.py:16
+#: shared/models.py:21
 msgid "Spanish"
-msgstr "spagnolo"
+msgstr "Spagnolo"
 
 #: shared/utils.py:35
 #, python-format
@@ -107,7 +144,7 @@ msgstr "Il tuo link di accesso"
 
 #: templates/token_email.html:6
 msgid "Please click the link below to access the invitee area."
-msgstr "Clicca il link sotto per accedere all'area per gli invitati"
+msgstr "Fare clic sul link sottostante per accedere all'area riservata agli invitati."
 
 #: templates/token_email.html:16
 msgid "Click here"
@@ -115,8 +152,7 @@ msgstr "Clicca quì"
 
 #: templates/token_email.html:24
 msgid "Alternatively, you can input the following code on the login page."
-msgstr ""
-"In alternativa, puoi inserire il seguente codice nella pagina di accesso."
+msgstr "In alternativa, puoi inserire il seguente codice nella pagina di accesso."
 
 #, fuzzy
 #~| msgid "Text must be provided"

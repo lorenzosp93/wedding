@@ -3,6 +3,7 @@ from io import BytesIO
 import os
 import uuid
 from PIL import Image
+from PIL.ImageOps import exif_transpose
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
@@ -10,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.html import strip_tags
-from wedding.settings import AUTH_USER_MODEL, MEDIA_URL, BASE_DIR
+from wedding.settings import AUTH_USER_MODEL
 
 
 THUMBNAIL_SIZE = 640, 640
@@ -221,7 +222,7 @@ class HasPicture(models.Model):
             self.thumbnail.save(save_path, suf, save=False)
 
     def create_thumb(self, img: Image.Image) -> Image.Image:
-        thumb = img.copy()
+        thumb = exif_transpose(img)
         thumb.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
         return thumb
 
