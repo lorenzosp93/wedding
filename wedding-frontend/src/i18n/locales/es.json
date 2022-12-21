@@ -1,7 +1,7 @@
 {
   "auth": {
     "loginpage": {
-      "emailAddress": "Dirección de correo electrónico",
+      "emailAddress": "Login",
       "loading": "Cargando",
       "loginPage": "Página de inicio de sesión",
       "submit": "Enviar",

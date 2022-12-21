@@ -23,7 +23,7 @@
         }}</router-link>
       </div>
     </div>
-    <onboarding-tour></onboarding-tour>
+    <onboarding-tour v-if="profile"></onboarding-tour>
   </div>
 </template>
 

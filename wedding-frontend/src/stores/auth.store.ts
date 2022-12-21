@@ -12,7 +12,7 @@ export const useAuthStore = defineStore({
     state: () => ({
         // initialize state from local storage to enable user to stay logged in
         token: localStorage.getItem('token') as string,
-        profile: JSON.parse(localStorage.getItem('profile') ?? 'null') as Profile | undefined,
+        profile: JSON.parse(localStorage.getItem('profile') ?? "null") ?? undefined as Profile | undefined,
         loading: false as boolean,
         error: undefined as AxiosError | undefined,
         registerError: undefined as UserError | undefined,
@@ -29,9 +29,9 @@ export const useAuthStore = defineStore({
                 localStorage.setItem('profile', JSON.stringify(profile));
                 // store user details and jwt in local storage to keep user logged in between page refreshes
                 localStorage.setItem('token', token);
-                if (this.profile?.language) {
-                    i18n.global.locale.value = this.profile.language;
-                    localStorage.setItem('lang', this.profile.language);
+                if (profile?.language) {
+                    i18n.global.locale.value = profile.language;
+                    localStorage.setItem('lang', profile.language);
                 }
                 const notificationStore = useNotificationStore();
                 notificationStore.checkIsSubscribed();
