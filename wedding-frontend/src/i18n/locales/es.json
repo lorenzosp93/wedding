@@ -5,7 +5,8 @@
       "loading": "Cargando",
       "loginPage": "Página de inicio de sesión",
       "submit": "Enviar",
-      "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}"
+      "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}",
+      "pleaseEnterYour": "Ingrese su correo electrónico para recibir un enlace o código de inicio de sesión."
     },
     "loginsuccess": {
       "loginWasSuccessful": "El inicio de sesión fue exitoso, <b>verifique tu bandeja de entrada <em>(incluso la carpeta de spam)</em> para obtener tu enlace de inicio de sesión.</b>",

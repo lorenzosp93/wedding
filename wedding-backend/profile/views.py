@@ -15,22 +15,22 @@ def register_user(request: Request) -> Response:
     if serializer.is_valid():
         user = serializer.user
         data = serializer.validated_data
-        if user and isinstance(user, AbstractUser):
+        if user and isinstance(user, AbstractUser) and user.email == '':
             try:
                 user.email = user.username = data.get('email')
                 user.save()
             except:
                 return Response(
                     status=500,
-                    data={"non_field_errors": _("An error occurred creating your profile, please try again later")},
+                    data={"non_field_errors": _("An error occurred creating your profile, please try again later.")},
                 )
             return Response(
-                status=200,
-                data=_("Profile created successfully"),
+                status=201,
+                data=_("Profile created successfully, please proceed with login."),
             )
         return Response(
-            status=500,
-            data={"non_field_errors": _("User is not configured correctly, please try again later")},
+            status=200,
+            data=_("Profile already exists, please proceed with login."),
         )
     return Response(
         status=400,
@@ -53,7 +53,7 @@ def setup_plus_one(request: Request) -> Response:
         )
         if (user is not None) & created:
             return Response(
-                status=200,
+                status=201,
                 data=_("User %(email)s created" % {'email': user.email}),
             )
         elif user:

@@ -3,67 +3,84 @@
     <div
       class="bg-pale dark:bg-darkPale p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-full max-w-xl shadow-lg"
     >
-      <h1 class="text-lg font-bold dark:text-darkNeutral my-2">
+      <h1 class="text-lg font-bold dark:text-darkNeutral py-2">
         {{ $t("auth.registerpage.registerPage") }}
       </h1>
-      <p class="dark:text-darkNeutral mb-2">
+      <p class="dark:text-darkNeutral pb-2">
         {{ $t("auth.registerpage.welcomeToThe") }}
       </p>
-      <form class="flex flex-col" @submit="register(user)">
-        <label
-          class="block mx-auto my-1 dark:text-darkNeutral"
-          for="email_input"
-          >{{ $t("auth.registerpage.firstName") }}</label
-        >
-        <p
-          v-if="registerError?.first_name?.length"
-          class="text-alert font-bold text-sm mx-auto pb-1"
-        >
-          {{ registerError.first_name[0] }}
-        </p>
-        <input
-          id="email_input"
-          v-model.trim="user.first_name"
-          class="block bg-neutral dark:bg-darkNeutral rounded-md mx-auto px-2 w-full max-w-xs mb-1"
-          type="email"
-        />
-        <label
-          class="block mx-auto my-1 dark:text-darkNeutral"
-          for="email_input"
-          >{{ $t("auth.registerpage.lastName") }}</label
-        >
-        <p
-          v-if="registerError?.last_name?.length"
-          class="text-alert font-bold text-sm mx-auto pb-1"
-        >
-          {{ registerError.last_name[0] }}
-        </p>
-        <input
-          id="email_input"
-          v-model.trim="user.last_name"
-          class="block bg-neutral dark:bg-darkNeutral rounded-md mx-auto px-2 w-full max-w-xs mb-1"
-          type="email"
-        />
-        <label
-          class="block mx-auto my-1 dark:text-darkNeutral"
-          for="email_input"
-          >{{ $t("auth.registerpage.email") }}</label
-        >
-        <p
-          v-if="registerError?.email?.length"
-          class="text-alert font-bold text-sm mx-auto pb-1"
-        >
-          {{ registerError.email[0] }}
-        </p>
-        <input
-          id="email_input"
-          v-model.trim="user.email"
-          class="block bg-neutral dark:bg-darkNeutral rounded-md mx-auto px-2 w-full max-w-xs mb-1"
-          type="email"
-        />
+      <form class="flex flex-col mt-3" @submit="register(user)">
+        <div class="grid grid-cols-6 gap-5 mx-3 mb-3">
+          <div class="col-span-6 sm:col-span-3">
+            <div class="flex flex-wrap">
+              <label
+                class="block dark:text-darkNeutral pb-0.5 my-auto"
+                for="last_name_input"
+                >{{ $t("auth.registerpage.firstName") }}</label
+              >
+              <p
+                v-if="registerError?.first_name?.length"
+                class="text-alert ml-auto my-auto"
+              >
+                {{ registerError.first_name[0] }}
+              </p>
+            </div>
+            <input
+              id="first_name_input"
+              v-model.trim="user.first_name"
+              class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1"
+              type="text"
+              required
+            />
+          </div>
+          <div class="col-span-6 sm:col-span-3">
+            <div class="flex flex-wrap">
+              <label
+                class="block dark:text-darkNeutral pb-0.5 my-auto"
+                for="last_name_input"
+                >{{ $t("auth.registerpage.lastName") }}</label
+              >
+              <p
+                v-if="registerError?.last_name?.length"
+                class="text-alert ml-auto my-auto"
+              >
+                {{ registerError.last_name[0] }}
+              </p>
+            </div>
+            <input
+              id="last_name_input"
+              v-model.trim="user.last_name"
+              class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1"
+              type="text"
+              required
+            />
+          </div>
+          <div class="col-span-6">
+            <div class="flex flex-wrap">
+              <label
+                class="block dark:text-darkNeutral pb-0.5 my-auto"
+                for="email_input"
+                >{{ $t("auth.registerpage.email") }}</label
+              >
+              <p
+                v-if="registerError?.email?.length"
+                class="text-alert ml-auto my-auto"
+              >
+                {{ registerError.email[0] }}
+              </p>
+            </div>
+            <input
+              id="email_input"
+              v-model.trim="user.email"
+              class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1"
+              type="email"
+              required
+            />
+          </div>
+        </div>
         <button
           v-if="!loading"
-          class="flex mx-auto my-2 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
+          class="flex ml-auto mr-3 my-2 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
           type="submit"
           @click.prevent="register(user)"
         >
@@ -74,7 +91,7 @@
         </div>
         <p
           v-if="!!registerError?.non_field_errors"
-          class="text-alert font-bold text-sm mx-auto py-2"
+          class="text-alert mx-auto py-2 text-center"
         >
           {{
             $t("auth.loginpage.thereWasAn", {

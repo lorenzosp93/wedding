@@ -47,13 +47,16 @@ export const useAuthStore = defineStore({
             this.token = '';
             this.profile = undefined;
             localStorage.clear();
-            router.push('/login');
+            router.push({name: 'login'});
         },
         register (user: User) {
             this.loading = true;
-            apiService.registerUser(user).then((response: AxiosResponse) => {
+            apiService.registerUser(user).then((response: AxiosResponse<string>) => {
                 this.loading = false;
-                router.push('/login');
+                router.push({name: 'login', query: {
+                    email: user.email,
+                    message: response.data,
+                }});
             }).catch((error: AxiosError<UserError> ) => {
                 this.loading = false;
                 console.log(error);

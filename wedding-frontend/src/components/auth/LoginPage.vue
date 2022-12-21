@@ -3,30 +3,34 @@
     <div
       class="bg-pale dark:bg-darkPale p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-full max-w-xl shadow-lg"
     >
-      <h1 class="text-lg font-bold dark:text-darkNeutral my-2">
+      <h1 class="text-lg font-bold dark:text-darkNeutral py-2">
         {{ $t("auth.loginpage.loginPage") }}
       </h1>
-      <form class="flex flex-col" @submit="handleLogin()">
-        <label
-          class="block mx-auto my-1 dark:text-darkNeutral"
-          for="email_input"
-          >{{ $t("auth.loginpage.emailAddress") }}</label
-        >
-        <p
-          v-if="error?.email"
-          class="text-alert font-bold text-sm mx-auto pb-1"
-        >
-          {{ error.email[0] }}
-        </p>
-        <input
-          id="email_input"
-          v-model.trim="email"
-          class="block bg-neutral dark:bg-darkNeutral rounded-md mx-auto px-2 w-full max-w-xs mb-1"
-          type="email"
-        />
+      <p class="dark:text-darkNeutral pb-2">
+        {{ $t("auth.loginpage.pleaseEnterYour") }}
+      </p>
+      <form class="flex flex-col mt-3" @submit="handleLogin()">
+        <div class="max-w-sm mx-auto w-full">
+          <div class="flex flex-wrap">
+            <label
+              class="block dark:text-darkNeutral pb-0.5 my-auto"
+              for="email_input"
+              >{{ $t("auth.loginpage.emailAddress") }}</label
+            >
+            <p v-if="error?.email" class="text-alert ml-auto my-auto">
+              {{ error.email[0] }}
+            </p>
+          </div>
+          <input
+            id="email_input"
+            v-model.trim="email"
+            class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1"
+            type="email"
+          />
+        </div>
         <button
           v-if="!loading"
-          class="flex mx-auto my-2 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
+          class="flex mx-auto my-3 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
           type="submit"
           @click.prevent="handleLogin()"
         >
@@ -37,11 +41,14 @@
         </div>
         <p
           v-if="!!error?.non_field_errors"
-          class="text-alert font-bold text-sm mx-auto py-2"
+          class="text-alert mx-auto py-2 text-center"
         >
           {{
             $t("auth.loginpage.thereWasAn", { a: error.non_field_errors[0] })
           }}
+        </p>
+        <p v-if="message" class="font-bold text-sm mx-auto py-2">
+          {{ message }}
         </p>
       </form>
     </div>
@@ -64,6 +71,7 @@ export default defineComponent({
       loading: false as boolean,
       email: "" as string,
       error: null as any,
+      message: "" as string,
     };
   },
   methods: {
@@ -74,6 +82,10 @@ export default defineComponent({
         this.error = error.response?.data ?? "Unable to return response";
       });
     },
+  },
+  mounted() {
+    this.email = (this.$route.query?.email as string) ?? "";
+    this.message = (this.$route.query?.message as string) ?? "";
   },
 });
 </script>

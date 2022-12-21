@@ -5,7 +5,8 @@
       "loading": "Caricamento in corso",
       "loginPage": "Pagina di login",
       "submit": "Invia",
-      "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}"
+      "thereWasAn": "Si è verificato un errore durante l'invio del codice di accesso:\n {a}",
+      "pleaseEnterYour": "Inserisci la tua e -mail per ricevere un link o un codice di accesso."
     },
     "loginsuccess": {
       "loginWasSuccessful": "L'accesso è riuscito, <b>controlla la tua casella di posta <em>(incluso la cartella di posta indesiderata)</em> per il tuo link di accesso.</b>",

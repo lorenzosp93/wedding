@@ -121,8 +121,8 @@ class RegisterUserSerializer(ModelSerializer):
     def validate(self, attrs: dict[str, str]) -> dict[str, str]:
         try:
             self.user = self.Meta.model.objects.get(
-                first_name=attrs.get('first_name', '').strip(),
-                last_name=attrs.get('last_name', '').strip(),
+                first_name__iexact=attrs.get('first_name', '').strip(),
+                last_name__iexact=attrs.get('last_name', '').strip(),
             )
         except:
             raise ValidationError({
@@ -131,14 +131,14 @@ class RegisterUserSerializer(ModelSerializer):
                     did you write it correcly?"""
                 )
             })
-        if isinstance(self.user, AbstractUser) and self.user.email != '':
-            if self.user.email != attrs.get('email', ''):
-                raise ValidationError({
-                    "email": _("""A user was already set up for this invitee with a different email""")
-                })
+        if (
+            isinstance(self.user, AbstractUser)
+            and self.user.email != ''
+            and self.user.email != attrs.get('email', '')
+        ):
             raise ValidationError({
-                "non_field_errors": _("""A user was already set up for this invitee""")
-            }, code='302')
+                "email": _("""A user was already set up for this invitee with a different email""")
+            })
         return super().validate(attrs)
 
     class Meta:

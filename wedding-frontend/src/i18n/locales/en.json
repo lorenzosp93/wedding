@@ -1,11 +1,12 @@
 {
   "auth": {
     "loginpage": {
-      "emailAddress": "Email address",
+      "emailAddress": "Email",
       "loading": "Loading",
       "loginPage": "Login page",
       "submit": "Submit",
-      "thereWasAn": "There was an error sending you the access code:\n {a}"
+      "thereWasAn": "There was an error sending you the access code:\n {a}",
+      "pleaseEnterYour": "\n        Please enter your email to receive a login link or code.\n      "
     },
     "loginsuccess": {
       "loginWasSuccessful": "Login was successful, please <b>check your inbox <em>(including the spam folder)</em> for your login link.</b>",
