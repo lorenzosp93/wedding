@@ -49,11 +49,11 @@ jobs:
           cache-from: type=local,src=/tmp/${{ github.ref_name }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{ github.ref_name }}/.buildx-cache-new
           build-args: |
-            ENV_MODE=${{ fromJSON('{"master":"production","develop":"staging"}')[github.ref_name] }}
+            ENV_MODE=${{ fromJSON('{"master": "production", "develop": "staging"}')[github.ref_name] }}
       - name: Move cache
         run: |
           rm -rf /tmp/${{ github.ref_name }}/.buildx-cache
-          mv /tmp/${{ github.ref_name}}/.buildx-cache-new /tmp/.buildx-cache
+          mv /tmp/${{ github.ref_name}}/.buildx-cache-new /tmp/${{ github.ref_name }}/.buildx-cache
 
 
   deploy:
