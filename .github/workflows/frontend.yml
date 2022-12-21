@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "14"
+          cache: 'npm'
       - run: npm install
       - run: npm run build --if-present
 
@@ -39,34 +40,20 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
-        if: ${{ github.ref_name == 'master' }}
-        with:
-          file: ./wedding-frontend/docker/Dockerfile
-          context: ./wedding-frontend
-          platforms: linux/arm64/v8
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:master
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-          build-args: |
-            ENV_MODE=production
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v3
-        if: ${{ github.ref_name == 'develop' }}
         with:
           file: ./wedding-frontend/docker/Dockerfile
           context: ./wedding-frontend
           platforms: linux/arm64/v8
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:develop
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=local,src=/tmp/${{ github.ref_name }}/.buildx-cache
+          cache-to: type=local,dest=/tmp/${{ github.ref_name }}/.buildx-cache-new
           build-args: |
-            ENV_MODE=staging
+            ENV_MODE=${{ fromJSON('{"master":"production","develop":"staging"}')[github.ref_name] }}
       - name: Move cache
         run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          rm -rf /tmp/${{ github.ref_name }}/.buildx-cache
+          mv /tmp/${{ github.ref_name}}/.buildx-cache-new /tmp/.buildx-cache
 
 
   deploy:
@@ -77,7 +64,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Kubernetes
-        uses: Azure/k8s-set-context@v1
+        uses: Azure/k8s-set-context@v3
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
