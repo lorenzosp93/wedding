@@ -41,8 +41,8 @@
           </li>
         </ul>
         <p
-          v-if="submitError?.find((e) => e.q == question.uuid && e.e?.option)"
-          class="text-alert"
+          v-if="submitError?.find((e: ResponseErrors) => e.q == question.uuid && e.e?.option?.length)"
+          class="text-alert dark:text-darkAlert"
         >
           {{ submitError.find((e) => e.q == question.uuid)?.e.option[0] }}
         </p>
@@ -58,8 +58,8 @@
             :required="question.mandatory && question.options.length == 0"
           />
           <p
-            v-if="submitError?.find((e) => e.q == question.uuid && e.e?.text)"
-            class="text-alert mx-3"
+            v-if="submitError?.find((e: ResponseErrors) => e.q == question.uuid && e.e?.text?.length)"
+            class="text-alert dark:text-darkAlert mx-3"
           >
             {{ submitError.find((e) => e.q == question.uuid)?.e.text[0] }}
           </p>
@@ -79,19 +79,26 @@
         v-if="activeObject?.questions?.every((q: Question) => q.response)"
         class="flex flex-wrap"
       >
-        <p class="my-2 font-bold text-accent">
+        <p class="py-1 font-bold text-accent my-auto">
           {{ $t("shared.listview.alreadyAnswered") }}
         </p>
-        <button
-          class="bg-pale dark:bg-darkpale text-primary rounded-md px-2 py-1 ml-auto my-auto"
-          @click.prevent="$emit('deleteResponses')"
-        >
-          {{ $t("shared.listview.changeResponses") }}
-        </button>
+        <div class="ml-auto my-auto relative w-48 min-h-[2.5rem] p-2">
+          <button
+            v-show="!deleteLoading"
+            class="bg-pale dark:bg-darkPale text-primary rounded-md px-2 py-1 my-auto"
+            @click.prevent="$emit('deleteResponses')"
+          >
+            {{ $t("shared.listview.changeResponses") }}
+          </button>
+          <loading-view v-if="deleteLoading"></loading-view>
+        </div>
       </div>
-      <div class="relative h-20 w-full pt-5 mx-auto">
+      <div
+        v-if="activeObject?.questions.some((q: Question) => !q.response)"
+        class="relative h-20 w-full pt-5 mx-auto"
+      >
         <button
-          v-show="!submitLoading && activeObject?.questions.some((q: Question) => !q.response)"
+          v-show="!submitLoading"
           class="bg-accent text-primary rounded-md px-2 py-1 flex mx-auto"
           @click.prevent="$emit('submitResponse', responses)"
         >
@@ -123,6 +130,9 @@ export default defineComponent({
     submitLoading: { type: Boolean },
     submitError: { type: Array<ResponseErrors> },
     submitSuccess: { type: Boolean },
+    deleteLoading: { type: Boolean },
+    deleteError: { type: Array<ResponseErrors> },
+    deleteSuccess: { type: Boolean },
   },
   emits: ["deleteResponses", "submitResponse"],
   methods: {

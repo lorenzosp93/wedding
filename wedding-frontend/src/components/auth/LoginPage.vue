@@ -17,7 +17,10 @@
               for="email_input"
               >{{ $t("auth.loginpage.emailAddress") }}</label
             >
-            <p v-if="error?.email" class="text-alert ml-auto my-auto">
+            <p
+              v-if="error?.email"
+              class="text-alert dark:text-darkAlert ml-auto my-auto"
+            >
               {{ error.email[0] }}
             </p>
           </div>
@@ -41,7 +44,7 @@
         </div>
         <p
           v-if="!!error?.non_field_errors"
-          class="text-alert mx-auto py-2 text-center"
+          class="text-alert dark:text-darkAlert mx-auto py-2 text-center"
         >
           {{
             $t("auth.loginpage.thereWasAn", { a: error.non_field_errors[0] })

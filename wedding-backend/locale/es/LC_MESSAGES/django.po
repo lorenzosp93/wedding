@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 13:48+0000\n"
-"PO-Revision-Date: 2022-12-21 14:50+0100\n"
+"POT-Creation-Date: 2022-12-21 16:25+0000\n"
+"PO-Revision-Date: 2022-12-21 18:23+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -20,15 +20,15 @@ msgstr ""
 
 #: inbox/serializers.py:44
 msgid "Text must be provided if no option is selected"
-msgstr "Se debe proporcionar texto si no se selecciona ninguna opción"
+msgstr "Debe indicarse el texto si no se selecciona ninguna opción"
 
 #: inbox/serializers.py:47
 msgid "Please choose an option"
-msgstr "Por favor, seleccione una opción"
+msgstr "Favor de seleccionar una opción"
 
 #: inbox/serializers.py:51
 msgid "Text must be provided"
-msgstr "Debe facilitarse el texto"
+msgstr "Favor de proporcionar texto"
 
 #: info/models.py:14
 msgid "Venues"
@@ -54,27 +54,31 @@ msgstr "Viaje"
 msgid "Events"
 msgstr "Eventos"
 
-#: info/models.py:23
+#: info/models.py:20
+msgid "Gifts"
+msgstr "Regalo"
+
+#: info/models.py:24
 msgid "Before"
 msgstr "Antes"
 
-#: info/models.py:24
-msgid "Ice-breaker"
-msgstr "Rompehielos"
-
 #: info/models.py:25
+msgid "Ice-breaker"
+msgstr "Ice-breaker"
+
+#: info/models.py:26
 msgid "Ceremony"
 msgstr "Ceremonia"
 
-#: info/models.py:26
+#: info/models.py:27
 msgid "Reception"
 msgstr "Recepción"
 
-#: info/models.py:27
+#: info/models.py:28
 msgid "Dinner"
 msgstr "Cena"
 
-#: info/models.py:28
+#: info/models.py:29
 msgid "Dance"
 msgstr "Baile"
 
@@ -95,15 +99,15 @@ msgstr ""
 #: profile/views.py:25
 msgid "An error occurred creating your profile, please try again later."
 msgstr ""
-"Se ha producido un error al crear su perfil, inténtelo de nuevo más tarde."
+"Se ha producido un error al crear tu perfil, inténtalo de nuevo más tarde."
 
 #: profile/views.py:29
 msgid "Profile created successfully, please proceed with login."
-msgstr "Perfil creado con éxito, por favor proceda con el inicio de sesión."
+msgstr "Perfil creado con éxito, por favor procede con el inicio de sesión."
 
 #: profile/views.py:33
 msgid "Profile already exists, please proceed with login."
-msgstr "El perfil ya existe, por favor proceda con el inicio de sesión."
+msgstr "El perfil ya existe, por favor procede con el inicio de sesión."
 
 #: profile/views.py:57
 #, python-format
@@ -117,12 +121,12 @@ msgstr "El usuario %(email)s ya existe"
 
 #: profile/views.py:66
 msgid "No plus-one available"
-msgstr "No hay plus-one disponible"
+msgstr "No hay +1 disponible"
 
 #: shared/advanced_models.py:75
 #, python-format
 msgid "There is a new message for you: %(subject)s"
-msgstr "Hay un nuevo mensaje por ti: %(subject)s"
+msgstr "Hay un nuevo mensaje para ti: %(subject)s"
 
 #: shared/models.py:19
 msgid "English"

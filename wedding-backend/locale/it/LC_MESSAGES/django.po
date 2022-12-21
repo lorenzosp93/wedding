@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 13:48+0000\n"
+"POT-Creation-Date: 2022-12-21 16:25+0000\n"
 "PO-Revision-Date: 2022-12-21 14:49+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
@@ -54,27 +54,31 @@ msgstr "Viaggi"
 msgid "Events"
 msgstr "Eventi"
 
-#: info/models.py:23
+#: info/models.py:20
+msgid "Gifts"
+msgstr "Regalo"
+
+#: info/models.py:24
 msgid "Before"
 msgstr "Prima"
 
-#: info/models.py:24
+#: info/models.py:25
 msgid "Ice-breaker"
 msgstr "Rompi-ghiaccio"
 
-#: info/models.py:25
+#: info/models.py:26
 msgid "Ceremony"
 msgstr "Cerimonia"
 
-#: info/models.py:26
+#: info/models.py:27
 msgid "Reception"
 msgstr "Ricevimento"
 
-#: info/models.py:27
+#: info/models.py:28
 msgid "Dinner"
 msgstr "Cena"
 
-#: info/models.py:28
+#: info/models.py:29
 msgid "Dance"
 msgstr "Ballo"
 
@@ -88,11 +92,13 @@ msgstr ""
 
 #: profile/serializers.py:140
 msgid "A user was already set up for this invitee with a different email"
-msgstr "Per questo invitato è già stato impostato un utente con un'email diversa"
+msgstr ""
+"Per questo invitato è già stato impostato un utente con un'email diversa"
 
 #: profile/views.py:25
 msgid "An error occurred creating your profile, please try again later."
-msgstr "Si è verificato un errore nella creazione del profilo, riprovare più tardi."
+msgstr ""
+"Si è verificato un errore nella creazione del profilo, riprovare più tardi."
 
 #: profile/views.py:29
 msgid "Profile created successfully, please proceed with login."
@@ -144,7 +150,8 @@ msgstr "Il tuo link di accesso"
 
 #: templates/token_email.html:6
 msgid "Please click the link below to access the invitee area."
-msgstr "Fare clic sul link sottostante per accedere all'area riservata agli invitati."
+msgstr ""
+"Fare clic sul link sottostante per accedere all'area riservata agli invitati."
 
 #: templates/token_email.html:16
 msgid "Click here"
@@ -152,7 +159,8 @@ msgstr "Clicca quì"
 
 #: templates/token_email.html:24
 msgid "Alternatively, you can input the following code on the login page."
-msgstr "In alternativa, puoi inserire il seguente codice nella pagina di accesso."
+msgstr ""
+"In alternativa, puoi inserire il seguente codice nella pagina di accesso."
 
 #, fuzzy
 #~| msgid "Text must be provided"

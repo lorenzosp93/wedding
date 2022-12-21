@@ -17,7 +17,7 @@
           class="w-full rounded-md bg-neutral dark:bg-darkNeutral"
           type="text"
         />
-        <p v-if="error?.first_name" class="text-alert mx-3">
+        <p v-if="error?.first_name" class="text-alert dark:text-darkAlert mx-3">
           {{ error.first_name[0] }}
         </p>
       </div>
@@ -31,7 +31,7 @@
           class="w-full rounded-md bg-neutral dark:bg-darkNeutral"
           type="text"
         />
-        <p v-if="error?.last_name" class="text-alert mx-3">
+        <p v-if="error?.last_name" class="text-alert dark:text-darkAlert mx-3">
           {{ error.last_name[0] }}
         </p>
       </div>
@@ -45,9 +45,14 @@
           class="w-full rounded-md bg-neutral dark:bg-darkNeutral"
           type="email"
         />
-        <p v-if="error?.email" class="text-alert mx-3">{{ error.email[0] }}</p>
+        <p v-if="error?.email" class="text-alert dark:text-darkAlert mx-3">
+          {{ error.email[0] }}
+        </p>
       </div>
-      <p v-if="error?.non_field_errors" class="text-alert mx-auto">
+      <p
+        v-if="error?.non_field_errors"
+        class="text-alert dark:text-darkAlert mx-auto"
+      >
         {{ error.non_field_errors }}
       </p>
       <div class="relative w-full h-16">

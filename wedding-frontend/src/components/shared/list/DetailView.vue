@@ -67,6 +67,9 @@
         :submit-loading="submitLoading"
         :submit-error="submitError"
         :submit-success="submitSuccess"
+        :delete-loading="deleteLoading"
+        :delete-error="deleteError"
+        :delete-success="deleteSuccess"
         @submit-response="$emit('submitResponse', responses)"
         @delete-responses="(response:Response) => $emit('deleteResponses', response)"
       ></question-view>
@@ -107,6 +110,9 @@ export default defineComponent({
     submitLoading: { type: Boolean },
     submitError: { type: Array<ResponseErrors> },
     submitSuccess: { type: Boolean },
+    deleteLoading: { type: Boolean },
+    deleteError: { type: Array<ResponseErrors> },
+    deleteSuccess: { type: Boolean },
   },
   emits: ["hideDetail", "setActive", "deleteResponses", "submitResponse"],
   data() {
