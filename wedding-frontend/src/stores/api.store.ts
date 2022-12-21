@@ -87,10 +87,10 @@ export const useInboxStore = defineStore({
         error: undefined as AxiosError | undefined,
         submitLoading: false as boolean,
         submitSuccess: false as boolean,
-        submitError: undefined as Array<ResponseErrors> | undefined,
+        submitError: [] as Array<ResponseErrors>,
         deleteLoading: false as boolean,
         deleteSuccess: false as boolean,
-        deleteError: undefined as Array<ResponseErrors> | undefined,
+        deleteError: [] as Array<ResponseErrors>,
     }),
     actions: {
         async getInbox(force: boolean = false): Promise<AxiosResponse<Message[]> | void> {
@@ -129,7 +129,7 @@ export const useInboxStore = defineStore({
                 responses.forEach((response: PromiseSettledResult<AxiosResponse>, idx: number) => {
                     if (response.status == 'rejected') {
                         this.submitError = [
-                            ...(this.submitError ?? []),
+                            ...this.submitError,
                             {
                                 q: activeMessage?.questions[idx].uuid ?? '',
                                 e: response.reason.response.data
@@ -139,7 +139,7 @@ export const useInboxStore = defineStore({
                 })
                 if (responses.every(response => response.status == 'fulfilled')) {
                     this.submitSuccess = true;
-                    this.submitError = undefined;
+                    this.submitError = [];
                 }
                 this.getInbox(true);
             });
@@ -171,7 +171,7 @@ export const useInboxStore = defineStore({
                 })
                 if (responses.every(response => response.status == 'fulfilled')) {
                     this.deleteSuccess = true;
-                    this.deleteError = undefined;
+                    this.deleteError = [];
                 }
                 this.getInbox(true);
             });

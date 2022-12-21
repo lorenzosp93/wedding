@@ -17,6 +17,7 @@ INFO_TYPES = (
     (3, _('Tips')),
     (4, _('Travel')),
     (5, _('Events')),
+    (6, _('Gifts')),
 )
 
 PHOTO_TYPES = (

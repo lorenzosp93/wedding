@@ -12,7 +12,7 @@
         }}</label>
         <p
           v-if="error?.token"
-          class="text-alert font-bold text-sm mx-auto pb-1"
+          class="text-alert dark:text-darkAlert font-bold text-sm mx-auto pb-1"
         >
           {{ error.token[0] }}
         </p>
@@ -37,7 +37,7 @@
         </div>
         <p
           v-if="!!error?.non_field_errors"
-          class="text-alert font-bold text-sm mx-auto py-2"
+          class="text-alert dark:text-darkAlert font-bold text-sm mx-auto py-2"
         >
           {{
             $t("auth.loginpage.thereWasAn", { a: error.non_field_errors[0] })

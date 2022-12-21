@@ -20,7 +20,7 @@
               >
               <p
                 v-if="registerError?.first_name?.length"
-                class="text-alert ml-auto my-auto"
+                class="text-alert dark:text-darkAlert ml-auto my-auto"
               >
                 {{ registerError.first_name[0] }}
               </p>
@@ -42,7 +42,7 @@
               >
               <p
                 v-if="registerError?.last_name?.length"
-                class="text-alert ml-auto my-auto"
+                class="text-alert dark:text-darkAlert ml-auto my-auto"
               >
                 {{ registerError.last_name[0] }}
               </p>
@@ -64,7 +64,7 @@
               >
               <p
                 v-if="registerError?.email?.length"
-                class="text-alert ml-auto my-auto"
+                class="text-alert dark:text-darkAlert ml-auto my-auto"
               >
                 {{ registerError.email[0] }}
               </p>
@@ -91,7 +91,7 @@
         </div>
         <p
           v-if="!!registerError?.non_field_errors"
-          class="text-alert mx-auto py-2 text-center"
+          class="text-alert dark:text-darkAlert mx-auto py-2 text-center"
         >
           {{
             $t("auth.loginpage.thereWasAn", {
