@@ -70,17 +70,9 @@ jobs:
       - name: Run Tests with coverage
         run: |
           coverage run manage.py test
-      - name: Generate coverage file
+      - name: Generate coverage report
         run: |
-          coverage xml -o coverage.xml
-      - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        with:
-          filename: coverage.xml
-          badge: true
-          format: markdown
-          indicators: true
-          output: both
+          coverage report
 
   build:
     runs-on: ubuntu-latest
