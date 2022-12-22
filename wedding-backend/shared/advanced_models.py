@@ -74,7 +74,7 @@ class TriggersNotifications(
             'image': getattr(self, 'picture', None),
             'body': _("There is a new message for you: %(subject)s") % {'subject': self.subject},
             'data': {
-                'url': f"{FRONTEND_HOST}/{'inbox' if self.__class__.__name__ == 'Message' else 'info'}/"
+                'url': f"{FRONTEND_HOST}/{'inbox' if self.__class__.__name__ == 'Message' else f'info/{self.get_type_display()}'}/"
             }
         }
 

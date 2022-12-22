@@ -37,12 +37,15 @@ WIDGET_TYPES = (
 # Create your models here.
 
 
-class Information(TriggersNotifications, HasAudience, HasPicture, HasContent, HasSubject):
+class Information(
+    TriggersNotifications, HasAudience,
+    HasPicture, HasContent, HasSubject
+):
     type: models.Field = models.IntegerField(choices=INFO_TYPES,)
 
     def __str__(self) -> str:
         return f"{self.subject}"
-    
+
     class Meta:
         ...
 
@@ -68,7 +71,7 @@ class InformationWidget(models.Model):
 
     def __str__(self) -> str:
         return f"{self.type} - {self.info}"
-    
+
     def save(self, **kwargs) -> None:
         self.full_clean()
         return super().save(**kwargs)
@@ -80,7 +83,7 @@ class InformationWidget(models.Model):
 class Photo(HasPicture, HasContent):
     tag: models.Field = models.ManyToManyField(User, blank=True,)
     private: models.Field = models.BooleanField(default=False,)
-    type: models.Field  = models.IntegerField(choices=PHOTO_TYPES, default=0)
+    type: models.Field = models.IntegerField(choices=PHOTO_TYPES, default=0)
 
     def __str__(self) -> str:
         return f"{self.picture.name} - {self.type}"
