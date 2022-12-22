@@ -19,17 +19,17 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='profile'
     )
-    language: models.Field  = models.CharField(
+    language: models.Field = models.CharField(
         choices=I18N,
         default='en',
         max_length=2,
     )
-    type: models.Field  = models.IntegerField(
+    type: models.Field = models.IntegerField(
         choices=USER_TYPES,
         default=2,
     )
-    plus: models.Field  = models.IntegerField(default=0)
-    parent: models.Field  = models.ForeignKey(
+    plus: models.Field = models.IntegerField(default=0)
+    parent: models.Field = models.ForeignKey(
         AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True,
@@ -37,18 +37,22 @@ class UserProfile(models.Model):
         related_name='childs',
     )
 
-    def setup_plus_one(self, first_name: str, last_name: str, email: str) -> tuple[User | None, bool]:
-        if self.user.childs.count() < self.plus:  # type: ignore
+    def setup_plus_one(
+        self, first_name: str, last_name: str, email: str
+    ) -> tuple[User | None, bool]:
+        if self.user.childs.count() < self.plus:
             user, created = get_user_model().objects.get_or_create(
                 username=email,
             )
             if created:
                 self.setup_profile(first_name, last_name,
-                                   email, user)  # type: ignore
-            return user, created  # type: ignore
+                                   email, user)
+            return user, created
         return None, False
 
-    def setup_profile(self, first_name: str, last_name: str, email: str, user: User) -> None:
+    def setup_profile(
+        self, first_name: str, last_name: str, email: str, user: User
+    ) -> None:
         user.first_name = first_name
         user.last_name = last_name
         user.email = email
@@ -65,14 +69,16 @@ class UserProfile(models.Model):
 
 
 class Keys(models.Model):
-    p256dh: models.Field  = models.CharField(max_length=100)
-    auth: models.Field  = models.CharField(max_length=30)
+    p256dh: models.Field = models.CharField(max_length=100)
+    auth: models.Field = models.CharField(max_length=30)
 
 
 class Subscription(TimeStampable):
-    user: models.Field  = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    endpoint: models.Field  = models.URLField()
-    keys: models.Field  = models.OneToOneField(Keys, on_delete=models.CASCADE, null=True)
+    user: models.Field = models.ForeignKey(
+        AUTH_USER_MODEL, on_delete=models.CASCADE)
+    endpoint: models.Field = models.URLField()
+    keys: models.Field = models.OneToOneField(
+        Keys, on_delete=models.CASCADE, null=True)
     user_agent: models.Field = models.TextField()
 
     class Meta:

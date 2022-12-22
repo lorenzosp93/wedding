@@ -1,4 +1,3 @@
-# type: ignore
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.urls import reverse
@@ -31,7 +30,8 @@ class TestSharedViews(TestCase):
 
     def test_get_auth_token(self) -> None:
         request = self.factory.get(
-            f"{reverse('shared:magic-auth')}?email={self.email}&token={self.otp}"
+            f"""{reverse('shared:magic-auth')}?email={self.email}&token={self.otp}
+            """
         )
         response = get_auth_token(request)
         self.assertEqual(response.status_code, 302)

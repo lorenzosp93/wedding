@@ -12,7 +12,9 @@ from wedding.tasks import send_email
 logger = logging.getLogger(__name__)
 
 
-def send_email_with_callback_token(user: AbstractUser, email_token: CallbackToken, **kwargs: str) -> bool:
+def send_email_with_callback_token(
+    user: AbstractUser, email_token: CallbackToken, **kwargs: str
+) -> bool:
     """
     Sends a Email to user.email.
 
@@ -24,15 +26,21 @@ def send_email_with_callback_token(user: AbstractUser, email_token: CallbackToke
             # Make sure we have a sending address before sending.
 
             # Get email subject and message
-            email_plaintext: str = kwargs.get('email_plaintext',
-                                              api_settings.PASSWORDLESS_EMAIL_PLAINTEXT_MESSAGE)
-            email_html: str = kwargs.get('email_html',
-                                         api_settings.PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME)
+            email_plaintext: str = kwargs.get(
+                'email_plaintext',
+                api_settings.PASSWORDLESS_EMAIL_PLAINTEXT_MESSAGE,
+            )
+            email_html: str = kwargs.get(
+                'email_html',
+                api_settings.PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME,
+            )
 
             email = user.email
             # activate user language
-            with override(user.profile.language):  # type: ignore
-                email_subject: str = _('Here is your login link for %(host)s') % {
+            with override(user.profile.language):
+                email_subject: str = _(
+                    'Here is your login link for %(host)s'
+                ) % {
                     'host': HOST,
                 }
                 # Inject context if user specifies.
@@ -52,13 +60,15 @@ def send_email_with_callback_token(user: AbstractUser, email_token: CallbackToke
 
         else:
             logger.debug(
-                "Failed to send token email. Missing PASSWORDLESS_EMAIL_NOREPLY_ADDRESS.")
+                """Failed to send token email.
+                Missing PASSWORDLESS_EMAIL_NOREPLY_ADDRESS."""
+            )
             return False
         return True
 
     except Exception as e:
         logger.debug("Failed to send token email to user: %d."
                      "Possibly no email on user object. Email entered was %s" %
-                     (user.pk, user.email))  # type: ignore
+                     (user.pk, user.email))
         logger.debug(e)
         return False

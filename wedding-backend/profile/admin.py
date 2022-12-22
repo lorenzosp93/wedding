@@ -1,5 +1,5 @@
 import csv
-from io import BytesIO
+from io import BytesIO, StringIO
 from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
@@ -12,9 +12,11 @@ from .models import UserProfile, Subscription
 
 admin.site.unregister(get_user_model())
 
+
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('user', 'endpoint',)
+
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
@@ -31,6 +33,7 @@ class UserProfileInLine(admin.TabularInline):
 
 
 HEADERS = {
+    'username': {'field': 'username', 'required': False},
     'email': {'field': 'email', 'required': True},
     'first_name': {'field': 'first_name', 'required': True},
     'last_name': {'field': 'last_name', 'required': True},
@@ -39,14 +42,22 @@ HEADERS = {
 }
 
 
-def import_document_validator(document: BytesIO, HEADERS:dict[str, dict[str, object]]) -> None:
+def import_document_validator(
+    document: BytesIO | StringIO, HEADERS: dict[str, dict[str, object]]
+) -> None:
     # check file valid csv format
+    read_head = document.read(1024)
+    if isinstance(read_head, bytes):
+        read_head = read_head.decode()
     try:
-        dialect = csv.Sniffer().sniff(document.read(1024).decode())
+        dialect = csv.Sniffer().sniff(read_head)
         document.seek(0, 0)
     except csv.Error:
         raise forms.ValidationError(u'Not a valid CSV file')
-    reader = csv.reader(document.read().decode().splitlines(), dialect)
+    read_document = document.read()
+    if isinstance(read_document, bytes):
+        read_document = read_document.decode()
+    reader = csv.reader(read_document.splitlines(), dialect)
     document.seek(0, 0)
     csv_headers = []
     required_headers = [header_name for header_name, values in
@@ -100,8 +111,13 @@ class UserAdmin(admin.ModelAdmin):
     def get_urls(self) -> list[URLPattern]:
         urls = super().get_urls()
         my_urls = [
-            path('import-csv/', self.import_csv),
-            path('download-csv-template/', self.download_csv_template),
+            path(
+                'import-csv/', self.import_csv, name='import-csv'
+            ),
+            path(
+                'download-csv-template/', self.download_csv_template,
+                name='download-csv-template'
+            ),
         ]
         return my_urls + urls
 
@@ -109,11 +125,16 @@ class UserAdmin(admin.ModelAdmin):
         if request.method == "POST":
             form = CsvImportForm(request.POST, request.FILES)
             if form.is_valid():
-                reader = self.open_csv(form)
-                if reader:
-                    self.create_users_from_csv(reader)
-                    self.message_user(request, "Your csv file has been imported")
-                self.message_user(request, "Your csv file could not be read")
+                csv_file = form.cleaned_data.get('csv_file')
+                if csv_file:
+                    reader = self.open_csv(csv_file)
+                    if reader:
+                        self.create_users_from_csv(reader)
+                        self.message_user(
+                            request, "Your csv file has been imported")
+                    else:
+                        self.message_user(
+                            request, "Your csv file could not be read")
             else:
                 self.message_user(
                     request, form.errors.as_text(), level='ERROR')
@@ -124,21 +145,29 @@ class UserAdmin(admin.ModelAdmin):
             request, "csv_form.html", payload
         )
 
-    def open_csv(self, form: CsvImportForm) -> list[dict] | None:
-        csv_file = form.cleaned_data.get('csv_file')
+    @staticmethod
+    def open_csv(csv_file: BytesIO | StringIO) -> list[dict] | None:
         if csv_file:
+            read_file = csv_file.read()
+            if isinstance(read_file, bytes):
+                read_file = read_file.decode()
             reader = list(csv.DictReader(
-                csv_file.read().decode('UTF-8').splitlines()))
+                read_file.splitlines()))
             return reader
         return None
 
-    def create_users_from_csv(self, reader: list[dict]) -> None:
+    @ staticmethod
+    def create_users_from_csv(reader: list[dict[str, str]]) -> None:
         get_user_model().objects.bulk_create([
             get_user_model()(
                 first_name=row.get('first_name'),
                 last_name=row.get('last_name'),
                 email=row.get('email'),
-                username=row.get('email')
+                username=(
+                    row.get('username')
+                    if row.get('username')
+                    else row.get('email')
+                )
             ) for row in reader
         ])
         UserProfile.objects.bulk_create([
@@ -149,7 +178,8 @@ class UserAdmin(admin.ModelAdmin):
             ) for row in reader
         ])
 
-    def download_csv_template(self, request: HttpRequest) -> HttpResponse:
+    @ staticmethod
+    def download_csv_template(_: HttpRequest) -> HttpResponse:
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=upload_template.csv'
         writer = csv.writer(response)

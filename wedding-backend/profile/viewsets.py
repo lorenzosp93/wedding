@@ -1,9 +1,7 @@
-from typing import Type
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.serializers import ModelSerializer
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from django.db.models import QuerySet
 from .serializers import (
-    UserProfileWriteSerializer, UserProfileSerializer, SubscriptionSerializer
+    UserProfileSerializer, SubscriptionSerializer
 )
 from .models import (
     UserProfile,
@@ -13,17 +11,13 @@ from .models import (
 WRITE_ACTIONS = ["create", "update", "partial_update", "destroy"]
 
 
-class UserProfileViewset(ModelViewSet):
+class UserProfileViewset(ReadOnlyModelViewSet):
     """
     This viewset automatically provides CRUD
     actions for UserProfile entries.
 
     """
-
-    def get_serializer_class(self) -> Type[ModelSerializer]:
-        if self.action in WRITE_ACTIONS:
-            return UserProfileWriteSerializer
-        return UserProfileSerializer
+    serializer_class = UserProfileSerializer
 
     def get_queryset(self) -> QuerySet[UserProfile]:
         return UserProfile.objects.filter(user__pk=self.request.user.pk)

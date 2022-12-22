@@ -2,27 +2,24 @@ from typing import Type
 from django.db.models import Q, F
 from django.http.request import HttpRequest
 from django.http.response import HttpResponseBase
-from rest_framework.request import Request
 from django.db.models import QuerySet
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from django.contrib.auth.models import AbstractBaseUser, AnonymousUser
-from rest_framework.viewsets import ReadOnlyModelViewSet, ViewSet
+from rest_framework.viewsets import ViewSet
 from rest_framework.serializers import ModelSerializer
-from .serializers import (
-    SettingsSerializer
-)
-from .models import (
-    SiteSetting
-)
 from wedding.settings import CACHE_TTL
+
 
 class CachedViewsetMixin(ViewSet):
     @method_decorator(cache_page(CACHE_TTL))
     @method_decorator(vary_on_headers("Authorization"))
-    def dispatch(self, request: HttpRequest, *args: list, **kwargs: dict) -> HttpResponseBase:
+    def dispatch(
+        self, request: HttpRequest, *args: list, **kwargs: dict
+    ) -> HttpResponseBase:
         return super().dispatch(request, *args, **kwargs)
+
 
 class BaseGetQuerysetMixin(ViewSet):
     serializer_class: Type[ModelSerializer]
@@ -52,7 +49,7 @@ class PrerequisiteViewSetMixin(BaseGetQuerysetMixin):
         self,
         user: AbstractBaseUser | AnonymousUser,
         cohort_pre: QuerySet,
-        obj_list: list=[]
+        obj_list: list = []
     ) -> list:
         if cohort_pre:
             user_options = user.response_set.filter(
@@ -66,7 +63,7 @@ class PrerequisiteViewSetMixin(BaseGetQuerysetMixin):
                         item in user_options
                         for item in pre
                     )  # all prerequisites in pre are found in user_options
-                    or pre in user_options  # single prerequisite is found in user_options
+                    or pre in user_options  # single prerequisite is found
                 ):
                     obj_list = [*obj_list, obj.get('pk')]
         return obj_list
@@ -78,14 +75,3 @@ class AudienceViewSetMixin(BaseGetQuerysetMixin):
         return super().get_queryset() \
             .annotate(audience_mod=F('audience') % user.profile.type) \
             .filter(audience_mod=0)
-
-
-class SettingsViewSet(ReadOnlyModelViewSet):
-    """
-    This viewset automatically provides `list` and `retrieve`
-    actions.
-
-    A simple viewset to view Settings entires.
-    """
-    queryset = SiteSetting.objects.all()
-    serializer_class = SettingsSerializer

@@ -1,3 +1,4 @@
+from datetime import date
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
@@ -155,3 +156,20 @@ class TestInboxViewsets(TestCase):
         response = ResponseViewSet.as_view({'post': 'create'})(request)
         self.assertEqual(response.status_code, 400)
         self.assertIn("text", response.data)
+
+    def test_response_delete(self) -> None:
+        self.response = Response.objects.create(
+            user=self.user,
+            question=self.question
+        )
+        self.response.option.add(self.option)
+        request = self.factory.delete(
+            reverse('inbox:response-detail', [self.response])
+        )
+        force_authenticate(request, self.user)
+        response = ResponseViewSet.as_view(
+            {'delete': 'destroy'})(request, pk=self.response.uuid)
+        self.response.refresh_from_db()
+        self.assertEqual(response.status_code, 204)
+        self.assertFalse(self.response.active)
+        self.assertIsInstance(self.response.deleted_at, date)
