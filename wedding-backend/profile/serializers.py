@@ -110,10 +110,11 @@ class SubscriptionSerializer(ModelSerializer):
             )
             return subscription
         return None
-    
+
     @staticmethod
     def get_user_agent(request: HttpRequest) -> str:
         return request.META.get('HTTP_USER_AGENT', '')
+
 
 class RegisterUserSerializer(ModelSerializer):
     user: AbstractBaseUser | None = None
@@ -124,7 +125,7 @@ class RegisterUserSerializer(ModelSerializer):
                 first_name__iexact=attrs.get('first_name', '').strip(),
                 last_name__iexact=attrs.get('last_name', '').strip(),
             )
-        except:
+        except Exception:
             raise ValidationError({
                 "non_field_errors": _(
                     """First and Last Name not found in invitee list,
@@ -148,3 +149,4 @@ class RegisterUserSerializer(ModelSerializer):
             'last_name',
             'email'
         ]
+        extra_kwargs = {'email': {'required': True, 'allow_blank': False}}
