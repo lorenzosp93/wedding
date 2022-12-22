@@ -27,7 +27,7 @@ class TestInboxViewsets(TestCase):
         )
         self.question = Question.objects.create(
             message=self.message,
-            subject=ContentString.objects.create(value='else')
+            subject=ContentString.objects.create(value='else'),
         )
         self.option = Option.objects.create(
             question=self.question,
@@ -106,3 +106,52 @@ class TestInboxViewsets(TestCase):
         self.assertEqual(created_response.question, self.question)
         self.assertIn(self.option, created_response.option.all())
         self.assertEqual(created_response.text, 'someText')
+
+    def test_response_errors_options(self) -> None:
+        request = self.factory.post(
+            reverse('inbox:response-list'),
+            {
+                "question": self.question.uuid,
+                "option": [],
+                "text": "",
+            }
+        )
+        force_authenticate(request, self.user)
+        response = ResponseViewSet.as_view({'post': 'create'})(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("option", response.data)
+
+    def test_response_errors_text_options(self) -> None:
+        self.question.free_text = True
+        self.question.save()
+        request = self.factory.post(
+            reverse('inbox:response-list'),
+            {
+                "question": self.question.uuid,
+                "option": [],
+                "text": "",
+            }
+        )
+        force_authenticate(request, self.user)
+        response = ResponseViewSet.as_view({'post': 'create'})(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("text", response.data)
+
+    def test_response_errors_text(self) -> None:
+        question = Question.objects.create(
+            subject=ContentString.objects.create(value='someQ'),
+            message=self.message,
+            free_text=True,
+        )
+        request = self.factory.post(
+            reverse('inbox:response-list'),
+            {
+                "question": question.uuid,
+                "option": [],
+                "text": "",
+            }
+        )
+        force_authenticate(request, self.user)
+        response = ResponseViewSet.as_view({'post': 'create'})(request)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("text", response.data)

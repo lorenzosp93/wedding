@@ -1,14 +1,14 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient, APIRequestFactory
+from rest_framework.test import APIRequestFactory, force_authenticate
 from .models import UserProfile
-from .views import register_user
+from .views import register_user, setup_plus_one
 
 
 class TestPlusOneView(TestCase):
     def setUp(self) -> None:
-        self.client = APIClient()
+        self.factory = APIRequestFactory()
         self.user = get_user_model().objects.create(
             username='some@email.com',
             first_name='someFirstName',
@@ -19,46 +19,53 @@ class TestPlusOneView(TestCase):
             user=self.user,
             plus=1,
         )
-        self.client.force_authenticate(self.user)
 
     def test_setup_plus_one(self) -> None:
-        response = self.client.post(reverse('profile:setup-plus-one'), {
+        request = self.factory.post(reverse('profile:setup-plus-one'), {
             "first_name": "a",
             "last_name": "b c",
             "email": "a@b.com",
         })
+        force_authenticate(request, self.user)
+        response = setup_plus_one(request)
         self.assertEqual(response.status_code, 201)
 
     def test_setup_plus_one_user_exists(self) -> None:
-        response = self.client.post(reverse('profile:setup-plus-one'), {
+        request = self.factory.post(reverse('profile:setup-plus-one'), {
             "first_name": "a",
             "last_name": "b",
             "email": "some@email.com",
         })
+        force_authenticate(request, self.user)
+        response = setup_plus_one(request)
         self.assertEqual(response.status_code, 400)
-        non_field_errors = response.json().get('non_field_errors')
+        non_field_errors = response.data.get('non_field_errors')
         self.assertIsNotNone(non_field_errors)
-        self.assertRegex(non_field_errors, 'some@email.com')
+        self.assertIn('some@email.com', non_field_errors)
 
     def test_setup_plus_one_no_plusone(self) -> None:
         self.profile.plus = 0
         self.profile.save()
-        response = self.client.post(reverse('profile:setup-plus-one'), {
+        request = self.factory.post(reverse('profile:setup-plus-one'), {
             "first_name": "a",
             "last_name": "b c",
             "email": "a@b.com",
         })
+        force_authenticate(request, self.user)
+        response = setup_plus_one(request)
         self.assertEqual(response.status_code, 400)
-        self.assertIsNotNone(response.json().get('non_field_errors'))
+        self.assertIsNotNone(response.data.get('non_field_errors'))
 
     def test_setup_plus_one_errors(self) -> None:
-        response = self.client.post(reverse('profile:setup-plus-one'), {
+        request = self.factory.post(reverse('profile:setup-plus-one'), {
             "first_name": "a",
             "last_name": "b c",
             "email": "a@b",
         })
+        force_authenticate(request, self.user)
+        response = setup_plus_one(request)
         self.assertEqual(response.status_code, 400)
-        self.assertIsNotNone(response.json().get('email'))
+        self.assertIsNotNone(response.data.get('email'))
 
 
 class TestRegisterUserView(TestCase):
