@@ -79,7 +79,7 @@ jobs:
           filename: /tmp/coverage.xml
           badge: true
           format: markdown
-          indicator: true
+          indicators: true
           output: both
 
   build:
