@@ -1,5 +1,4 @@
 from datetime import timedelta
-
 from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser
@@ -27,7 +26,9 @@ class ExpiringTokenAuthentication(TokenAuthentication):
     https://stackoverflow.com/questions/14567586
     """
 
-    def authenticate_credentials(self, key: str) -> tuple[AbstractBaseUser, Token]:
+    def authenticate_credentials(
+        self, key: str
+    ) -> tuple[AbstractBaseUser, Token]:
         try:
             token = Token.objects.get(key=key)
         except Token.DoesNotExist:
