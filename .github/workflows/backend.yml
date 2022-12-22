@@ -68,9 +68,20 @@ jobs:
           python manage.py migrate
           python manage.py migrate --run-syncdb
           python manage.py check
-      - name: Run Tests
+      - name: Run Tests with coverage
         run: |
-          python manage.py test
+          coverage run manage.py test
+      - name: Generate coverage file
+        run: |
+          coverage xml -o /tmp/coverage.xml
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: /tmp/coverage.xml
+          badge: true
+          format: markdown
+          indicator: true
+          output: both
 
   build:
     runs-on: ubuntu-latest
