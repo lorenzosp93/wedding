@@ -7,7 +7,9 @@ from rest_framework.serializers import (
 from .models import (
     Message, Question, Response, Option
 )
-from profile.serializers import TranslationContentMixin, TranslationSubjectMixin
+from profile.serializers import (
+    TranslationContentMixin, TranslationSubjectMixin,
+)
 
 
 class OptionSerializer(TranslationContentMixin, ModelSerializer):

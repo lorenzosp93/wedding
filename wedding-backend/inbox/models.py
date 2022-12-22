@@ -56,8 +56,8 @@ class Question(Serializable, HasSubject, HasContent):
         related_name='questions',
     )
     multi_select: models.Field = models.BooleanField(default=False)
-    free_text: models.Field  = models.BooleanField(default=False)
-    mandatory: models.Field  = models.BooleanField(default=True)
+    free_text: models.Field = models.BooleanField(default=False)
+    mandatory: models.Field = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return f"{self.message} - {self.subject}"
@@ -69,7 +69,7 @@ class Question(Serializable, HasSubject, HasContent):
 class Option(Serializable, HasContent):
     """Model to define selectable options for questions - 'Other' 
     option is omitted for SingleSelectOther or MultiSelectOther questions"""
-    question: models.Field  = models.ForeignKey(
+    question: models.Field = models.ForeignKey(
         Question,
         on_delete=models.CASCADE,
         related_name='options',
@@ -84,19 +84,21 @@ class Option(Serializable, HasContent):
 
 class Response(Serializable, TimeStampable):
     "Model to capture the response from a specific user"
-    question: models.Field  = models.ForeignKey(
+    question: models.Field = models.ForeignKey(
         Question,
         on_delete=models.CASCADE,
         related_name='responses'
     )
-    option: models.Field  = models.ManyToManyField(
+    option: models.Field = models.ManyToManyField(
         Option,
         blank=True,
     )
-    text: models.Field  = models.TextField(null=True, blank=True)
-    user: models.Field  = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    active: models.Field  = models.BooleanField(default=True)
-    deleted_at: models.Field  = models.DateTimeField(default=None, null=True, blank=True)
+    text: models.Field = models.TextField(null=True, blank=True)
+    user: models.Field = models.ForeignKey(
+        AUTH_USER_MODEL, on_delete=models.CASCADE)
+    active: models.Field = models.BooleanField(default=True)
+    deleted_at: models.Field = models.DateTimeField(
+        default=None, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.user}'s reply to {self.question.subject}"

@@ -10,7 +10,7 @@ from .models import (
     Option,
 )
 from .serializers import MessageSerializer
-from .viewsets import MessageViewSet
+from .viewsets import (MessageViewSet, ResponseViewSet)
 from shared.models import ContentString
 from profile.models import UserProfile
 
@@ -85,3 +85,24 @@ class TestInboxViewsets(TestCase):
         force_authenticate(new_request, new_user)
         new_response = MessageViewSet.as_view({'get': 'list'})(new_request)
         self.assertNotIn(serialized_obj, new_response.data)
+
+    def test_response_submit(self) -> None:
+        request = self.factory.post(
+            reverse('inbox:response-list'),
+            {
+                "question": self.question.uuid,
+                "option": [self.option.uuid],
+                "text": "someText",
+            }
+        )
+        force_authenticate(request, self.user)
+        response = ResponseViewSet.as_view({'post': 'create'})(request)
+        self.assertEqual(response.status_code, 201)
+        created_response = Response.objects.get(
+            user=self.user,
+            question=self.question,
+        )
+        self.assertIsInstance(created_response, Response)
+        self.assertEqual(created_response.question, self.question)
+        self.assertIn(self.option, created_response.option.all())
+        self.assertEqual(created_response.text, 'someText')
