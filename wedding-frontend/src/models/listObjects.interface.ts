@@ -45,7 +45,7 @@ export interface OptionElement {
 }
 
 export interface Response {
-    option: string[] | string;
+    option: string[];
     text: string;
     uuid?: string;
     question?: string;

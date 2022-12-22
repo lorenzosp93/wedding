@@ -8,6 +8,7 @@ from .serializers import PlusOneSerializer, RegisterUserSerializer
 
 # Create your views here.
 
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def register_user(request: Request) -> Response:
@@ -19,10 +20,11 @@ def register_user(request: Request) -> Response:
             try:
                 user.email = user.username = data.get('email')
                 user.save()
-            except:
+            except Exception:
                 return Response(
                     status=500,
-                    data={"non_field_errors": _("An error occurred creating your profile, please try again later.")},
+                    data={"non_field_errors": _(
+                        "An error occurred creating your profile, please try again later.")},
                 )
             return Response(
                 status=201,
@@ -59,7 +61,8 @@ def setup_plus_one(request: Request) -> Response:
         elif user:
             return Response(
                 status=400,
-                data={"non_field_errors": _("User %(email)s exists already" % {'email': user.email})},
+                data={"non_field_errors": _("User %(email)s exists already" % {
+                                            'email': user.email})},
             )
         return Response(
             status=400,

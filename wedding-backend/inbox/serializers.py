@@ -7,7 +7,9 @@ from rest_framework.serializers import (
 from .models import (
     Message, Question, Response, Option
 )
-from profile.serializers import TranslationContentMixin, TranslationSubjectMixin
+from profile.serializers import (
+    TranslationContentMixin, TranslationSubjectMixin,
+)
 
 
 class OptionSerializer(TranslationContentMixin, ModelSerializer):
@@ -41,12 +43,14 @@ class ResponseSerializer(ModelSerializer):
             if not data.get('option') and not data.get('text'):
                 if question.free_text:
                     raise ValidationError({
-                        "text": _("Text must be provided if no option is selected"),
+                        "text": _(
+                            "Text must be provided if no option is selected"
+                        ),
                     })
                 raise ValidationError({
                     'option': _("Please choose an option"),
                 })
-        elif not data.get('text'):
+        elif not data.get('text') and question.free_text:
             raise ValidationError({
                 'text': _("Text must be provided"),
             })

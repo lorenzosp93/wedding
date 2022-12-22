@@ -5,7 +5,7 @@ on:
     branches: [master, develop]
     paths:
       - "wedding-backend/**"
-      - ".github/workflow/backend.yml"
+      - ".github/workflows/backend.yml"
 
 jobs:
   test:
@@ -95,12 +95,9 @@ jobs:
           platforms: linux/arm64/v8
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding:${{ github.ref_name }}
-          cache-from: type=local,src=/tmp/${{ github.ref_name }}/.buildx-cache
-          cache-to: type=local,dest=/tmp/${{ github.ref_name }}/.buildx-cache-new
-      - name: Move cache
-        run: |
-          rm -rf /tmp/${{ github.ref_name }}/.buildx-cache
-          mv /tmp/${{ github.ref_name }}/.buildx-cache-new /tmp/${{ github.ref_name }}/.buildx-cache
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
 
 
   deploy:

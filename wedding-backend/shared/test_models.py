@@ -2,10 +2,13 @@ from django.test import TestCase
 from .models import ContentString, TranslatedString, get_translated_content
 
 # Create your tests here.
+
+
 class TestSharedContentModels(TestCase):
     """
     Class to test the `ContentString` module 
     """
+
     def setUp(self) -> None:
         "Provide initial values to tests"
         self.test_string = ContentString.objects.create(
@@ -36,13 +39,15 @@ class TestSharedContentModels(TestCase):
             language=1,
             content=self.test_string,
         )
-    
+
     def test_contentstring_creation(self) -> None:
         self.assertIsInstance(self.test_string, ContentString)
-    
+
     def test_translatedstring_creation(self) -> None:
         self.assertIsInstance(self.es_test_string, TranslatedString)
 
     def get_translated_content(self) -> None:
         es_string = get_translated_content(self.test_string, 2)
         self.assertEqual(es_string, self.es_test_string.t9n)
+
+

@@ -1,7 +1,6 @@
-from operator import truediv
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from .models import UserProfile
+from .models import Keys, Subscription, UserProfile
 
 # Create your tests here.
 
@@ -18,6 +17,16 @@ class TestProfileModels(TestCase):
         self.profile.language = 'it'
         self.profile.plus = 3
         self.profile.save()
+        self.keys = Keys.objects.create(
+            p256dh='BLc4xRzKlKORKWlbdgFaBrrPK3ydWAHo4M0gs0i1oEKgPpWC5cW8OCzVrOQRv-1npXRWk8udnW3oYhIO4475rds=',
+            auth='5I2Bu2oKdyy9CwL8QVF0NQ=='
+        )
+        self.subscription = Subscription.objects.create(
+            user=self.user,
+            endpoint='',
+            keys=self.keys,
+            user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15'
+        )
 
     def test_profile_creation(self) -> None:
         self.assertIsInstance(self.profile, UserProfile)
@@ -25,6 +34,10 @@ class TestProfileModels(TestCase):
     def test_profile_update(self) -> None:
         self.assertEqual(self.profile.language, 'it')
         self.assertEqual(self.profile.plus, 3)
+    
+    def test_subscription_creation(self) -> None:
+        self.assertIsInstance(self.subscription, Subscription)
+        self.assertIsInstance(self.keys, Keys)
 
     def test_setup_plus_one(self) -> None:
         self.plus_one, created = self.profile.setup_plus_one(
