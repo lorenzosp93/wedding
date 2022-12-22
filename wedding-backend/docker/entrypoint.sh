@@ -68,8 +68,9 @@ done
 
 # Section 3- Idempotent Django commands  
 python manage.py collectstatic --noinput  
-python manage.py makemigrations  
-python manage.py migrate
-django-admin compilemessages -l es -l it
+python manage.py makemigrations --noinput
+python manage.py migrate --noinput
+python manage.py makemessages -l es -l it
+python manage.py compilemessages -l es -l it
 
 exec "$@"

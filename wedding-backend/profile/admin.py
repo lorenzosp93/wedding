@@ -12,9 +12,11 @@ from .models import UserProfile, Subscription
 
 admin.site.unregister(get_user_model())
 
+
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('user', 'endpoint',)
+
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
@@ -31,6 +33,7 @@ class UserProfileInLine(admin.TabularInline):
 
 
 HEADERS = {
+    'username': {'field': 'username', 'required': False},
     'email': {'field': 'email', 'required': True},
     'first_name': {'field': 'first_name', 'required': True},
     'last_name': {'field': 'last_name', 'required': True},
@@ -39,7 +42,9 @@ HEADERS = {
 }
 
 
-def import_document_validator(document: BytesIO, HEADERS:dict[str, dict[str, object]]) -> None:
+def import_document_validator(
+    document: BytesIO, HEADERS: dict[str, dict[str, dict[str, str | bool]]]
+) -> None:
     # check file valid csv format
     try:
         dialect = csv.Sniffer().sniff(document.read(1024).decode())
@@ -112,7 +117,8 @@ class UserAdmin(admin.ModelAdmin):
                 reader = self.open_csv(form)
                 if reader:
                     self.create_users_from_csv(reader)
-                    self.message_user(request, "Your csv file has been imported")
+                    self.message_user(
+                        request, "Your csv file has been imported")
                 self.message_user(request, "Your csv file could not be read")
             else:
                 self.message_user(
@@ -138,7 +144,11 @@ class UserAdmin(admin.ModelAdmin):
                 first_name=row.get('first_name'),
                 last_name=row.get('last_name'),
                 email=row.get('email'),
-                username=row.get('email')
+                username=(
+                    row.get('username')
+                    if row.get('username')
+                    else row.get('email')
+                )
             ) for row in reader
         ])
         UserProfile.objects.bulk_create([

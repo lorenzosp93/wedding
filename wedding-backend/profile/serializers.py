@@ -9,7 +9,6 @@ from rest_framework.serializers import (
     Serializer, EmailField, BaseSerializer
 )
 from shared.serializers import (
-    AddressSerializer,
     UserSerializer,
 )
 from .models import (
@@ -20,7 +19,9 @@ from .models import (
 from shared.models import get_translated_content
 
 
-def translated_string(serializer: BaseSerializer, obj: Model, field: str) -> str | None:
+def translated_string(
+    serializer: BaseSerializer, obj: Model, field: str
+) -> str | None:
     request: HttpRequest | None = serializer.context.get('request')
     if request:
         profile = UserProfile.objects.get(
@@ -43,14 +44,6 @@ class TranslationSubjectMixin(ModelSerializer):
         return translated_string(self, obj, 'subject')
 
     subject = SerializerMethodField('translated_subject')
-
-
-class UserProfileWriteSerializer(ModelSerializer):
-    address = AddressSerializer(required=False)
-
-    class Meta:
-        model = UserProfile
-        fields = ['address', 'language']
 
 
 class BaseUserProfileSerializer(ModelSerializer):
@@ -138,7 +131,9 @@ class RegisterUserSerializer(ModelSerializer):
             and self.user.email != attrs.get('email', '')
         ):
             raise ValidationError({
-                "email": _("""A user was already set up for this invitee with a different email""")
+                "email": _(
+                    """A user was already set up for this invitee with a different email"""
+                )
             })
         return super().validate(attrs)
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-21 16:25+0000\n"
+"POT-Creation-Date: 2022-12-22 15:53+0000\n"
 "PO-Revision-Date: 2022-12-21 18:23+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "Text must be provided if no option is selected"
 msgstr "Debe indicarse el texto si no se selecciona ninguna opción"
 
-#: inbox/serializers.py:47
+#: inbox/serializers.py:51
 msgid "Please choose an option"
 msgstr "Favor de seleccionar una opción"
 
-#: inbox/serializers.py:51
+#: inbox/serializers.py:55
 msgid "Text must be provided"
 msgstr "Favor de proporcionar texto"
 
@@ -82,7 +82,7 @@ msgstr "Cena"
 msgid "Dance"
 msgstr "Baile"
 
-#: profile/serializers.py:130
+#: profile/serializers.py:124
 msgid ""
 "First and Last Name not found in invitee list,\n"
 "                    did you write it correcly?"
@@ -90,36 +90,36 @@ msgstr ""
 "No se encuentra el nombre y apellidos en la lista de invitados,\n"
 "                    ¿lo has escrito correctamente?"
 
-#: profile/serializers.py:140
+#: profile/serializers.py:135
 msgid "A user was already set up for this invitee with a different email"
 msgstr ""
 "Ya se ha configurado un usuario para este invitado con una dirección de "
 "correo electrónico diferente"
 
-#: profile/views.py:25
+#: profile/views.py:27
 msgid "An error occurred creating your profile, please try again later."
 msgstr ""
 "Se ha producido un error al crear tu perfil, inténtalo de nuevo más tarde."
 
-#: profile/views.py:29
+#: profile/views.py:31
 msgid "Profile created successfully, please proceed with login."
 msgstr "Perfil creado con éxito, por favor procede con el inicio de sesión."
 
-#: profile/views.py:33
+#: profile/views.py:35
 msgid "Profile already exists, please proceed with login."
 msgstr "El perfil ya existe, por favor procede con el inicio de sesión."
 
-#: profile/views.py:57
+#: profile/views.py:59
 #, python-format
 msgid "User %(email)s created"
 msgstr "Usuario %(email)s creado"
 
-#: profile/views.py:62
+#: profile/views.py:64
 #, python-format
 msgid "User %(email)s exists already"
 msgstr "El usuario %(email)s ya existe"
 
-#: profile/views.py:66
+#: profile/views.py:69
 msgid "No plus-one available"
 msgstr "No hay +1 disponible"
 
@@ -128,19 +128,19 @@ msgstr "No hay +1 disponible"
 msgid "There is a new message for you: %(subject)s"
 msgstr "Hay un nuevo mensaje para ti: %(subject)s"
 
-#: shared/models.py:19
+#: shared/models.py:16
 msgid "English"
 msgstr "Inglés"
 
-#: shared/models.py:20
+#: shared/models.py:17
 msgid "Italian"
 msgstr "Italiano"
 
-#: shared/models.py:21
+#: shared/models.py:18
 msgid "Spanish"
 msgstr "Español"
 
-#: shared/utils.py:35
+#: shared/utils.py:42
 #, python-format
 msgid "Here is your login link for %(host)s"
 msgstr "Tu enlace de acceso para %(host)s"
