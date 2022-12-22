@@ -19,7 +19,7 @@ class HasPrerequisiteOptions(HasUserList):
     )
 
     def get_users(self) -> models.QuerySet[AbstractBaseUser]:
-        if self.option_pre.count() > 0:  # type: ignore
+        if self.option_pre.count() > 0:
             return super().get_users().filter(
                 pk__in=self.get_user_list_pre()
             )
@@ -31,14 +31,17 @@ class HasPrerequisiteOptions(HasUserList):
                 option=option,
                 active=True,
             ).values_list('user__pk', flat=True)]
-            for option in self.option_pre.all()  # type: ignore
+            for option in self.option_pre.all()
         ]))
 
     class Meta:
         abstract = True
 
 
-class Message(TriggersNotifications,  HasPrerequisiteOptions, HasAudience, Serializable, HasContent, TimeStampable):
+class Message(
+    TriggersNotifications,  HasPrerequisiteOptions,
+    HasAudience, Serializable, HasContent, TimeStampable
+):
     "Model to define generic messages to users"
 
     def __str__(self) -> str:

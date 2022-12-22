@@ -19,18 +19,23 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 
 
-@api_view(('GET',))
+@api_view(['GET', ])
 @permission_classes((AllowAny,))
-def get_languages() -> Response:
+def get_languages(_: Request) -> Response:
     """
         Return supported languages
     """
-    return Response([{'iso': x, 'display': y} for x, y in I18N], status=status.HTTP_200_OK)
+    return Response(
+        [{'iso': x, 'display': y} for x, y in I18N],
+        status=status.HTTP_200_OK
+    )
 
 
 @api_view(['GET', ])
 @permission_classes([AllowAny, ])
-def get_auth_token(request: Request, *args: list, **kwargs: dict) -> Response | HttpResponseRedirect:
+def get_auth_token(
+    request: Request, *args: list, **kwargs: dict
+) -> Response | HttpResponseRedirect:
     """
         Function to retrieve auth token from email/mobile + OTP combination.
     """
@@ -49,9 +54,19 @@ def get_auth_token(request: Request, *args: list, **kwargs: dict) -> Response | 
                 data=token.__dict__, partial=True)
             if token_serializer.is_valid():
                 if request.query_params.get('api'):
-                    return Response({'token': str(token)}, status=status.HTTP_200_OK)
-                return redirect(f"{settings.FRONTEND_HOST}/?token={token_serializer.data.get('token')}")
+                    return Response(
+                        {'token': str(token)},
+                        status=status.HTTP_200_OK
+                    )
+                return redirect(
+                    f"""{settings.FRONTEND_HOST}/?token={
+                        token_serializer.data.get('token')
+                    }"""
+                )
 
-    logger.error("Couldn't log in unknown user. Errors on serializer: {}".format(
-        serializer.errors))
+    logger.error(
+        "Couldn't log in unknown user. Errors on serializer: {}".format(
+            serializer.errors
+        )
+    )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
