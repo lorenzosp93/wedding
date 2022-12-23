@@ -14,7 +14,7 @@ export default defineConfig({
       isProduction: process.env.DEV === 'false',
     }),
     viteCompression({
-      filter: /\.(js|mjs|json|css|html|svg|webp|ttf)$/i,
+      filter: /\.(js|mjs|json|css|html|svg|webp|ttf|png|ico|txt)$/i,
     }),
     VueI18nPlugin({
       include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**'),
@@ -27,7 +27,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/\/api\//],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
       },
       includeAssets: [
         'favicon.ico',
