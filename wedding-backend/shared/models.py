@@ -111,7 +111,7 @@ class HasPicture(models.Model):
     )
 
     def save(self, *args, **kwargs) -> None:
-        if not self.thumbnail:
+        if not self.thumbnail and self.picture:
             self.save_thumb()
         return super(HasPicture, self).save(*args, **kwargs)
 
