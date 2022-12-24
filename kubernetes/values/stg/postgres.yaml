@@ -11,7 +11,7 @@ image:
   tag: ""
 
 imagePullSecrets: []
-nameOverride: "wedding"
+nameOverride: "wedding-stg"
 fullnameOverride: ""
 
 serviceAccount:
@@ -87,7 +87,8 @@ tolerations: []
 affinity: {}
 
 persistentVolume:
-  storage: 8Gi
+  storage: 2Gi
+  path: /data/postgres-pv/
 
 database:
   name: django

@@ -5,50 +5,50 @@ repositories:
     url: https://kubernetes.github.io/ingress-nginx
 
 releases:
-  - name: wedding
-    namespace: wedding
-    chart: ./charts/wedding
-    values:
-      - ./values/prod/wedding.yaml
-  - name: frontend
-    namespace: wedding
-    chart: bitnami/nginx
-    values:
-      - ./values/prod/frontend.yaml
+  # - name: wedding
+  #   namespace: wedding
+  #   chart: ./charts/wedding
+  #   values:
+  #     - ./values/prod/wedding.yaml
+  # - name: frontend
+  #   namespace: wedding
+  #   chart: bitnami/nginx
+  #   values:
+  #     - ./values/prod/frontend.yaml
   - name: postgres-wedding
     namespace: wedding
     chart: ./charts/postgres
     values:
       - ./values/prod/postgres.yaml
-  - name: redis-wedding
-    namespace: wedding
-    chart: bitnami/redis
-    values:
-      - ./values/prod/redis.yaml
+  # - name: redis-wedding
+  #   namespace: wedding
+  #   chart: bitnami/redis
+  #   values:
+  #     - ./values/prod/redis.yaml
 
-  - name: ingress-controller
-    namespace: default
-    chart: ingress-nginx/ingress-nginx
-    values:
-      - ./values/prod/ingress-controller.yaml
+  # - name: ingress-controller
+  #   namespace: default
+  #   chart: ingress-nginx/ingress-nginx
+  #   values:
+  #     - ./values/prod/ingress-controller.yaml
 
-  - name: wedding
-    namespace: wedding-stg
-    chart: ./charts/wedding
-    values:
-      - ./values/stg/wedding.yaml
-  - name: frontend
-    namespace: wedding-stg
-    chart: bitnami/nginx
-    values:
-      - ./values/stg/frontend.yaml
-  - name: postgres-wedding-stg
-    namespace: wedding-stg
-    chart: ./charts/postgres
-    values:
-      - ./values/stg/postgres.yaml
-  - name: redis-wedding
-    namespace: wedding-stg
-    chart: bitnami/redis
-    values:
-      - ./values/stg/redis.yaml
+  # - name: wedding
+  #   namespace: wedding-stg
+  #   chart: ./charts/wedding
+  #   values:
+  #     - ./values/stg/wedding.yaml
+  # - name: frontend
+  #   namespace: wedding-stg
+  #   chart: bitnami/nginx
+  #   values:
+  #     - ./values/stg/frontend.yaml
+  # - name: postgres-wedding-stg
+  #   namespace: wedding-stg
+  #   chart: ./charts/postgres
+  #   values:
+  #     - ./values/stg/postgres.yaml
+  # - name: redis-wedding
+  #   namespace: wedding-stg
+  #   chart: bitnami/redis
+  #   values:
+  #     - ./values/stg/redis.yaml
