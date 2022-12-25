@@ -47,7 +47,7 @@ class Information(
         return f"{self.subject}"
 
     class Meta:
-        ...
+        ordering = ['type', 'pk']
 
 
 def validate_json(value: str) -> None:
