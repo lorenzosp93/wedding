@@ -6,6 +6,7 @@ from django.utils.translation import override, gettext_lazy as _
 from django.template import loader
 from shared.models import I18N, TimeStampable
 from wedding.settings import AUTH_USER_MODEL, FRONTEND_HOST
+from wedding.tasks import send_email
 
 USER_TYPES = (
     (2, 'family'),
@@ -74,7 +75,6 @@ class UserProfile(models.Model):
                 }
             )
 
-        from wedding.tasks import send_email
         send_email.delay([profile.user.email], subject, message, html_message)
 
     def setup_profile(

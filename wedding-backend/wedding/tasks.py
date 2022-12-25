@@ -4,7 +4,6 @@ from django.apps import apps
 from django.core.mail import send_mail
 from pywebpush import webpush, WebPushException
 from wedding.settings import WEBPUSH_SETTINGS, EMAIL_TO
-from profile.serializers import SubscriptionSerializer
 from wedding.celery import app
 
 
@@ -37,14 +36,16 @@ def send_email(
 @app.task(
     ignore_result=True,
 )
-def send_notifications_for_subscriptions(subscriptions_list: list[str], payload: dict) -> None:
+def send_notifications_for_subscriptions(
+    subscriptions_list: list[str], payload: dict
+) -> None:
     subscriptions = apps.get_model(
         'profile', 'Subscription').objects.filter(pk__in=subscriptions_list)
 
     for subscription in subscriptions:
         try:
             webpush(
-                SubscriptionSerializer(subscription).data,
+                apps.get_model('profile', 'Subscription')(subscription).data,
                 json.dumps(payload),
                 vapid_private_key=WEBPUSH_SETTINGS.get('VAPID_PRIVATE_KEY'),
                 vapid_claims={
