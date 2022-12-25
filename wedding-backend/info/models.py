@@ -47,7 +47,7 @@ class Information(
         return f"{self.subject}"
 
     class Meta:
-        ordering = ['type', 'pk']
+        ordering = ['pk']
 
 
 def validate_json(value: str) -> None:
@@ -89,4 +89,4 @@ class Photo(HasPicture, HasContent):
         return f"{self.picture.name} - {self.type}"
 
     class Meta:
-        ordering = ['type']
+        ordering = ['type', 'pk']
