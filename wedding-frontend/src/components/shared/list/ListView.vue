@@ -21,6 +21,7 @@
             :key="obj.uuid"
             @click="setActive(idx)"
             :obj="obj"
+            :active="active == idx"
           />
           <li v-if="searchedList?.length == 0 && objList?.length">
             <p class="p-3">{{ $t("shared.listview.noMessage") }}</p>

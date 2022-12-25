@@ -2,7 +2,9 @@
   <li class="py-5 border-b px-3 transition cursor-pointer">
     <div class="flex justify-between items-center">
       <div class="w-full mr-5 pl-5 text-left">
-        <h3 class="text-lg font-semibold">{{ obj?.subject }}</h3>
+        <h3 class="text-lg font-semibold" :class="{ 'text-accent': active }">
+          {{ obj?.subject }}
+        </h3>
         <div
           class="-full text-md italic text-secondary dark:text-darkSecondary"
         >
@@ -55,6 +57,7 @@ export default defineComponent({
   },
   props: {
     obj: { type: Object as PropType<ListObject> },
+    active: { type: Boolean },
   },
   computed: {
     hasQuestions() {
