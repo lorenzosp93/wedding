@@ -54,6 +54,9 @@ export const useInfoStore = defineStore({
             }
         },
         activateType(type: string) {
+            if (!type) {
+                type = this.infoTypes.find(t => t) ?? '';
+            }
             this.activeType = type;
         },
         handleResponse(response: AxiosResponse<Information[]>) {
