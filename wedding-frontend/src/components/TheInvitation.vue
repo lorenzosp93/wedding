@@ -10,7 +10,7 @@
         <div
           id="envelopeContainer"
           :class="{ invisible: !loaded }"
-          class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-20 sm:-top-24 short:-top-28 px-1"
+          class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-20 sm:-top-24 px-1"
         >
           <img
             id="base"
@@ -178,14 +178,22 @@
     <Teleport to="body">
       <div
         id="scroller"
-        :class="{ invisible: !loaded }"
-        class="fixed w-fit bottom-0 right-1/2 translate-x-1/2 py-2 flex z-20 cursor-pointer"
+        v-show="loaded"
+        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 short:mr-5 py-2 flex z-20 cursor-pointer"
         @click="scrollToBottom"
       >
         <chevron-double-down-icon
           class="h-10 w-10 md:h-12 md:w-12 pt-3.5 animate-bounce stroke-accent stroke-2"
         />
       </div>
+      <a
+        id="rsvp"
+        @click="$router.push({ name: 'inbox' })"
+        v-show="loaded"
+        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-lg px-2 py-1 mb-5 short:mr-5 opacity-0 font-[Tangerine] text-2xl cursor-pointer"
+      >
+        R.S.V.P.
+      </a>
     </Teleport>
   </div>
 </template>
@@ -310,7 +318,8 @@ export default defineComponent({
           },
           0.5
         )
-        .set("#scroller", { autoAlpha: 0 }, 0.5);
+        .set("#scroller", { autoAlpha: 0 }, 0.5)
+        .to("#rsvp", { autoAlpha: 1, duration: 0.1 }, 0.9);
       this.tl = tl;
     },
     scrollToBottom() {

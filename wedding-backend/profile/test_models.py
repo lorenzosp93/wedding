@@ -1,3 +1,4 @@
+from unittest.mock import Mock, patch
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import Keys, Subscription, UserProfile
@@ -34,12 +35,13 @@ class TestProfileModels(TestCase):
     def test_profile_update(self) -> None:
         self.assertEqual(self.profile.language, 'it')
         self.assertEqual(self.profile.plus, 3)
-    
+
     def test_subscription_creation(self) -> None:
         self.assertIsInstance(self.subscription, Subscription)
         self.assertIsInstance(self.keys, Keys)
 
-    def test_setup_plus_one(self) -> None:
+    @patch('wedding.tasks.send_email.delay')
+    def test_setup_plus_one(self, send_email: Mock) -> None:
         self.plus_one, created = self.profile.setup_plus_one(
             first_name='some name',
             last_name='some last name',
@@ -61,3 +63,4 @@ class TestProfileModels(TestCase):
                 self.plus_one.profile.parent,
                 self.user
             )
+            send_email.assert_called_once()

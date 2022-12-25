@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 15:53+0000\n"
-"PO-Revision-Date: 2022-12-21 14:49+0100\n"
+"POT-Creation-Date: 2022-12-25 11:23+0000\n"
+"PO-Revision-Date: 2022-12-25 12:28+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -82,6 +82,16 @@ msgstr "Cena"
 msgid "Dance"
 msgstr "Ballo"
 
+#: profile/models.py:60
+#, python-format
+msgid "You have been invited as %(parent)s's plus one"
+msgstr "Sei stato invitato come plus-one di %(parent)s"
+
+#: profile/models.py:65
+#, python-format
+msgid "%(parent)s invited you to Priscilla and Lorenzo's wedding website: %(url)s"
+msgstr "%(parent)s ti ha invitato al matrimonio di Priscilla e Lorenzo: %(url)s"
+
 #: profile/serializers.py:124
 msgid ""
 "First and Last Name not found in invitee list,\n"
@@ -92,13 +102,11 @@ msgstr ""
 
 #: profile/serializers.py:135
 msgid "A user was already set up for this invitee with a different email"
-msgstr ""
-"Per questo invitato è già stato impostato un utente con un'email diversa"
+msgstr "Per questo invitato è già stato impostato un utente con un'email diversa"
 
 #: profile/views.py:27
 msgid "An error occurred creating your profile, please try again later."
-msgstr ""
-"Si è verificato un errore nella creazione del profilo, riprovare più tardi."
+msgstr "Si è verificato un errore nella creazione del profilo, riprovare più tardi."
 
 #: profile/views.py:31
 msgid "Profile created successfully, please proceed with login."
@@ -144,23 +152,34 @@ msgstr "Spagnolo"
 msgid "Here is your login link for %(host)s"
 msgstr "Il tuo link di accesso per %(host)s"
 
+#: templates/plus_one_email.html:5
+msgid "You have been invited!"
+msgstr "Sei stato invitato!"
+
+#: templates/plus_one_email.html:6
+#, python-format
+msgid "%(parent_fullname)s invited you to Priscilla and Lorenzo's wedding."
+msgstr "%(parent_fullname)s ti ha invitato al matrimonio di Priscilla e Lorenzo."
+
+#: templates/plus_one_email.html:7
+msgid "You can access the website through the link below."
+msgstr "Puoi accedere al sito attraverso il link sottostante."
+
+#: templates/plus_one_email.html:17 templates/token_email.html:16
+msgid "Click here"
+msgstr "Clicca quì"
+
 #: templates/token_email.html:5
 msgid "Your login link"
 msgstr "Il tuo link di accesso"
 
 #: templates/token_email.html:6
 msgid "Please click the link below to access the invitee area."
-msgstr ""
-"Fare clic sul link sottostante per accedere all'area riservata agli invitati."
-
-#: templates/token_email.html:16
-msgid "Click here"
-msgstr "Clicca quì"
+msgstr "Fare clic sul link sottostante per accedere all'area riservata agli invitati."
 
 #: templates/token_email.html:24
 msgid "Alternatively, you can input the following code on the login page."
-msgstr ""
-"In alternativa, puoi inserire il seguente codice nella pagina di accesso."
+msgstr "In alternativa, puoi inserire il seguente codice nella pagina di accesso."
 
 #, fuzzy
 #~| msgid "Text must be provided"

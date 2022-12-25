@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 15:53+0000\n"
-"PO-Revision-Date: 2022-12-21 18:23+0100\n"
+"POT-Creation-Date: 2022-12-25 11:23+0000\n"
+"PO-Revision-Date: 2022-12-25 12:25+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -82,6 +82,18 @@ msgstr "Cena"
 msgid "Dance"
 msgstr "Baile"
 
+#: profile/models.py:60
+#, python-format
+msgid "You have been invited as %(parent)s's plus one"
+msgstr "Has sido invitado como plus-one de %(parent)s"
+
+#: profile/models.py:65
+#, python-format
+msgid ""
+"%(parent)s invited you to Priscilla and Lorenzo's wedding website: %(url)s"
+msgstr ""
+"%(parent)s te invita al sitio web de la boda de Priscilla y Lorenzo: %(url)s"
+
 #: profile/serializers.py:124
 msgid ""
 "First and Last Name not found in invitee list,\n"
@@ -145,6 +157,23 @@ msgstr "Español"
 msgid "Here is your login link for %(host)s"
 msgstr "Tu enlace de acceso para %(host)s"
 
+#: templates/plus_one_email.html:5
+msgid "You have been invited!"
+msgstr "Estás invitado"
+
+#: templates/plus_one_email.html:6
+#, python-format
+msgid "%(parent_fullname)s invited you to Priscilla and Lorenzo's wedding."
+msgstr "%(parent_fullname)s te invitó a la boda de Priscilla y Lorenzo."
+
+#: templates/plus_one_email.html:7
+msgid "You can access the website through the link below."
+msgstr "Puedes acceder al sitio web a través del siguiente enlace."
+
+#: templates/plus_one_email.html:17 templates/token_email.html:16
+msgid "Click here"
+msgstr "Click aquí"
+
 #: templates/token_email.html:5
 msgid "Your login link"
 msgstr "Tu enlace de acceso"
@@ -154,10 +183,6 @@ msgid "Please click the link below to access the invitee area."
 msgstr ""
 "Por favor, haz click al enlace a continuación para acceder al área de "
 "invitados."
-
-#: templates/token_email.html:16
-msgid "Click here"
-msgstr "Click aquí"
 
 #: templates/token_email.html:24
 msgid "Alternatively, you can input the following code on the login page."

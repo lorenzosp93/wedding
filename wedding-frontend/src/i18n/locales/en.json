@@ -28,7 +28,8 @@
       "last_name": "Last Name(s)",
       "loading": "Loading",
       "submit": "Submit",
-      "success": "Success!"
+      "success": "Success!",
+      "pleaseEnterThe": "\n      Please enter the details of your plus one. An account will be created for\n      them, and they will be able to log in using their email.\n    "
     },
     "theprofile": {
       "email": "Email:",

@@ -1,3 +1,4 @@
+from unittest.mock import Mock, patch
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -20,7 +21,8 @@ class TestPlusOneView(TestCase):
             plus=1,
         )
 
-    def test_setup_plus_one(self) -> None:
+    @patch('wedding.tasks.send_email.delay')
+    def test_setup_plus_one(self, send_email: Mock) -> None:
         request = self.factory.post(reverse('profile:setup-plus-one'), {
             "first_name": "a",
             "last_name": "b c",
@@ -29,6 +31,7 @@ class TestPlusOneView(TestCase):
         force_authenticate(request, self.user)
         response = setup_plus_one(request)
         self.assertEqual(response.status_code, 201)
+        send_email.assert_called_once()
 
     def test_setup_plus_one_user_exists(self) -> None:
         request = self.factory.post(reverse('profile:setup-plus-one'), {

@@ -1,5 +1,5 @@
 <template>
-  <nav id="the-navbar" class="px-3 py-3 bg-neutral dark:bg-darkNeutral">
+  <nav id="the-navbar" class="px-3 py-3">
     <div
       class="container flex flex-wrap justify-between items-center mx-auto max-w-4xl"
     >
@@ -54,7 +54,7 @@
                 ></chevron-down-icon>
               </div>
               <ul
-                class="md:absolute md:left-1/2 md:-translate-x-1/2 md:top-5 bg-neutral dark:bg-darkNeutral flex flex-col md:flex-row z-30 md:transition-none"
+                class="md:absolute md:left-1/2 md:-translate-x-1/2 md:top-5 flex flex-col md:flex-row z-30 md:transition-none"
                 style="transition: max-height 0.4s, opacity 0.2s ease-in"
                 :class="{
                   'invisible opacity-0 max-h-0': !dropInfo,

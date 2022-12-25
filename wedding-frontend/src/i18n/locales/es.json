@@ -1,133 +1,134 @@
 {
-    "auth": {
-        "loginpage": {
-            "emailAddress": "Email",
-            "loading": "Cargando",
-            "loginPage": "Página de inicio de sesión",
-            "submit": "Enviar",
-            "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}",
-            "pleaseEnterYour": "Ingresa tu correo electrónico para recibir un enlace o código de acceso."
-        },
-        "loginsuccess": {
-            "loginWasSuccessful": "El inicio de sesión fue exitoso, <b>verifica tu bandeja de entrada <em>(incluyendo la carpeta de spam)</em> para obtener tu enlace de inicio de sesión.</b>",
-            "ifYouGetYourEmail": "Si recibes tu correo en un dispositivo diferente o tienes problemas con el enlace, también puedes ingresar el código OTP a continuación.",
-            "otp": "Codigo OTP (6 dígitos)"
-        }
+  "auth": {
+    "loginpage": {
+      "emailAddress": "Email",
+      "loading": "Cargando",
+      "loginPage": "Página de inicio de sesión",
+      "submit": "Enviar",
+      "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}",
+      "pleaseEnterYour": "Ingresa tu correo electrónico para recibir un enlace o código de acceso."
     },
-    "profile": {
-        "plusone": {
-            "email": "Email",
-            "first_name": "Nombre",
-            "last_name": "Apellido(s)",
-            "loading": "Cargando",
-            "submit": "Enviar",
-            "success": "¡Éxito!"
-        },
-        "theprofile": {
-            "email": "Email:",
-            "first_name": "Nombre:",
-            "invite": "Invitar +1",
-            "last_name": "Apellido(s):",
-            "logOut": "Cerrar sesión",
-            "plusOne": "+1 disponbiles:",
-            "yourPlusOnes": "Tus +1"
-        }
-    },
-    "shared": {
-        "listview": {
-            "alreadyAnswered": "Ya has respondido a estas preguntas.",
-            "changeResponses": "Cambia tus respuestas",
-            "done": "¡Has terminado por hoy!",
-            "loading": "Cargando",
-            "noMessage": "No se pudo encontrar ningún mensaje que coincida con tu búsqueda.",
-            "other": "Otro:",
-            "search": "Buscar...",
-            "submit": "Enviar",
-            "success": "¡Has enviado con éxito tus respuestas!"
-        },
-        "notfound": {
-            "pageNotFound": "¡Página no encontrada!"
-        },
-        "thenavbar": {
-            "gallery": "Galeria",
-            "home": "Home",
-            "inbox": "Bandeja de entrada",
-            "information": "Información",
-            "openMainMenu": "Abrir menú principal",
-            "profile": "Perfil"
-        },
-        "tour": {
-            "confirmCancel": "¿Estás seguro de que quieres cancelar el tour? Siempre puedes acceder a él nuevamente haciendo clic en el botón (i) en la pagina principal.",
-            "next": "Siguiente",
-            "back": "Atrás",
-            "finish": "Finalizar",
-            "intro": "¡Bienvenido a nuestra aplicación de boda! Aquí, podrás acceder a toda la información sobre las celebraciones y unirte a nosotros mientras nos preparamos para nuestro día especial. \n\n Haz clic en el botón 'Siguiente' para echar un vistazo rápido.",
-            "mobile-menu": "Como estás en un dispositivo móvil, el menú está convenientemente escondido detrás del botón arriba. Hazle clic para continuar.",
-            "invite": "¡Detrás de este botón, puedes encontrar la invitación digital para la boda!",
-            "information": "En esta sección, encontrarás toda la información sobre las celebraciones de la boda, incluidos Eventos, Viajes, Consejos y más.",
-            "inbox": {
-                "navbar": "En la Bandeja de entrada, encontrarás comunicaciones de los novios, incluidas preguntas importantes que podrás responder directamente en la aplicación.",
-                "list": "Aquí está la lista de mensajes activos. También puedes buscar un mensaje anterior en la lista.",
-                "detail": "Esta es la vista del mensaje. En caso de que el mensaje tenga preguntas, podrás responderlas directamente en esta página.",
-                "pushNotification": "Al hacer clic en este botón, puedes optar por recibir una notificación cada vez que haya un nuevo mensaje o información disponible."
-            },
-            "gallery": "En la galería encontrarás las fotos de la celebración.",
-            "profile": "La sección de perfil te permite verificar tu información y hacer logout de la aplicación si es necesario.\n\nTambién puedes instalar esta aplicación haciendo click a la opción 'Agregar a la pantalla de inicio' de tu buscador."
-        },
-        "countdown": {
-            "days": "días",
-            "hours": "horas",
-            "minutes": "minutos",
-            "seconds": "segundos"
-        },
-        "loadingview": {
-            "loadingSpinner": "loading"
-        },
-        "list": {
-            "ui": {
-                "listitem": {
-                    "youAlreadyReplied": "Ya respondiste a este mensaje.",
-                    "youStillHavent": "Todavía no has respondido a este mensaje."
-                }
-            }
-        },
-        "onboardingtour": {
-            "tourButton": "botón del tour del sitio"
-        },
-        "pushsubscribe": {
-            "notificationsButton": "boton de notificaciones"
-        }
-    },
-    "thehome": {
-        "hi": "Hola {a},",
-        "openYourInvitation": "¡Abre tu invitación!",
-        "priscillaAndLorenzo": "Priscilla y Lorenzo",
-        "weAreDelighted": "estamos encantados de invitarte a nuestra boda en Roma.\n          La Ciudad Eterna es donde nos conocimos y nos enamoramos, ¡y nos encantaría que nos acompañes en la celebración!",
-        "withLove": "con amor,"
-    },
-    "theinvitation": {
-        "envelope": "sobre",
-        "envelopeflap": "solapa del sobre",
-        "scrollDown": "Desplazar hacia abajo",
-        "danielCabreraUscangaAndReginaMatos": "Daniel Cabrera Uscanga y Regina Matos Cano",
-        "canoCommunicateTheWeddingOfTheirDaughter": "celebrarán el matrimonio de",
-        "priscillaWith": "su hija Priscilla con",
-        "renatoRSpinelliAndVincenzaAlessio": "Renato R. Spinelli y Vincenza Alessio Ruffo",
-        "ruffoDiCalabriaCommunicateTheWeddingOf": "di Calabria celebrarán el matrimonio de",
-        "theirSonLorenzoWith": "su hijo Lorenzo con",
-        "lorenzoSpinelli": "Lorenzo Spinelli",
-        "priscillaCabreraMatos": "Priscilla Cabrera Matos",
-        "sundayOct1st2023h1630": "Domingo, 1 de octubre de 2023 - h 16:30",
-        "rome": "Roma",
-        "amsterdamTheNetherlands": "Amsterdam, Países Bajos",
-        "witteDeWithstraat1601": "Witte de Withstraat 160-1",
-        "romeItaly": "Roma, Italia",
-        "viaEttorePetrolini11": "via Ettore Petrolini 11",
-        "pueblaMexico": "Puebla, México",
-        "paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
-        "888LomasDeAngelopolis": "888, Lomas de Angelópolis",
-        "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
-        "envelopeFlap": "Solapa de sobre",
-        "waxSealOn": "Sello de cera en el sobre"
+    "loginsuccess": {
+      "loginWasSuccessful": "El inicio de sesión fue exitoso, <b>verifica tu bandeja de entrada <em>(incluyendo la carpeta de spam)</em> para obtener tu enlace de inicio de sesión.</b>",
+      "ifYouGetYourEmail": "Si recibes tu correo en un dispositivo diferente o tienes problemas con el enlace, también puedes ingresar el código OTP a continuación.",
+      "otp": "Codigo OTP (6 dígitos)"
     }
+  },
+  "profile": {
+    "plusone": {
+      "email": "Email",
+      "first_name": "Nombre",
+      "last_name": "Apellido(s)",
+      "loading": "Cargando",
+      "submit": "Enviar",
+      "success": "¡Éxito!",
+      "pleaseEnterThe": "Ingresa los detalles de tu +1. Se creará una cuenta para ellos y podrán iniciar sesión usando su correo electronico."
+    },
+    "theprofile": {
+      "email": "Email:",
+      "first_name": "Nombre:",
+      "invite": "Invitar +1",
+      "last_name": "Apellido(s):",
+      "logOut": "Cerrar sesión",
+      "plusOne": "+1 disponbiles:",
+      "yourPlusOnes": "Tus +1"
+    }
+  },
+  "shared": {
+    "listview": {
+      "alreadyAnswered": "Ya has respondido a estas preguntas.",
+      "changeResponses": "Cambia tus respuestas",
+      "done": "¡Has terminado por hoy!",
+      "loading": "Cargando",
+      "noMessage": "No se pudo encontrar ningún mensaje que coincida con tu búsqueda.",
+      "other": "Otro:",
+      "search": "Buscar...",
+      "submit": "Enviar",
+      "success": "¡Has enviado con éxito tus respuestas!"
+    },
+    "notfound": {
+      "pageNotFound": "¡Página no encontrada!"
+    },
+    "thenavbar": {
+      "gallery": "Galeria",
+      "home": "Home",
+      "inbox": "Bandeja de entrada",
+      "information": "Información",
+      "openMainMenu": "Abrir menú principal",
+      "profile": "Perfil"
+    },
+    "tour": {
+      "confirmCancel": "¿Estás seguro de que quieres cancelar el tour? Siempre puedes acceder a él nuevamente haciendo clic en el botón (i) en la pagina principal.",
+      "next": "Siguiente",
+      "back": "Atrás",
+      "finish": "Finalizar",
+      "intro": "¡Bienvenido a nuestra aplicación de boda! Aquí, podrás acceder a toda la información sobre las celebraciones y unirte a nosotros mientras nos preparamos para nuestro día especial. \n\n Haz clic en el botón 'Siguiente' para echar un vistazo rápido.",
+      "mobile-menu": "Como estás en un dispositivo móvil, el menú está convenientemente escondido detrás del botón arriba. Hazle clic para continuar.",
+      "invite": "¡Detrás de este botón, puedes encontrar la invitación digital para la boda!",
+      "information": "En esta sección, encontrarás toda la información sobre las celebraciones de la boda, incluidos Eventos, Viajes, Consejos y más.",
+      "inbox": {
+        "navbar": "En la Bandeja de entrada, encontrarás comunicaciones de los novios, incluidas preguntas importantes que podrás responder directamente en la aplicación.",
+        "list": "Aquí está la lista de mensajes activos. También puedes buscar un mensaje anterior en la lista.",
+        "detail": "Esta es la vista del mensaje. En caso de que el mensaje tenga preguntas, podrás responderlas directamente en esta página.",
+        "pushNotification": "Al hacer clic en este botón, puedes optar por recibir una notificación cada vez que haya un nuevo mensaje o información disponible."
+      },
+      "gallery": "En la galería encontrarás las fotos de la celebración.",
+      "profile": "La sección de perfil te permite verificar tu información y hacer logout de la aplicación si es necesario.\n\nTambién puedes instalar esta aplicación haciendo click a la opción 'Agregar a la pantalla de inicio' de tu buscador."
+    },
+    "countdown": {
+      "days": "días",
+      "hours": "horas",
+      "minutes": "minutos",
+      "seconds": "segundos"
+    },
+    "loadingview": {
+      "loadingSpinner": "loading"
+    },
+    "list": {
+      "ui": {
+        "listitem": {
+          "youAlreadyReplied": "Ya respondiste a este mensaje.",
+          "youStillHavent": "Todavía no has respondido a este mensaje."
+        }
+      }
+    },
+    "onboardingtour": {
+      "tourButton": "botón del tour del sitio"
+    },
+    "pushsubscribe": {
+      "notificationsButton": "boton de notificaciones"
+    }
+  },
+  "thehome": {
+    "hi": "Hola {a},",
+    "openYourInvitation": "¡Abre tu invitación!",
+    "priscillaAndLorenzo": "Priscilla y Lorenzo",
+    "weAreDelighted": "estamos encantados de invitarte a nuestra boda en Roma.\n          La Ciudad Eterna es donde nos conocimos y nos enamoramos, ¡y nos encantaría que nos acompañes en la celebración!",
+    "withLove": "con amor,"
+  },
+  "theinvitation": {
+    "envelope": "sobre",
+    "envelopeflap": "solapa del sobre",
+    "scrollDown": "Desplazar hacia abajo",
+    "danielCabreraUscangaAndReginaMatos": "Daniel Cabrera Uscanga y Regina Matos Cano",
+    "canoCommunicateTheWeddingOfTheirDaughter": "celebrarán el matrimonio de",
+    "priscillaWith": "su hija Priscilla con",
+    "renatoRSpinelliAndVincenzaAlessio": "Renato R. Spinelli y Vincenza Alessio Ruffo",
+    "ruffoDiCalabriaCommunicateTheWeddingOf": "di Calabria celebrarán el matrimonio de",
+    "theirSonLorenzoWith": "su hijo Lorenzo con",
+    "lorenzoSpinelli": "Lorenzo Spinelli",
+    "priscillaCabreraMatos": "Priscilla Cabrera Matos",
+    "sundayOct1st2023h1630": "Domingo, 1 de octubre de 2023 - h 16:30",
+    "rome": "Roma",
+    "amsterdamTheNetherlands": "Amsterdam, Países Bajos",
+    "witteDeWithstraat1601": "Witte de Withstraat 160-1",
+    "romeItaly": "Roma, Italia",
+    "viaEttorePetrolini11": "via Ettore Petrolini 11",
+    "pueblaMexico": "Puebla, México",
+    "paseoToscana165Cluster": "Paseo Toscana 165, Cluster",
+    "888LomasDeAngelopolis": "888, Lomas de Angelópolis",
+    "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
+    "envelopeFlap": "Solapa de sobre",
+    "waxSealOn": "Sello de cera en el sobre"
+  }
 }
