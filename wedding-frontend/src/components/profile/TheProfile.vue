@@ -22,10 +22,12 @@
           <tr v-if="profile?.plus">
             <td>{{ $t("profile.theprofile.plusOne") }}</td>
             <td class="flex w-full">
-              <p class="my-auto ml-auto">{{ profile.plus }}</p>
+              <p class="my-auto ml-auto">
+                {{ profile.plus - profile?.childs?.length }}
+              </p>
               <div
-                v-if="profile?.plus - profile?.childs?.length"
-                class="ml-auto mr-2"
+                v-if="profile.plus - profile?.childs?.length"
+                class="ml-auto"
               >
                 <button
                   class="rounded-md bg-pale dark:bg-darkPale py-1 px-2"

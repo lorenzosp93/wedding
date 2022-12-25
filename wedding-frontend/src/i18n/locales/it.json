@@ -28,7 +28,8 @@
       "last_name": "Cognome/i",
       "loading": "Caricamento in corso",
       "submit": "Invia",
-      "success": "Successo!"
+      "success": "Successo!",
+      "pleaseEnterThe": "Inserisci i dettagli del tuo +1. Verrà creato un account e potrà utilizzare la email per accedere al sito."
     },
     "theprofile": {
       "email": "Email:",

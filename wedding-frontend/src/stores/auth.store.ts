@@ -18,23 +18,19 @@ export const useAuthStore = defineStore({
         registerError: undefined as UserError | undefined,
     }),
     actions: {
-        async login(token: string) {
-            // update pinia state
-            this.token = token;
+        async getProfile () {
             this.loading = true;
-            apiService.getUserProfile().then((response: AxiosResponse<Profile[]>) => {
+            return apiService.getUserProfile().then((response: AxiosResponse<Profile[]>) => {
                 let profile = response.data.find((d: Profile) => d);
                 this.profile = profile;
                 this.loading = false;
+
                 localStorage.setItem('profile', JSON.stringify(profile));
-                // store user details and jwt in local storage to keep user logged in between page refreshes
-                localStorage.setItem('token', token);
+
                 if (profile?.language) {
                     i18n.global.locale.value = profile.language;
                     localStorage.setItem('lang', profile.language);
                 }
-                const notificationStore = useNotificationStore();
-                notificationStore.checkIsSubscribed();
             }).catch(
                 (error: AxiosError) => {
                     this.loading = false;
@@ -42,6 +38,14 @@ export const useAuthStore = defineStore({
                     this.error = error;
                 }
             )
+        },
+        async login(token: string) {
+            this.token = token;
+            await this.getProfile().then(_ => {
+                localStorage.setItem('token', token);
+                const notificationStore = useNotificationStore();
+                notificationStore.checkIsSubscribed();
+            });
         },
         logout () {
             this.token = '';
