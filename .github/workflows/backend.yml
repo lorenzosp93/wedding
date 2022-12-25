@@ -94,7 +94,7 @@ jobs:
         with:
           file: ./wedding-backend/docker/Dockerfile
           context: ./wedding-backend
-          platforms: linux/arm64/v8
+          platforms: linux/arm64,linux/amd64
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding:${{ github.ref_name }}
           cache-from: type=gha

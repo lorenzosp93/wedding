@@ -45,7 +45,7 @@ jobs:
         with:
           file: ./wedding-frontend/docker/Dockerfile
           context: ./wedding-frontend
-          platforms: linux/arm64/v8
+          platforms: linux/arm64,linux/amd64
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:develop
           cache-from: type=gha

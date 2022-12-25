@@ -72,6 +72,12 @@ spec:
               httpHeaders:
               - name: Accept
                 value: application/json
+              {{- if .Values.ingress.enabled }}
+              {{- with (first .Values.ingress.hosts) }}
+              - name: Host
+                value: {{ .host }}
+              {{- end }}
+              {{- end }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
@@ -86,6 +92,12 @@ spec:
               httpHeaders:
               - name: Accept
                 value: application/json
+              {{- if .Values.ingress.enabled }}
+              {{- with (first .Values.ingress.hosts) }}
+              - name: Host
+                value: {{ .host }}
+              {{- end }}
+              {{- end }}
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}

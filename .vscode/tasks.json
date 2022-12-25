@@ -9,7 +9,8 @@
 				"tag": "wedding:develop",
 				"dockerfile": "${workspaceFolder}/wedding-backend/docker/Dockerfile",
 				"context": "${workspaceFolder}/wedding-backend",
-				"pull": true
+				"pull": true,
+				"customOptions": "--platform linux/arm64 --platform linux/amd64"
 			},
 			"problemMatcher": [],
 			"group": {
@@ -24,6 +25,8 @@
 				"tag": "wedding-frontend:develop",
 				"dockerfile": "${workspaceFolder}/wedding-frontend/docker/Dockerfile",
 				"context": "${workspaceFolder}/wedding-frontend",
+				"pull": true,
+				"customOptions": "--platform linux/arm64 --platform linux/amd64"
 			},
 			"problemMatcher": [],
 			"group": {
