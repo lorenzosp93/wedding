@@ -47,7 +47,7 @@ jobs:
           context: ./wedding-frontend
           platforms: linux/arm64,linux/amd64
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:develop
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding-frontend:${{github.ref_name}}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
