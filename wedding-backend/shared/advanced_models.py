@@ -70,11 +70,19 @@ class TriggersNotifications(
             [*subscriptions.values_list('pk', flat=True)], payload)
 
     def build_payload(self) -> dict[str, str | dict[str, str] | None]:
+        image_link = ''
+        if (picture := getattr(self, 'picture', None)):
+            image_link = picture.url
         return {
-            'image': getattr(self, 'picture', None),
-            'body': _("There is a new message for you: %(subject)s") % {'subject': self.subject},
+            'image': image_link,
+            'body': _(
+                "There is a new message for you: %(subject)s"
+            ) % {'subject': self.subject},
             'data': {
-                'url': f"{FRONTEND_HOST}/{'inbox' if self.__class__.__name__ == 'Message' else f'info/{self.get_type_display()}'}/"
+                'url': f"""{FRONTEND_HOST}/{
+                    'inbox' if self.__class__.__name__ == 'Message'
+                    else f'info/{self.get_type_display()}'
+                }/"""
             }
         }
 
