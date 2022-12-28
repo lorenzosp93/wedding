@@ -6,7 +6,7 @@
           {{ obj?.subject }}
         </h3>
         <div
-          class="-full text-md italic text-secondary dark:text-darkSecondary"
+          class="w-full text-md italic text-secondary dark:text-darkSecondary pt-1"
         >
           {{ listItemContent(obj?.content ?? "", 40) }}
         </div>
@@ -20,10 +20,9 @@
       <div v-if="hasResponses" class="group float-left relative mb-auto">
         <chat-bubble-left-right-icon class="w-6 h-6 stroke-secondary">
         </chat-bubble-left-right-icon>
-        <span
-          class="absolute w-48 -left-52 top-1/2 -translate-y-1/2 hidden group-hover:flex bg-pale dark:bg-darkPale px-2 py-1 rounded-md shadow-lg h-fit before:content-[''] before:absolute before:top-1/2 before:left-[100%] before:-translate-y-1/2 before:border-8 before:border-pale dark:before:border-darkPale dark:before:border-r-transparent before:border-r-transparent dark:before:border-y-transparent before:border-y-transparent select-none"
-          >{{ $t("shared.list.ui.listitem.youAlreadyReplied") }}</span
-        >
+        <tooltip-item>
+          {{ $t("shared.list.ui.listitem.youAlreadyReplied") }}
+        </tooltip-item>
       </div>
       <div
         v-if="hasQuestions && !hasResponses"
@@ -31,10 +30,9 @@
       >
         <chat-bubble-left-icon class="w-6 h-6 stroke-accent">
         </chat-bubble-left-icon>
-        <span
-          class="absolute w-48 -left-52 top-1/2 -translate-y-1/2 hidden group-hover:flex bg-pale dark:bg-darkPale px-2 py-1 rounded-md shadow-lg h-fit before:content-[''] before:absolute before:top-1/2 before:left-[100%] before:-translate-y-1/2 before:border-8 before:border-pale dark:before:border-darkPale dark:before:border-r-transparent before:border-r-transparent dark:before:border-y-transparent before:border-y-transparent select-none"
-          >{{ $t("shared.list.ui.listitem.youStillHavent") }}</span
-        >
+        <tooltip-item>
+          {{ $t("shared.list.ui.listitem.youStillHavent") }}
+        </tooltip-item>
       </div>
     </div>
   </li>
@@ -42,6 +40,7 @@
 
 <script lang="ts">
 import type { ListObject, Question } from "@/models/listObjects.interface";
+import TooltipItem from "./TooltipItem.vue";
 import { defineComponent, type PropType } from "vue";
 import { marked } from "marked";
 import {
@@ -54,6 +53,7 @@ export default defineComponent({
   components: {
     ChatBubbleLeftIcon,
     ChatBubbleLeftRightIcon,
+    TooltipItem,
   },
   props: {
     obj: { type: Object as PropType<ListObject> },
@@ -94,5 +94,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>

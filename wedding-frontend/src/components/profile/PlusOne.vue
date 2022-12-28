@@ -4,22 +4,25 @@
     @click="$emit('toggle')"
   ></div>
   <div
-    class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-pale dark:bg-darkPale ring-1 ring-accent p-3 w-full max-w-sm"
+    class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-pale dark:bg-darkPale p-3 w-full max-w-sm shadow-lg"
   >
     <p class="text-left p-1 mb-2">{{ $t("profile.plusone.pleaseEnterThe") }}</p>
-    <form class="flex flex-wrap" @submit="setupPlusOne">
+    <form class="flex flex-wrap" @submit="callSetupPlusOne">
       <div class="my-1 px-5 mx-auto w-full text-start">
         <label class="w-full" for="first_name">{{
           $t("profile.plusone.first_name")
         }}</label>
         <input
           id="first_name"
-          v-model.trim="submit.first_name"
+          v-model.trim="plusOne.first_name"
           class="w-full rounded-md bg-neutral dark:bg-darkNeutral"
           type="text"
         />
-        <p v-if="error?.first_name" class="text-alert dark:text-darkAlert mx-3">
-          {{ error.first_name[0] }}
+        <p
+          v-if="registerError?.first_name"
+          class="text-alert dark:text-darkAlert mx-3"
+        >
+          {{ registerError.first_name[0] }}
         </p>
       </div>
       <div class="my-1 px-5 mx-auto w-full text-start">
@@ -28,12 +31,15 @@
         }}</label>
         <input
           id="last_name"
-          v-model.trim="submit.last_name"
+          v-model.trim="plusOne.last_name"
           class="w-full rounded-md bg-neutral dark:bg-darkNeutral"
           type="text"
         />
-        <p v-if="error?.last_name" class="text-alert dark:text-darkAlert mx-3">
-          {{ error.last_name[0] }}
+        <p
+          v-if="registerError?.last_name"
+          class="text-alert dark:text-darkAlert mx-3"
+        >
+          {{ registerError.last_name[0] }}
         </p>
       </div>
       <div class="my-1 px-5 mx-auto w-full text-start">
@@ -42,25 +48,28 @@
         }}</label>
         <input
           id="email"
-          v-model.trim="submit.email"
+          v-model.trim="plusOne.email"
           class="w-full rounded-md bg-neutral dark:bg-darkNeutral"
           type="email"
         />
-        <p v-if="error?.email" class="text-alert dark:text-darkAlert mx-3">
-          {{ error.email[0] }}
+        <p
+          v-if="registerError?.email"
+          class="text-alert dark:text-darkAlert mx-3"
+        >
+          {{ registerError.email[0] }}
         </p>
       </div>
       <p
-        v-if="error?.non_field_errors"
+        v-if="registerError?.non_field_errors"
         class="text-alert dark:text-darkAlert mx-auto"
       >
-        {{ error.non_field_errors }}
+        {{ registerError.non_field_errors }}
       </p>
       <div class="relative w-full h-16">
         <button
           v-show="!loading && !success"
           class="flex mx-auto px-2 py-1 bg-accent rounded-md my-5"
-          @click.prevent="setupPlusOne"
+          @click.prevent="callSetupPlusOne"
         >
           {{ $t("profile.plusone.submit") }}
         </button>
@@ -72,13 +81,12 @@
 </template>
 
 <script lang="ts">
-import ApiService from "../../services/api.service";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { useAuthStore } from "@/stores";
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import type { User } from "@/models/auth.interface";
-import type { AxiosError } from "axios";
+import type { AxiosResponse } from "axios";
 
 export default defineComponent({
   name: "PlusOne",
@@ -86,39 +94,26 @@ export default defineComponent({
   emits: ["toggle"],
   data() {
     return {
-      submit: {
+      plusOne: {
         first_name: "",
         last_name: "",
         email: "",
       } as User,
-      error: null as any,
-      loading: false,
-      success: false,
     };
   },
-  computed: {},
+  computed: {
+    ...mapState(useAuthStore, ["registerError", "loading", "success"]),
+  },
   mounted() {},
   methods: {
-    setupPlusOne() {
-      this.loading = true;
-      ApiService.setupPlusOne(this.submit).then(
-        (_) => {
-          this.error = null;
-          this.loading = false;
-          this.success = true;
-          this.getProfile();
-          setTimeout(() => this.$emit("toggle"), 1000);
-        },
-        (error: AxiosError) => {
-          this.loading = false;
-          this.error = error?.response?.data ?? "There was an unexpected error";
-        }
-      );
+    ...mapActions(useAuthStore, ["getProfile", "setupPlusOne"]),
+    callSetupPlusOne() {
+      this.setupPlusOne(this.plusOne)
+        .then((_) => {
+          this.$emit("toggle");
+        })
+        .catch();
     },
-    ...mapActions(useAuthStore, ["getProfile"]),
   },
 });
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>

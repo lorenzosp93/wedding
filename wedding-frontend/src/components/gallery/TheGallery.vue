@@ -6,24 +6,12 @@
         :key="col"
         class="flex-[100%] md:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit"
       >
-        <div
+        <thumbnail-item
           v-for="photo in gallery.filter((_,idx:number)=>{ return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4) == col - 1 })"
           :key="photo.id"
-          class="mx-auto w-full cursor-pointer my-3 rounded-md overflow-hidden shadow-lg"
+          :photo="photo"
           @click="activePhoto = photo"
-        >
-          <img
-            :src="photo.thumbnail"
-            :alt="`Picture ${photo.id} thumbnail`"
-            class="w-full"
-          />
-          <div
-            v-if="photo?.content"
-            class="bg-neutral dark:bg-darkNeutral dark:text-secondary px-3 py-3"
-          >
-            {{ photo.content }}
-          </div>
-        </div>
+        />
       </div>
       <div
         v-show="loading || next"
@@ -41,21 +29,12 @@
         <loading-view v-show="loading"></loading-view>
       </div>
     </div>
-    <div v-if="activePhoto" class="fixed top-0 left-0 w-full h-full">
-      <div
-        class="absolute w-fit h-fit top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 p-2 bg-secondary rounded-lg shadow-2xl"
-      >
-        <img
-          class="max-w-[90vw] max-h-[80vh] rounded-lg"
-          :src="activePhoto.picture"
-          alt="Full-size picture"
-        />
-      </div>
-      <div
-        class="absolute z-40 w-screen h-screen backdrop-blur-sm cursor-pointer"
-        @click="activePhoto = null"
-      ></div>
-    </div>
+    <photo-item
+      @close-photo="activePhoto = null"
+      v-if="activePhoto"
+      :activePhoto="activePhoto"
+      class="fixed top-0 left-0 w-full h-full"
+    ></photo-item>
   </div>
 </template>
 
@@ -67,6 +46,8 @@ import LoadingView from "@/components/shared/LoadingView.vue";
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 import { defineComponent } from "vue";
 import type { Photo } from "@/models/listObjects.interface";
+import ThumbnailItem from "./ui/ThumbnailItem.vue";
+import PhotoItem from "./ui/PhotoItem.vue";
 
 type Breakpoint = {
   name: "sm" | "md" | "lg" | "xl";
@@ -78,6 +59,8 @@ export default defineComponent({
   components: {
     LoadingView,
     ChevronDoubleDownIcon,
+    ThumbnailItem,
+    PhotoItem,
   },
   props: {},
   data() {
