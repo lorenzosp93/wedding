@@ -6,7 +6,7 @@
           {{ obj?.subject }}
         </h3>
         <div
-          class="-full text-md italic text-secondary dark:text-darkSecondary pt-1"
+          class="w-full text-md italic text-secondary dark:text-darkSecondary pt-1"
         >
           {{ listItemContent(obj?.content ?? "", 40) }}
         </div>
