@@ -140,6 +140,16 @@
                     {{ $t("theinvitation.888LomasDeAngelopolis") }}
                   </tspan>
                 </text>
+                <text
+                  font-family="Tangerine"
+                  font-size="16"
+                  font-weight="normal"
+                  fill="#1F4045"
+                >
+                  <tspan x="50%" text-anchor="middle" y="371">
+                    {{ $t("theinvitation.noKids") }}
+                  </tspan>
+                </text>
               </g>
             </g>
           </svg>
@@ -186,14 +196,14 @@
           class="h-10 w-10 md:h-12 md:w-12 pt-3.5 animate-bounce stroke-accent stroke-2"
         />
       </div>
-      <a
+      <router-link
         id="rsvp"
-        @click="$router.push({ name: 'inbox' })"
+        :to="{ name: 'inbox' }"
         v-show="loaded"
         class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-lg px-2 py-1 mb-5 short:mr-5 opacity-0 font-[Tangerine] text-2xl cursor-pointer"
       >
         R.S.V.P.
-      </a>
+      </router-link>
     </Teleport>
   </div>
 </template>
