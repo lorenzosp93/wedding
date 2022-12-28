@@ -16,8 +16,26 @@ export const useAuthStore = defineStore({
         loading: false as boolean,
         error: undefined as AxiosError | undefined,
         registerError: undefined as UserError | undefined,
+        success: false as boolean,
     }),
     actions: {
+        setupPlusOne(plusOne: User) {
+            this.loading = true;
+            return apiService.setupPlusOne(plusOne).then(
+                (response:AxiosResponse<string>) => {
+                    this.error = undefined;
+                    this.loading = false;
+                    this.success = true;
+                    this.getProfile();
+                    return response
+                },
+                (error: AxiosError<UserError>) => {
+                    this.loading = false;
+                    this.registerError = error?.response?.data;
+                    throw error
+                }
+            );
+        },
         async getProfile () {
             this.loading = true;
             return apiService.getUserProfile().then((response: AxiosResponse<Profile[]>) => {
@@ -56,6 +74,7 @@ export const useAuthStore = defineStore({
         register (user: User) {
             this.loading = true;
             apiService.registerUser(user).then((response: AxiosResponse<string>) => {
+                this.success = true;
                 this.loading = false;
                 router.push({name: 'login', query: {
                     email: user.email,

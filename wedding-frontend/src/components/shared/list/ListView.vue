@@ -49,9 +49,7 @@
         @submit-response="
           (response) => $emit('submitResponse', response, activeObject?.uuid)
         "
-        @delete-responses="
-          (response) => $emit('deleteResponses', activeObject?.uuid)
-        "
+        @delete-responses="(_) => $emit('deleteResponses', activeObject?.uuid)"
       ></detail-view>
     </main>
   </div>
