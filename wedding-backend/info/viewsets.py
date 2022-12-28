@@ -9,12 +9,10 @@ from .models import (
 )
 from shared.viewsets import (
     AudienceViewSetMixin,
-    CachedViewsetMixin
 )
 
 
 class InformationViewSet(
-    CachedViewsetMixin,
     AudienceViewSetMixin,
     ReadOnlyModelViewSet,
 ):
@@ -28,7 +26,6 @@ class InformationViewSet(
 
 
 class PhotoViewSet(
-    CachedViewsetMixin,
     ReadOnlyModelViewSet,
 ):
     serializer_class = PhotoSerializer

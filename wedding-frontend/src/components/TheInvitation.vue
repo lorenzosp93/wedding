@@ -140,6 +140,16 @@
                     {{ $t("theinvitation.888LomasDeAngelopolis") }}
                   </tspan>
                 </text>
+                <text
+                  font-family="Tangerine"
+                  font-size="16"
+                  font-weight="normal"
+                  fill="#1F4045"
+                >
+                  <tspan x="50%" text-anchor="middle" y="371">
+                    {{ $t("theinvitation.noKids") }}
+                  </tspan>
+                </text>
               </g>
             </g>
           </svg>
