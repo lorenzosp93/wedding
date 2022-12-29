@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="invitation-wrapper">
     <div
       id="the-invitation"
       :class="{ 'h-[200vh]': loaded }"
@@ -86,12 +86,11 @@
 import { defineComponent } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 import TheMessage from "./shared/ui/TheMessage.vue";
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger);
 
 type ImageDef = {
   name: string;
@@ -110,7 +109,6 @@ export default defineComponent({
     return {
       loaded: false as Boolean,
       tl: null as GSAPTimeline | null,
-      smoother: null as ScrollSmoother | null,
       images: [
         {
           name: "waxSeal",
@@ -161,17 +159,13 @@ export default defineComponent({
     },
     cleanup() {
       this.tl?.kill();
-      this.smoother?.kill();
     },
     setupEnvelopeAnimation() {
       this.cleanup();
-
-      this.smoother = ScrollSmoother.create({
+      ScrollTrigger.config({
         ignoreMobileResize: true,
-        normalizeScroll: true,
-        content: "#main",
-        wrapper: "#app",
       });
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "#main",
