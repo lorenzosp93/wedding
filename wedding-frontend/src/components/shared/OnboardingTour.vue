@@ -170,7 +170,7 @@ export default {
             text: this.$t("shared.tour.inbox.list"),
             attachTo: {
               element: "#list-view",
-              on: "right",
+              on: "bottom",
             },
             modalOverlayOpeningPadding: -5,
             buttons: [
@@ -200,7 +200,7 @@ export default {
             text: this.$t("shared.tour.inbox.detail"),
             attachTo: {
               element: "#detail-view",
-              on: "left",
+              on: "bottom",
             },
             modalOverlayOpeningPadding: -5,
             buttons: [

@@ -2,7 +2,9 @@
   <div
     class="text-3xl md:text-5xl text-center flex w-full items-center justify-center dark:text-darkPale"
   >
-    <div class="text-2xl mr-1 font-extralight">in</div>
+    <div class="text-2xl mr-1 font-extralight">
+      {{ $t("shared.countdown.in") }}
+    </div>
     <div class="mx-1 p-2 rounded-lg">
       <div class="p-1 leading-none" :x-text="$t('shared.countdown.days')">
         {{ days }}

@@ -70,7 +70,7 @@
       "back": "Indietro",
       "finish": "Fine",
       "intro": "Benvenuti nella app per il nostro matrimonio! \n\nL'abbiamo costruita da zero in modo da darti una fantastica esperienza in preparazione del grande giorno. Qui, sarai in grado di accedere a tutte le informazioni sulle celebrazioni e unirti a noi mentre ci prepariamo per il nostro giorno speciale. \n\n Fai clic sul pulsante 'Continua' per dare una rapida occhiata in giro.",
-      "mobile-menu": "Dato che sei su un dispositivo mobile, il menu è comodamente nascosto dietro il pulsante nell'angolo. Cliccalo per procedere.",
+      "mobile-menu": "Fai clic sul bottone in alto per visualizzare il menú di navigazione.",
       "invite": "Dietro questo pulsante, puoi trovare la versione digitale dell'invito!",
       "information": "In questa sezione, troverai tutte le informazioni sui festeggiamenti del matrimonio, inclusi Eventi, Viaggi, Suggerimenti e altro ancora.",
       "inbox": {
@@ -79,10 +79,11 @@
         "detail": "Questa è la vista di dettaglio del messaggio. Nel caso in cui il messaggio includa delle domande, sarai in grado di rispondere direttamente su questa pagina.",
         "pushNotification": "Facendo clic su questo pulsante, puoi scegliere di essere avvisato ogni volta che c'è un nuovo messaggio o informazione disponibile!"
       },
-      "gallery": "Nella galleria troverai le foto dei festeggiamenti.",
-      "profile": "La sezione del profilo consente di controllare le tue informazioni e di disconnettersi dall'app, se necessario. \n\n Puoi anche installare l'applicazione cliccando sull'opzione 'Aggiungi alla schermata Home' sul tuo browser."
+      "gallery": "Nella Galleria troverai le foto dei festeggiamenti.",
+      "profile": "La sezione del Profilo consente di controllare le tue informazioni e di disconnettersi dall'app, se necessario. \n\n Puoi anche installare l'applicazione cliccando sull'opzione 'Aggiungi alla schermata Home' sul tuo browser."
     },
     "countdown": {
+      "in": "fra",
       "days": "giorni",
       "hours": "ore",
       "minutes": "minuti",
