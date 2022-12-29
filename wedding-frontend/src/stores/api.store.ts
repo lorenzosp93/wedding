@@ -6,6 +6,13 @@ import { defineStore } from 'pinia';
 const INFOS_TTL = 60 // minutes
 const GALLERY_TTL = 60 // minutes
 
+interface GetContentOptions {
+    force: boolean;
+};
+interface GetGalleryContentOptions extends GetContentOptions{
+    galleryLimit: number;
+}
+
 export const useInfoStore = defineStore({
     id: 'info',
     state: () => ({
@@ -96,8 +103,8 @@ export const useInboxStore = defineStore({
         deleteError: [] as Array<ResponseErrors>,
     }),
     actions: {
-        async getInbox(force: boolean = false): Promise<AxiosResponse<Message[]> | void> {
-            if (this.inbox.length == 0 || force) {
+        async getInbox(options: GetContentOptions = {force: false}): Promise<AxiosResponse<Message[]> | void> {
+            if (this.inbox.length == 0 || options.force) {
                 this.inboxLoading = true;
                 apiService.getInboxContent().then(
                     (response: AxiosResponse<Message[]>) => {
@@ -144,7 +151,7 @@ export const useInboxStore = defineStore({
                     this.submitSuccess = true;
                     this.submitError = [];
                 }
-                this.getInbox(true);
+                this.getInbox({ force: true });
             });
         },
         async deleteResponses(activeUuid: string): Promise<AxiosResponse | void> {
@@ -176,11 +183,12 @@ export const useInboxStore = defineStore({
                     this.deleteSuccess = true;
                     this.deleteError = [];
                 }
-                this.getInbox(true);
+                this.getInbox({ force: true });
             });
         },
     },
 })
+
 
 export const useGalleryStore = defineStore({
     id: 'gallery',
@@ -194,12 +202,12 @@ export const useGalleryStore = defineStore({
         next: localStorage.getItem('galleryNext') as string | null,
     }),
     actions: {
-        async getGalleryContent(force: boolean = false): Promise<AxiosResponse<Gallery> | void> {
-            if (this.gallery.length == 0 || this.galleryExpiry < Date.now() || force) {
+        async getGalleryContent(options: GetGalleryContentOptions): Promise<AxiosResponse<Gallery> | void> {
+            if (this.gallery.length == 0 || this.galleryExpiry < Date.now() || options.force) {
                 this.loading = true;
-                apiService.getGalleryContent(this.next).then(
+                apiService.getGalleryContent({ overrideLink: this.next ?? undefined, galleryLimit: options.galleryLimit }).then(
                     (response: AxiosResponse<Gallery>) => {
-                        this.handleResponse(response, force);
+                        this.handleResponse(response, options.force);
                     }
                 ).catch(
                     (error: AxiosError) => {

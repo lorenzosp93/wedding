@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import apiService, { API_URL, axiosInstanceFactory } from '@/services/api.service'
+import apiService from '@/services/api.service'
 import type { AxiosError, AxiosResponse } from 'axios';
 import type { Subscription } from '@/models/listObjects.interface';
 

@@ -49,6 +49,8 @@ import type { Photo } from "@/models/listObjects.interface";
 import ThumbnailItem from "./ui/ThumbnailItem.vue";
 import PhotoItem from "./ui/PhotoItem.vue";
 
+const GALLERY_LIMIT = 16; // images per load
+
 type Breakpoint = {
   name: "sm" | "md" | "lg" | "xl";
   value: number;
@@ -77,7 +79,7 @@ export default defineComponent({
     ...mapState(useGalleryStore, ["gallery", "loading", "error", "next"]),
   },
   mounted() {
-    this.getGalleryContent();
+    this.getGalleryContent({ force: false, galleryLimit: GALLERY_LIMIT });
     this.setupGalleryColumns();
     this.updateBreakpoint();
     this.setupInfiniteScroll();
@@ -90,7 +92,7 @@ export default defineComponent({
     ...mapActions(useGalleryStore, ["getGalleryContent"]),
     getMoreGalleryContent() {
       if (this.next && !this.loading) {
-        this.getGalleryContent(true);
+        this.getGalleryContent({ force: true, galleryLimit: GALLERY_LIMIT });
       }
     },
     setupInfiniteScroll() {
