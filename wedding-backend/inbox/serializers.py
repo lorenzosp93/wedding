@@ -2,7 +2,7 @@ from django.http import HttpRequest
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import (
     ModelSerializer, PrimaryKeyRelatedField,
-    SerializerMethodField, ValidationError, Field
+    SerializerMethodField, ValidationError
 )
 from .models import (
     Message, Question, Response, Option
@@ -10,6 +10,7 @@ from .models import (
 from profile.serializers import (
     TranslationContentMixin, TranslationSubjectMixin,
 )
+from shared.serializers import HasUserSerializer
 
 
 class OptionSerializer(TranslationContentMixin, ModelSerializer):
@@ -19,14 +20,13 @@ class OptionSerializer(TranslationContentMixin, ModelSerializer):
         fields = '__all__'
 
 
-class ResponseSerializer(ModelSerializer):
+class ResponseSerializer(HasUserSerializer):
     option = PrimaryKeyRelatedField(
         many=True,
         required=False,
         queryset=Option.objects.all()
     )
     question = PrimaryKeyRelatedField(queryset=Question.objects.all())
-    user: Field = PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Response
@@ -54,13 +54,6 @@ class ResponseSerializer(ModelSerializer):
             raise ValidationError({
                 'text': _("Text must be provided"),
             })
-
-    def save(self, **kwargs) -> Response:
-        """Include default for read_only `user` field"""
-        request: HttpRequest | None = self.context.get('request')
-        if request:
-            kwargs["user"] = request.user
-        return super().save(**kwargs)
 
 
 class QuestionSerializer(

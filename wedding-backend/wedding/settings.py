@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'inbox',
     'info',
     'profile',
+    'guestbook',
     'wedding',
     'storages',
     'health_check',

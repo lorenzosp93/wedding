@@ -10,8 +10,10 @@ from django.views.decorators.vary import vary_on_headers
 from django.contrib.auth.models import AbstractBaseUser, AnonymousUser
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.serializers import ModelSerializer
+from inbox.models import Message
 from wedding.settings import CACHE_TTL
 from .models import Deactivate
+from .advanced_models import HasAudience
 
 
 class CachedViewsetMixin(ViewSet):
@@ -31,7 +33,7 @@ class BaseGetQuerysetMixin(ViewSet):
 
 
 class PrerequisiteViewSetMixin(BaseGetQuerysetMixin):
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[Message]:
         """
         Logic to correctly return messages with no prerequisites and messages
         for which the prerequisite is met by the user.
@@ -50,7 +52,7 @@ class PrerequisiteViewSetMixin(BaseGetQuerysetMixin):
     def get_list_pre(
         self,
         user: AbstractBaseUser | AnonymousUser,
-        cohort_pre: QuerySet,
+        cohort_pre: QuerySet[Message],
         obj_list: list = []
     ) -> list:
         if cohort_pre:
@@ -72,7 +74,7 @@ class PrerequisiteViewSetMixin(BaseGetQuerysetMixin):
 
 
 class AudienceViewSetMixin(BaseGetQuerysetMixin):
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[HasAudience]:
         user = self.request.user
         return super().get_queryset() \
             .annotate(audience_mod=F('audience') % user.profile.type) \
