@@ -1,12 +1,11 @@
-from datetime import datetime
 from django.db.models import QuerySet
 from rest_framework.viewsets import (
     ReadOnlyModelViewSet,
-    ModelViewSet,
 )
 from shared.viewsets import (
     AudienceViewSetMixin,
-    PrerequisiteViewSetMixin
+    PrerequisiteViewSetMixin,
+    DeactivateViewSetMixin,
 )
 from .serializers import MessageSerializer, ResponseSerializer
 from .models import Response
@@ -24,7 +23,7 @@ class MessageViewSet(
     serializer_class = MessageSerializer
 
 
-class ResponseViewSet(ModelViewSet):
+class ResponseViewSet(DeactivateViewSetMixin):
     """
         This ViewSet enables creation, modification, retrieval 
         and listing of Response objects
@@ -33,8 +32,3 @@ class ResponseViewSet(ModelViewSet):
 
     def get_queryset(self) -> QuerySet[Response]:
         return Response.objects.filter(user__pk=self.request.user.pk)
-
-    def perform_destroy(self, instance: Response) -> None:
-        instance.active = False
-        instance.deleted_at = datetime.now()
-        instance.save()

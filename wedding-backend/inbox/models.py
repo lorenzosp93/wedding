@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from wedding.settings import AUTH_USER_MODEL
 from shared.models import (
     Serializable, TimeStampable,
-    HasContent, HasSubject,
+    HasContent, HasSubject, Deactivate
 )
 from shared.advanced_models import (
     HasAudience, HasUserList,
@@ -48,7 +48,7 @@ class Message(
         return f"{self.subject}"
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['pk']
 
 
 class Question(Serializable, HasSubject, HasContent):
@@ -85,7 +85,7 @@ class Option(Serializable, HasContent):
         return f"{self.question} - {self.content}"
 
 
-class Response(Serializable, TimeStampable):
+class Response(Serializable, TimeStampable, Deactivate):
     "Model to capture the response from a specific user"
     question: models.Field = models.ForeignKey(
         Question,
@@ -99,12 +99,13 @@ class Response(Serializable, TimeStampable):
     text: models.Field = models.TextField(null=True, blank=True)
     user: models.Field = models.ForeignKey(
         AUTH_USER_MODEL, on_delete=models.CASCADE)
-    active: models.Field = models.BooleanField(default=True)
-    deleted_at: models.Field = models.DateTimeField(
-        default=None, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.user}'s reply to {self.question.subject}"
 
+    def get_options(self) -> str:
+        return ",\n".join([o.content.value for o in self.option.all()])
+
     class Meta:
         unique_together = ['question', 'user', 'active', 'deleted_at']
+        ordering = ['-pk']

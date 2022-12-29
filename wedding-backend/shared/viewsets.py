@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Type
 from django.db.models import Q, F
 from django.http.request import HttpRequest
@@ -7,9 +8,10 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from django.contrib.auth.models import AbstractBaseUser, AnonymousUser
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.serializers import ModelSerializer
 from wedding.settings import CACHE_TTL
+from .models import Deactivate
 
 
 class CachedViewsetMixin(ViewSet):
@@ -75,3 +77,10 @@ class AudienceViewSetMixin(BaseGetQuerysetMixin):
         return super().get_queryset() \
             .annotate(audience_mod=F('audience') % user.profile.type) \
             .filter(audience_mod=0)
+
+
+class DeactivateViewSetMixin(ModelViewSet):
+    def perform_destroy(self, instance: Deactivate) -> None:
+        instance.active = False
+        instance.deleted_at = datetime.now()
+        instance.save()

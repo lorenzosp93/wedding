@@ -213,3 +213,13 @@ class HasSubject(models.Model):
 
     class Meta:
         abstract = True
+
+
+class Deactivate(models.Model):
+    "Abstract class for models that can be deactivated"
+    active: models.Field = models.BooleanField(default=True)
+    deleted_at: models.Field = models.DateTimeField(
+        default=None, null=True, blank=True)
+
+    class Meta:
+        abstract = True
