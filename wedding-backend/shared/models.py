@@ -1,4 +1,5 @@
 "Define abstract models to be used in all apps"
+from datetime import datetime
 from io import BytesIO
 import os
 import uuid
@@ -8,6 +9,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.html import strip_tags
+from requests import delete
 from wedding.settings import AUTH_USER_MODEL
 
 

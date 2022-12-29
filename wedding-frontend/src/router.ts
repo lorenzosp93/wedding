@@ -13,6 +13,7 @@ const TheInbox = () => import('@/components/inbox/TheInbox.vue')
 const TheInfo = () => import('@/components/information/TheInfo.vue')
 const TheGallery = () => import('@/components/gallery/TheGallery.vue')
 const TheProfile = () => import('@/components/profile/TheProfile.vue')
+const TheGuestBook = () => import('@/components/guestbook/TheGuestBook.vue')
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,6 +27,7 @@ const router = createRouter({
     { name: 'info', path: '/info/:infoType?/:active?', components: { default: TheInfo, TheNavbar }, },
     { name: 'gallery', path: '/gallery', components: { default: TheGallery, TheNavbar }, },
     { name: 'profile', path: '/profile', components: { default: TheProfile, TheNavbar }, },
+    { name: 'guestbook', path: '/guestbook', components: { default: TheGuestBook, TheNavbar }, },
   ]
 })
 

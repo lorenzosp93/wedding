@@ -1,8 +1,10 @@
 import axios, { type AxiosInstance, type AxiosResponse, type RawAxiosRequestHeaders } from 'axios';
 import authHeader from './authheader';
 import { useAuthStore } from '@/stores';
-import type { Gallery, Information, Message, Response, Subscription } from '@/models/listObjects.interface';
+import type { Information, Message, Response, Subscription } from '@/models/listObjects.interface';
+import type { Gallery } from '@/models/gallery.interface';
 import type { User, Profile } from '@/models/auth.interface';
+import type { GuestBook, GuestBookEntry } from '@/models/guestbook.interface';
 
 
 export const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
@@ -27,7 +29,7 @@ export function getCSRFHeader(): RawAxiosRequestHeaders {
   return { 'X-CSRFToken': getCookie('csrftoken') }
 }
 
-export function axiosInstanceFactory(): AxiosInstance {
+function axiosInstanceFactory(): AxiosInstance {
   var headers = { ...authHeader() };
   headers = { ...headers, ...getCSRFHeader() };
   const request = axios.create({
@@ -48,9 +50,9 @@ export function axiosInstanceFactory(): AxiosInstance {
   return request
 }
 
-interface GalleryOptions {
+interface LimitOffsetOptions {
   overrideLink?: string;
-  galleryLimit: number;
+  limit: number;
 };
 
 class ApiService {
@@ -92,7 +94,7 @@ class ApiService {
 
   async deleteInboxResponse(response_uuid: string): Promise<AxiosResponse> {
     return axiosInstanceFactory().delete(
-      '/api/inbox/response/${response_uuid}/'
+      `/api/inbox/response/${response_uuid}/`
     )
   }
 
@@ -102,9 +104,10 @@ class ApiService {
     )
   }
 
-  async getGalleryContent(options: GalleryOptions): Promise<AxiosResponse<Gallery>> {
+  async getGalleryContent(options: LimitOffsetOptions): Promise<AxiosResponse<Gallery>> {
+    let overrideLink = options.overrideLink?.length ? options.overrideLink : null
     return axiosInstanceFactory().get(
-      options?.overrideLink ?? '/api/photo/?limit=' + options.galleryLimit
+      overrideLink ?? `/api/photo/?limit=${options.limit}`
     )
   }
 
@@ -112,6 +115,26 @@ class ApiService {
     return axiosInstanceFactory().post(
       '/api/user/subscription/',
       subscription
+    )
+  }
+
+  async getGuestBookContent(options: LimitOffsetOptions): Promise<AxiosResponse<GuestBook>> {
+    let overrideLink = options.overrideLink?.length ? options.overrideLink : null
+    return axiosInstanceFactory().get(
+      overrideLink ?? `/api/guestbook/entry/?limit=${options.limit}`
+    )
+  }
+
+  async postGuestBookEntry(text: string): Promise<AxiosResponse<GuestBookEntry>> {
+    return axiosInstanceFactory().post(
+      '/api/guestbook/entry/',
+      { text: text }
+    )
+  }
+
+  async deleteGuestBookContent(uuid: string): Promise<AxiosResponse<GuestBookEntry[]>> {
+    return axiosInstanceFactory().delete(
+      `/api/guestbook/entry/${uuid}/`
     )
   }
 

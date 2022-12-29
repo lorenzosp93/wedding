@@ -79,6 +79,15 @@
           </li>
           <li>
             <router-link
+              id="navbar-guestbook"
+              :to="{ name: 'guestbook' }"
+              class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
+              @click="dropInfo = false"
+              >{{ $t("shared.thenavbar.guestbook") }}</router-link
+            >
+          </li>
+          <li>
+            <router-link
               id="navbar-inbox"
               :to="{ name: 'inbox' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"

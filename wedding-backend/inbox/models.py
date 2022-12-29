@@ -108,4 +108,4 @@ class Response(Serializable, TimeStampable, Deactivate):
 
     class Meta:
         unique_together = ['question', 'user', 'active', 'deleted_at']
-        ordering = ['-pk']
+        ordering = ['-created_at']

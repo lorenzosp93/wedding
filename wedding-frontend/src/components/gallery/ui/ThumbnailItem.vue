@@ -17,13 +17,13 @@
 </template>
 
 <script lang="ts">
-import type { Photo } from "@/models/listObjects.interface";
+import type { Photo } from "@/models/gallery.interface";
 import { defineComponent, type PropType } from "vue";
 
 export default defineComponent({
   name: "ThumbnailItem",
   props: {
-    photo: {type: Object as PropType<Photo>}
-  }
+    photo: { type: Object as PropType<Photo> },
+  },
 });
 </script>

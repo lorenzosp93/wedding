@@ -11,7 +11,7 @@
           <push-subscribe></push-subscribe>
           <input
             v-model.trim="search"
-            class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral"
+            class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-secondary dark:placeholder-darkNeutral"
             :placeholder="$t('shared.listview.search')"
           />
         </label>

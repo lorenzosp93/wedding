@@ -59,6 +59,7 @@
     "thenavbar": {
       "gallery": "Gallery",
       "home": "Home",
+      "guestbook": "Guestbook",
       "inbox": "Inbox",
       "information": "Information",
       "openMainMenu": "Open main menu",
@@ -73,6 +74,7 @@
       "mobile-menu": "Click on the button above to open the mobile navigation menú.",
       "invite": "Behind this button, you can find the digital invite for the wedding!",
       "information": "In this section, you will find all the information about the wedding celebrations, including Events, Travel, Tips and more.",
+      "guestbook": "You can also open the Guestbook, where you can find all the messages from the other invitees and you can leave your own.",
       "inbox": {
         "navbar": "In the Inbox, you will find communications from the bride and groom, including important questions that you will be able to answer directly on the app.",
         "list": "Here is the list of active messages. You can even search this list if you're looking for an old message.",
@@ -138,7 +140,16 @@
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
     "envelopeFlap": "Envelope flap",
     "waxSealOn": "Wax seal on the envelope",
-    "noKids": "Adults only"
+    "noKids": "Adults only",
+    "rsvp": "\n        R.S.V.P.\n      "
   },
-  "thegallery": {}
+  "thegallery": {},
+  "guestbook": {
+    "ui": {
+      "guestbookform": {
+        "writeAGuestbook": "Write a guestbook message for the bride and groom...",
+        "submit": "Submit"
+      }
+    }
+  }
 }

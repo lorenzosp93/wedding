@@ -1,13 +1,12 @@
-from django.db.models import QuerySet
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.viewsets import ModelViewSet
-from .models import Entry
+from shared.viewsets import DeactivateViewSet
 from .serializers import EntrySerializer
+
 
 # Create your views here.
 
 
-class EntryViewset(ModelViewSet):
+class EntryViewset(DeactivateViewSet, ModelViewSet):
     serializer_class = EntrySerializer
-
-    def get_queryset(self) -> QuerySet[Entry]:
-        return Entry.objects.filter(active=True)
+    pagination_class = LimitOffsetPagination

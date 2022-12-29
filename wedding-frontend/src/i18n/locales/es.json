@@ -52,7 +52,8 @@
     "thenavbar": {
       "gallery": "Galería",
       "home": "Home",
-      "inbox": "Bandeja de entrada",
+      "guestbook": "Guestbook",
+      "inbox": "Inbox",
       "information": "Información",
       "openMainMenu": "Abrir menú principal",
       "profile": "Perfil"
@@ -66,6 +67,7 @@
       "mobile-menu": "Haz clic en el botón de arriba para visualizar el menú de navegación.",
       "invite": "¡Detrás de éste botón, puedes encontrar la invitación digital para la boda!",
       "information": "En esta sección, encontrarás toda la información sobre las celebraciones de la boda, incluidos Eventos, Viajes, Consejos y más.",
+      "guestbook": "También puedes abrir el Guestbook, donde puedes encontrar todos los mensajes de los otros invitados y puedes dejar el tuyo.",
       "inbox": {
         "navbar": "En la Bandeja de entrada, encontrarás comunicaciones de los novios, incluidas preguntas importantes que podrás responder directamente en la aplicación.",
         "list": "Aquí está la lista de mensajes activos. También puedes buscar un mensaje anterior en la lista.",
@@ -131,6 +133,15 @@
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
     "envelopeFlap": "Solapa de sobre",
     "waxSealOn": "Sello de cera en el sobre",
-    "noKids": "Sólo adultos"
+    "noKids": "Sólo adultos",
+    "rsvp": "\n        R.S.V.P.\n      "
+  },
+  "guestbook": {
+    "ui": {
+      "guestbookform": {
+        "writeAGuestbook": "Escribe un mensaje en el libro de invitados...",
+        "submit": "Envia"
+      }
+    }
   }
 }

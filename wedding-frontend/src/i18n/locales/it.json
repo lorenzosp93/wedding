@@ -59,7 +59,8 @@
     "thenavbar": {
       "gallery": "Galleria",
       "home": "Home",
-      "inbox": "Posta in arrivo",
+      "guestbook": "Guestbook",
+      "inbox": "Inbox",
       "information": "Informazioni",
       "openMainMenu": "Apri il menu principale",
       "profile": "Profilo"
@@ -73,6 +74,7 @@
       "mobile-menu": "Fai clic sul bottone in alto per visualizzare il menú di navigazione.",
       "invite": "Dietro questo pulsante, puoi trovare la versione digitale dell'invito!",
       "information": "In questa sezione, troverai tutte le informazioni sui festeggiamenti del matrimonio, inclusi Eventi, Viaggi, Suggerimenti e altro ancora.",
+      "guestbook": "Puoi anche aprire il Guestbook, dove puoi trovare tutti i messaggi ricevuti dagli altri invitati e puoi scrivere il tuo.",
       "inbox": {
         "navbar": "Nella Posta in arrivo, troverai comunicazioni dagli sposi, comprese domande importanti a cui potrai rispondere direttamente dall'app.",
         "list": "Ecco l'elenco dei messaggi attivi. Puoi anche effettuare una ricerca per trovare un messaggio precedente.",
@@ -138,6 +140,15 @@
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
     "envelopeFlap": "Lembo della busta",
     "waxSealOn": "Sigillo di cera sulla busta",
-    "noKids": "Solo adulti"
+    "noKids": "Solo adulti",
+    "rsvp": "\n        R.S.V.P.\n      "
+  },
+  "guestbook": {
+    "ui": {
+      "guestbookform": {
+        "writeAGuestbook": "Scrivi un messaggio per la sposa e lo sposo...",
+        "submit": "Invia"
+      }
+    }
   }
 }

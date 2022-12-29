@@ -17,6 +17,11 @@ import Shepherd from "shepherd.js";
 
 const notificationStore = useNotificationStore();
 
+let pushSubscribeVisible =
+  "serviceWorker" in navigator &&
+  "PushManager" in window &&
+  !notificationStore.isSubscribed;
+
 export default {
   name: "OnboardingTour",
   components: {
@@ -90,7 +95,6 @@ export default {
           {
             id: "invite",
             text: this.$t("shared.tour.invite"),
-            classes: "mt-3",
             attachTo: {
               element: "#invite-link",
               on: "bottom",
@@ -133,6 +137,15 @@ export default {
             text: this.$t("shared.tour.information"),
             attachTo: {
               element: "#navbar-information",
+              on: "bottom",
+            },
+            classes: "mt-3",
+          },
+          {
+            id: "guestbook",
+            text: this.$t("shared.tour.guestbook"),
+            attachTo: {
+              element: "#navbar-guestbook",
               on: "bottom",
             },
             classes: "mt-3",
@@ -234,11 +247,7 @@ export default {
             modalOverlayOpeningRadius: 10,
             canClickTarget: true,
             showOn: () => {
-              return (
-                "serviceWorker" in navigator &&
-                "PushManager" in window &&
-                !notificationStore.isSubscribed
-              );
+              return pushSubscribeVisible;
             },
             attachTo: {
               element: "#notification-trigger",
@@ -272,6 +281,29 @@ export default {
               on: "bottom",
             },
             classes: "mt-3",
+            buttons: [
+              {
+                action: () => {
+                  if (!pushSubscribeVisible) {
+                    this.$router
+                      .push({ name: "inbox", params: { active: 0 } })
+                      .then(() => {
+                        return this.tour?.back();
+                      });
+                  } else {
+                    return this.tour?.back();
+                  }
+                },
+                secondary: true,
+                text: this.$t("shared.tour.back"),
+              },
+              {
+                action: () => {
+                  return this.tour?.next();
+                },
+                text: this.$t("shared.tour.next"),
+              },
+            ],
           },
           {
             id: "profile",

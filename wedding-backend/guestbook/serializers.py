@@ -14,7 +14,10 @@ class EntrySerializer(HasUserSerializer):
     class Meta:
         model = Entry
         fields = [
+            'uuid',
             'user_fullname',
             'text',
             'created_at',
+            'user'
         ]
+        extra_kwargs = {'text': {'required': True}}

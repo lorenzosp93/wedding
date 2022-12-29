@@ -1,16 +1,23 @@
-import type { Gallery, Information, Message, Photo, Question, Response, ResponseErrors } from '@/models/listObjects.interface';
+import type { GuestBook, GuestBookEntry, GuestBookError } from '@/models/guestbook.interface';
+import type { Information, Message, Response, ResponseErrors } from '@/models/listObjects.interface';
+import type { Gallery, Photo } from '@/models/gallery.interface';
 import apiService from '@/services/api.service';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { defineStore } from 'pinia';
 
-const INFOS_TTL = 60 // minutes
-const GALLERY_TTL = 60 // minutes
+const INFOS_TTL = 60; // minutes
+const GALLERY_TTL = 60; // minutes
+const GUESTBOOK_TTL = 5; // minutes
+
+export const GALLERY_LIMIT = 16;
+export const GUESTBOOK_LIMIT = 30;
 
 interface GetContentOptions {
     force: boolean;
 };
-interface GetGalleryContentOptions extends GetContentOptions{
-    galleryLimit: number;
+interface GetLimitOffsetContentOptions extends GetContentOptions{
+    limit?: number;
+    next?: boolean;
 }
 
 export const useInfoStore = defineStore({
@@ -44,7 +51,7 @@ export const useInfoStore = defineStore({
         },
     },
     actions: {
-        async getInfo(): Promise<AxiosResponse<Information[]> | void> {
+        async getInfo(): Promise<void> {
             if (this.infos.length == 0 || this.infosExpiry < Date.now()) {
                 this.loading = true;
                 apiService.getInfoContent().then(
@@ -78,11 +85,11 @@ export const useInfoStore = defineStore({
             localStorage.setItem('infosExpiry', this.infosExpiry.toString());
         },
         setExpiry() {
-            let infosExpiry = new Date();
-            infosExpiry.setTime(
-                infosExpiry.getTime() + INFOS_TTL * 60 * 1000
+            let expiry = new Date();
+            expiry.setTime(
+                expiry.getTime() + INFOS_TTL * 60 * 1000
             );
-            this.infosExpiry = infosExpiry.valueOf();
+            this.infosExpiry = expiry.valueOf();
         }
     },
 });
@@ -103,7 +110,7 @@ export const useInboxStore = defineStore({
         deleteError: [] as Array<ResponseErrors>,
     }),
     actions: {
-        async getInbox(options: GetContentOptions = {force: false}): Promise<AxiosResponse<Message[]> | void> {
+        async getInbox(options: GetContentOptions = {force: false}): Promise<void> {
             if (this.inbox.length == 0 || options.force) {
                 this.inboxLoading = true;
                 apiService.getInboxContent().then(
@@ -119,7 +126,7 @@ export const useInboxStore = defineStore({
                 )
             }
         },
-        async submitResponse(responses: Response[], activeUuid: string) {
+        async submitResponse(responses: Response[], activeUuid: string): Promise<void> {
             var calls: Promise<AxiosResponse>[] = [];
             let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.submitLoading = true;
@@ -154,7 +161,7 @@ export const useInboxStore = defineStore({
                 this.getInbox({ force: true });
             });
         },
-        async deleteResponses(activeUuid: string): Promise<AxiosResponse | void> {
+        async deleteResponses(activeUuid: string): Promise<void> {
             var calls: Promise<AxiosResponse>[] = [];
             let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.deleteLoading = true;
@@ -199,15 +206,22 @@ export const useGalleryStore = defineStore({
         galleryExpiry: Date.parse(
             localStorage.getItem('galleryExpiry') ?? ''
         ) as number,
-        next: localStorage.getItem('galleryNext') as string | null,
+        next: localStorage.getItem('galleryNext') as string,
     }),
     actions: {
-        async getGalleryContent(options: GetGalleryContentOptions): Promise<AxiosResponse<Gallery> | void> {
-            if (this.gallery.length == 0 || this.galleryExpiry < Date.now() || options.force) {
+        async getGalleryContent(options: GetLimitOffsetContentOptions): Promise<void> {
+            if (this.galleryExpiry < Date.now()) {
+                this.gallery = [];
+                this.next = '';
+            }
+            if (this.gallery.length == 0 || options.force) {
                 this.loading = true;
-                apiService.getGalleryContent({ overrideLink: this.next ?? undefined, galleryLimit: options.galleryLimit }).then(
+                apiService.getGalleryContent({
+                    overrideLink: this.next,
+                    limit: options.limit ?? GALLERY_LIMIT,
+                }).then(
                     (response: AxiosResponse<Gallery>) => {
-                        this.handleResponse(response, options.force);
+                        this.handleResponse(response, options.next);
                     }
                 ).catch(
                     (error: AxiosError) => {
@@ -216,20 +230,20 @@ export const useGalleryStore = defineStore({
                 )
             }
         },
-        handleResponse(response: AxiosResponse<Gallery>, force: boolean): void {
+        handleResponse(response: AxiosResponse<Gallery>, next: boolean | undefined): void {
             let gallery = new Set([...this.gallery, ...response.data.results]);
             this.gallery = Array.from(gallery);
-            this.next = response.data.next;
+            this.next = response.data.next ?? '';
             this.loading = false;
-            this.setExpiry();
-            this.persistGallery(force);
-        },
-        persistGallery(force: boolean): void {
-            if (!force) { // set properties for persistence upon refresh
-                localStorage.setItem('gallery', JSON.stringify(this.gallery));
-                localStorage.setItem('galleryExpiry', this.galleryExpiry.toString());
-                localStorage.setItem('galleryNext', this.next ?? '');
+            if (!next) {
+                this.setExpiry();
+                this.persistGallery();
             }
+        },
+        persistGallery(): void {
+            localStorage.setItem('gallery', JSON.stringify(this.gallery));
+            localStorage.setItem('galleryExpiry', this.galleryExpiry.toString());
+            localStorage.setItem('galleryNext', this.next);
         },
         setExpiry(): void {
             let galleryExpiry = new Date();
@@ -241,6 +255,91 @@ export const useGalleryStore = defineStore({
     },
 })
 
+export const useGuestBookStore = defineStore({
+    id: 'guestbook',
+    state: () => ({
+        entries: JSON.parse(localStorage.getItem('guestBookEntries') ?? "[]") as GuestBookEntry[],
+        entriesExpiry: Date.parse(
+            localStorage.getItem('guestBookExpiry') ?? ''
+        ) as number,
+        next: localStorage.getItem('guestBookNext') as string,
+        loading: false as boolean,
+        error: undefined as AxiosError | undefined,
+        submitLoading: false as boolean,
+        submitSuccess: false as boolean,
+        submitError: undefined as GuestBookError | undefined,
+        deleteLoading: false as boolean,
+        deleteSuccess: false as boolean,
+        deleteError: undefined as GuestBookError | undefined,
+    }),
+    actions: {
+        async getEntries(options: GetLimitOffsetContentOptions): Promise<void> {
+            if (this.entriesExpiry < Date.now()) { 
+                this.entries = [];
+                this.next = '';
+            };
+            if (this.entries.length == 0 || options.force) {
+                this.loading = true;
+                apiService.getGuestBookContent({ limit: options.limit ?? GUESTBOOK_LIMIT, overrideLink: options.next ? this.next : ''}).then(
+                    (response: AxiosResponse<GuestBook>) => {
+                        this.handleResponse(response, options.force, options.next);
+                    }
+                ).catch(
+                    (error: AxiosError) => {
+                        this.loading = false;
+                        console.log(error);
+                        this.error = error;
+                    }
+                );
+            }
+        },
+        async submitEntry(text: string): Promise<void> {
+            this.submitLoading = true;
+            apiService.postGuestBookEntry(text).then((_) => {
+                this.submitError = undefined;
+                this.submitLoading = false;
+                this.getEntries({ force: true });
+            }).catch((error: AxiosError<GuestBookError>) => {
+                this.submitError = error?.response?.data;
+            })
+        },
+        async deleteEntry(uuid: string): Promise<void> {
+            this.deleteLoading = true;
+            apiService.deleteGuestBookContent(uuid).then((_) => {
+                this.deleteLoading = false;
+                this.getEntries({ force: true });
+            }).catch((error: AxiosError<GuestBookError>) => {
+                this.deleteError = error?.response?.data;
+            })
+        },
+        handleResponse(response: AxiosResponse<GuestBook>, force: boolean, next: boolean | undefined) {
+            this.loading = false;
+            if (next) {
+            let entries = new Set([...this.entries, ...response.data.results]);
+            this.entries = Array.from(entries);
+            } else {
+                this.entries = response.data.results;
+            }
+            this.next = response.data.next ?? '';
+            if (!next) {
+                this.setExpiry();
+                this.persistInfo();
+            }
+        },
+        persistInfo() {
+            localStorage.setItem('guestBookEntries', JSON.stringify(this.entries));
+            localStorage.setItem('guestBookExpiry', this.entriesExpiry.toString());
+            localStorage.setItem('guestBookNext', this.next);
+        },
+        setExpiry() {
+            let expiry = new Date();
+            expiry.setTime(
+                expiry.getTime() + GUESTBOOK_TTL * 60 * 1000
+            );
+            this.entriesExpiry = expiry.valueOf();
+        }
+    }
+})
 
 
 

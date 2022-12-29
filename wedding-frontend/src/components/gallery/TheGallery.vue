@@ -13,21 +13,12 @@
           @click="activePhoto = photo"
         />
       </div>
-      <div
-        v-show="loading || next"
-        class="relative flex w-full mx-auto min-h-[50px]"
-      >
-        <div
-          v-show="next && !loading"
-          @click="getMoreGalleryContent"
-          class="m-auto cursor-pointer"
-        >
-          <chevron-double-down-icon
-            class="h-10 w-10 md:h-12 md:w-12 pt-3.5 animate-bounce stroke-accent stroke-2"
-          />
-        </div>
-        <loading-view v-show="loading"></loading-view>
-      </div>
+      <infinite-scrolling
+        @get-more-content="getMoreContent"
+        :next="next ?? undefined"
+        :loading="loading"
+        class="m-auto cursor-pointer"
+      />
     </div>
     <photo-item
       @close-photo="activePhoto = null"
@@ -39,17 +30,16 @@
 </template>
 
 <script lang="ts">
-import { debounce, throttle } from "underscore";
+import { debounce } from "underscore";
 import { mapActions, mapState } from "pinia";
 import { useGalleryStore } from "@/stores/api.store";
 import LoadingView from "@/components/shared/LoadingView.vue";
-import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 import { defineComponent } from "vue";
-import type { Photo } from "@/models/listObjects.interface";
+import type { Photo } from "@/models/gallery.interface";
 import ThumbnailItem from "./ui/ThumbnailItem.vue";
 import PhotoItem from "./ui/PhotoItem.vue";
-
-const GALLERY_LIMIT = 16; // images per load
+import InfiniteScrolling from "../shared/InfiniteScrolling.vue";
+import { GALLERY_LIMIT } from "@/stores/api.store";
 
 type Breakpoint = {
   name: "sm" | "md" | "lg" | "xl";
@@ -60,7 +50,7 @@ export default defineComponent({
   name: "TheGallery",
   components: {
     LoadingView,
-    ChevronDoubleDownIcon,
+    InfiniteScrolling,
     ThumbnailItem,
     PhotoItem,
   },
@@ -79,40 +69,23 @@ export default defineComponent({
     ...mapState(useGalleryStore, ["gallery", "loading", "error", "next"]),
   },
   mounted() {
-    this.getGalleryContent({ force: false, galleryLimit: GALLERY_LIMIT });
+    this.getGalleryContent({ force: false, limit: GALLERY_LIMIT });
     this.setupGalleryColumns();
     this.updateBreakpoint();
-    this.setupInfiniteScroll();
   },
   beforeUnmount() {
-    window.removeEventListener("scroll", this.scrollEventListener());
     window.removeEventListener("resize", this.resizeEventListener());
   },
   methods: {
     ...mapActions(useGalleryStore, ["getGalleryContent"]),
-    getMoreGalleryContent() {
+    getMoreContent() {
       if (this.next && !this.loading) {
-        this.getGalleryContent({ force: true, galleryLimit: GALLERY_LIMIT });
+        this.getGalleryContent({
+          force: true,
+          next: true,
+          limit: GALLERY_LIMIT,
+        });
       }
-    },
-    setupInfiniteScroll() {
-      window.addEventListener("scroll", this.scrollEventListener());
-    },
-    scrollEventListener() {
-      return debounce(() => {
-        let condition =
-          window.innerHeight + window.pageYOffset >=
-          document.documentElement.offsetHeight;
-        if (condition) {
-          throttle(
-            () => {
-              this.getMoreGalleryContent();
-            },
-            500,
-            { leading: true }
-          )();
-        }
-      }, 200);
     },
     setupGalleryColumns() {
       window.addEventListener("resize", this.resizeEventListener());
