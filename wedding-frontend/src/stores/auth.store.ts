@@ -4,22 +4,23 @@ import type { Profile, User, UserError } from '@/models/auth.interface';
 import type { AxiosError, AxiosResponse } from 'axios';
 import i18n from '@/i18n';
 import router from '@/router';
-import { useNotificationStore } from '@/stores/notification.store'
+import { useNotificationStore } from '@/stores'
+import { useStorage, type RemovableRef } from '@vueuse/core'
 
 
 export const useAuthStore = defineStore({
     id: 'auth',
     state: () => ({
         // initialize state from local storage to enable user to stay logged in
-        token: localStorage.getItem('token') as string,
-        profile: JSON.parse(localStorage.getItem('profile') ?? "null") ?? undefined as Profile | undefined,
+        token: useStorage('token', '') as RemovableRef<string | undefined>,
+        profile: useStorage('profile', { id: 0 } as Profile) as RemovableRef<Profile | undefined>,
         loading: false as boolean,
         error: undefined as AxiosError | undefined,
         registerError: undefined as UserError | undefined,
         success: false as boolean,
     }),
     actions: {
-        setupPlusOne(plusOne: User) {
+        async setupPlusOne(plusOne: User) {
             this.loading = true;
             return apiService.setupPlusOne(plusOne).then(
                 (response:AxiosResponse<string>) => {
@@ -39,15 +40,14 @@ export const useAuthStore = defineStore({
         async getProfile () {
             this.loading = true;
             return apiService.getUserProfile().then((response: AxiosResponse<Profile[]>) => {
-                let profile = response.data.find((d: Profile) => d);
-                this.profile = profile;
                 this.loading = false;
-
-                localStorage.setItem('profile', JSON.stringify(profile));
-
-                if (profile?.language) {
-                    i18n.global.locale.value = profile.language;
-                    localStorage.setItem('lang', profile.language);
+                let profile = response.data.find((d: Profile) => d);
+                if (profile) {
+                    this.profile = profile;
+                    if (profile?.language) {
+                        i18n.global.locale.value = profile.language;
+                        localStorage.setItem('lang', profile.language);
+                    }
                 }
             }).catch(
                 (error: AxiosError) => {
@@ -59,21 +59,20 @@ export const useAuthStore = defineStore({
         },
         async login(token: string) {
             this.token = token;
-            await this.getProfile().then(_ => {
-                localStorage.setItem('token', token);
+            await this.getProfile().then(() => {
                 const notificationStore = useNotificationStore();
                 notificationStore.checkIsSubscribed();
             });
         },
         logout () {
-            this.token = '';
+            this.token = undefined;
             this.profile = undefined;
             localStorage.clear();
             router.push({name: 'login'});
         },
-        register (user: User) {
+        async register (user: User) {
             this.loading = true;
-            apiService.registerUser(user).then((response: AxiosResponse<string>) => {
+            return apiService.registerUser(user).then((response: AxiosResponse<string>) => {
                 this.success = true;
                 this.loading = false;
                 router.push({name: 'login', query: {

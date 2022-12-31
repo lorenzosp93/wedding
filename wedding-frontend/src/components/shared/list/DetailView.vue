@@ -92,6 +92,7 @@ import type {
   Response,
   ResponseErrors,
 } from "@/models/listObjects.interface";
+import { useEventListener } from "@vueuse/core";
 
 export default defineComponent({
   components: {
@@ -126,7 +127,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    window.addEventListener("keydown", (event) => {
+    useEventListener("keydown", (event: KeyboardEvent) => {
       if (
         event.key == "ArrowRight" &&
         this.active &&

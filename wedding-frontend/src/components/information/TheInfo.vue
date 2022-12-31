@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { mapActions, mapState } from "pinia";
-import { useInfoStore } from "@/stores/api.store.js";
+import { useInfoStore } from "@/stores";
 import ListView from "@/components/shared/list/ListView.vue";
 import { defineComponent } from "vue";
 

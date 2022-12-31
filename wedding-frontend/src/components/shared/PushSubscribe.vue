@@ -14,7 +14,7 @@
 
 <script lang="ts">
 // https://web.dev/push-notifications-subscribing-a-user/
-import { useNotificationStore } from "@/stores/notification.store";
+import { useNotificationStore } from "@/stores";
 import { mapState, mapActions } from "pinia";
 import { BellAlertIcon } from "@heroicons/vue/24/outline";
 import { defineComponent } from "vue";

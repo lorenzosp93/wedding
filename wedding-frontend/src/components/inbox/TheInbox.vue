@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { useInboxStore } from "@/stores/api.store";
+import { useInboxStore } from "@/stores";
 import { mapActions, mapState } from "pinia";
 import ListView from "@/components/shared/list/ListView.vue";
 import { defineComponent } from "vue";

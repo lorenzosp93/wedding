@@ -101,4 +101,4 @@ class MessageSerializer(
 
     class Meta:
         model = Message
-        exclude = ['submit', 'modified_at', 'audience',]
+        exclude = ['submit', 'modified_at', 'audience', 'option_pre',]

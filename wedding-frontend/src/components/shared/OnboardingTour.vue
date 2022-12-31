@@ -12,8 +12,9 @@
 
 <script lang="ts">
 import { InformationCircleIcon } from "@heroicons/vue/24/outline";
-import { useNotificationStore } from "@/stores/notification.store";
+import { useNotificationStore } from "@/stores";
 import Shepherd from "shepherd.js";
+import { useStorage, type RemovableRef } from "@vueuse/core";
 
 const notificationStore = useNotificationStore();
 
@@ -30,6 +31,7 @@ export default {
   data() {
     return {
       tour: undefined as undefined | Shepherd.Tour,
+      seen: useStorage("shepherd-tour", false) as RemovableRef<boolean>,
     };
   },
   created() {
@@ -335,12 +337,10 @@ export default {
       });
     },
     dismissTour() {
-      if (!localStorage.getItem("shepherd-tour")) {
-        localStorage.setItem("shepherd-tour", "true");
-      }
+      this.seen = true;
     },
     startTour() {
-      if (!localStorage.getItem("shepherd-tour")) {
+      if (!this.seen) {
         this.tour?.start();
       }
     },

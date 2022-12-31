@@ -30,16 +30,16 @@
 </template>
 
 <script lang="ts">
-import { debounce } from "underscore";
 import { mapActions, mapState } from "pinia";
-import { useGalleryStore } from "@/stores/api.store";
+import { useGalleryStore, GALLERY_LIMIT } from "@/stores";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { defineComponent } from "vue";
 import type { Photo } from "@/models/gallery.interface";
 import ThumbnailItem from "./ui/ThumbnailItem.vue";
 import PhotoItem from "./ui/PhotoItem.vue";
 import InfiniteScrolling from "../shared/InfiniteScrolling.vue";
-import { GALLERY_LIMIT } from "@/stores/api.store";
+import { useEventListener } from "@vueuse/core";
+import { useDebounceFn } from "@vueuse/core";
 
 type Breakpoint = {
   name: "sm" | "md" | "lg" | "xl";
@@ -73,9 +73,6 @@ export default defineComponent({
     this.setupGalleryColumns();
     this.updateBreakpoint();
   },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.resizeEventListener());
-  },
   methods: {
     ...mapActions(useGalleryStore, ["getGalleryContent"]),
     getMoreContent() {
@@ -88,10 +85,10 @@ export default defineComponent({
       }
     },
     setupGalleryColumns() {
-      window.addEventListener("resize", this.resizeEventListener());
+      useEventListener("resize", this.resizeEventListener());
     },
     resizeEventListener() {
-      return debounce(() => {
+      return useDebounceFn(() => {
         this.updateBreakpoint();
       }, 100);
     },

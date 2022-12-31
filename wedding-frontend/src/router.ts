@@ -40,7 +40,7 @@ router.beforeEach(async (to: RouteLocation) => {
   const auth = useAuthStore();
   const token = auth.token || to.query['token'];
 
-  if (!auth.profile && token) {
+  if (!auth.profile?.id && token) {
     await auth.login(token as string);
     return
   }

@@ -18,9 +18,10 @@
 
 <script lang="ts">
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
-import { debounce, throttle } from "underscore";
 import { defineComponent } from "vue";
 import LoadingView from "./LoadingView.vue";
+import { useEventListener } from "@vueuse/core";
+import { useDebounceFn, useThrottleFn } from "@vueuse/core";
 
 export default defineComponent({
   name: "InfiniteScrolling",
@@ -36,28 +37,26 @@ export default defineComponent({
   mounted() {
     this.setupInfiniteScroll();
   },
-  beforeUnmount() {
-    window.removeEventListener("scroll", this.scrollEventListener());
-  },
   methods: {
     getMoreContent() {
       this.$emit("getMoreContent");
     },
     setupInfiniteScroll() {
-      window.addEventListener("scroll", this.scrollEventListener());
+      useEventListener("scroll", this.scrollEventListener());
     },
     scrollEventListener() {
-      return debounce(() => {
+      return useDebounceFn(() => {
         let condition =
           window.innerHeight + window.pageYOffset >=
           document.documentElement.offsetHeight;
         if (condition) {
-          throttle(
+          useThrottleFn(
             () => {
               this.getMoreContent();
             },
             500,
-            { leading: true }
+            false,
+            true
           )();
         }
       }, 200);

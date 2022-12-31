@@ -7,7 +7,6 @@ export interface ListObject {
     subject: string;
     questions?: Question[];
     created_at?: string;
-    option_pre?: string[];
     widget?: Widget[];
     type?: string;
     picture?: null | string;
@@ -22,7 +21,6 @@ export interface Information extends ListObject {
 }
 
 export interface Message extends ListObject {
-    option_pre: string[];
     questions: Question[];
 }
 

@@ -120,7 +120,7 @@
 </template>
 
 <script lang="ts">
-import { useInfoStore } from "@/stores/api.store.js";
+import { useInfoStore } from "@/stores";
 import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";

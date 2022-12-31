@@ -67,6 +67,8 @@ import type {
   Response,
 } from "@/models/listObjects.interface";
 import type { AxiosError } from "axios";
+import type { RemovableRef } from "@vueuse/shared";
+import { useStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "ListView",
@@ -92,9 +94,7 @@ export default defineComponent({
     return {
       active: 0 as number,
       viewDetail: false as boolean,
-      responses: JSON.parse(
-        localStorage.getItem("responses") ?? "[]"
-      ) as Array<Response>,
+      responses: useStorage("responses", []) as RemovableRef<Response[]>,
       search: "" as string,
     };
   },
@@ -126,9 +126,6 @@ export default defineComponent({
   mounted() {
     this.responseSetup();
     this.refreshActive();
-  },
-  beforeUnmount() {
-    localStorage.setItem("responses", JSON.stringify(this.responses));
   },
   methods: {
     refreshActive() {

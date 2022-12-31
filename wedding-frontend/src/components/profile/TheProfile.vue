@@ -43,7 +43,7 @@
       </table>
     </div>
 
-    <div v-if="profile?.childs.length" class="w-full overflow-auto px-5">
+    <div v-if="profile?.childs?.length" class="w-full overflow-auto px-5">
       <p class="font-bold">
         {{ $t("profile.theprofile.yourPlusOnes") }}
       </p>
