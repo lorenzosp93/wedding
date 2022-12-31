@@ -1,19 +1,19 @@
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
+import { createPinia, setActivePinia } from 'pinia';
 import {
   useInfoStore,
+  useInboxStore,
   useGalleryStore,
   useGuestBookStore,
-  useInboxStore,
   GALLERY_LIMIT,
   GUESTBOOK_LIMIT,
 } from "../api.store";
-import { createPinia, setActivePinia } from 'pinia';
 import apiService from '@/services/api.service';
 import type { Information, Message, Response } from '@/models/listObjects.interface';
 import type { AxiosResponse } from 'axios';
 
 let axiosResponse = {
-  data: [], status: 200, statusText: 'success', headers: {}, config: {}
+  data: [], status: 200, statusText: 'fulfilled', headers: {}, config: {}
 } as AxiosResponse;
 
 let testInfo = [{
@@ -116,13 +116,13 @@ describe('Inbox store test', () => {
   it('Submits responses', () => {
     let store = useInboxStore();
 
-    let res = vi.fn(apiService.postInboxResponse);
-    let res2 = vi.fn(store.getInbox);
+    let res = vi.spyOn(apiService, 'postInboxResponse').mockResolvedValue(axiosResponse);
+    let res1 = vi.spyOn(store, 'getInbox').mockResolvedValue();
 
-    store.submitResponse([testResponse, testResponse], testInbox[0].uuid).then(() => {
+    store.submitResponse([testResponse, testResponse], testInbox[0].uuid).finally(() => {
       expect(res).toBeCalledTimes(2);
       expect(store.submitSuccess).toBe(true);
-      expect(res2).toBeCalledWith({ force: true });
+      expect(res1).toBeCalledWith({ force: true });
     })
   })
 

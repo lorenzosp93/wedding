@@ -144,7 +144,7 @@ export const useInboxStore = defineStore({
                     }
                 }
             )
-            Promise.allSettled(calls).then((responses: PromiseSettledResult<AxiosResponse>[]) => {
+            return Promise.allSettled(calls).then((responses: PromiseSettledResult<AxiosResponse>[]) => {
                 this.submitLoading = false;
                 responses.forEach((response: PromiseSettledResult<AxiosResponse>, idx: number) => {
                     if (response.status == 'rejected') {

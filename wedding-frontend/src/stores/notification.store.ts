@@ -13,7 +13,7 @@ export const useNotificationStore = defineStore({
     error: undefined as AxiosError | undefined,
   }),
   actions: {
-    checkIsSubscribed () {
+    async checkIsSubscribed () {
       apiService.getUserSubscription().then((response: AxiosResponse<Subscription[]>) => {
         this.isSubscribed = !!response.data?.length;
       }).catch((error: AxiosError) => {
@@ -21,7 +21,7 @@ export const useNotificationStore = defineStore({
         this.error = error;
       })
     },
-    askPermission() {
+    async askPermission() {
       return new Promise((resolve, reject) => {
         const permissionResult = Notification.requestPermission(function (
           result
@@ -39,7 +39,7 @@ export const useNotificationStore = defineStore({
         this.subscribeUserToPush();
       });
     },
-    subscribeUserToPush() {
+    async subscribeUserToPush() {
       return navigator.serviceWorker
         .getRegistration()
         .then((registration: ServiceWorkerRegistration | undefined) => {

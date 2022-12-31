@@ -2,10 +2,10 @@ import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia';
 import { useAuthStore } from "../auth.store";
 import type { Profile } from '@/models/auth.interface';
-import type { Subscription } from '@/models/listObjects.interface';
 import type { AxiosError, AxiosResponse } from 'axios';
 import apiService from '@/services/api.service';
 import router from '@/router';
+import { useNotificationStore } from '../notification.store';
 
 vi.mock('@/router', () => ({
   default: {
@@ -37,16 +37,9 @@ let testProfile = {
   childs: [],
 } as Profile;
 
-let testSubscription = {
-  endpoint:'https://abc.com',
-  keys: {
-    p256dh: 'abc123',
-    auth: 'abc',
-  }
-} as Subscription;
 
 let axiosResponse = {
- data: [], status: 200, statusText: 'success', headers: {}, config: {}
+ data: [], status: 200, statusText: 'fulfilled', headers: {}, config: {}
 } as AxiosResponse
 
 describe('Auth store test', () => {
@@ -102,11 +95,7 @@ describe('Auth store test', () => {
     let token: string = 'abc';
 
     let res = vi.spyOn(store, 'getProfile').mockResolvedValue();
-
-    let res1 = vi.spyOn(apiService, 'getUserSubscription').mockResolvedValue({
-      ...axiosResponse,
-      data: [testSubscription],
-    })
+    let res1 = vi.spyOn(useNotificationStore(), 'checkIsSubscribed').mockResolvedValue();
 
     store.login(token).then(() => {
       expect(res).toBeCalled();
@@ -141,7 +130,7 @@ describe('Auth store test', () => {
     let store = useAuthStore();
 
     let res = vi.spyOn(store, 'getProfile')
-    let res1 = vi.spyOn(apiService, 'setupPlusOne').mockImplementation(async (_) => {
+    vi.spyOn(apiService, 'setupPlusOne').mockImplementation(async (_) => {
       throw { response: { data: 'someError' } } as AxiosError
     });
 

@@ -14,7 +14,7 @@
           v-for="entry in entries"
           :key="entry.uuid"
           :entry="entry"
-          :own="entry.user == profile.user.id"
+          :own="entry.user == profile?.user?.id"
           @delete-entry="deleteEntry(entry.uuid)"
         />
         <infinite-scrolling
