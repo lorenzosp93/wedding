@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import LoadingView from "@/components/shared/LoadingView.vue";
-import { get_token } from "@/services/login.service.js";
+import { getToken } from "@/services/login.service.js";
 import type { AxiosError } from "axios";
 import { defineComponent } from "vue";
 
@@ -73,7 +73,7 @@ export default defineComponent({
   methods: {
     getToken() {
       this.loading = true;
-      get_token(this.email, this.token)
+      getToken(this.email, this.token)
         .then()
         .catch((error: AxiosError) => {
           this.loading = false;

@@ -1,13 +1,15 @@
-import { mergeConfig } from 'vite';
-import { defineConfig } from 'vitest/config';
-import viteConfig from './vite.config';
+import { mergeConfig } from "vite";
+import { defineConfig } from "vitest/config";
+import viteConfig from "./vite.config";
 
 export default defineConfig(
-    mergeConfig(viteConfig, { // extending app vite config
-        test: {
-            globals: true,
-            environment: 'jsdom',
-      },
-      root: ".",
-    })
+  mergeConfig(viteConfig, {
+    // extending app vite config
+    test: {
+      globals: true,
+      environment: "jsdom",
+    },
+    root: ".",
+    setupFiles: "__tests__/setup.js",
+  })
 );
