@@ -30,7 +30,7 @@
                 class="ml-auto"
               >
                 <button
-                  class="rounded-md bg-pale dark:bg-darkPale py-1 px-2"
+                  class="rounded-md bg-accent text-primary py-1 px-2 shadow-lg"
                   @click="togglePlusOne"
                 >
                   {{ $t("profile.theprofile.invite") }}
@@ -43,7 +43,7 @@
       </table>
     </div>
 
-    <div v-if="profile?.childs.length" class="w-full overflow-auto px-5">
+    <div v-if="profile?.childs?.length" class="w-full overflow-auto px-5">
       <p class="font-bold">
         {{ $t("profile.theprofile.yourPlusOnes") }}
       </p>
@@ -72,7 +72,7 @@
     </div>
 
     <button
-      class="rounded-md bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3"
+      class="rounded-md shadow-lg bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3"
       @click="logout"
     >
       {{ $t("profile.theprofile.logOut") }}

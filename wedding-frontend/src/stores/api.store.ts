@@ -1,21 +1,35 @@
-import type { Gallery, Information, Message, Photo, Question, Response, ResponseErrors } from '@/models/listObjects.interface';
+import type { GuestBook, GuestBookEntry, GuestBookError } from '@/models/guestbook.interface';
+import type { Information, Message, Response, ResponseErrors } from '@/models/listObjects.interface';
+import type { Gallery, Photo } from '@/models/gallery.interface';
 import apiService from '@/services/api.service';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { defineStore } from 'pinia';
+import { useStorage, type RemovableRef } from '@vueuse/core'
 
-const INFOS_TTL = 60 // minutes
-const GALLERY_TTL = 60 // minutes
+export const INFOS_TTL = 60; // minutes
+export const INBOX_TTL = 10; // minutes
+export const GALLERY_TTL = 60; // minutes
+export const GUESTBOOK_TTL = 5; // minutes
+
+export const GALLERY_LIMIT = 16;
+export const GUESTBOOK_LIMIT = 30;
+
+interface GetContentOptions {
+    force: boolean;
+};
+interface GetLimitOffsetContentOptions extends GetContentOptions{
+    limit?: number;
+    next?: boolean;
+}
 
 export const useInfoStore = defineStore({
     id: 'info',
     state: () => ({
         // initialize state from local storage to enable user to stay logged in
-        infos: JSON.parse(localStorage.getItem('infos') ?? "[]") as Information[],
+        infos: useStorage('infos', []) as RemovableRef<Information[]>,
         loading: false as boolean,
         error: undefined as AxiosError | undefined,
-        infosExpiry: Date.parse(
-            localStorage.getItem('infosExpiry') ?? ''
-        ) as number,
+        expiry: useStorage('infosExpiry', Date.now()) as RemovableRef<number>,
         activeType: undefined as string | undefined,
     }),
     getters: {
@@ -37,8 +51,11 @@ export const useInfoStore = defineStore({
         },
     },
     actions: {
-        async getInfo(): Promise<AxiosResponse<Information[]> | void> {
-            if (this.infos.length == 0 || this.infosExpiry < Date.now()) {
+        async getInfo(): Promise<void> {
+            if (this.expiry < Date.now()) {
+                this.infos = [];
+            }
+            if (this.infos.length == 0) {
                 this.loading = true;
                 apiService.getInfoContent().then(
                     (response: AxiosResponse<Information[]>) => {
@@ -64,18 +81,13 @@ export const useInfoStore = defineStore({
             this.loading = false;
             this.setExpiry();
             this.activeType = this.infos.find(info => info)?.type;
-            this.persistInfo();
-        },
-        persistInfo() {
-            localStorage.setItem('infos', JSON.stringify(this.infos));
-            localStorage.setItem('infosExpiry', this.infosExpiry.toString());
         },
         setExpiry() {
-            let infosExpiry = new Date();
-            infosExpiry.setTime(
-                infosExpiry.getTime() + INFOS_TTL * 60 * 1000
+            let expiry = new Date();
+            expiry.setTime(
+                expiry.getTime() + INFOS_TTL * 60 * 1000
             );
-            this.infosExpiry = infosExpiry.valueOf();
+            this.expiry = expiry.valueOf();
         }
     },
 });
@@ -84,7 +96,8 @@ export const useInfoStore = defineStore({
 export const useInboxStore = defineStore({
     id: 'inbox',
     state: () => ({
-        inbox: [] as Message[],
+        inbox: useStorage('inbox', []) as RemovableRef<Message[]>,
+        expiry: useStorage('inboxExpiry', Date.now()) as RemovableRef<number>,
         inboxLoading: false as boolean,
         responses: [] as Array<Response>,
         error: undefined as AxiosError | undefined,
@@ -96,13 +109,17 @@ export const useInboxStore = defineStore({
         deleteError: [] as Array<ResponseErrors>,
     }),
     actions: {
-        async getInbox(force: boolean = false): Promise<AxiosResponse<Message[]> | void> {
-            if (this.inbox.length == 0 || force) {
+        async getInbox(options: GetContentOptions = {force: false}): Promise<void> {
+            if (this.expiry < Date.now()) {
+                this.inbox = [];
+            }
+            if (this.inbox.length == 0 || options.force) {
                 this.inboxLoading = true;
                 apiService.getInboxContent().then(
                     (response: AxiosResponse<Message[]>) => {
                         this.inboxLoading = false;
                         this.inbox = response.data;
+                        this.setExpiry()
                     }
                 ).catch(
                     (error: AxiosError) => {
@@ -112,7 +129,7 @@ export const useInboxStore = defineStore({
                 )
             }
         },
-        async submitResponse(responses: Response[], activeUuid: string) {
+        async submitResponse(responses: Response[], activeUuid: string): Promise<void> {
             var calls: Promise<AxiosResponse>[] = [];
             let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.submitLoading = true;
@@ -127,7 +144,7 @@ export const useInboxStore = defineStore({
                     }
                 }
             )
-            Promise.allSettled(calls).then((responses: PromiseSettledResult<AxiosResponse>[]) => {
+            return Promise.allSettled(calls).then((responses: PromiseSettledResult<AxiosResponse>[]) => {
                 this.submitLoading = false;
                 responses.forEach((response: PromiseSettledResult<AxiosResponse>, idx: number) => {
                     if (response.status == 'rejected') {
@@ -144,10 +161,10 @@ export const useInboxStore = defineStore({
                     this.submitSuccess = true;
                     this.submitError = [];
                 }
-                this.getInbox(true);
+                this.getInbox({ force: true });
             });
         },
-        async deleteResponses(activeUuid: string): Promise<AxiosResponse | void> {
+        async deleteResponses(activeUuid: string): Promise<void> {
             var calls: Promise<AxiosResponse>[] = [];
             let activeMessage = this.inbox.find(m => m.uuid == activeUuid);
             this.deleteLoading = true;
@@ -176,30 +193,43 @@ export const useInboxStore = defineStore({
                     this.deleteSuccess = true;
                     this.deleteError = [];
                 }
-                this.getInbox(true);
+                this.getInbox({ force: true });
             });
         },
+        setExpiry() {
+            let expiry = new Date();
+            expiry.setTime(
+                expiry.getTime() + INBOX_TTL * 60 * 1000
+            );
+            this.expiry = expiry.valueOf();
+        }
     },
 })
+
 
 export const useGalleryStore = defineStore({
     id: 'gallery',
     state: () => ({
         loading: false as boolean,
         error: undefined as AxiosError | undefined | null,
-        gallery: JSON.parse(localStorage.getItem('gallery') ?? "[]") as Photo[],
-        galleryExpiry: Date.parse(
-            localStorage.getItem('galleryExpiry') ?? ''
-        ) as number,
-        next: localStorage.getItem('galleryNext') as string | null,
+        gallery: useStorage('gallery', []) as RemovableRef<Photo[]>,
+        expiry: useStorage('galleryExpiry', Date.now()) as RemovableRef<number>,
+        next: useStorage('galleryNext', '') as RemovableRef<string>,
     }),
     actions: {
-        async getGalleryContent(force: boolean = false): Promise<AxiosResponse<Gallery> | void> {
-            if (this.gallery.length == 0 || this.galleryExpiry < Date.now() || force) {
+        async getGalleryContent(options: GetLimitOffsetContentOptions): Promise<void> {
+            if (this.expiry < Date.now()) {
+                this.gallery = [];
+                this.next = '';
+            }
+            if (this.gallery.length == 0 || options.force) {
                 this.loading = true;
-                apiService.getGalleryContent(this.next).then(
+                apiService.getGalleryContent({
+                    overrideLink: this.next,
+                    limit: options.limit ?? GALLERY_LIMIT,
+                }).then(
                     (response: AxiosResponse<Gallery>) => {
-                        this.handleResponse(response, force);
+                        this.handleResponse(response, options.next);
                     }
                 ).catch(
                     (error: AxiosError) => {
@@ -208,19 +238,13 @@ export const useGalleryStore = defineStore({
                 )
             }
         },
-        handleResponse(response: AxiosResponse<Gallery>, force: boolean): void {
+        handleResponse(response: AxiosResponse<Gallery>, next: boolean | undefined): void {
             let gallery = new Set([...this.gallery, ...response.data.results]);
             this.gallery = Array.from(gallery);
-            this.next = response.data.next;
+            this.next = response.data.next ?? '';
             this.loading = false;
-            this.setExpiry();
-            this.persistGallery(force);
-        },
-        persistGallery(force: boolean): void {
-            if (!force) { // set properties for persistence upon refresh
-                localStorage.setItem('gallery', JSON.stringify(this.gallery));
-                localStorage.setItem('galleryExpiry', this.galleryExpiry.toString());
-                localStorage.setItem('galleryNext', this.next ?? '');
+            if (!next) {
+                this.setExpiry();
             }
         },
         setExpiry(): void {
@@ -228,11 +252,88 @@ export const useGalleryStore = defineStore({
             galleryExpiry.setTime(
                 galleryExpiry.getTime() + GALLERY_TTL * 60 * 1000
             );
-            this.galleryExpiry = galleryExpiry.valueOf();
+            this.expiry = galleryExpiry.valueOf();
         },
     },
 })
 
+export const useGuestBookStore = defineStore({
+    id: 'guestbook',
+    state: () => ({
+        entries: useStorage('guestbookEntries', []) as RemovableRef<GuestBookEntry[]>,
+        expiry: useStorage('entriesExpiry', Date.now()) as RemovableRef<number>,
+        next: useStorage('guestbookNext', '') as RemovableRef<string>,
+        loading: false as boolean,
+        error: undefined as AxiosError | undefined,
+        submitLoading: false as boolean,
+        submitSuccess: false as boolean,
+        submitError: undefined as GuestBookError | undefined,
+        deleteLoading: false as boolean,
+        deleteSuccess: false as boolean,
+        deleteError: undefined as GuestBookError | undefined,
+    }),
+    actions: {
+        async getEntries(options: GetLimitOffsetContentOptions): Promise<void> {
+            if (this.expiry < Date.now()) { 
+                this.entries = [];
+                this.next = '';
+            };
+            if (this.entries.length == 0 || options.force) {
+                this.loading = true;
+                apiService.getGuestBookContent({ limit: options.limit ?? GUESTBOOK_LIMIT, overrideLink: options.next ? this.next : ''}).then(
+                    (response: AxiosResponse<GuestBook>) => {
+                        this.handleResponse(response, options.force, options.next);
+                    }
+                ).catch(
+                    (error: AxiosError) => {
+                        this.loading = false;
+                        console.log(error);
+                        this.error = error;
+                    }
+                );
+            }
+        },
+        async submitEntry(text: string): Promise<void> {
+            this.submitLoading = true;
+            apiService.postGuestBookEntry(text).then((_) => {
+                this.submitError = undefined;
+                this.submitLoading = false;
+                this.getEntries({ force: true });
+            }).catch((error: AxiosError<GuestBookError>) => {
+                this.submitError = error?.response?.data;
+            })
+        },
+        async deleteEntry(uuid: string): Promise<void> {
+            this.deleteLoading = true;
+            apiService.deleteGuestBookContent(uuid).then((_) => {
+                this.deleteLoading = false;
+                this.getEntries({ force: true });
+            }).catch((error: AxiosError<GuestBookError>) => {
+                this.deleteError = error?.response?.data;
+            })
+        },
+        handleResponse(response: AxiosResponse<GuestBook>, force: boolean, next: boolean | undefined) {
+            this.loading = false;
+            if (next) {
+            let entries = new Set([...this.entries, ...response.data.results]);
+            this.entries = Array.from(entries);
+            } else {
+                this.entries = response.data.results;
+            }
+            this.next = response.data.next ?? '';
+            if (!next) {
+                this.setExpiry();
+            }
+        },
+        setExpiry() {
+            let expiry = new Date();
+            expiry.setTime(
+                expiry.getTime() + GUESTBOOK_TTL * 60 * 1000
+            );
+            this.expiry = expiry.valueOf();
+        }
+    }
+})
 
 
 

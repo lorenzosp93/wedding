@@ -50,9 +50,10 @@
       "pageNotFound": "¡Página no encontrada!"
     },
     "thenavbar": {
-      "gallery": "Galeria",
+      "gallery": "Galería",
       "home": "Home",
-      "inbox": "Bandeja de entrada",
+      "guestbook": "Guestbook",
+      "inbox": "Inbox",
       "information": "Información",
       "openMainMenu": "Abrir menú principal",
       "profile": "Perfil"
@@ -62,20 +63,22 @@
       "next": "Siguiente",
       "back": "Atrás",
       "finish": "Finalizar",
-      "intro": "¡Bienvenido a nuestra aplicación de boda! \n\nHemos construido esta aplicación desde cero para darte una experiencia unica en preparación de nuestro gran día. Aquí, podrás acceder a toda la información sobre las celebraciones y unirte a nosotros mientras nos preparamos para nuestro día especial. \n\n Haz clic en el botón 'Siguiente' para echar un vistazo rápido.",
-      "mobile-menu": "Como estás en un dispositivo móvil, el menú está convenientemente escondido detrás del botón arriba. Hazle clic para continuar.",
-      "invite": "¡Detrás de este botón, puedes encontrar la invitación digital para la boda!",
+      "intro": "¡Bienvenido a nuestra aplicación de boda! \n\nHemos construido esta aplicación desde cero para darte una experiencia única en preparación de nuestro gran día. Aquí, podrás acceder a toda la información sobre las celebraciones y unirte a nosotros mientras nos preparamos para nuestro día especial. \n\n Haz clic en el botón 'Siguiente' para echar un vistazo rápido.",
+      "mobile-menu": "Haz clic en el botón de arriba para visualizar el menú de navegación.",
+      "invite": "¡Detrás de éste botón, puedes encontrar la invitación digital para la boda!",
       "information": "En esta sección, encontrarás toda la información sobre las celebraciones de la boda, incluidos Eventos, Viajes, Consejos y más.",
+      "guestbook": "También puedes abrir el Guestbook, donde puedes encontrar todos los mensajes de los otros invitados y puedes dejar el tuyo.",
       "inbox": {
         "navbar": "En la Bandeja de entrada, encontrarás comunicaciones de los novios, incluidas preguntas importantes que podrás responder directamente en la aplicación.",
         "list": "Aquí está la lista de mensajes activos. También puedes buscar un mensaje anterior en la lista.",
         "detail": "Esta es la vista del mensaje. En caso de que el mensaje tenga preguntas, podrás responderlas directamente en esta página.",
-        "pushNotification": "Al hacer clic en este botón, puedes optar por recibir una notificación cada vez que haya un nuevo mensaje o información disponible."
+        "pushNotification": "Al hacer clic en éste botón, puedes optar por recibir una notificación cada vez que haya un nuevo mensaje o información disponible."
       },
-      "gallery": "En la galería encontrarás las fotos de la celebración.",
-      "profile": "La sección de perfil te permite verificar tu información y hacer logout de la aplicación si es necesario.\n\nTambién puedes instalar esta aplicación haciendo click a la opción 'Agregar a la pantalla de inicio' de tu buscador."
+      "gallery": "En la Galería encontrarás las fotos de la celebración.",
+      "profile": "La sección de Perfil te permite verificar tu información y hacer <e>logout</e> de la aplicación si es necesario.\n\nTambién puedes instalar esta aplicación haciendo clic a la opción 'Agregar a la pantalla de inicio' de tu buscador."
     },
     "countdown": {
+      "in": "",
       "days": "días",
       "hours": "horas",
       "minutes": "minutos",
@@ -87,8 +90,8 @@
     "list": {
       "ui": {
         "listitem": {
-          "youAlreadyReplied": "Ya respondiste a este mensaje.",
-          "youStillHavent": "Todavía no has respondido a este mensaje."
+          "youAlreadyReplied": "Ya respondiste a éste mensaje.",
+          "youStillHavent": "Todavía no has respondido a éste mensaje."
         }
       }
     },
@@ -120,7 +123,7 @@
     "priscillaCabreraMatos": "Priscilla Cabrera Matos",
     "sundayOct1st2023h1630": "Domingo, 1 de octubre de 2023 - h 16:30",
     "rome": "Roma",
-    "amsterdamTheNetherlands": "Amsterdam, Países Bajos",
+    "amsterdamTheNetherlands": "Ámsterdam, Países Bajos",
     "witteDeWithstraat1601": "Witte de Withstraat 160-1",
     "romeItaly": "Roma, Italia",
     "viaEttorePetrolini11": "via Ettore Petrolini 11",
@@ -130,6 +133,15 @@
     "basilicaDeiSantiGiovanniEPaoloAlCelio": "Basilica dei Santi Giovanni e Paolo al Celio",
     "envelopeFlap": "Solapa de sobre",
     "waxSealOn": "Sello de cera en el sobre",
-    "noKids": "Solo adultos"
+    "noKids": "Sólo adultos",
+    "rsvp": "\n        R.S.V.P.\n      "
+  },
+  "guestbook": {
+    "ui": {
+      "guestbookform": {
+        "writeAGuestbook": "Escribe un mensaje en el libro de invitados...",
+        "submit": "Envia"
+      }
+    }
   }
 }

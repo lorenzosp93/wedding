@@ -1,11 +1,13 @@
 import axios, { type AxiosInstance, type AxiosResponse, type RawAxiosRequestHeaders } from 'axios';
 import authHeader from './authheader';
 import { useAuthStore } from '@/stores';
-import type { Gallery, Information, Message, Response, Subscription } from '@/models/listObjects.interface';
+import type { Information, Message, Response, Subscription } from '@/models/listObjects.interface';
+import type { Gallery } from '@/models/gallery.interface';
 import type { User, Profile } from '@/models/auth.interface';
+import type { GuestBook, GuestBookEntry } from '@/models/guestbook.interface';
+
 
 export const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
-const GALLERY_LIMIT = 16 // images per load
 
 function getCookie(name: string): string {
   let cookieValue = '';
@@ -27,11 +29,12 @@ export function getCSRFHeader(): RawAxiosRequestHeaders {
   return { 'X-CSRFToken': getCookie('csrftoken') }
 }
 
-export function axiosInstanceFactory(): AxiosInstance {
+function axiosInstanceFactory(): AxiosInstance {
   var headers = { ...authHeader() };
   headers = { ...headers, ...getCSRFHeader() };
   const request = axios.create({
-    headers: headers
+    headers: headers,
+    baseURL: API_URL,
   })
   request.interceptors.response.use(
     response => response,
@@ -47,66 +50,91 @@ export function axiosInstanceFactory(): AxiosInstance {
   return request
 }
 
+interface LimitOffsetOptions {
+  overrideLink?: string;
+  limit: number;
+};
 
 class ApiService {
 
   async setupPlusOne(invitee: User): Promise<AxiosResponse> {
     return axiosInstanceFactory().post(
-      API_URL + '/api/user/setup-plus-one/',
+      '/api/user/setup-plus-one/',
       invitee,
     )
   }
 
   async registerUser(invitee: User): Promise<AxiosResponse> {
     return axiosInstanceFactory().post(
-      API_URL + '/api/user/register-user/',
+      '/api/user/register-user/',
       invitee,
     )
   }
 
   async getUserSubscription(): Promise<AxiosResponse<Subscription[]>> {
     return axiosInstanceFactory().get(
-      `${API_URL}/api/user/subscription/`
+      '/api/user/subscription/'
     )
   }
 
   async getUserProfile(): Promise<AxiosResponse<Profile[]>> {
-    return axiosInstanceFactory().get(API_URL + '/api/user/profile/')
+    return axiosInstanceFactory().get('/api/user/profile/')
   }
 
   async getInboxContent(): Promise<AxiosResponse<Message[]>> {
-    return axiosInstanceFactory().get(API_URL + '/api/inbox/message/')
+    return axiosInstanceFactory().get('/api/inbox/message/')
   }
 
   async postInboxResponse(response: Response): Promise<AxiosResponse> {
     return axiosInstanceFactory().post(
-      API_URL + '/api/inbox/response/',
+      '/api/inbox/response/',
       response
     )
   }
 
   async deleteInboxResponse(response_uuid: string): Promise<AxiosResponse> {
     return axiosInstanceFactory().delete(
-      `${API_URL}/api/inbox/response/${response_uuid}/`
+      `/api/inbox/response/${response_uuid}/`
     )
   }
 
   async getInfoContent(): Promise<AxiosResponse<Information[]>> {
     return axiosInstanceFactory().get(
-      API_URL + '/api/info/'
+      '/api/info/'
     )
   }
 
-  async getGalleryContent(overrideLink: string | null = null): Promise<AxiosResponse<Gallery>> {
+  async getGalleryContent(options: LimitOffsetOptions): Promise<AxiosResponse<Gallery>> {
+    let overrideLink = options.overrideLink?.length ? options.overrideLink : null
     return axiosInstanceFactory().get(
-      overrideLink ?? API_URL + '/api/photo/?limit=' + GALLERY_LIMIT
+      overrideLink ?? `/api/photo/?limit=${options.limit}`
     )
   }
 
   async postUserSubscription(subscription: PushSubscriptionJSON | undefined): Promise<AxiosResponse> {
     return axiosInstanceFactory().post(
-      `${API_URL}/api/user/subscription/`,
+      '/api/user/subscription/',
       subscription
+    )
+  }
+
+  async getGuestBookContent(options: LimitOffsetOptions): Promise<AxiosResponse<GuestBook>> {
+    let overrideLink = options.overrideLink?.length ? options.overrideLink : null
+    return axiosInstanceFactory().get(
+      overrideLink ?? `/api/guestbook/entry/?limit=${options.limit}`
+    )
+  }
+
+  async postGuestBookEntry(text: string): Promise<AxiosResponse<GuestBookEntry>> {
+    return axiosInstanceFactory().post(
+      '/api/guestbook/entry/',
+      { text: text }
+    )
+  }
+
+  async deleteGuestBookContent(uuid: string): Promise<AxiosResponse<GuestBookEntry[]>> {
+    return axiosInstanceFactory().delete(
+      `/api/guestbook/entry/${uuid}/`
     )
   }
 

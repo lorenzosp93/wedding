@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/api-auth/', include(
         'rest_framework.urls', namespace='rest_framework',
     )),
+    path('api/guestbook/', include('guestbook.urls')),
     path('api/inbox/', include('inbox.urls')),
     path('api/shared/', include('shared.urls')),
     path('api/', include('info.urls')),

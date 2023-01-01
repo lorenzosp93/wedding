@@ -11,7 +11,7 @@
           <push-subscribe></push-subscribe>
           <input
             v-model.trim="search"
-            class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-neutral dark:placeholder-darkNeutral"
+            class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-secondary dark:placeholder-darkNeutral"
             :placeholder="$t('shared.listview.search')"
           />
         </label>
@@ -67,6 +67,8 @@ import type {
   Response,
 } from "@/models/listObjects.interface";
 import type { AxiosError } from "axios";
+import type { RemovableRef } from "@vueuse/shared";
+import { useStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "ListView",
@@ -92,9 +94,7 @@ export default defineComponent({
     return {
       active: 0 as number,
       viewDetail: false as boolean,
-      responses: JSON.parse(
-        localStorage.getItem("responses") ?? "[]"
-      ) as Array<Response>,
+      responses: useStorage("responses", []) as RemovableRef<Response[]>,
       search: "" as string,
     };
   },
@@ -126,9 +126,6 @@ export default defineComponent({
   mounted() {
     this.responseSetup();
     this.refreshActive();
-  },
-  beforeUnmount() {
-    localStorage.setItem("responses", JSON.stringify(this.responses));
   },
   methods: {
     refreshActive() {

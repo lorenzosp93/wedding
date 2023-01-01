@@ -14,7 +14,7 @@
         <ul
           v-if="question.options?.length"
           :multiple="question.multi_select"
-          class="w-full my-2 bg-pale dark:bg-darkPale rounded-md"
+          class="w-full my-2 bg-pale dark:bg-darkPale rounded-md shadow-inner border-none"
         >
           <li
             v-for="option in question.options"
@@ -27,7 +27,7 @@
               :value="option.uuid"
               :name="question.uuid"
               :type="question.multi_select ? 'checkbox' : 'radio'"
-              class="my-2 bg-neutral dark:bg-darkNeutral text-accent"
+              class="my-2 bg-neutral dark:bg-darkNeutral text-accent border-none"
               :disabled="
                 question.response
                   ? question.multi_select
@@ -53,7 +53,7 @@
           <input
             v-model="getInputResponse(question).text"
             type="text"
-            class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1"
+            class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 border-none shadow-inner"
             :readonly="question.response"
             :required="question.mandatory && question.options.length == 0"
           />

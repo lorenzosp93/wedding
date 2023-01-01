@@ -44,6 +44,6 @@ class MessageAdmin(admin.ModelAdmin):
 @admin.register(Response)
 class ResponseAdmin(admin.ModelAdmin):
     list_display = (
-        'user', 'question', 'active', 'deleted_at'
+        'user', 'question', 'get_options', 'text', 'active', 'deleted_at'
     )
     list_filter = ('user', 'question', 'active')

@@ -79,6 +79,15 @@
           </li>
           <li>
             <router-link
+              id="navbar-guestbook"
+              :to="{ name: 'guestbook' }"
+              class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
+              @click="dropInfo = false"
+              >{{ $t("shared.thenavbar.guestbook") }}</router-link
+            >
+          </li>
+          <li>
+            <router-link
               id="navbar-inbox"
               :to="{ name: 'inbox' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
@@ -111,7 +120,7 @@
 </template>
 
 <script lang="ts">
-import { useInfoStore } from "@/stores/api.store.js";
+import { useInfoStore } from "@/stores";
 import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";

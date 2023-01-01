@@ -8,12 +8,12 @@ from .models import (
     Photo,
 )
 from shared.viewsets import (
-    AudienceViewSetMixin,
+    AudienceViewSet,
 )
 
 
 class InformationViewSet(
-    AudienceViewSetMixin,
+    AudienceViewSet,
     ReadOnlyModelViewSet,
 ):
     """

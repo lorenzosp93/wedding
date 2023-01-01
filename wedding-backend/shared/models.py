@@ -1,4 +1,5 @@
 "Define abstract models to be used in all apps"
+from datetime import datetime
 from io import BytesIO
 import os
 import uuid
@@ -8,6 +9,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.html import strip_tags
+from requests import delete
 from wedding.settings import AUTH_USER_MODEL
 
 
@@ -210,6 +212,16 @@ class HasSubject(models.Model):
         on_delete=models.CASCADE,
         related_name='%(class)s_subject'
     )
+
+    class Meta:
+        abstract = True
+
+
+class Deactivate(models.Model):
+    "Abstract class for models that can be deactivated"
+    active: models.Field = models.BooleanField(default=True)
+    deleted_at: models.Field = models.DateTimeField(
+        default=None, null=True, blank=True)
 
     class Meta:
         abstract = True

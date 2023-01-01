@@ -1,27 +1,27 @@
 import { defineStore } from 'pinia';
-import apiService, { API_URL, axiosInstanceFactory } from '@/services/api.service'
+import apiService from '@/services/api.service'
 import type { AxiosError, AxiosResponse } from 'axios';
 import type { Subscription } from '@/models/listObjects.interface';
+import { useStorage, type RemovableRef } from '@vueuse/core';
 
 export const useNotificationStore = defineStore({
   id: 'notification',
   state: () => ({
     pushSubscription: undefined as PushSubscription | undefined,
-    isSubscribed: JSON.parse(localStorage.getItem('notificationSubscribed') ?? 'false') as boolean,
+    isSubscribed: useStorage('notificationSubscribed', false) as RemovableRef<boolean>,
     loading: false as boolean,
     error: undefined as AxiosError | undefined,
   }),
   actions: {
-    checkIsSubscribed () {
+    async checkIsSubscribed () {
       apiService.getUserSubscription().then((response: AxiosResponse<Subscription[]>) => {
         this.isSubscribed = !!response.data?.length;
-        localStorage.setItem('notificationSubscribed', this.isSubscribed.toString())
       }).catch((error: AxiosError) => {
         console.log(error);
         this.error = error;
       })
     },
-    askPermission() {
+    async askPermission() {
       return new Promise((resolve, reject) => {
         const permissionResult = Notification.requestPermission(function (
           result
@@ -39,7 +39,7 @@ export const useNotificationStore = defineStore({
         this.subscribeUserToPush();
       });
     },
-    subscribeUserToPush() {
+    async subscribeUserToPush() {
       return navigator.serviceWorker
         .getRegistration()
         .then((registration: ServiceWorkerRegistration | undefined) => {

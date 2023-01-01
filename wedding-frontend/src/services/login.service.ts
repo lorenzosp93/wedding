@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_APP_BACKEND_URL;
 
 export async function login (email: string) {
   return axios.post(
-    API_URL + '/api/auth/email/', {
+    `${API_URL}/api/auth/email/`, {
     email: email
   })
   .then(() => {

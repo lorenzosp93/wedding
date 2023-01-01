@@ -12,10 +12,16 @@
 
 <script lang="ts">
 import { InformationCircleIcon } from "@heroicons/vue/24/outline";
-import { useNotificationStore } from "@/stores/notification.store";
+import { useNotificationStore } from "@/stores";
 import Shepherd from "shepherd.js";
+import { useStorage, type RemovableRef } from "@vueuse/core";
 
 const notificationStore = useNotificationStore();
+
+let pushSubscribeVisible =
+  "serviceWorker" in navigator &&
+  "PushManager" in window &&
+  !notificationStore.isSubscribed;
 
 export default {
   name: "OnboardingTour",
@@ -25,6 +31,7 @@ export default {
   data() {
     return {
       tour: undefined as undefined | Shepherd.Tour,
+      seen: useStorage("shepherd-tour", false) as RemovableRef<boolean>,
     };
   },
   created() {
@@ -90,7 +97,6 @@ export default {
           {
             id: "invite",
             text: this.$t("shared.tour.invite"),
-            classes: "mt-3",
             attachTo: {
               element: "#invite-link",
               on: "bottom",
@@ -138,6 +144,15 @@ export default {
             classes: "mt-3",
           },
           {
+            id: "guestbook",
+            text: this.$t("shared.tour.guestbook"),
+            attachTo: {
+              element: "#navbar-guestbook",
+              on: "bottom",
+            },
+            classes: "mt-3",
+          },
+          {
             id: "inbox-navbar",
             text: this.$t("shared.tour.inbox.navbar"),
             attachTo: {
@@ -170,7 +185,7 @@ export default {
             text: this.$t("shared.tour.inbox.list"),
             attachTo: {
               element: "#list-view",
-              on: "right",
+              on: "bottom",
             },
             modalOverlayOpeningPadding: -5,
             buttons: [
@@ -200,7 +215,7 @@ export default {
             text: this.$t("shared.tour.inbox.detail"),
             attachTo: {
               element: "#detail-view",
-              on: "left",
+              on: "bottom",
             },
             modalOverlayOpeningPadding: -5,
             buttons: [
@@ -234,11 +249,7 @@ export default {
             modalOverlayOpeningRadius: 10,
             canClickTarget: true,
             showOn: () => {
-              return (
-                "serviceWorker" in navigator &&
-                "PushManager" in window &&
-                !notificationStore.isSubscribed
-              );
+              return pushSubscribeVisible;
             },
             attachTo: {
               element: "#notification-trigger",
@@ -272,6 +283,29 @@ export default {
               on: "bottom",
             },
             classes: "mt-3",
+            buttons: [
+              {
+                action: () => {
+                  if (!pushSubscribeVisible) {
+                    this.$router
+                      .push({ name: "inbox", params: { active: 0 } })
+                      .then(() => {
+                        return this.tour?.back();
+                      });
+                  } else {
+                    return this.tour?.back();
+                  }
+                },
+                secondary: true,
+                text: this.$t("shared.tour.back"),
+              },
+              {
+                action: () => {
+                  return this.tour?.next();
+                },
+                text: this.$t("shared.tour.next"),
+              },
+            ],
           },
           {
             id: "profile",
@@ -303,12 +337,10 @@ export default {
       });
     },
     dismissTour() {
-      if (!localStorage.getItem("shepherd-tour")) {
-        localStorage.setItem("shepherd-tour", "true");
-      }
+      this.seen = true;
     },
     startTour() {
-      if (!localStorage.getItem("shepherd-tour")) {
+      if (!this.seen) {
         this.tour?.start();
       }
     },
