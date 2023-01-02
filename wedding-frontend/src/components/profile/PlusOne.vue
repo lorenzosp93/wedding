@@ -1,9 +1,10 @@
 <template>
   <div
-    class="z-20 absolute left-0 top-0 backdrop-blur-sm h-screen w-screen"
-    @click="$emit('toggle')"
+    class="z-20 absolute left-0 top-0 backdrop-blur-sm h-screen w-screen cursor-pointer"
+    data-test="outside"
   ></div>
-  <div
+  <OnClickOutside
+    @trigger="$emit('toggle')"
     class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-pale dark:bg-darkPale p-3 w-full max-w-sm shadow-lg"
   >
     <p class="text-left p-1 mb-2">{{ $t("profile.plusone.pleaseEnterThe") }}</p>
@@ -77,7 +78,7 @@
         <p v-if="success">{{ $t("profile.plusone.success") }}</p>
       </div>
     </form>
-  </div>
+  </OnClickOutside>
 </template>
 
 <script lang="ts">
@@ -86,11 +87,14 @@ import { useAuthStore } from "@/stores";
 import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import type { User } from "@/models/auth.interface";
-import type { AxiosResponse } from "axios";
+import { OnClickOutside } from "@vueuse/components";
 
 export default defineComponent({
   name: "PlusOne",
-  components: { LoadingView },
+  components: {
+    LoadingView,
+    OnClickOutside,
+  },
   emits: ["toggle"],
   data() {
     return {

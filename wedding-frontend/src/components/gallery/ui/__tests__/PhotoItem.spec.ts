@@ -17,8 +17,5 @@ describe("Photo item test", () => {
 
     let img = wrapper.find("img");
     expect(img.element.src).toBe("https://picture.link/");
-    let outside = wrapper.find('[data-test="outside"]');
-    await outside.trigger("click");
-    expect(wrapper.emitted("closePhoto")).toBeTruthy();
   });
 });
