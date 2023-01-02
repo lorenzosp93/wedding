@@ -10,6 +10,7 @@
     <div
       v-if="photo?.content"
       class="bg-neutral dark:bg-darkNeutral dark:text-secondary px-3 py-3"
+      test-data="content"
     >
       {{ photo.content }}
     </div>

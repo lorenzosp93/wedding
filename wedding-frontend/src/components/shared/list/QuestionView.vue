@@ -27,7 +27,7 @@
               :value="option.uuid"
               :name="question.uuid"
               :type="question.multi_select ? 'checkbox' : 'radio'"
-              class="my-2 bg-neutral dark:bg-darkNeutral text-accent border-none"
+              class="my-2 bg-neutral dark:bg-darkNeutral text-accent border-none focus:ring-accent"
               :disabled="
                 question.response
                   ? question.multi_select
@@ -53,7 +53,7 @@
           <input
             v-model="getInputResponse(question).text"
             type="text"
-            class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 border-none shadow-inner"
+            class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 border-none shadow-inner focus:ring-accent"
             :readonly="question.response"
             :required="question.mandatory && question.options.length == 0"
           />
@@ -68,7 +68,7 @@
           v-if="
             question.uuid ==
             submitError?.find(
-              (e) => e.q == question.uuid && e.e?.non_field_errors
+              (e) => e.q == question.uuid && e.e?.non_field_errors?.length
             )
           "
         >

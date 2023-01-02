@@ -3,13 +3,13 @@ import messages from "@intlify/unplugin-vue-i18n/messages";
 
 const i18n = createI18n({
   locale:
-    localStorage.getItem('lang') ||
+    localStorage.getItem("lang") ||
     navigator.language ||
     // Detect user's browser language
     import.meta.env.VITE_APP_I18N_LOCALE,
-  fallbackLocale: import.meta.env.VITE_APP_I18N_FALLBACK_LOCALE || 'en',
+  fallbackLocale: import.meta.env.VITE_APP_I18N_FALLBACK_LOCALE || "en",
   // Load selected lang's .json file
-  availableLocales: ['en', 'it', 'es'],
+  availableLocales: ["en", "it", "es"],
   messages: messages,
   globalInjection: true,
 });

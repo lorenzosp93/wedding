@@ -23,8 +23,8 @@ def register_user(request: Request) -> Response:
             except Exception:
                 return Response(
                     status=500,
-                    data={"non_field_errors": _(
-                        "An error occurred creating your profile, please try again later.")},
+                    data={"non_field_errors": [_(
+                        "An error occurred creating your profile, please try again later.")]},
                 )
             return Response(
                 status=201,
@@ -61,12 +61,12 @@ def setup_plus_one(request: Request) -> Response:
         elif user:
             return Response(
                 status=400,
-                data={"non_field_errors": _("User %(email)s exists already" % {
-                                            'email': user.email})},
+                data={"non_field_errors": [_("User %(email)s exists already" % {
+                    'email': user.email})]},
             )
         return Response(
             status=400,
-            data={"non_field_errors": _("No plus-one available")},
+            data={"non_field_errors": [_("No plus-one available")]},
         )
     return Response(
         status=400,

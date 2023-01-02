@@ -34,7 +34,7 @@ class UserProfileInLine(admin.TabularInline):
 
 HEADERS = {
     'username': {'field': 'username', 'required': False},
-    'email': {'field': 'email', 'required': True},
+    'email': {'field': 'email', 'required': False},
     'first_name': {'field': 'first_name', 'required': True},
     'last_name': {'field': 'last_name', 'required': True},
     'language': {'field': 'language', 'required': False},

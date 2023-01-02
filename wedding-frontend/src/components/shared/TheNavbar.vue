@@ -35,12 +35,15 @@
               :to="{ name: 'home' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
               aria-current="page"
-              @click="dropInfo = false"
               >{{ $t("shared.thenavbar.home") }}</router-link
             >
           </li>
           <li>
-            <div id="navbar-information" class="relative rounded">
+            <OnClickOutside
+              id="navbar-information"
+              @trigger="dropInfo = false"
+              class="relative rounded"
+            >
               <div
                 class="flex flex-row items-center cursor-pointer"
                 @click="dropInfo = !dropInfo"
@@ -75,14 +78,13 @@
                   </router-link>
                 </li>
               </ul>
-            </div>
+            </OnClickOutside>
           </li>
           <li>
             <router-link
               id="navbar-guestbook"
               :to="{ name: 'guestbook' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              @click="dropInfo = false"
               >{{ $t("shared.thenavbar.guestbook") }}</router-link
             >
           </li>
@@ -91,7 +93,6 @@
               id="navbar-inbox"
               :to="{ name: 'inbox' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              @click="dropInfo = false"
               >{{ $t("shared.thenavbar.inbox") }}</router-link
             >
           </li>
@@ -100,7 +101,6 @@
               id="navbar-gallery"
               :to="{ name: 'gallery' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              @click="dropInfo = false"
               >{{ $t("shared.thenavbar.gallery") }}</router-link
             >
           </li>
@@ -109,7 +109,6 @@
               id="navbar-profile"
               :to="{ name: 'profile' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              @click="dropInfo = false"
               >{{ $t("shared.thenavbar.profile") }}</router-link
             >
           </li>
@@ -124,12 +123,14 @@ import { useInfoStore } from "@/stores";
 import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";
+import { OnClickOutside } from "@vueuse/components";
 
 export default defineComponent({
   name: "TheNavbar",
   components: {
     Bars3Icon,
     ChevronDownIcon,
+    OnClickOutside,
   },
   data() {
     return {

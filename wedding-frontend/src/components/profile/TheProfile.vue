@@ -31,6 +31,7 @@
               >
                 <button
                   class="rounded-md bg-accent text-primary py-1 px-2 shadow-lg"
+                  data-test="plusOne-button"
                   @click="togglePlusOne"
                 >
                   {{ $t("profile.theprofile.invite") }}
@@ -57,7 +58,7 @@
                   <th>{{ $t("profile.theprofile.first_name") }}</th>
                   <th>{{ $t("profile.theprofile.last_name") }}</th>
                 </thead>
-                <tbody>
+                <tbody data-test="plusOne-table">
                   <tr v-for="child in profile?.childs" :key="child.id">
                     <td>{{ child.user.email }}</td>
                     <td>{{ child.user.first_name }}</td>
@@ -74,6 +75,7 @@
     <button
       class="rounded-md shadow-lg bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3"
       @click="logout"
+      data-test="logout-button"
     >
       {{ $t("profile.theprofile.logOut") }}
     </button>

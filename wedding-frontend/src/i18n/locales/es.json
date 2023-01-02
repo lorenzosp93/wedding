@@ -12,6 +12,13 @@
       "loginWasSuccessful": "El inicio de sesión fue exitoso, <b>verifica tu bandeja de entrada <em>(incluyendo la carpeta de spam)</em> para obtener tu enlace de inicio de sesión.</b>",
       "ifYouGetYourEmail": "Si recibes tu correo en un dispositivo diferente o tienes problemas con el enlace, también puedes ingresar el código OTP a continuación.",
       "otp": "Codigo OTP (6 dígitos)"
+    },
+    "registerpage": {
+      "registerPage": "Página de registración",
+      "firstName": "Nombre",
+      "lastName": "Apellidos",
+      "email": "Email",
+      "welcomeToThe": "Bienvenido a la pagina de registración. Favor de proporcionar tus datos como aparecen en el mensaje que recibiste, y la mail que quieres utilizar para acceder al sitio."
     }
   },
   "profile": {
