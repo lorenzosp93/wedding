@@ -75,7 +75,8 @@
         :to="{ name: 'inbox' }"
         v-show="loaded"
         class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-lg px-2 py-1 mb-5 short:mr-5 opacity-0 font-[Tangerine] text-2xl cursor-pointer"
-      >{{ $t('theinvitation.rsvp') }}</router-link>
+        >{{ $t("theinvitation.rsvp") }}</router-link
+      >
     </Teleport>
   </div>
 </template>
@@ -88,6 +89,9 @@ import LoadingView from "@/components/shared/LoadingView.vue";
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 import TheMessage from "./shared/ui/TheMessage.vue";
 
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+});
 gsap.registerPlugin(ScrollTrigger);
 
 type ImageDef = {
@@ -160,9 +164,6 @@ export default defineComponent({
     },
     setupEnvelopeAnimation() {
       this.cleanup();
-      ScrollTrigger.config({
-        ignoreMobileResize: true,
-      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
