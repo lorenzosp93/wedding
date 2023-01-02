@@ -39,6 +39,7 @@ HEADERS = {
     'last_name': {'field': 'last_name', 'required': True},
     'language': {'field': 'language', 'required': False},
     'plus': {'field': 'plus', 'required': False},
+    'type': {'field': 'type', 'required': False},
 }
 
 
@@ -172,9 +173,14 @@ class UserAdmin(admin.ModelAdmin):
         ])
         UserProfile.objects.bulk_create([
             UserProfile(
-                user=get_user_model().objects.get(username=row.get('email')),
+                user=get_user_model().objects.get(username=(
+                    row.get('username')
+                    if row.get('username')
+                    else row.get('email')
+                )),
                 language=row.get('language'),
-                plus=row.get('plus')
+                plus=row.get('plus', 0),
+                type=row.get('type', 2)
             ) for row in reader
         ])
 
