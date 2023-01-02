@@ -39,6 +39,7 @@ HEADERS = {
     'last_name': {'field': 'last_name', 'required': True},
     'language': {'field': 'language', 'required': False},
     'plus': {'field': 'plus', 'required': False},
+    'type': {'field': 'type', 'required': False},
 }
 
 
@@ -178,7 +179,8 @@ class UserAdmin(admin.ModelAdmin):
                     else row.get('email')
                 )),
                 language=row.get('language'),
-                plus=row.get('plus')
+                plus=row.get('plus', 0),
+                type=row.get('type', 2)
             ) for row in reader
         ])
 
