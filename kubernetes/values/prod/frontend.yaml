@@ -692,12 +692,16 @@ metrics:
     ## limits:
     ##    cpu: 100m
     ##    memory: 128Mi
-    limits: {}
+    limits:
+      cpu: 330m
+      memory: 256Mi
     ## Examples:
     ## requests:
     ##    cpu: 100m
     ##    memory: 128Mi
-    requests: {}
+    requests:
+      cpu: 100m
+      memory: 128Mi
   ## Prometheus Operator ServiceMonitor configuration
   ##
   serviceMonitor:
