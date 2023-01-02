@@ -5,6 +5,7 @@
         v-for="col in 4"
         :key="col"
         class="flex-[100%] md:flex-[50%] lg:flex-[25%] max-w-full md:max-w-[50%] lg:max-w-[25%] px-1.5 h-fit"
+        data-test="gallery-cols"
       >
         <thumbnail-item
           v-for="photo in gallery.filter((_,idx:number)=>{ return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4) == col - 1 })"
@@ -21,7 +22,7 @@
       />
     </div>
     <photo-item
-      @close-photo="activePhoto = null"
+      @close-photo="activePhoto = undefined"
       v-if="activePhoto"
       :activePhoto="activePhoto"
       class="fixed top-0 left-0 w-full h-full"
@@ -57,7 +58,7 @@ export default defineComponent({
   props: {},
   data() {
     return {
-      activePhoto: null as Photo | null,
+      activePhoto: undefined as Photo | undefined,
       breakpointMap: [
         { name: "md", value: 768 },
         { name: "lg", value: 1024 },

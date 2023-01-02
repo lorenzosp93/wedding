@@ -164,7 +164,7 @@ class TestInboxViewsets(TestCase):
         )
         self.response.option.add(self.option)
         request = self.factory.delete(
-            reverse('inbox:response-detail', [self.response])
+            reverse('inbox:response-detail', [self.response.uuid])
         )
         force_authenticate(request, self.user)
         response = ResponseViewSet.as_view(

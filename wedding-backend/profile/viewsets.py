@@ -8,7 +8,6 @@ from .models import (
     Subscription,
 )
 
-WRITE_ACTIONS = ["create", "update", "partial_update", "destroy"]
 
 
 class UserProfileViewset(ReadOnlyModelViewSet):
