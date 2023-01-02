@@ -172,7 +172,11 @@ class UserAdmin(admin.ModelAdmin):
         ])
         UserProfile.objects.bulk_create([
             UserProfile(
-                user=get_user_model().objects.get(username=row.get('email')),
+                user=get_user_model().objects.get(username=(
+                    row.get('username')
+                    if row.get('username')
+                    else row.get('email')
+                )),
                 language=row.get('language'),
                 plus=row.get('plus')
             ) for row in reader
