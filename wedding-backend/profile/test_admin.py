@@ -20,16 +20,13 @@ class TestCsvProfileAdmin(TestCase):
             'testLastName',    # last_name
             'es',              # language
             '2',               # plus
+            '3',               # type
         ]
         buffer = StringIO()
         writer = csv.writer(buffer)
         writer.writerow(HEADERS.keys())
         writer.writerow(content)
         buffer.seek(0)
-        # buffer.__dict__.update({
-        #     'name': 'testFile.csv',
-        #     'size': buffer.__sizeof__()
-        # })
         self.csv = buffer
         self.factory = RequestFactory()
 
@@ -63,3 +60,4 @@ class TestCsvProfileAdmin(TestCase):
         if user:
             self.assertEqual(user.first_name, 'testFirstName')
             self.assertEqual(user.last_name, 'testLastName')
+            self.assertEqual(user.profile.type, 3)
