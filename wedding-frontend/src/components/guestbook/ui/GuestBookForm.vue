@@ -6,7 +6,7 @@
         v-model="text"
         id="guestBookText"
         type="text"
-        class="w-full rounded-md bg-pale dark:bg-darkPale dark:placeholder-darkNeutral placeholder-secondary border-none shadow-inner"
+        class="w-full rounded-md bg-pale dark:bg-darkPale dark:placeholder-darkNeutral placeholder-secondary border-none shadow-inner focus:ring-accent"
         :placeholder="$t('guestbook.ui.guestbookform.writeAGuestbook')"
       />
       <p
@@ -18,7 +18,9 @@
       <button
         @click.prevent="submitEntry"
         class="rounded-md bg-accent text-primary mx-auto my-2 px-2 py-1 shadow-lg"
-      >{{ $t('guestbook.ui.guestbookform.submit') }}</button>
+      >
+        {{ $t("guestbook.ui.guestbookform.submit") }}
+      </button>
       <p
         v-if="submitError?.non_field_errors?.length"
         class="text-alert dark:text-darkAlert"

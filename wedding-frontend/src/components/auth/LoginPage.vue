@@ -27,7 +27,7 @@
           <input
             id="email_input"
             v-model.trim="email"
-            class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1"
+            class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1 focus:ring-accent border-none shadow-inner"
             type="email"
             data-test="email-input"
           />
@@ -65,6 +65,7 @@ import { defineComponent } from "vue";
 import { login } from "@/services/login.service";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import type { AxiosError } from "axios";
+import type { UserError } from "@/models/auth.interface";
 
 export default defineComponent({
   name: "LoginPage",
@@ -75,16 +76,16 @@ export default defineComponent({
     return {
       loading: false as boolean,
       email: "" as string,
-      error: null as any,
+      error: undefined as UserError | undefined,
       message: "" as string,
     };
   },
   methods: {
     handleLogin() {
       this.loading = true;
-      login(this.email).catch((error: AxiosError) => {
+      login(this.email).catch((error: AxiosError<UserError>) => {
         this.loading = false;
-        this.error = error.response?.data ?? "Unable to return response";
+        this.error = error.response?.data ?? undefined;
       });
     },
   },

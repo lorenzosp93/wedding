@@ -5,24 +5,30 @@ import type { ComponentPublicInstance } from "vue";
 import { createTestingPinia } from "@pinia/testing";
 import { useAuthStore } from "@/stores";
 import type { Store } from "pinia";
+import i18n from "@/i18n";
 
 describe("Plus one tests", () => {
   let wrapper: VueWrapper<ComponentPublicInstance<any>>;
   let store: Store<"auth">;
+
   beforeEach(() => {
     wrapper = mount(PlusOne, {
       global: {
         plugins: [createTestingPinia()],
-        mocks: { $t: (t: string) => t },
+        mocks: {
+          $t: (t: string, obj: Record<string, unknown>) => {
+            return i18n.global.t(t, "en", obj);
+          },
+        },
       },
     });
     store = useAuthStore();
   });
 
   it("Submits plus one user", () => {
-    let firstName = wrapper.find("#first_name");
-    let lastName = wrapper.find("#last_name");
-    let email = wrapper.find("#email");
+    let firstName = wrapper.find("#first_name_input");
+    let lastName = wrapper.find("#last_name_input");
+    let email = wrapper.find("#email_input");
     firstName.setValue("someName");
     lastName.setValue("someLastName");
     email.setValue("some@email.com");

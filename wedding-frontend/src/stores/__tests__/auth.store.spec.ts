@@ -142,7 +142,7 @@ describe("Auth store test", () => {
       return Promise.reject({ response: { data: "someError" } } as AxiosError);
     });
 
-    store.setupPlusOne(testProfile.user).then(() => {
+    store.setupPlusOne(testProfile.user).catch(() => {
       expect(store.registerError).toBe("someError");
     });
   });

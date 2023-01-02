@@ -33,6 +33,7 @@ export const useAuthStore = defineStore({
         (error: AxiosError<UserError>) => {
           this.loading = false;
           this.registerError = error?.response?.data;
+          return Promise.reject(error);
         }
       );
     },
