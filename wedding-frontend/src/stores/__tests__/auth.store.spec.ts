@@ -2,10 +2,10 @@ import { describe, it, expect, vi, beforeEach, type Mock } from "vitest";
 import { setActivePinia, createPinia } from "pinia";
 import { useAuthStore } from "../auth.store";
 import type { Profile } from "@/models/auth.interface";
-import { AxiosError, type AxiosResponse } from "axios";
 import { apiService, apiServicePublic } from "@/services/api.service";
 import router from "@/router";
 import { useNotificationStore } from "../notification.store";
+import type { AxiosError, AxiosResponse } from "axios";
 
 vi.mock("@/router", () => ({
   default: {
@@ -142,10 +142,8 @@ describe("Auth store test", () => {
       return Promise.reject({ response: { data: "someError" } } as AxiosError);
     });
 
-    expect(store.setupPlusOne(testProfile.user))
-      .rejects.toThrow(new AxiosError())
-      .then(() => {
-        expect(store.registerError).toBe("someError");
-      });
+    store.setupPlusOne(testProfile.user).then(() => {
+      expect(store.registerError).toBe("someError");
+    });
   });
 });

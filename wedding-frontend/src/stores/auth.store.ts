@@ -24,17 +24,15 @@ export const useAuthStore = defineStore({
       this.loading = true;
       let service = await import("@/services/api.service");
       return service.apiService.setupPlusOne(plusOne).then(
-        (response: AxiosResponse<string>) => {
+        (_: AxiosResponse<string>) => {
           this.error = undefined;
           this.loading = false;
           this.success = true;
           this.getProfile();
-          return response;
         },
         (error: AxiosError<UserError>) => {
           this.loading = false;
           this.registerError = error?.response?.data;
-          throw error;
         }
       );
     },
@@ -91,7 +89,6 @@ export const useAuthStore = defineStore({
         })
         .catch((error: AxiosError<UserError>) => {
           this.loading = false;
-          console.log(error);
           this.registerError = error?.response?.data;
         });
     },

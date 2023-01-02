@@ -112,11 +112,9 @@ export default defineComponent({
   methods: {
     ...mapActions(useAuthStore, ["getProfile", "setupPlusOne"]),
     callSetupPlusOne() {
-      this.setupPlusOne(this.plusOne)
-        .then((_) => {
-          this.$emit("toggle");
-        })
-        .catch();
+      this.setupPlusOne(this.plusOne).then(() => {
+        this.$emit("toggle");
+      });
     },
   },
 });

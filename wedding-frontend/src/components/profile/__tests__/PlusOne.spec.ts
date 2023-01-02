@@ -8,7 +8,7 @@ import type { Store } from "pinia";
 
 describe("Plus one tests", () => {
   let wrapper: VueWrapper<ComponentPublicInstance<any>>;
-  let store: Store;
+  let store: Store<"auth">;
   beforeEach(() => {
     wrapper = mount(PlusOne, {
       global: {
@@ -26,9 +26,13 @@ describe("Plus one tests", () => {
     firstName.setValue("someName");
     lastName.setValue("someLastName");
     email.setValue("some@email.com");
+
+    let mockSetup = ((store as any).setupPlusOne as Mock).mockImplementation(
+      async () => {}
+    );
     email.trigger("submit");
 
-    expect((store as any).setupPlusOne).toBeCalledWith({
+    expect(mockSetup).toBeCalledWith({
       first_name: "someName",
       last_name: "someLastName",
       email: "some@email.com",

@@ -62,7 +62,7 @@ describe("Gallery tests", () => {
 
   it("Gets more content", () => {
     let infinite = wrapper.findComponent({ name: "InfiniteScrolling" });
-    infinite.vm.$emit("get-more-content");
+    infinite.vm.$emit("getMoreContent");
     expect((store as any).getGalleryContent).toBeCalled();
   });
 });

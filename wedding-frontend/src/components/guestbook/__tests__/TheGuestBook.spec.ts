@@ -49,7 +49,7 @@ describe("Guest book item tests", () => {
   });
   it("Gets more content", async () => {
     let infinite = wrapper.findComponent({ name: "InfiniteScrolling" });
-    infinite.vm.$emit("get-more-content");
+    infinite.vm.$emit("getMoreContent");
     expect((store as any).getEntries).toBeCalled();
   });
 });
