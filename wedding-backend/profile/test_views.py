@@ -44,7 +44,7 @@ class TestPlusOneView(TestCase):
         self.assertEqual(response.status_code, 400)
         non_field_errors = response.data.get('non_field_errors')
         self.assertIsNotNone(non_field_errors)
-        self.assertIn('some@email.com', non_field_errors)
+        self.assertIn('some@email.com', non_field_errors[0])
 
     def test_setup_plus_one_no_plusone(self) -> None:
         self.profile.plus = 0
