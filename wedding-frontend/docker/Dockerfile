@@ -1,8 +1,8 @@
 # build stage
 FROM node:17.8.0-alpine as build-stage
 WORKDIR /app
-COPY package*.json ./
 COPY gsap-bonus.tgz ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 ARG ENV_MODE=staging
