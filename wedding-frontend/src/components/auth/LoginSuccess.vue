@@ -23,11 +23,13 @@
           maxlength="6"
           pattern="[0-9]{6}"
           class="block bg-neutral dark:bg-darkNeutral dark:text-darkPrimary rounded-md mx-auto px-2 w-full max-w-xs mb-1 text-center"
+          data-test="token-input"
         />
         <button
           v-if="!loading"
           class="flex mx-auto my-2 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
           type="submit"
+          data-test="form-button"
           @click.prevent="getToken"
         >
           {{ $t("auth.loginpage.submit") }}
@@ -50,7 +52,7 @@
 
 <script lang="ts">
 import LoadingView from "@/components/shared/LoadingView.vue";
-import { get_token } from "@/services/login.service.js";
+import { getToken } from "@/services/login.service.js";
 import type { AxiosError } from "axios";
 import { defineComponent } from "vue";
 
@@ -73,7 +75,7 @@ export default defineComponent({
   methods: {
     getToken() {
       this.loading = true;
-      get_token(this.email, this.token)
+      getToken(this.email, this.token)
         .then()
         .catch((error: AxiosError) => {
           this.loading = false;

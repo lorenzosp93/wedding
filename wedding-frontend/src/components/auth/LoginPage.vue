@@ -29,12 +29,14 @@
             v-model.trim="email"
             class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1"
             type="email"
+            data-test="email-input"
           />
         </div>
         <button
           v-if="!loading"
           class="flex mx-auto my-3 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
           type="submit"
+          data-test="form-button"
           @click.prevent="handleLogin()"
         >
           {{ $t("auth.loginpage.submit") }}

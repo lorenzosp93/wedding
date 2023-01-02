@@ -7,7 +7,10 @@
       id="object-header"
       class="flex flex-initial justify-between items-center border-b-2 mb-1 px-1"
     >
-      <div class="p-1 mr-2 md:hidden select-none" @click="$emit('hideDetail')">
+      <div
+        class="p-1 mr-2 md:hidden select-none cursor-pointer"
+        @click="$emit('hideDetail')"
+      >
         <arrow-left-icon class="h-6 w-6" />
       </div>
       <div id="header-title" class="w-full flex py-3">

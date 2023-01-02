@@ -1,25 +1,31 @@
-import { defineStore } from 'pinia';
-import apiService from '@/services/api.service'
-import type { AxiosError, AxiosResponse } from 'axios';
-import type { Subscription } from '@/models/listObjects.interface';
-import { useStorage, type RemovableRef } from '@vueuse/core';
+import { defineStore } from "pinia";
+import { apiService } from "@/services/api.service";
+import type { AxiosError, AxiosResponse } from "axios";
+import type { Subscription } from "@/models/listObjects.interface";
+import { useStorage, type RemovableRef } from "@vueuse/core";
 
 export const useNotificationStore = defineStore({
-  id: 'notification',
+  id: "notification",
   state: () => ({
     pushSubscription: undefined as PushSubscription | undefined,
-    isSubscribed: useStorage('notificationSubscribed', false) as RemovableRef<boolean>,
+    isSubscribed: useStorage(
+      "notificationSubscribed",
+      false
+    ) as RemovableRef<boolean>,
     loading: false as boolean,
     error: undefined as AxiosError | undefined,
   }),
   actions: {
-    async checkIsSubscribed () {
-      apiService.getUserSubscription().then((response: AxiosResponse<Subscription[]>) => {
-        this.isSubscribed = !!response.data?.length;
-      }).catch((error: AxiosError) => {
-        console.log(error);
-        this.error = error;
-      })
+    async checkIsSubscribed() {
+      apiService
+        .getUserSubscription()
+        .then((response: AxiosResponse<Subscription[]>) => {
+          this.isSubscribed = !!response.data?.length;
+        })
+        .catch((error: AxiosError) => {
+          console.log(error);
+          this.error = error;
+        });
     },
     async askPermission() {
       return new Promise((resolve, reject) => {
@@ -57,12 +63,12 @@ export const useNotificationStore = defineStore({
         });
     },
     async publishSubscription() {
-      apiService.postUserSubscription(
-        this.pushSubscription?.toJSON()
-      ).then(() => {
-        this.isSubscribed = true;
-        localStorage.setItem('notificationSubscribed', 'true');
-      });
+      apiService
+        .postUserSubscription(this.pushSubscription?.toJSON())
+        .then(() => {
+          this.isSubscribed = true;
+          localStorage.setItem("notificationSubscribed", "true");
+        });
     },
     urlBase64ToUint8Array(base64String: string): Uint8Array {
       var padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -78,5 +84,5 @@ export const useNotificationStore = defineStore({
       }
       return outputArray;
     },
-  }
-})
+  },
+});
