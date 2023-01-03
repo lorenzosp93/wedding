@@ -5,10 +5,7 @@
       v-if="responses && responses?.length"
       @submit="$emit('submitResponse', responses)"
     >
-      <div
-        v-for="(question, idx) in activeObject?.questions"
-        :key="question.uuid"
-      >
+      <div v-for="(question, idx) in questions" :key="question.uuid">
         <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
         <p v-html="question.content" class="text-sm pl-5"></p>
         <ul
@@ -23,18 +20,17 @@
           >
             <input
               :id="option.uuid"
-              v-model="getInputResponse(question).option"
               :value="option.uuid"
+              @input="
+                (event) => {
+                  handleInput(question, event);
+                }
+              "
+              :checked="!!question.response?.option.includes(option.uuid)"
               :name="question.uuid"
               :type="question.multi_select ? 'checkbox' : 'radio'"
-              class="my-2 bg-neutral dark:bg-darkNeutral text-accent border-none focus:ring-accent"
-              :disabled="
-                question.response
-                  ? question.multi_select
-                    ? true
-                    : question?.response?.option != option.uuid
-                  : false
-              "
+              class="my-2 bg-neutral dark:bg-darkNeutral text-accent border-none focus:ring-accent disabled:text-primary"
+              :disabled="question.response ? true : false"
               :required="question.mandatory"
             />
             <label :for="option.uuid" class="ml-3">{{ option.content }}</label>
@@ -51,10 +47,10 @@
             $t("shared.listview.other")
           }}</label>
           <input
-            v-model="getInputResponse(question).text"
+            v-model="getResponse(question).text"
             type="text"
             class="w-full rounded-md bg-pale dark:bg-darkPale px-2 py-1 border-none shadow-inner focus:ring-accent"
-            :readonly="question.response"
+            :readonly="!!question.response"
             :required="question.mandatory && question.options.length == 0"
           />
           <p
@@ -69,17 +65,20 @@
             question.uuid ==
             submitError?.find(
               (e) => e.q == question.uuid && e.e?.non_field_errors?.length
-            )
+            )?.q
           "
         >
-          {{ submitError?.find((e) => e.q == question)?.e.non_field_errors[0] }}
+          {{
+            submitError?.find((e) => e.q == question.uuid)?.e
+              .non_field_errors[0]
+          }}
         </p>
       </div>
       <div
-        v-if="activeObject?.questions?.every((q: Question) => q.response)"
+        v-if="questions?.every((q: Question) => q.response)"
         class="flex flex-wrap"
       >
-        <p class="py-1 font-bold text-accent my-auto">
+        <p class="py-1 font-bold my-auto">
           {{ $t("shared.listview.alreadyAnswered") }}
         </p>
         <div class="ml-auto my-auto relative w-48 min-h-[2.5rem] p-2">
@@ -94,7 +93,7 @@
         </div>
       </div>
       <div
-        v-if="activeObject?.questions.some((q: Question) => !q.response)"
+        v-if="questions.some((q: Question) => !q.response)"
         class="relative h-20 w-full pt-5 mx-auto"
       >
         <button
@@ -121,12 +120,16 @@ import type {
 } from "@/models/listObjects.interface";
 
 export default defineComponent({
+  data() {
+    return {
+      responses: [] as Response[],
+    };
+  },
   components: {
     LoadingView,
   },
   props: {
-    activeObject: { type: Object },
-    responses: { type: Array<Response> },
+    questions: { type: Array<Question>, default: [] },
     submitLoading: { type: Boolean },
     submitError: { type: Array<ResponseErrors> },
     submitSuccess: { type: Boolean },
@@ -134,14 +137,59 @@ export default defineComponent({
     deleteError: { type: Array<ResponseErrors> },
     deleteSuccess: { type: Boolean },
   },
+  watch: {
+    questions(newVal: Question[], oldVal: Question[]) {
+      if (newVal != oldVal) {
+        this.responseSetup();
+      }
+    },
+  },
   emits: ["deleteResponses", "submitResponse"],
+  mounted() {
+    this.responseSetup();
+  },
   methods: {
-    getInputResponse(question: Question): Response {
+    responseSetup() {
+      this.responses = [];
+      if (this.questions.length) {
+        this.questions.forEach((question: Question) => {
+          this.responses = [
+            ...this.responses,
+            {
+              question: question.uuid,
+              option: question?.response?.option ?? [],
+              text: question?.response?.text ?? "",
+            },
+          ];
+        });
+      }
+    },
+    handleInput(question: Question, event: Event) {
+      let value = (event?.target as HTMLInputElement).value;
+      let response = this.getResponse(question);
+      if (response) {
+        if (question.multi_select) {
+          this.multiSelectInputHandler(value, response);
+        } else {
+          this.singleSelectInputHandler(value, response);
+        }
+      }
+    },
+    multiSelectInputHandler(value: string, response: Response) {
+      if (response.option.includes(value)) {
+        response.option = response.option.filter((o: string) => o != value);
+      } else {
+        response.option = [...response.option, value];
+      }
+    },
+    singleSelectInputHandler(value: string, response: Response) {
+      response.option = [value];
+    },
+    getResponse(question: Question): Response {
       return (
-        this.responses?.find((r: Response) => r.question == question.uuid) ?? {
+        this.responses.find((r: Response) => r.question == question.uuid) ?? {
           option: [],
           text: "",
-          question: question.uuid,
         }
       );
     },

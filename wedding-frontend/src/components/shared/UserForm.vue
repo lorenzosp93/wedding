@@ -21,6 +21,7 @@
           class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1 border-none shadow-inner focus:ring-accent"
           type="text"
           required
+          autofocus
         />
       </div>
       <div class="col-span-6 sm:col-span-3">

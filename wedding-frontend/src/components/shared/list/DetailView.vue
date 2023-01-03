@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <article
-    class="@container md:flex absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh]"
+    class="@container md:flex absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-[calc(100vh-4.5rem)]"
   >
     <header
       id="object-header"
@@ -65,16 +65,15 @@
       ></widgets-view>
       <question-view
         v-if="activeObject?.questions?.length"
-        :active-object="activeObject"
-        :responses="responses"
+        :questions="activeObject.questions"
         :submit-loading="submitLoading"
         :submit-error="submitError"
         :submit-success="submitSuccess"
         :delete-loading="deleteLoading"
         :delete-error="deleteError"
         :delete-success="deleteSuccess"
-        @submit-response="$emit('submitResponse', responses)"
-        @delete-responses="(response:Response) => $emit('deleteResponses', response)"
+        @submit-response="(responses: Response[]) => $emit('submitResponse', responses)"
+        @delete-responses="$emit('deleteResponses')"
       ></question-view>
     </article>
   </article>
@@ -110,7 +109,6 @@ export default defineComponent({
     activeObject: { type: Object as PropType<ListObject> },
     active: { type: Number },
     searchedList: { type: Array<ListObject> },
-    responses: { type: Array<Response> },
     submitLoading: { type: Boolean },
     submitError: { type: Array<ResponseErrors> },
     submitSuccess: { type: Boolean },
