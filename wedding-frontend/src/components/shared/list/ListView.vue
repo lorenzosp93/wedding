@@ -69,6 +69,7 @@ import type {
 import type { AxiosError } from "axios";
 import type { RemovableRef } from "@vueuse/shared";
 import { useStorage } from "@vueuse/core";
+import type { RouteLocation } from "vue-router";
 
 export default defineComponent({
   name: "ListView",
@@ -92,7 +93,7 @@ export default defineComponent({
   emits: ["submitResponse", "deleteResponses"],
   data() {
     return {
-      active: 0 as number,
+      active: undefined as number | undefined,
       viewDetail: false as boolean,
       responses: useStorage("responses", []) as RemovableRef<Response[]>,
       search: "" as string,
@@ -112,47 +113,42 @@ export default defineComponent({
       });
     },
     activeObject(): ListObject | undefined {
-      return this.objList ? this.objList[this.active] : undefined;
+      return this.objList?.length ? this.objList[this.active ?? 0] : undefined;
     },
   },
   watch: {
     objList() {
       this.responseSetup();
     },
-    $route() {
-      this.refreshActive();
+    $route(newValue: RouteLocation) {
+      this.getActiveFromRoute();
     },
   },
   mounted() {
     this.responseSetup();
-    this.refreshActive();
+    this.getActiveFromRoute();
   },
   methods: {
-    refreshActive() {
+    getActiveFromRoute() {
       this.viewDetail = !!this.$route.params.active;
       let parseActive = parseInt(this.$route.params.active as string);
       if (Number.isSafeInteger(parseActive)) {
-        this.setActive(parseInt(this.$route.params.active as string));
+        this.setActive(parseActive);
       }
     },
-    setActive(n: number) {
-      if (n < 0) {
+    setActive(n: number | undefined) {
+      if (n && !(n >= 0 && n <= (this.objList?.length ?? 1) - 1)) {
         n = 0;
       }
+      this.active = n;
       this.$router.push({
         name: this.$route.name ?? undefined,
-        params: { ...this.$route.params, active: `${n}` },
+        params: { ...this.$route.params, active: `${n ?? ""}` },
       });
-      this.active = n;
-      this.viewDetail = true;
     },
     hideDetail() {
+      this.setActive(undefined);
       this.viewDetail = false;
-      this.$route.params.active = "";
-      this.$router.push({
-        name: this.$route.name ?? undefined,
-        params: { ...this.$route.params },
-      });
     },
     responseSetup() {
       this.responses = new Array<Response>();
