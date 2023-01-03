@@ -13,19 +13,13 @@
         class="z-20 inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:ring-1 ring-secondary"
         aria-controls="navbar-default"
         aria-expanded="false"
-        @click="() => {if(!menu){menu = true}}"
+        @click="menu = !menu"
       >
         <span class="sr-only">{{ $t("shared.thenavbar.openMainMenu") }}</span>
         <bars-3-icon class="w-6 h-6"></bars-3-icon>
       </button>
       <OnClickOutside
-        @trigger="handleTrigger"
-        :ignore="[
-          '#menu-toggle',
-          '.shepherd-button',
-          '.shepherd-button-secondary',
-          '.shepherd-content',
-        ]"
+        @trigger="(event: Event) => handleTrigger(event.target as HTMLElement)"
         id="navbar-default"
         class="z-20 w-full md:transform-none md:block md:w-auto md:opacity-100 md:max-h-full"
         style="transition: max-height 0.4s, opacity 0.2s ease-in"
@@ -133,7 +127,6 @@ import { defineComponent } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
 import { useStorage, type RemovableRef } from "@vueuse/core";
-import Shepherd from "shepherd.js";
 
 export default defineComponent({
   name: "TheNavbar",
@@ -160,13 +153,15 @@ export default defineComponent({
     this.getInfo();
   },
   methods: {
-    getActiveTour() {
-      return Shepherd.activeTour;
-    },
-    handleTrigger() {
-      if (!this.getActiveTour()) {
-        this.menu = false;
+    handleTrigger(target: HTMLElement) {
+      let isTour = !!(
+        target.className && target.className.includes("shepherd")
+      );
+      let isMenuButton = target.id == "menu-toggle";
+      if (isTour || isMenuButton) {
+        return;
       }
+      this.menu = false;
     },
     ...mapActions(useInfoStore, ["getInfo", "activateType"]),
   },
