@@ -5,17 +5,17 @@
     <main v-show="!loading" class="flex w-full">
       <section
         id="list-view"
-        class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%] bg-neutral dark:bg-darkNeutral h-full max-h-[82.5vh] short:max-h-[70vh] overflow-y-auto"
+        class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%] bg-neutral dark:bg-darkNeutral h-full max-h-[calc(100vh-4.5rem)]"
       >
-        <label class="flex">
+        <div class="flex flex-initial">
           <push-subscribe></push-subscribe>
           <input
             v-model.trim="search"
             class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-secondary dark:placeholder-darkNeutral"
             :placeholder="$t('shared.listview.search')"
           />
-        </label>
-        <ul class="mt-1 overflow-y-scroll">
+        </div>
+        <ul class="mt-1 flex-auto overflow-y-scroll">
           <list-item
             v-for="(obj, idx) in searchedList"
             :key="obj.uuid"
@@ -36,7 +36,6 @@
         :active="active"
         :active-object="activeObject"
         :searched-list="searchedList"
-        :responses="responses"
         :class="{ hidden: !viewDetail }"
         :submit-error="submitError"
         :delete-error="deleteError"
@@ -47,7 +46,7 @@
         @hide-detail="hideDetail"
         @set-active="setActive"
         @submit-response="
-          (response) => $emit('submitResponse', response, activeObject?.uuid)
+          (responses: Response[]) => $emit('submitResponse', responses, activeObject?.uuid)
         "
         @delete-responses="(_) => $emit('deleteResponses', activeObject?.uuid)"
       ></detail-view>
@@ -69,7 +68,6 @@ import type {
 import type { AxiosError } from "axios";
 import type { RemovableRef } from "@vueuse/shared";
 import { useStorage } from "@vueuse/core";
-import type { RouteLocation } from "vue-router";
 
 export default defineComponent({
   name: "ListView",
@@ -117,15 +115,11 @@ export default defineComponent({
     },
   },
   watch: {
-    objList() {
-      this.responseSetup();
-    },
-    $route(newValue: RouteLocation) {
+    $route() {
       this.getActiveFromRoute();
     },
   },
   mounted() {
-    this.responseSetup();
     this.getActiveFromRoute();
   },
   methods: {
@@ -149,23 +143,6 @@ export default defineComponent({
     hideDetail() {
       this.setActive(undefined);
       this.viewDetail = false;
-    },
-    responseSetup() {
-      this.responses = new Array<Response>();
-      this.objList?.forEach((obj) => {
-        if (obj.questions?.length) {
-          obj.questions.forEach((question) => {
-            this.responses = [
-              ...this.responses,
-              {
-                question: question.uuid,
-                option: question?.response?.option ?? [],
-                text: question?.response?.text ?? "",
-              },
-            ];
-          });
-        }
-      });
     },
   },
 });

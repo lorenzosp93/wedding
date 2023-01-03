@@ -17,7 +17,7 @@ class OptionSerializer(TranslationContentMixin, ModelSerializer):
 
     class Meta:
         model = Option
-        fields = '__all__'
+        fields = ('uuid', 'content',)
 
 
 class ResponseSerializer(HasUserSerializer):
@@ -73,12 +73,7 @@ class QuestionSerializer(
             if response:
                 option_list = response.option.values_list('uuid', flat=True)
                 return {
-                    'option': (
-                        option_list[0]
-                        if len(option_list) == 1
-                        and not response.question.multi_select
-                        else option_list
-                    ),
+                    'option': option_list,
                     'text': response.text if response else '',
                     'uuid': response.uuid,
                 }
@@ -89,7 +84,7 @@ class QuestionSerializer(
 
     class Meta:
         model = Question
-        fields = '__all__'
+        exclude = ['message',]
 
 
 class MessageSerializer(

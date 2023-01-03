@@ -1,9 +1,10 @@
 <template>
-  <nav id="the-navbar" class="px-3 py-3">
-    <div
-      class="container flex flex-wrap justify-between items-center mx-auto max-w-4xl"
-    >
-      <router-link to="/" class="">
+  <nav
+    id="the-navbar"
+    class="px-3 py-3 flex flex-initial max-w-4xl mx-auto w-full"
+  >
+    <div class="flex flex-wrap justify-between items-center w-full">
+      <router-link to="/" class="mr-auto w-fit">
         <img class="h-12 w-48" :src="logo" aria-label="P & L logo" />
       </router-link>
       <button
@@ -17,7 +18,14 @@
         <span class="sr-only">{{ $t("shared.thenavbar.openMainMenu") }}</span>
         <bars-3-icon class="w-6 h-6"></bars-3-icon>
       </button>
-      <div
+      <OnClickOutside
+        @trigger="handleTrigger"
+        :ignore="[
+          '#menu-toggle',
+          '.shepherd-button',
+          '.shepherd-button-secondary',
+          '.shepherd-content',
+        ]"
         id="navbar-default"
         class="z-20 w-full md:transform-none md:block md:w-auto md:opacity-100 md:max-h-full"
         style="transition: max-height 0.4s, opacity 0.2s ease-in"
@@ -113,7 +121,7 @@
             >
           </li>
         </ul>
-      </div>
+      </OnClickOutside>
     </div>
   </nav>
 </template>
@@ -124,6 +132,8 @@ import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
+import { useStorage, type RemovableRef } from "@vueuse/core";
+import Shepherd from "shepherd.js";
 
 export default defineComponent({
   name: "TheNavbar",
@@ -137,6 +147,10 @@ export default defineComponent({
       menu: false as boolean,
       dropInfo: false as boolean,
       logo: new URL("@/assets/logo_long.svg", import.meta.url).href as string,
+      onboardingSeen: useStorage(
+        "shepherd-tour",
+        false
+      ) as RemovableRef<boolean>,
     };
   },
   computed: {
@@ -146,8 +160,16 @@ export default defineComponent({
     this.getInfo();
   },
   methods: {
+    getActiveTour() {
+      return Shepherd.activeTour;
+    },
     toggleMenu() {
       this.menu = !this.menu;
+    },
+    handleTrigger() {
+      if (!this.getActiveTour()) {
+        this.menu = false;
+      }
     },
     ...mapActions(useInfoStore, ["getInfo", "activateType"]),
   },

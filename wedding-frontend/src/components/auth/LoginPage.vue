@@ -29,6 +29,7 @@
             v-model.trim="email"
             class="block bg-neutral dark:bg-darkNeutral rounded-md px-2 w-full mb-1 focus:ring-accent border-none shadow-inner"
             type="email"
+            autofocus
             data-test="email-input"
           />
         </div>

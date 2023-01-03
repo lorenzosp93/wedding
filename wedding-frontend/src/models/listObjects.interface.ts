@@ -33,13 +33,11 @@ export interface Question {
   multi_select: boolean;
   free_text: boolean;
   mandatory: boolean;
-  message: string;
 }
 
 export interface OptionElement {
   uuid: string;
   content: string;
-  question: string;
 }
 
 export interface Response {
