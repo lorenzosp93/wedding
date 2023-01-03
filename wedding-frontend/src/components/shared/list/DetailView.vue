@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <article
-    class="@container md:flex absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-[calc(100vh-4.5rem)]"
+    class="@container md:flex absolute left-0 z-10 md:relative w-full mx-auto md:w-[60%] lg:w-[65%] px-3 flex flex-col bg-neutral dark:bg-darkNeutral h-full max-h-rest"
   >
     <header
       id="object-header"
@@ -145,4 +145,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.max-h-rest {
+  max-height: 90vh;
+  max-height: calc(100vh - 4.5rem);
+  max-height: calc(100svh - 4.5rem);
+}
+</style>

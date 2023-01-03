@@ -13,7 +13,7 @@
         class="z-20 inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:ring-1 ring-secondary"
         aria-controls="navbar-default"
         aria-expanded="false"
-        @click="toggleMenu"
+        @click="menu = true"
       >
         <span class="sr-only">{{ $t("shared.thenavbar.openMainMenu") }}</span>
         <bars-3-icon class="w-6 h-6"></bars-3-icon>
@@ -162,9 +162,6 @@ export default defineComponent({
   methods: {
     getActiveTour() {
       return Shepherd.activeTour;
-    },
-    toggleMenu() {
-      this.menu = !this.menu;
     },
     handleTrigger() {
       if (!this.getActiveTour()) {
