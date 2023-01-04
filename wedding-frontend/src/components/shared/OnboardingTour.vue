@@ -14,7 +14,7 @@
 import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 import { useNotificationStore } from "@/stores";
 import Shepherd from "shepherd.js";
-import { useStorage, type RemovableRef } from "@vueuse/core";
+import { offset, autoPlacement } from "@floating-ui/dom";
 
 const notificationStore = useNotificationStore();
 
@@ -31,7 +31,8 @@ export default {
   data() {
     return {
       tour: undefined as undefined | Shepherd.Tour,
-      seen: useStorage("shepherd-tour", false) as RemovableRef<boolean>,
+      seen: ((localStorage.getItem("shepherd-tour") ?? "false") ==
+        "true") as boolean,
     };
   },
   created() {
@@ -54,6 +55,9 @@ export default {
           modalOverlayOpeningPadding: 5,
           modalOverlayOpeningRadius: 5,
           canClickTarget: false,
+          floatingUIOptions: {
+            middleware: [offset(10), autoPlacement()],
+          },
           scrollTo: {
             behavior: "smooth",
             block: "center",
@@ -81,8 +85,6 @@ export default {
           {
             id: "intro",
             text: this.$t("shared.tour.intro"),
-            modalOverlayOpeningPadding: -5,
-            modalOverlayOpeningRadius: 10,
             buttons: [
               {
                 action: () => {
@@ -99,13 +101,12 @@ export default {
             text: this.$t("shared.tour.invite"),
             attachTo: {
               element: "#invite-link",
-              on: "bottom",
+              on: "top",
             },
           },
           {
             id: "mobile-menu",
             text: this.$t("shared.tour.mobile-menu"),
-            classes: "mt-3",
             attachTo: {
               element: "#menu-toggle",
               on: "bottom",
@@ -141,7 +142,6 @@ export default {
               element: "#navbar-information",
               on: "bottom",
             },
-            classes: "mt-3",
           },
           {
             id: "guestbook",
@@ -150,7 +150,6 @@ export default {
               element: "#navbar-guestbook",
               on: "bottom",
             },
-            classes: "mt-3",
           },
           {
             id: "inbox-navbar",
@@ -159,7 +158,6 @@ export default {
               element: "#navbar-inbox",
               on: "bottom",
             },
-            classes: "mt-3",
             buttons: [
               {
                 action: () => {
@@ -187,7 +185,6 @@ export default {
               element: "#list-view",
               on: "bottom",
             },
-            modalOverlayOpeningPadding: -5,
             buttons: [
               {
                 action: () => {
@@ -217,7 +214,6 @@ export default {
               element: "#detail-view",
               on: "bottom",
             },
-            modalOverlayOpeningPadding: -5,
             buttons: [
               {
                 action: () => {
@@ -245,8 +241,6 @@ export default {
           {
             id: "push-subscribe",
             text: this.$t("shared.tour.inbox.pushNotification"),
-            modalOverlayOpeningPadding: -4,
-            modalOverlayOpeningRadius: 10,
             canClickTarget: true,
             showOn: () => {
               return pushSubscribeVisible;
@@ -255,6 +249,7 @@ export default {
               element: "#notification-trigger",
               on: "top",
             },
+            modalOverlayOpeningPadding: -2,
             buttons: [
               {
                 action: () => {
@@ -282,7 +277,6 @@ export default {
               element: "#navbar-gallery",
               on: "bottom",
             },
-            classes: "mt-3",
             buttons: [
               {
                 action: () => {
@@ -314,7 +308,6 @@ export default {
               element: "#navbar-profile",
               on: "bottom",
             },
-            classes: "mt-3",
             buttons: [
               {
                 action: () => {
@@ -325,9 +318,9 @@ export default {
               },
               {
                 action: () => {
+                  this.$router.push({ name: "home" });
                   this.dismissTour();
                   this.tour?.complete();
-                  this.$router.push({ name: "home" });
                 },
                 text: this.$t("shared.tour.finish"),
               },
@@ -337,7 +330,7 @@ export default {
       });
     },
     dismissTour() {
-      this.seen = true;
+      localStorage.setItem("shepherd-tour", "true");
     },
     startTour() {
       if (!this.seen) {

@@ -126,7 +126,6 @@ import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
-import { useStorage, type RemovableRef } from "@vueuse/core";
 
 export default defineComponent({
   name: "TheNavbar",
@@ -140,10 +139,6 @@ export default defineComponent({
       menu: false as boolean,
       dropInfo: false as boolean,
       logo: new URL("@/assets/logo_long.svg", import.meta.url).href as string,
-      onboardingSeen: useStorage(
-        "shepherd-tour",
-        false
-      ) as RemovableRef<boolean>,
     };
   },
   computed: {
@@ -155,7 +150,7 @@ export default defineComponent({
   methods: {
     handleTrigger(target: HTMLElement) {
       let isTour = !!(
-        target.className && target.className.includes("shepherd")
+        target.className.length && target.className.includes("shepherd")
       );
       let isMenuButton = target.id == "menu-toggle";
       if (isTour || isMenuButton) {
