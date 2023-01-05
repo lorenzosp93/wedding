@@ -50,14 +50,14 @@ export default {
         confirmCancelMessage: this.$t("shared.tour.confirmCancel"),
         keyboardNavigation: false,
         defaultStepOptions: {
+          floatingUIOptions: {
+            middleware: [offset(10), autoPlacement()],
+          },
           title: undefined,
           arrow: false,
           modalOverlayOpeningPadding: 5,
           modalOverlayOpeningRadius: 5,
           canClickTarget: false,
-          floatingUIOptions: {
-            middleware: [offset(10), autoPlacement()],
-          },
           scrollTo: {
             behavior: "smooth",
             block: "center",
@@ -80,7 +80,7 @@ export default {
           cancelIcon: {
             enabled: true,
           },
-        },
+        } as Shepherd.Step.StepOptions,
         steps: [
           {
             id: "intro",
