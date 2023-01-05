@@ -13,6 +13,7 @@
         class="z-20 inline-flex items-center p-2 ml-3 text-sm text-secondary rounded-lg md:hidden hover:ring-1 ring-secondary"
         aria-controls="navbar-default"
         aria-expanded="false"
+        ref="menuToggle"
         @click="menu = !menu"
       >
         <span class="sr-only">{{ $t("shared.thenavbar.openMainMenu") }}</span>
@@ -126,6 +127,7 @@ import { mapActions, mapState } from "pinia";
 import { defineComponent } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
+import Shepherd from "shepherd.js";
 
 export default defineComponent({
   name: "TheNavbar",
@@ -149,10 +151,10 @@ export default defineComponent({
   },
   methods: {
     handleTrigger(target: HTMLElement) {
-      let isTour = !!(
-        target.className.length && target.className.includes("shepherd")
+      let isTour = !!Shepherd.activeTour;
+      let isMenuButton = (this.$refs.menuToggle as HTMLElement).contains(
+        target
       );
-      let isMenuButton = target.id == "menu-toggle";
       if (isTour || isMenuButton) {
         return;
       }
