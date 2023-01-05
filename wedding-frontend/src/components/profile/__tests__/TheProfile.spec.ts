@@ -45,12 +45,14 @@ describe("The Profile tests", () => {
     expect(wrapper.text()).toContain("testLastName");
     expect(wrapper.text()).toContain("test@email.com");
   });
+
   it("Tests profile logout", async () => {
     let logout = wrapper.find('[data-test="logout-button"]');
     logout.trigger("click");
 
     expect((store as any).logout).toBeCalled();
   });
+
   it("Tests plusOne button display", async () => {
     let plus = wrapper.find('[data-test="plusOne-button"]');
     expect(plus.exists()).toBeTruthy();
@@ -58,6 +60,7 @@ describe("The Profile tests", () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.find('[data-test="plusOne-button"]').exists()).toBeFalsy();
   });
+
   it("Tests plusOne data display", async () => {
     store.$patch({
       profile: {

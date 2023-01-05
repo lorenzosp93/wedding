@@ -8,7 +8,7 @@
         class="my-5 px-3"
       />
       <div
-        class="flex flex-wrap gap-5 rounded-md bg-pale dark:bg-darkPale p-5 mx-3"
+        class="flex flex-wrap gap-5 rounded-md bg-pale dark:bg-darkPale p-5 m-3"
       >
         <guest-book-item
           v-for="entry in entries"
