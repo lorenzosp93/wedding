@@ -16,8 +16,8 @@ describe("Plus one tests", () => {
       global: {
         plugins: [createTestingPinia()],
         mocks: {
-          $t: (t: string, obj: Record<string, unknown>) => {
-            return i18n.global.t(t, "en", obj);
+          $t: (t: string, obj: Record<string, unknown>): string => {
+            return i18n.global.t(t, "en", obj); // @ts-ignore
           },
         },
       },
@@ -25,18 +25,18 @@ describe("Plus one tests", () => {
     store = useAuthStore();
   });
 
-  it("Submits plus one user", () => {
+  it("Submits plus one user", async () => {
     let firstName = wrapper.find("#first_name_input");
     let lastName = wrapper.find("#last_name_input");
     let email = wrapper.find("#email_input");
-    firstName.setValue("someName");
-    lastName.setValue("someLastName");
-    email.setValue("some@email.com");
+    await firstName.setValue("someName");
+    await lastName.setValue("someLastName");
+    await email.setValue("some@email.com");
 
     let mockSetup = ((store as any).setupPlusOne as Mock).mockImplementation(
       async () => {}
     );
-    email.trigger("submit");
+    await email.trigger("submit");
 
     expect(mockSetup).toBeCalledWith({
       first_name: "someName",

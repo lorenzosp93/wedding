@@ -46,21 +46,19 @@ describe("Gallery tests", () => {
   });
 
   it("Creates columns", async () => {
-    // expect(mockGet).toBeCalled();
     let cols = wrapper.findAll('[data-test="gallery-cols"]');
 
     expect(cols[0].element.childElementCount).toBe(1);
     expect(cols[1].element.childElementCount).toBe(1);
   });
 
-  it("Activates photos", () => {
+  it("Activates photos", async () => {
     let item = wrapper.findComponent({ name: "ThumbnailItem" });
-    item.trigger("click");
-    wrapper.vm.$nextTick();
+    await item.trigger("click");
     expect((wrapper.vm as any).activePhoto).toStrictEqual(item.vm.photo);
   });
 
-  it("Gets more content", () => {
+  it("Gets more content", async () => {
     let infinite = wrapper.findComponent({ name: "InfiniteScrolling" });
     infinite.vm.$emit("getMoreContent");
     expect((store as any).getGalleryContent).toBeCalled();

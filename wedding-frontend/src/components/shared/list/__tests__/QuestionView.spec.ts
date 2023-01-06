@@ -2,6 +2,7 @@ import { describe, it, vi, beforeEach, expect, type Mock } from "vitest";
 import { VueWrapper, mount } from "@vue/test-utils";
 import QuestionView from "../QuestionView.vue";
 import type { ComponentPublicInstance } from "vue";
+import type { Response } from "@/models/listObjects.interface";
 
 describe("Question view tests", () => {
   let wrapper: VueWrapper<ComponentPublicInstance<any>>;
@@ -21,15 +22,15 @@ describe("Question view tests", () => {
             subject: "someQuestion?",
             options: [
               {
-                uuid: "12345",
+                uuid: "a12345",
                 content: "option1",
               },
               {
-                uuid: "23456",
+                uuid: "a23456",
                 content: "option2",
               },
               {
-                uuid: "3456",
+                uuid: "a3456",
                 content: "option3",
               },
             ],
@@ -62,5 +63,19 @@ describe("Question view tests", () => {
     });
   });
 
-  it("Submits responses", () => {});
+  it("Submits responses", async () => {
+    await wrapper.get("#a23456").trigger("input");
+    await wrapper.get("#a3456").trigger("input");
+    await wrapper.get("#b6").trigger("input");
+    await wrapper.findAll("input[type=text]")[1].setValue("someText");
+    await wrapper.get("button").trigger("click");
+
+    let submit = wrapper.emitted().submitResponse[0] as Array<Response[]>;
+    expect(submit[0]).toHaveLength(2);
+    expect(submit[0][0].question).toBe("abc123");
+    expect(submit[0][0].option).toStrictEqual(["a23456", "a3456"]);
+    expect(submit[0][1].question).toBe("abc234");
+    expect(submit[0][1].option).toStrictEqual(["b6"]);
+    expect(submit[0][1].text).toBe("someText");
+  });
 });

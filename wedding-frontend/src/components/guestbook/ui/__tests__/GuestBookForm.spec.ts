@@ -20,9 +20,9 @@ describe("Guest book item tests", () => {
   it("Submits text", async () => {
     let textArea = wrapper.get("textarea");
     let button = wrapper.get("button");
-    textArea.setValue("This is a test message.");
-    textArea.trigger("submit");
-    button.trigger("submit");
+    await textArea.setValue("This is a test message.");
+    await textArea.trigger("submit");
+    await button.trigger("submit");
     expect(wrapper.emitted().submitEntry[0]).toStrictEqual([
       "This is a test message.",
     ]);

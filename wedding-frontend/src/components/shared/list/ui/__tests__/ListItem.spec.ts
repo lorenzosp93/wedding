@@ -20,6 +20,7 @@ describe("Test list items", () => {
       },
     });
   });
+
   it("Displays list item", async () => {
     let thumb = wrapper.find("img");
     expect(thumb.element.src).toBe("https://thumb.url/");
