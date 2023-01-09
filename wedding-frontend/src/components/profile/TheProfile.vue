@@ -22,22 +22,23 @@
           <tr v-if="profile?.plus">
             <td>{{ $t("profile.theprofile.plusOne") }}</td>
             <td class="flex w-full">
-              <p class="my-auto ml-auto">
-                {{ profile.plus - profile?.childs?.length }}
-              </p>
               <div
                 v-if="profile.plus - profile?.childs?.length"
                 class="ml-auto"
               >
                 <button
-                  class="rounded-md bg-accent text-primary py-1 px-2 shadow-lg"
+                  class="flex rounded-md bg-accent text-primary py-1 px-2 shadow-lg"
                   data-test="plusOne-button"
                   @click="togglePlusOne"
                 >
-                  {{ $t("profile.theprofile.invite") }}
+                  <p class="my-auto ml-auto pr-2">
+                    {{ profile.plus - profile?.childs?.length }}
+                  </p>
+                  <user-plus-icon class="w-6 h-6"></user-plus-icon>
                 </button>
                 <plus-one v-if="showPlusOne" @toggle="togglePlusOne" />
               </div>
+              <div v-else class="ml-auto">0</div>
             </td>
           </tr>
         </tbody>
@@ -86,11 +87,13 @@
 import PlusOne from "./PlusOne.vue";
 import profile from "@/components/mixins/profile";
 import { defineComponent } from "vue";
+import { UserPlusIcon } from "@heroicons/vue/24/outline";
 
 export default defineComponent({
   name: "TheProfile",
   components: {
     PlusOne,
+    UserPlusIcon,
   },
   mixins: [profile],
   data() {
