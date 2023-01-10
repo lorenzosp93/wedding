@@ -22,7 +22,7 @@
           </button>
         </div>
       </div>
-      <div class="flex pt-2">
+      <div v-if="submitError" class="flex pt-2">
         <p
           v-if="submitError?.text?.length"
           class="text-alert dark:text-darkAlert"

@@ -345,7 +345,7 @@ export default {
 @import "shepherd.js/dist/css/shepherd.css";
 
 .shepherd-element {
-  @apply bg-neutral dark:bg-darkNeutral rounded-lg font-serif max-w-md;
+  @apply bg-neutral dark:bg-darkNeutral rounded-lg font-serif max-w-md shadow-lg;
 }
 
 .shepherd-content {
