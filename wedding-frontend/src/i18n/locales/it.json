@@ -146,7 +146,7 @@
   "guestbook": {
     "ui": {
       "guestbookform": {
-        "writeAGuestbook": "Scrivi un messaggio per la sposa e lo sposo...",
+        "writeAGuestbook": "Scrivi un messaggio per gli sposi...",
         "submit": "Invia"
       }
     }

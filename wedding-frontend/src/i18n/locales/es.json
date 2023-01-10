@@ -4,7 +4,7 @@
       "emailAddress": "Email",
       "loading": "Cargando",
       "loginPage": "Página de inicio de sesión",
-      "submit": "Enviar",
+      "submit": "Envia",
       "thereWasAn": "Hubo un error al enviarte el código de acceso:\n {a}",
       "pleaseEnterYour": "Ingresa tu correo electrónico para recibir un enlace o código de acceso."
     },
@@ -27,7 +27,7 @@
       "first_name": "Nombre",
       "last_name": "Apellido(s)",
       "loading": "Cargando",
-      "submit": "Enviar",
+      "submit": "Envia",
       "success": "¡Éxito!",
       "pleaseEnterThe": "Ingresa los detalles de tu +1. Se creará una cuenta para ellos y podrán iniciar sesión usando su correo electronico."
     },
@@ -50,7 +50,7 @@
       "noMessage": "No se pudo encontrar ningún mensaje que coincida con tu búsqueda.",
       "other": "Otro:",
       "search": "Buscar...",
-      "submit": "Enviar",
+      "submit": "Envia",
       "success": "¡Has enviado con éxito tus respuestas!"
     },
     "notfound": {
