@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-5xl mx-auto">
+  <div class="max-w-5xl mx-auto p-3">
     <div>
       <guest-book-form
         @submit-entry="(text: string) => {submitEntry(text)}"
@@ -8,7 +8,7 @@
         class="my-5 px-3"
       />
       <div
-        class="flex flex-wrap gap-5 rounded-md bg-pale dark:bg-darkPale p-5 m-3"
+        class="flex flex-wrap gap-5 rounded-md bg-pale dark:bg-darkPale p-5 shadow-lg"
       >
         <guest-book-item
           v-for="entry in entries"
