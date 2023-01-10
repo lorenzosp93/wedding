@@ -27,7 +27,7 @@
                 class="ml-auto"
               >
                 <button
-                  class="flex rounded-md bg-accent text-primary py-1 px-2 shadow-lg"
+                  class="flex rounded-md bg-accent text-primary py-1 px-2 shadow-md"
                   data-test="plusOne-button"
                   @click="togglePlusOne"
                 >
@@ -74,7 +74,7 @@
     </div>
 
     <button
-      class="rounded-md shadow-lg bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3"
+      class="rounded-md shadow-md bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3"
       @click="logout"
       data-test="logout-button"
     >

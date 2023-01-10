@@ -1,7 +1,7 @@
 <template>
   <div class="flex py-5 px-3">
     <div
-      class="bg-pale dark:bg-darkPale p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-full max-w-xl shadow-lg"
+      class="bg-pale dark:bg-darkPale p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-full max-w-xl shadow-sm"
     >
       <h1 class="text-lg font-bold dark:text-darkNeutral py-2">
         {{ $t("auth.loginpage.loginPage") }}
@@ -35,7 +35,7 @@
         </div>
         <button
           v-if="!loading"
-          class="flex mx-auto my-3 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
+          class="flex mx-auto my-3 px-2 py-1 rounded-lg bg-accent text-primary shadow-md"
           type="submit"
           data-test="form-button"
           @click.prevent="handleLogin()"

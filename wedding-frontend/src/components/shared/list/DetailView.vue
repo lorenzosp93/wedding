@@ -51,7 +51,7 @@
         <img
           :src="activeObject?.picture"
           alt="Information article picture"
-          class="rounded-lg shadow-md"
+          class="rounded-lg shadow-sm"
         />
       </section>
       <section

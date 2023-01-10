@@ -13,7 +13,7 @@
       </div>
       <img
         v-if="obj?.thumbnail"
-        class="max-w-[40%] rounded-md shadow-lg"
+        class="max-w-[40%] rounded-md shadow-sm"
         :src="obj.thumbnail"
         alt="Information article thumbnail"
       />

@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <div class="mx-auto">
       <div
-        class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-md prose"
+        class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-sm prose"
       >
         <p class="mx-auto">
           {{ $t("thehome.hi", { a: profile?.user?.first_name }) }}
@@ -18,7 +18,7 @@
         id="invite-link"
         class="flex w-fit mx-auto my-8 bg-accent text-primary px-2 py-1 rounded-md shadow-md"
       >
-        <router-link :to="{ name: 'invitation' }" class="">{{
+        <router-link :to="{ name: 'invitation' }">{{
           $t("thehome.openYourInvitation")
         }}</router-link>
       </div>

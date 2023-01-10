@@ -1,11 +1,12 @@
 import { describe, it, vi, beforeEach, expect, type Mock } from "vitest";
-import { mount } from "@vue/test-utils";
+import { type VueWrapper, mount } from "@vue/test-utils";
 import LoginSuccess from "../LoginSuccess.vue";
 import * as login from "@/services/login.service";
 
 describe("Login success page test", async () => {
-  it("Submits the OTP token", async () => {
-    let wrapper = mount(LoginSuccess, {
+  let wrapper: VueWrapper<any>;
+  beforeEach(() => {
+    wrapper = mount(LoginSuccess, {
       global: {
         mocks: {
           $t: (t: string) => t,
@@ -13,17 +14,23 @@ describe("Login success page test", async () => {
         },
       },
     });
-    let input = wrapper.get('[data-test="token-input"]');
-    await input.setValue(123456);
+  });
+  it("Submits the OTP token", async () => {
+    let inputs = wrapper.findAll("input");
+    await inputs[0].setValue("1");
+    await inputs[1].setValue("2");
+    await inputs[2].setValue("3");
+    await inputs[3].setValue("4");
+    await inputs[4].setValue("5");
+    await inputs[5].setValue("6");
     let button = wrapper.get('[data-test="form-button"]');
     let mockGet = vi
       .spyOn(login, "getToken")
       .mockImplementation(async () => {});
 
-    await input.trigger("submit");
+    await inputs[0].trigger("submit");
     await button.trigger("click");
 
-    expect(wrapper.vm.token).toBe("123456");
     expect(mockGet).toBeCalledTimes(2);
     expect(mockGet).toBeCalledWith("test@email.com", "123456");
   });

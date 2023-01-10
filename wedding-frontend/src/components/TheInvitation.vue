@@ -74,7 +74,7 @@
         id="rsvp"
         :to="{ name: 'inbox' }"
         v-show="loaded"
-        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-lg px-2 py-1 mb-5 short:mr-5 opacity-0 font-[Tangerine] text-2xl cursor-pointer"
+        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-md px-2 py-1 mb-5 short:mr-5 opacity-0 font-[Tangerine] text-2xl cursor-pointer"
         >{{ $t("theinvitation.rsvp") }}</router-link
       >
     </Teleport>

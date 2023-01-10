@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class="w-full mx-auto max-w-5xl">
+  <div class="w-full mx-auto max-w-5xl mt-2">
     <loading-view v-if="loading"></loading-view>
     <main v-show="!loading" class="flex w-full">
       <section
@@ -11,7 +11,8 @@
           <push-subscribe></push-subscribe>
           <input
             v-model.trim="search"
-            class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 focus:outline-none focus:ring-2 w-full placeholder-secondary dark:placeholder-darkNeutral"
+            type="text"
+            class="rounded-lg my-auto p-3 bg-pale dark:bg-darkPale transition duration-200 w-full placeholder-secondary dark:placeholder-darkNeutral shadow-inner focus:ring-accent border-none"
             :placeholder="$t('shared.listview.search')"
           />
         </div>

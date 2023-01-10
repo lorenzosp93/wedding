@@ -2,32 +2,30 @@
 <template>
   <div class="py-5 px-3 flex">
     <div
-      class="bg-pale dark:bg-darkPale p-5 rounded-2xl mx-auto max-w-xl w-full shadow-lg dark:text-darkNeutral"
+      class="bg-pale dark:bg-darkPale p-5 rounded-2xl mx-auto max-w-xl w-full shadow-sm"
     >
-      <p v-html="$t('auth.loginsuccess.loginWasSuccessful')"></p>
-      <p class="py-2" v-html="$t('auth.loginsuccess.ifYouGetYourEmail')"></p>
-      <form class="w-fit mx-auto flex flex-col" @submit="getToken">
+      <p
+        class="dark:text-darkNeutral"
+        v-html="$t('auth.loginsuccess.loginWasSuccessful')"
+      ></p>
+      <p
+        class="py-2 dark:text-darkNeutral"
+        v-html="$t('auth.loginsuccess.ifYouGetYourEmail')"
+      ></p>
+      <form class="w-fit mx-auto flex flex-col mt-3" @submit="getToken">
         <label for="otp" class="block mx-auto my-1 dark:text-darkNeutral">{{
           $t("auth.loginsuccess.otp")
         }}</label>
+        <otp-input v-model:token="token"></otp-input>
         <p
           v-if="error?.token"
-          class="text-alert dark:text-darkAlert font-bold text-sm mx-auto pb-1"
+          class="text-alert dark:text-darkAlert font-bold text-sm mx-auto pt-1"
         >
           {{ error.token[0] }}
         </p>
-        <input
-          v-model="token"
-          type="text"
-          inputmode="numeric"
-          maxlength="6"
-          pattern="[0-9]{6}"
-          class="block bg-neutral dark:bg-darkNeutral dark:text-darkPrimary rounded-md mx-auto px-2 w-full max-w-xs mb-1 text-center"
-          data-test="token-input"
-        />
         <button
           v-if="!loading"
-          class="flex mx-auto my-2 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
+          class="flex mx-auto mt-3 px-2 py-1 rounded-lg bg-accent text-primary shadow-md"
           type="submit"
           data-test="form-button"
           @click.prevent="getToken"
@@ -55,16 +53,18 @@ import LoadingView from "@/components/shared/LoadingView.vue";
 import { getToken } from "@/services/login.service.js";
 import type { AxiosError } from "axios";
 import { defineComponent } from "vue";
+import OtpInput from "./ui/OtpInput.vue";
 
 export default defineComponent({
   name: "LoginSuccess",
   components: {
     LoadingView,
+    OtpInput,
   },
   data() {
     return {
       email: "" as string,
-      token: "" as string,
+      token: ["", "", "", "", "", ""] as string[],
       loading: false as boolean,
       error: null as any,
     };
@@ -75,7 +75,7 @@ export default defineComponent({
   methods: {
     getToken() {
       this.loading = true;
-      getToken(this.email, this.token)
+      getToken(this.email, this.token.join(""))
         .then()
         .catch((error: AxiosError) => {
           this.loading = false;
