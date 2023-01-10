@@ -5,7 +5,7 @@
   ></div>
   <OnClickOutside
     @trigger="$emit('toggle')"
-    class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-pale dark:bg-darkPale p-3 w-full max-w-sm shadow-lg"
+    class="z-30 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-pale dark:bg-darkPale p-3 w-full max-w-sm shadow-sm"
   >
     <p class="text-left p-1 mb-2">{{ $t("profile.plusone.pleaseEnterThe") }}</p>
     <user-form

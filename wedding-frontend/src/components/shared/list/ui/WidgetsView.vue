@@ -4,7 +4,7 @@
       <a
         v-if="calendarWidget"
         :href="`data:text/calendar;base64,${createICalBase64()}`"
-        class="my-auto ml-auto px-2 py-1 shadow-lg rounded-md bg-accent w-fit text-primary font-semibold flex cursor-pointer whitespace-nowrap"
+        class="my-auto ml-auto px-2 py-1 shadow-md rounded-md bg-accent w-fit text-primary font-semibold flex cursor-pointer whitespace-nowrap"
       >
         <calendar-icon class="h-6 w-6 my-auto" />
         <time class="hidden @xl:block px-2 my-auto">

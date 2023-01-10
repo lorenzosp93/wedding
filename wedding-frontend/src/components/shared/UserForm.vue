@@ -71,7 +71,7 @@
     </div>
     <button
       v-if="!loading"
-      class="flex ml-auto mr-3 my-2 px-2 py-1 rounded-lg bg-accent text-primary shadow-lg"
+      class="flex ml-auto mr-3 my-2 px-2 py-1 rounded-lg bg-accent text-primary shadow-md"
       type="submit"
       @click.prevent="register(user)"
     >

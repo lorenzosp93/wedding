@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mx-auto w-full cursor-pointer my-3 rounded-md overflow-hidden shadow-lg"
+    class="mx-auto w-full cursor-pointer my-3 rounded-md overflow-hidden shadow-sm"
   >
     <img
       :src="photo?.thumbnail"

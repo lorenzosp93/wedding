@@ -9,6 +9,7 @@
     >
       <div
         class="p-1 mr-2 md:hidden select-none cursor-pointer"
+        data-test="hide-icon"
         @click="$emit('hideDetail')"
       >
         <arrow-left-icon class="h-6 w-6" />
@@ -21,7 +22,7 @@
           class="flex text-primary dark:text-darkPrimary ml-1 space-x-4 order-last"
         >
           <li
-            :class="{ 'invisible cursor-none': !(active != 0) }"
+            :class="{ 'invisible cursor-none': active == 0 }"
             class="p-1 cursor-pointer select-none"
             @click="$emit('setActive', (active ?? 0) - 1)"
           >
@@ -30,8 +31,7 @@
           <li
             :class="{
               'invisible cursor-none': !(
-                active != (searchedList?.length ?? 0) - 1 &&
-                searchedList?.length
+                active != (searchedListLength ?? 0) - 1 && searchedListLength
               ),
             }"
             class="p-1 cursor-pointer select-none"
@@ -51,7 +51,7 @@
         <img
           :src="activeObject?.picture"
           alt="Information article picture"
-          class="rounded-lg shadow-md"
+          class="rounded-lg shadow-sm"
         />
       </section>
       <section
@@ -105,10 +105,9 @@ export default defineComponent({
     ArrowUpIcon,
   },
   props: {
-    viewDetail: { type: Boolean, default: false },
     activeObject: { type: Object as PropType<ListObject> },
     active: { type: Number },
-    searchedList: { type: Array<ListObject> },
+    searchedListLength: { type: Number },
     submitLoading: { type: Boolean },
     submitError: { type: Array<ResponseErrors> },
     submitSuccess: { type: Boolean },
@@ -132,7 +131,7 @@ export default defineComponent({
       if (
         event.key == "ArrowRight" &&
         this.active &&
-        this.active < (this.searchedList?.length ?? 0) - 1
+        this.active < (this.searchedListLength ?? 0) - 1
       ) {
         this.$emit("setActive", this.active + 1);
       }

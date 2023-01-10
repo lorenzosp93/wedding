@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col p-2 m-auto rounded-md shadow-lg bg-neutral dark:bg-darkNeutral w-fit max-w-md"
+    class="flex flex-col p-2 m-auto rounded-md shadow-sm bg-neutral dark:bg-darkNeutral w-fit max-w-md"
   >
     <div class="flex">
       <div class="flex flex-col">

@@ -1,14 +1,15 @@
 <template>
   <div class="max-w-5xl mx-auto">
-    <div>
+    <div class="sticky top-0 bg-neutral dark:bg-darkNeutral w-full px-3 my-5">
       <guest-book-form
         @submit-entry="(text: string) => {submitEntry(text)}"
         :submitLoading="submitLoading"
         :submitError="submitError"
-        class="my-5 px-3"
       />
+    </div>
+    <div class="pt-4 px-5">
       <div
-        class="flex flex-wrap gap-5 rounded-md bg-pale dark:bg-darkPale p-5 m-3"
+        class="flex flex-wrap gap-5 rounded-md bg-pale dark:bg-darkPale p-5 shadow-sm"
       >
         <guest-book-item
           v-for="entry in entries"
