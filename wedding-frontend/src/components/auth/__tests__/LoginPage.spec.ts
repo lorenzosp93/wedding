@@ -15,7 +15,9 @@ describe("Login page test", () => {
         },
       },
     });
-    expect(wrapper.vm.email).toBe("test@email.com");
+    await wrapper.vm.$nextTick();
+    let input = wrapper.get("input");
+    expect(input.element.value).toBe("test@email.com");
   });
 
   it("Calls login endpoint on email submit", async () => {
@@ -30,7 +32,6 @@ describe("Login page test", () => {
     let emailInput = wrapper.find('[data-test="email-input"]');
     let formButton = wrapper.find('[data-test="form-button"]');
     await emailInput.setValue("test@email.com");
-    expect(wrapper.vm.email).toBe("test@email.com");
 
     let mockLogin = vi.spyOn(login, "login").mockImplementation(async () => {});
     await emailInput.trigger("submit");
