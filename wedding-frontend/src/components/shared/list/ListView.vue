@@ -32,7 +32,7 @@
         </ul>
       </section>
       <detail-view
-        v-show="viewDetail"
+        :class="{ hidden: !viewDetail }"
         id="detail-view"
         :active="active"
         :active-object="activeObject"

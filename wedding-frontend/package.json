@@ -8,7 +8,7 @@
     "dev": "vite --host 127.0.0.1 --port 8080",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
-    "test": "vitest run"
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.1.0",
