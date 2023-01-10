@@ -35,7 +35,7 @@
         id="detail-view"
         :active="active"
         :active-object="activeObject"
-        :searched-list="searchedList"
+        :searched-list-length="searchedList?.length"
         :class="{ hidden: !viewDetail }"
         :submit-error="submitError"
         :delete-error="deleteError"

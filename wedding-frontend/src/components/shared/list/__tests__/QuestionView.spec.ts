@@ -1,5 +1,5 @@
 import { describe, it, vi, beforeEach, expect, type Mock } from "vitest";
-import { VueWrapper, mount } from "@vue/test-utils";
+import { type VueWrapper, mount } from "@vue/test-utils";
 import QuestionView from "../QuestionView.vue";
 import type { ComponentPublicInstance } from "vue";
 import type { Response } from "@/models/listObjects.interface";
