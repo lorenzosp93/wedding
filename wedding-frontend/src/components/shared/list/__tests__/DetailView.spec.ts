@@ -14,7 +14,6 @@ describe("Detail view tests", () => {
         },
       },
       propsData: {
-        viewDetail: true,
         activeObject: {
           uuid: "abc123",
           subject: "testSubject",

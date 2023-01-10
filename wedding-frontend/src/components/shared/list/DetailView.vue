@@ -105,7 +105,6 @@ export default defineComponent({
     ArrowUpIcon,
   },
   props: {
-    viewDetail: { type: Boolean, default: false },
     activeObject: { type: Object as PropType<ListObject> },
     active: { type: Number },
     searchedListLength: { type: Number },

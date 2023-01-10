@@ -32,11 +32,11 @@
         </ul>
       </section>
       <detail-view
+        v-show="viewDetail"
         id="detail-view"
         :active="active"
         :active-object="activeObject"
         :searched-list-length="searchedList?.length"
-        :class="{ hidden: !viewDetail }"
         :submit-error="submitError"
         :delete-error="deleteError"
         :submit-loading="submitLoading"
@@ -66,8 +66,6 @@ import type {
   Response,
 } from "@/models/listObjects.interface";
 import type { AxiosError } from "axios";
-import type { RemovableRef } from "@vueuse/shared";
-import { useStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "ListView",
@@ -93,7 +91,6 @@ export default defineComponent({
     return {
       active: undefined as number | undefined,
       viewDetail: false as boolean,
-      responses: useStorage("responses", []) as RemovableRef<Response[]>,
       search: "" as string,
     };
   },
