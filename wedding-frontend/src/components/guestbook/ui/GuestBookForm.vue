@@ -11,7 +11,7 @@
           :placeholder="$t('guestbook.ui.guestbookform.writeAGuestbook')"
         />
         <div class="flex flex-col">
-          <span class="text-secondary ml-3 px-auto">
+          <span class="text-secondary dark:text-darkNeutral ml-3 px-auto">
             {{ text?.length }}/280
           </span>
           <button
