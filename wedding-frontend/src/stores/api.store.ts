@@ -44,14 +44,15 @@ export const useInfoStore = defineStore({
   getters: {
     infosActiveType: (state): Information[] => {
       return state.infos.filter((info) => {
-        return info.type == state.activeType;
+        return info.type.toLowerCase() == state.activeType?.toLowerCase();
       });
     },
     infoTypes: (state): string[] => {
       var infoTypes: string[] = [];
       state.infos.forEach((info) => {
-        if (!infoTypes.includes(info?.type)) {
-          infoTypes = [...infoTypes, info?.type];
+        let type = info?.type.toLowerCase();
+        if (!infoTypes.includes(type)) {
+          infoTypes = [...infoTypes, type];
         }
       });
       return infoTypes;
@@ -78,15 +79,15 @@ export const useInfoStore = defineStore({
     },
     activateType(type: string) {
       if (!type) {
-        type = this.infoTypes.find((t) => t) ?? "";
+        type = this.infoTypes.find((t) => t)?.toLowerCase() ?? "";
       }
-      this.activeType = type;
+      this.activeType = type.toLowerCase();
     },
     handleResponse(response: AxiosResponse<Information[]>) {
       this.infos = response.data;
       this.loading = false;
       this.setExpiry();
-      this.activeType = this.infos.find((info) => info)?.type;
+      this.activeType = this.infos.find((info) => info)?.type.toLowerCase();
     },
     setExpiry() {
       let expiry = new Date();

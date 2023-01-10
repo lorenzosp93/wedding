@@ -62,9 +62,9 @@ describe("Info store test", () => {
     store.getInfo().then(() => {
       expect(mock).toBeCalled();
       expect(store.infos).toStrictEqual(testInfo);
-      expect(store.activeType).toBe("Events");
+      expect(store.activeType).toBe("events");
       expect(store.expiry).toBeGreaterThan(Date.now());
-      expect(store.infoTypes).toStrictEqual(["Events", "Travel"]);
+      expect(store.infoTypes).toStrictEqual(["events", "travel"]);
       expect(store.infosActiveType).toStrictEqual([testInfo[0]]);
     });
   });
@@ -84,14 +84,12 @@ let testInbox = [
           {
             uuid: "acb231",
             content: "someOptionContent",
-            question: "cba321",
           },
         ],
         response: null,
         multi_select: true,
         free_text: true,
         mandatory: true,
-        message: "abc123",
       },
     ],
   },

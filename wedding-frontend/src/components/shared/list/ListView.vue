@@ -124,12 +124,10 @@ export default defineComponent({
     getActiveFromRoute() {
       this.viewDetail = !!this.$route.params.active;
       let parseActive = parseInt(this.$route.params.active as string);
-      if (Number.isSafeInteger(parseActive)) {
-        this.setActive(parseActive);
-      }
+      this.setActive(Number.isSafeInteger(parseActive) ? parseActive : 0);
     },
     setActive(n: number | undefined) {
-      if (n && !(n >= 0 && n <= (this.objList?.length ?? 1) - 1)) {
+      if (n && !(n >= 0)) {
         n = 0;
       }
       this.active = n;

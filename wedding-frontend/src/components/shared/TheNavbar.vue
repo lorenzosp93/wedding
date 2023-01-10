@@ -74,7 +74,7 @@
                 >
                   <router-link
                     :to="{ name: 'info', params: { infoType: type } }"
-                    class="hover:text-accent child"
+                    class="hover:text-accent child capitalize"
                     @click="activateType(type)"
                   >
                     {{ type }}
