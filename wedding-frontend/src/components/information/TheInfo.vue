@@ -15,9 +15,6 @@ export default defineComponent({
   components: {
     ListView,
   },
-  data() {
-    return {};
-  },
   computed: {
     ...mapState(useInfoStore, [
       "infos",

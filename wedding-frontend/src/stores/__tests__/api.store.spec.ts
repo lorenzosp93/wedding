@@ -62,9 +62,9 @@ describe("Info store test", () => {
     store.getInfo().then(() => {
       expect(mock).toBeCalled();
       expect(store.infos).toStrictEqual(testInfo);
-      expect(store.activeType).toBe("Events");
+      expect(store.activeType).toBe("events");
       expect(store.expiry).toBeGreaterThan(Date.now());
-      expect(store.infoTypes).toStrictEqual(["Events", "Travel"]);
+      expect(store.infoTypes).toStrictEqual(["events", "travel"]);
       expect(store.infosActiveType).toStrictEqual([testInfo[0]]);
     });
   });
