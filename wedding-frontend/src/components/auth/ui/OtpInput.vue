@@ -33,7 +33,7 @@ export default defineComponent({
         if (nextEl) {
           nextEl = nextEl.nextElementSibling;
         } else {
-          (event.target as HTMLInputElement).form?.submit();
+          (event.target as HTMLInputElement).form?.requestSubmit();
         }
       }
     },

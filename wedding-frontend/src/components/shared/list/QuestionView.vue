@@ -3,7 +3,7 @@
   <section id="object-questions">
     <form
       v-if="responses && responses?.length"
-      @submit="$emit('submitResponse', responses)"
+      @submit.prevent="$emit('submitResponse', responses)"
     >
       <div v-for="(question, idx) in questions" :key="question.uuid">
         <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
