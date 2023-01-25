@@ -107,5 +107,8 @@ class Response(Serializable, TimeStampable, Deactivate):
         return ",\n".join([o.content.value for o in self.option.all()])
 
     class Meta:
-        unique_together = ['question', 'user', 'active', 'deleted_at']
+        constraints = [models.UniqueConstraint(
+            fields=['question', 'user', 'active', 'deleted_at'],
+            name='unique_active_response_per_user_and_question',
+        ),]
         ordering = ['-created_at']

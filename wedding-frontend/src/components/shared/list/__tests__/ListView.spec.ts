@@ -17,7 +17,7 @@ describe("Test list view", () => {
           $route: {
             name: "testRoute",
             params: {
-              active: 0,
+              active: "test-slug",
             },
           },
         },
@@ -30,6 +30,7 @@ describe("Test list view", () => {
             content: "testContent",
             questions: [],
             picture: "https://picture.url",
+            slug: "test-slug",
           },
           {
             uuid: "def456",
@@ -37,6 +38,7 @@ describe("Test list view", () => {
             content: "testContent1",
             questions: [],
             picture: "https://picture1.url",
+            slug: "test-slug-1",
           },
         ],
         loading: false,
@@ -48,7 +50,7 @@ describe("Test list view", () => {
     expect(wrapper.vm.$router.push).toBeCalledWith({
       name: "testRoute",
       params: {
-        active: "0",
+        active: "test-slug",
       },
     });
     let li = wrapper.findAllComponents({ name: "ListItem" });
@@ -57,7 +59,7 @@ describe("Test list view", () => {
     expect(wrapper.vm.$router.push).toBeCalledWith({
       name: "testRoute",
       params: {
-        active: "1",
+        active: "test-slug-1",
       },
     });
   });

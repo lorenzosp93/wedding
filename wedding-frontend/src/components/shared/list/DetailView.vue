@@ -22,20 +22,20 @@
           class="flex text-primary dark:text-darkPrimary ml-1 space-x-4 order-last"
         >
           <li
-            :class="{ 'invisible cursor-none': active == 0 }"
+            :class="{ 'invisible cursor-none': activeIdx == 0 }"
             class="p-1 cursor-pointer select-none"
-            @click="$emit('setActive', (active ?? 0) - 1)"
+            @click="$emit('setActive', (activeIdx ?? 0) - 1)"
           >
             <arrow-up-icon class="h-6 w-6" />
           </li>
           <li
             :class="{
               'invisible cursor-none': !(
-                active != (searchedListLength ?? 0) - 1 && searchedListLength
+                activeIdx != (searchedListLength ?? 0) - 1 && searchedListLength
               ),
             }"
             class="p-1 cursor-pointer select-none"
-            @click="$emit('setActive', (active ?? 0) + 1)"
+            @click="$emit('setActive', (activeIdx ?? 0) + 1)"
           >
             <arrow-down-icon class="h-6 w-6" />
           </li>
@@ -72,7 +72,7 @@
         :delete-loading="deleteLoading"
         :delete-error="deleteError"
         :delete-success="deleteSuccess"
-        @submit-response="(responses: Response[]) => $emit('submitResponse', responses)"
+        @submit-response="(responses: IResponse[]) => $emit('submitResponse', responses)"
         @delete-responses="$emit('deleteResponses')"
       ></question-view>
     </article>
@@ -90,9 +90,9 @@ import {
 } from "@heroicons/vue/24/outline";
 import { defineComponent, type PropType } from "vue";
 import type {
-  ListObject,
-  Response,
-  ResponseErrors,
+  IListObject,
+  IResponse,
+  IResponseErrors,
 } from "@/models/listObjects.interface";
 import { useEventListener } from "@vueuse/core";
 
@@ -105,14 +105,14 @@ export default defineComponent({
     ArrowUpIcon,
   },
   props: {
-    activeObject: { type: Object as PropType<ListObject> },
-    active: { type: Number },
+    activeObject: { type: Object as PropType<IListObject> },
+    activeIdx: { type: Number },
     searchedListLength: { type: Number },
     submitLoading: { type: Boolean },
-    submitError: { type: Array<ResponseErrors> },
+    submitError: { type: Array<IResponseErrors> },
     submitSuccess: { type: Boolean },
     deleteLoading: { type: Boolean },
-    deleteError: { type: Array<ResponseErrors> },
+    deleteError: { type: Array<IResponseErrors> },
     deleteSuccess: { type: Boolean },
   },
   emits: ["hideDetail", "setActive", "deleteResponses", "submitResponse"],
@@ -130,13 +130,13 @@ export default defineComponent({
     useEventListener("keydown", (event: KeyboardEvent) => {
       if (
         event.key == "ArrowRight" &&
-        this.active &&
-        this.active < (this.searchedListLength ?? 0) - 1
+        this.activeIdx &&
+        this.activeIdx < (this.searchedListLength ?? 0) - 1
       ) {
-        this.$emit("setActive", this.active + 1);
+        this.$emit("setActive", this.activeIdx + 1);
       }
-      if (event.key == "ArrowLeft" && this.active && this.active > 0) {
-        this.$emit("setActive", this.active - 1);
+      if (event.key == "ArrowLeft" && this.activeIdx && this.activeIdx > 0) {
+        this.$emit("setActive", this.activeIdx - 1);
       }
     });
     this.loadWidgets = true;

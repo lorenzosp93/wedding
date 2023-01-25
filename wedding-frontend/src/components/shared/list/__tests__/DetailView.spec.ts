@@ -21,7 +21,7 @@ describe("Detail view tests", () => {
           questions: [],
           picture: "https://picture.url",
         },
-        active: 1,
+        activeIdx: 1,
         searchedListLength: 2,
       },
     });

@@ -1,5 +1,4 @@
 "Define abstract models to be used in all apps"
-from datetime import datetime
 from io import BytesIO
 import os
 import uuid
@@ -9,7 +8,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.html import strip_tags
-from requests import delete
 from wedding.settings import AUTH_USER_MODEL
 
 
@@ -154,7 +152,7 @@ class ContentString(models.Model):
     value: models.Field = models.TextField()
 
     def __str__(self) -> str:
-        return f"{strip_tags(self.value)} - {self.pk}"
+        return f"{self.pk} - {strip_tags(self.value)}"
 
 
 class TranslatedString(models.Model):
@@ -172,10 +170,15 @@ class TranslatedString(models.Model):
     )
 
     class Meta:
-        unique_together = ['language', 'content']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['language', 'content'],
+                name='unique_translation_per_language_and_content',
+            ),
+        ]
 
     def __str__(self) -> str:
-        return f'{strip_tags(self.content.value)} -> {self.language}'
+        return f'{strip_tags(self.content.value)} => {self.language}'
 
 
 def get_translated_content(
@@ -207,10 +210,10 @@ class HasContent(models.Model):
 
 class HasSubject(models.Model):
     "Abstract class to define subject content"
-    subject: models.Field = models.ForeignKey(
+    subject: models.Field = models.OneToOneField(
         ContentString,
         on_delete=models.CASCADE,
-        related_name='%(class)s_subject'
+        related_name='%(class)s_subject',
     )
 
     class Meta:

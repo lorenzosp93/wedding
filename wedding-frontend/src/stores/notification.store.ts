@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { apiService } from "@/services/api.service";
 import type { AxiosError, AxiosResponse } from "axios";
-import type { Subscription } from "@/models/listObjects.interface";
+import type { ISubscription } from "@/models/listObjects.interface";
 import { useStorage, type RemovableRef } from "@vueuse/core";
 
 export const useNotificationStore = defineStore({
@@ -19,7 +19,7 @@ export const useNotificationStore = defineStore({
     async checkIsSubscribed() {
       apiService
         .getUserSubscription()
-        .then((response: AxiosResponse<Subscription[]>) => {
+        .then((response: AxiosResponse<ISubscription[]>) => {
           this.isSubscribed = !!response.data?.length;
         })
         .catch((error: AxiosError) => {

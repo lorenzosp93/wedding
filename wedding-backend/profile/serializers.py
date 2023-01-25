@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
 from django.forms import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.http import HttpRequest
@@ -40,10 +41,16 @@ class TranslationContentMixin(ModelSerializer):
 
 
 class TranslationSubjectMixin(ModelSerializer):
+    subject = SerializerMethodField('translated_subject')
+    slug = SerializerMethodField('get_slug')
+
     def translated_subject(self, obj: Model) -> str | None:
         return translated_string(self, obj, 'subject')
 
-    subject = SerializerMethodField('translated_subject')
+    def get_slug(self, obj: Model) -> str | None:
+        if (subject := self.translated_subject(obj)):
+            return slugify(subject)
+        return None
 
 
 class BaseUserProfileSerializer(ModelSerializer):

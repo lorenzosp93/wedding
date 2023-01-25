@@ -20,9 +20,9 @@
           <list-item
             v-for="(obj, idx) in searchedList"
             :key="obj.uuid"
-            @click="setActive(idx)"
+            @click="setActive(obj?.slug ?? '')"
             :obj="obj"
-            :active="active == idx"
+            :active="active == obj.slug"
           />
           <li v-if="searchedList?.length == 0 && objList?.length">
             <p class="p-3">{{ $t("shared.listview.noMessage") }}</p>
@@ -35,7 +35,7 @@
       <detail-view
         :class="{ hidden: !viewDetail }"
         id="detail-view"
-        :active="active"
+        :active-idx="searchedList?.indexOf(activeObject ?? searchedList[0])"
         :active-object="activeObject"
         :searched-list-length="searchedList?.length"
         :submit-error="submitError"
@@ -45,9 +45,9 @@
         :submit-success="submitSuccess"
         :delete-success="deleteSuccess"
         @hide-detail="hideDetail"
-        @set-active="setActive"
+        @set-active="setActiveByIdx"
         @submit-response="
-          (responses: Response[]) => $emit('submitResponse', responses, activeObject?.uuid)
+          (responses: IResponse[]) => $emit('submitResponse', responses, activeObject?.uuid)
         "
         @delete-responses="(_) => $emit('deleteResponses', activeObject?.uuid)"
       ></detail-view>
@@ -62,9 +62,9 @@ import DetailView from "./DetailView.vue";
 import ListItem from "./ui/ListItem.vue";
 import { defineComponent, type PropType } from "vue";
 import type {
-  ResponseErrors,
-  ListObject,
-  Response,
+  IResponseErrors,
+  IListObject,
+  IResponse,
 } from "@/models/listObjects.interface";
 import type { AxiosError } from "axios";
 
@@ -77,26 +77,26 @@ export default defineComponent({
     ListItem,
   },
   props: {
-    objList: { type: Array<ListObject> },
+    objList: { type: Array<IListObject> },
     loading: { type: Boolean },
     error: { type: Object as PropType<AxiosError> },
     submitLoading: { type: Boolean },
-    submitError: { type: Array<ResponseErrors> },
+    submitError: { type: Array<IResponseErrors> },
     submitSuccess: { type: Boolean },
     deleteLoading: { type: Boolean },
-    deleteError: { type: Array<ResponseErrors> },
+    deleteError: { type: Array<IResponseErrors> },
     deleteSuccess: { type: Boolean },
   },
   emits: ["submitResponse", "deleteResponses"],
   data() {
     return {
-      active: undefined as number | undefined,
+      active: "" as string,
       viewDetail: false as boolean,
       search: "" as string,
     };
   },
   computed: {
-    searchedList(): Array<ListObject> | undefined {
+    searchedList(): Array<IListObject> | undefined {
       if (!this.search) {
         return this.objList;
       }
@@ -108,8 +108,10 @@ export default defineComponent({
         );
       });
     },
-    activeObject(): ListObject | undefined {
-      return this.objList?.length ? this.objList[this.active ?? 0] : undefined;
+    activeObject(): IListObject | undefined {
+      return this.objList?.length
+        ? this.objList.find((obj) => obj.slug == this.active) ?? this.objList[0]
+        : undefined;
     },
   },
   watch: {
@@ -123,23 +125,23 @@ export default defineComponent({
   methods: {
     getActiveFromRoute() {
       this.viewDetail = !!this.$route.params.active;
-      let parseActive = parseInt(this.$route.params.active as string);
-      if (Number.isSafeInteger(parseActive)) {
-        this.setActive(parseActive);
-      }
+      this.setActive(this.$route.params.active as string);
     },
-    setActive(n: number | undefined) {
-      if (n && !(n >= 0)) {
-        n = 0;
-      }
-      this.active = n;
+    setActive(active: string) {
+      this.active = active;
       this.$router.push({
         name: this.$route.name ?? undefined,
-        params: { ...this.$route.params, active: `${n ?? ""}` },
+        params: { ...this.$route.params, active: active },
       });
     },
+    setActiveByIdx(idx: number) {
+      if (this.searchedList?.length) {
+        let active = this.searchedList[idx]?.slug ?? "";
+        this.setActive(active);
+      }
+    },
     hideDetail() {
-      this.setActive(undefined);
+      this.setActive("");
       this.viewDetail = false;
     },
   },

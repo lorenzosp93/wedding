@@ -32,6 +32,10 @@ export default defineComponent({
         this.token[i] = pasteData[i];
         if (nextEl) {
           nextEl = nextEl.nextElementSibling;
+        } else {
+          event.target?.dispatchEvent(
+            new CustomEvent("submit", { bubbles: true, cancelable: true })
+          );
         }
       }
     },
