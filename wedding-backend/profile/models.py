@@ -115,4 +115,9 @@ class Subscription(TimeStampable):
     user_agent: models.Field = models.TextField()
 
     class Meta:
-        unique_together = ['user', 'user_agent', 'endpoint']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'user_agent', 'endpoint'],
+                name='unique_subscription_per_device'
+            ),
+        ]

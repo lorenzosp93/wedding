@@ -1,5 +1,5 @@
 <template>
-  <form v-if="user" class="flex flex-col mt-3" @submit="register(user)">
+  <form v-if="user" class="flex flex-col mt-3" @submit.prevent="register(user)">
     <div class="grid grid-cols-6 gap-5 mx-3 mb-3">
       <div class="col-span-6 sm:col-span-3">
         <div class="flex flex-wrap">

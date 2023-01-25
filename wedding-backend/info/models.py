@@ -77,7 +77,12 @@ class InformationWidget(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        unique_together = ['info', 'type']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['info', 'type'],
+                name='unique_widget_per_info_type',
+            ),
+        ]
 
 
 class Photo(HasPicture, HasContent):

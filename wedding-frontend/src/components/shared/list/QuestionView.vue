@@ -3,7 +3,7 @@
   <section id="object-questions">
     <form
       v-if="responses && responses?.length"
-      @submit="$emit('submitResponse', responses)"
+      @submit.prevent="$emit('submitResponse', responses)"
     >
       <div v-for="(question, idx) in questions" :key="question.uuid">
         <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
@@ -37,7 +37,7 @@
           </li>
         </ul>
         <p
-          v-if="submitError?.find((e: ResponseErrors) => e.q == question.uuid && e.e?.option?.length)"
+          v-if="submitError?.find((e: IResponseErrors) => e.q == question.uuid && e.e?.option?.length)"
           class="text-alert dark:text-darkAlert"
         >
           {{ submitError.find((e) => e.q == question.uuid)?.e.option[0] }}
@@ -54,7 +54,7 @@
             :required="question.mandatory && question.options.length == 0"
           />
           <p
-            v-if="submitError?.find((e: ResponseErrors) => e.q == question.uuid && e.e?.text?.length)"
+            v-if="submitError?.find((e: IResponseErrors) => e.q == question.uuid && e.e?.text?.length)"
             class="text-alert dark:text-darkAlert mx-3"
           >
             {{ submitError.find((e) => e.q == question.uuid)?.e.text[0] }}
@@ -75,7 +75,7 @@
         </p>
       </div>
       <div
-        v-if="questions?.every((q: Question) => q.response)"
+        v-if="questions?.every((q: IQuestion) => q.response)"
         class="flex flex-wrap"
       >
         <p class="py-1 font-bold my-auto">
@@ -93,7 +93,7 @@
         </div>
       </div>
       <div
-        v-if="questions.some((q: Question) => !q.response)"
+        v-if="questions.some((q: IQuestion) => !q.response)"
         class="relative h-20 w-full pt-5 mx-auto"
       >
         <button
@@ -114,31 +114,31 @@
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { defineComponent, type PropType } from "vue";
 import type {
-  Question,
-  Response,
-  ResponseErrors,
+  IQuestion,
+  IResponse,
+  IResponseErrors,
 } from "@/models/listObjects.interface";
 
 export default defineComponent({
   data() {
     return {
-      responses: [] as Response[],
+      responses: [] as IResponse[],
     };
   },
   components: {
     LoadingView,
   },
   props: {
-    questions: { type: Array<Question>, default: [] },
+    questions: { type: Array<IQuestion>, default: [] },
     submitLoading: { type: Boolean },
-    submitError: { type: Array<ResponseErrors> },
+    submitError: { type: Array<IResponseErrors> },
     submitSuccess: { type: Boolean },
     deleteLoading: { type: Boolean },
-    deleteError: { type: Array<ResponseErrors> },
+    deleteError: { type: Array<IResponseErrors> },
     deleteSuccess: { type: Boolean },
   },
   watch: {
-    questions(newVal: Question[], oldVal: Question[]) {
+    questions(newVal: IQuestion[], oldVal: IQuestion[]) {
       if (newVal != oldVal) {
         this.responseSetup();
       }
@@ -152,7 +152,7 @@ export default defineComponent({
     responseSetup() {
       this.responses = [];
       if (this.questions.length) {
-        this.questions.forEach((question: Question) => {
+        this.questions.forEach((question: IQuestion) => {
           this.responses = [
             ...this.responses,
             {
@@ -164,7 +164,7 @@ export default defineComponent({
         });
       }
     },
-    handleInput(question: Question, event: Event) {
+    handleInput(question: IQuestion, event: Event) {
       let value = (event?.target as HTMLInputElement).value;
       let response = this.getResponse(question);
       if (response) {
@@ -175,19 +175,19 @@ export default defineComponent({
         }
       }
     },
-    multiSelectInputHandler(value: string, response: Response) {
+    multiSelectInputHandler(value: string, response: IResponse) {
       if (response.option.includes(value)) {
         response.option = response.option.filter((o: string) => o != value);
       } else {
         response.option = [...response.option, value];
       }
     },
-    singleSelectInputHandler(value: string, response: Response) {
+    singleSelectInputHandler(value: string, response: IResponse) {
       response.option = [value];
     },
-    getResponse(question: Question): Response {
+    getResponse(question: IQuestion): IResponse {
       return (
-        this.responses.find((r: Response) => r.question == question.uuid) ?? {
+        this.responses.find((r: IResponse) => r.question == question.uuid) ?? {
           option: [],
           text: "",
         }

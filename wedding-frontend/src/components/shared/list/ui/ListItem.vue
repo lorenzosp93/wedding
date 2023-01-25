@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import ListItemWidgets from "./ListItemWidgets.vue";
-import type { ListObject, Question } from "@/models/listObjects.interface";
+import type { IListObject, IQuestion } from "@/models/listObjects.interface";
 import { defineComponent, type PropType } from "vue";
 import truncation from "@/components/mixins/truncation";
 
@@ -37,7 +37,7 @@ export default defineComponent({
     ListItemWidgets,
   },
   props: {
-    obj: { type: Object as PropType<ListObject> },
+    obj: { type: Object as PropType<IListObject> },
     active: { type: Boolean },
   },
   computed: {
@@ -47,7 +47,7 @@ export default defineComponent({
     hasResponses() {
       return (
         this.hasQuestions &&
-        !!this?.obj?.questions?.every((q: Question) => q.response)
+        !!this?.obj?.questions?.every((q: IQuestion) => q.response)
       );
     },
   },

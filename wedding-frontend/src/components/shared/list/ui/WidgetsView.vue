@@ -69,9 +69,9 @@ import { createEvent, type EventStatus, type EventAttributes } from "ics";
 import i18n from "@/i18n/index.js";
 import { defineComponent, Teleport, type PropType } from "vue";
 import {
-  WidgetType,
-  type Widget,
-  type ListObject,
+  IWidgetType,
+  type IWidget,
+  type IListObject,
 } from "@/models/listObjects.interface";
 
 export default defineComponent({
@@ -81,17 +81,17 @@ export default defineComponent({
     PlusIcon,
   },
   props: {
-    activeObject: { type: Object as PropType<ListObject> },
+    activeObject: { type: Object as PropType<IListObject> },
   },
   computed: {
     calendarWidget() {
       return this.activeObject?.widget?.find(
-        (w: Widget) => w.type == WidgetType.calendar
+        (w: IWidget) => w.type == IWidgetType.calendar
       )?.content;
     },
     mapsWidget() {
       return this.activeObject?.widget?.find(
-        (w: Widget) => w.type == WidgetType.maps
+        (w: IWidget) => w.type == IWidgetType.maps
       )?.content;
     },
   },

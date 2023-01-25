@@ -32,6 +32,8 @@ export default defineComponent({
         this.token[i] = pasteData[i];
         if (nextEl) {
           nextEl = nextEl.nextElementSibling;
+        } else {
+          (event.target as HTMLInputElement).form?.requestSubmit();
         }
       }
     },

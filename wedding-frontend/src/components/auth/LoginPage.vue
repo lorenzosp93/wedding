@@ -9,7 +9,7 @@
       <p class="dark:text-darkNeutral pb-2">
         {{ $t("auth.loginpage.pleaseEnterYour") }}
       </p>
-      <form class="flex flex-col mt-3" @submit="handleLogin()">
+      <form class="flex flex-col mt-3" @submit.prevent="handleLogin()">
         <div class="max-w-sm mx-auto w-full">
           <div class="flex flex-wrap">
             <label

@@ -12,7 +12,7 @@
         class="py-2 dark:text-darkNeutral"
         v-html="$t('auth.loginsuccess.ifYouGetYourEmail')"
       ></p>
-      <form class="w-fit mx-auto flex flex-col mt-3" @submit="getToken">
+      <form class="w-fit mx-auto flex flex-col mt-3" @submit.prevent="getToken">
         <label for="otp" class="block mx-auto my-1 dark:text-darkNeutral">{{
           $t("auth.loginsuccess.otp")
         }}</label>

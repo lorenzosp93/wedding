@@ -4,7 +4,10 @@ from rest_framework.serializers import (
 from .models import (
     Information, Photo, InformationWidget
 )
-from profile.serializers import TranslationContentMixin, TranslationSubjectMixin
+from profile.serializers import (
+    TranslationContentMixin,
+    TranslationSubjectMixin,
+)
 
 
 class InformationWidgetSerializer(ModelSerializer):
@@ -29,9 +32,8 @@ class InformationSerializer(
 
     class Meta:
         model = Information
-        fields = [
-            'id', 'content', 'subject', 'type',
-            'widget', 'picture', 'thumbnail',
+        exclude = [
+            'audience', 'submit',
         ]
 
 

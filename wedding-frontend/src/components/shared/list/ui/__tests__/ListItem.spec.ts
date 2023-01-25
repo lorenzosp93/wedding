@@ -1,7 +1,7 @@
 import { describe, it, vi, beforeEach, expect, type Mock } from "vitest";
 import { VueWrapper, mount } from "@vue/test-utils";
 import ListItem from "../ListItem.vue";
-import type { ListObject } from "@/models/listObjects.interface";
+import type { IListObject } from "@/models/listObjects.interface";
 
 describe("Test list items", () => {
   let wrapper: VueWrapper;
@@ -15,7 +15,7 @@ describe("Test list items", () => {
           subject: "testSubject",
           content: "testContent",
           thumbnail: "https://thumb.url",
-        } as ListObject,
+        } as IListObject,
         active: false as boolean,
       },
     });
