@@ -66,7 +66,7 @@ class Question(Serializable, HasSubject, HasContent):
         return f"{self.message} - {self.subject}"
 
     class Meta:
-        ...
+        ordering = ['pk']
 
 
 class Option(Serializable, HasContent):
