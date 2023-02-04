@@ -112,7 +112,7 @@
               id="navbar-profile"
               :to="{ name: 'profile' }"
               class="flex py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              ><p>{{ $t("shared.thenavbar.profile") }}</p>
+              >{{ $t("shared.thenavbar.profile") }}
             </router-link>
           </li>
         </ul>
