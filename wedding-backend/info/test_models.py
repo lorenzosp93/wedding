@@ -30,7 +30,7 @@ class TestInfo(TestCase):
             subject=content,
             content=content,
             audience=30,
-            type=0,
+            type=3,
         )
         self.content_json = '{"start": [2022,12,15]}'
         self.info_widget = InformationWidget.objects.create(
@@ -93,7 +93,7 @@ class TestTriggersNotification(TestCase):
             subject=content,
             content=content,
             audience=30,
-            type=0,
+            type=3,
         )
         self.user = get_user_model().objects.create(
             username='testuser'
