@@ -2,25 +2,35 @@ import { describe, it, vi, beforeEach, expect, type Mock } from "vitest";
 import { type VueWrapper, mount } from "@vue/test-utils";
 import ListView from "../ListView.vue";
 import type { ComponentPublicInstance } from "vue";
+import { createTestingPinia } from "@pinia/testing";
 
 describe("Test list view", () => {
   let wrapper: VueWrapper<ComponentPublicInstance<any>>;
 
   beforeEach(() => {
+    vi.mock("vue-router", async () => {
+      const actual: typeof import("vue-router") = await vi.importActual(
+        "vue-router"
+      );
+      return {
+        ...actual,
+        useRouter: vi.fn(() => ({
+          push: vi.fn(),
+        })),
+        useRoute: vi.fn(() => ({
+          name: "testRoute",
+          params: {
+            active: "test-slug",
+          },
+        })),
+      };
+    });
     wrapper = mount(ListView, {
       global: {
         mocks: {
           $t: (t: string) => t,
-          $router: {
-            push: vi.fn(),
-          },
-          $route: {
-            name: "testRoute",
-            params: {
-              active: "test-slug",
-            },
-          },
         },
+        plugins: [createTestingPinia()],
       },
       propsData: {
         objList: [
@@ -47,7 +57,7 @@ describe("Test list view", () => {
   });
 
   it("Displays the list", async () => {
-    expect(wrapper.vm.$router.push).toBeCalledWith({
+    expect(wrapper.vm.router.push).toBeCalledWith({
       name: "testRoute",
       params: {
         active: "test-slug",
@@ -56,7 +66,7 @@ describe("Test list view", () => {
     let li = wrapper.findAllComponents({ name: "ListItem" });
     expect(li).toHaveLength(2);
     await li[1].trigger("click");
-    expect(wrapper.vm.$router.push).toBeCalledWith({
+    expect(wrapper.vm.router.push).toBeCalledWith({
       name: "testRoute",
       params: {
         active: "test-slug-1",

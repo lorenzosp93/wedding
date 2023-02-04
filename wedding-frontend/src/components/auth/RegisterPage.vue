@@ -10,45 +10,28 @@
         {{ $t("auth.registerpage.welcomeToThe") }}
       </p>
       <user-form
-        @register="(user: User) => register(user)"
+        @register="(user: User) => authStore.register(user)"
         :user="user"
-        :loading="loading"
-        :register-error="registerError"
+        :loading="authStore.loading"
+        :register-error="authStore.registerError"
       />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import LoadingView from "@/components/shared/LoadingView.vue";
+<script setup lang="ts">
+import { type Ref, ref } from "vue";
 import { useAuthStore } from "@/stores";
-import { mapState, mapActions } from "pinia";
 import type { User } from "@/models/auth.interface";
 import UserForm from "../shared/UserForm.vue";
 
-export default defineComponent({
-  name: "RegisterPage",
-  components: {
-    LoadingView,
-    UserForm,
-  },
-  data() {
-    return {
-      user: {
-        email: "",
-        first_name: "",
-        last_name: "",
-      } as User,
-    };
-  },
-  computed: {
-    ...mapState(useAuthStore, ["loading", "registerError"]),
-  },
-  methods: {
-    ...mapActions(useAuthStore, ["register"]),
-  },
+const user: Ref<User> = ref({
+  email: "",
+  first_name: "",
+  last_name: "",
 });
+
+const authStore = useAuthStore();
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

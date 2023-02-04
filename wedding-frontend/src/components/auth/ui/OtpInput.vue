@@ -17,36 +17,34 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { defineProps } from "vue";
 
-export default defineComponent({
-  props: {
-    token: { type: Array<string>, default: ["", "", "", "", "", ""] },
-  },
-  methods: {
-    handlePaste(event: ClipboardEvent) {
-      const pasteData = event.clipboardData?.getData("text/plain") ?? "";
-      let nextEl = (event.target as HTMLInputElement).nextElementSibling;
-      for (let i = 0; i < this.token.length; i++) {
-        this.token[i] = pasteData[i];
-        if (nextEl) {
-          nextEl = nextEl.nextElementSibling;
-        } else {
-          (event.target as HTMLInputElement).form?.requestSubmit();
-        }
-      }
-    },
-    handleInput(event: InputEvent, idx: number) {
-      let target = event.target as HTMLInputElement;
-      let data = event.data ?? target?.value ?? "";
-      this.token[idx] = data;
-      if (data && target.nextElementSibling) {
-        (target.nextElementSibling as HTMLInputElement).focus();
-      } else if (!data && target.previousElementSibling) {
-        (target.previousElementSibling as HTMLInputElement).focus();
-      }
-    },
-  },
+const props = defineProps({
+  token: { type: Array<string>, default: ["", "", "", "", "", ""] },
 });
+
+function handlePaste(event: ClipboardEvent) {
+  const pasteData = event.clipboardData?.getData("text/plain") ?? "";
+  let nextEl = (event.target as HTMLInputElement).nextElementSibling;
+  for (let i = 0; i < props.token.length; i++) {
+    props.token[i] = pasteData[i];
+    if (nextEl) {
+      nextEl = nextEl.nextElementSibling;
+    } else {
+      (event.target as HTMLInputElement).form?.requestSubmit();
+    }
+  }
+}
+
+function handleInput(event: InputEvent, idx: number) {
+  let target = event.target as HTMLInputElement;
+  let data = event.data ?? target?.value ?? "";
+  props.token[idx] = data;
+  if (data && target.nextElementSibling) {
+    (target.nextElementSibling as HTMLInputElement).focus();
+  } else if (!data && target.previousElementSibling) {
+    (target.previousElementSibling as HTMLInputElement).focus();
+  }
+}
 </script>

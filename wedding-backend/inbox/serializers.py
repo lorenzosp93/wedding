@@ -84,7 +84,7 @@ class QuestionSerializer(
 
     class Meta:
         model = Question
-        exclude = ['message',]
+        exclude = ['message']
 
 
 class MessageSerializer(

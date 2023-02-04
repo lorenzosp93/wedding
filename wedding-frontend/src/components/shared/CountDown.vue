@@ -40,78 +40,73 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { type Ref, watch, ref, computed, onBeforeUnmount } from "vue";
 
-export default defineComponent({
-  name: "CountDown",
-  props: {
-    endDate: {
-      // pass date object till when you want to run the timer
-      type: Date,
-      default() {
-        return new Date();
-      },
-    },
-    negative: {
-      // optional, should countdown after 0 to negative
-      type: Boolean,
-      default: false,
+const props = defineProps({
+  endDate: {
+    // pass date object till when you want to run the timer
+    type: Date,
+    default() {
+      return new Date();
     },
   },
-  data() {
-    return {
-      now: new Date(),
-      timer: undefined as undefined | NodeJS.Timer,
-    };
+  negative: {
+    // optional, should countdown after 0 to negative
+    type: Boolean,
+    default: false,
   },
-  computed: {
-    days() {
-      let d = Math.trunc(
-        (this.endDate.valueOf() - this.now.valueOf()) / 1000 / 3600 / 24
-      );
-      return d > 9 ? d : "0" + d;
-    },
-    hour() {
-      let h =
-        Math.trunc(
-          (this.endDate.valueOf() - this.now.valueOf()) / 1000 / 3600
-        ) % 24;
-      return h > 9 ? h : "0" + h;
-    },
-    min() {
-      let m =
-        Math.trunc((this.endDate.valueOf() - this.now.valueOf()) / 1000 / 60) %
-        60;
-      return m > 9 ? m : "0" + m;
-    },
-    sec() {
-      let s =
-        Math.trunc((this.endDate.valueOf() - this.now.valueOf()) / 1000) % 60;
-      return s > 9 ? s : "0" + s;
-    },
+});
+
+const now = ref(new Date());
+const timer: Ref<undefined | NodeJS.Timer> = ref(undefined);
+
+const days = computed(() => {
+  let d = Math.trunc(
+    (props.endDate.valueOf() - now.value.valueOf()) / 1000 / 3600 / 24
+  );
+  return d > 9 ? d : "0" + d;
+});
+
+const hour = computed(() => {
+  let h =
+    Math.trunc((props.endDate.valueOf() - now.value.valueOf()) / 1000 / 3600) %
+    24;
+  return h > 9 ? h : "0" + h;
+});
+
+const min = computed(() => {
+  let m =
+    Math.trunc((props.endDate.valueOf() - now.value.valueOf()) / 1000 / 60) %
+    60;
+  return m > 9 ? m : "0" + m;
+});
+
+const sec = computed(() => {
+  let s =
+    Math.trunc((props.endDate.valueOf() - now.value.valueOf()) / 1000) % 60;
+  return s > 9 ? s : "0" + s;
+});
+
+watch(
+  () => props.endDate,
+  async (newVal) => {
+    if (timer.value) {
+      clearInterval(timer.value);
+    }
+    timer.value = setInterval(() => {
+      now.value = new Date();
+      if (props.negative) return;
+      if (now.value > newVal) {
+        now.value = newVal;
+        clearInterval(timer.value);
+      }
+    }, 1000);
   },
-  watch: {
-    endDate: {
-      immediate: true,
-      handler(newVal) {
-        if (this.timer) {
-          clearInterval(this.timer);
-        }
-        this.timer = setInterval(() => {
-          this.now = new Date();
-          if (this.negative) return;
-          if (this.now > newVal) {
-            this.now = newVal;
-            clearInterval(this.timer);
-          }
-        }, 1000);
-      },
-    },
-  },
-  beforeUnmount() {
-    clearInterval(this.timer);
-  },
+  { immediate: true }
+);
+onBeforeUnmount(() => {
+  clearInterval(timer.value);
 });
 </script>
 

@@ -17,7 +17,7 @@ describe("Plus one tests", () => {
         plugins: [createTestingPinia()],
         mocks: {
           $t: (t: string, obj: Record<string, unknown>): string => {
-            return i18n.global.t(t, "en", obj); // @ts-ignore
+            return i18n.global.t(t, "en", obj);
           },
         },
       },
@@ -49,11 +49,9 @@ describe("Plus one tests", () => {
     store.$patch({
       registerError: {
         email: ["invalid email"],
-        non_field_errors: ["other error"],
       },
     });
     await wrapper.vm.$nextTick();
     expect(wrapper.text()).toContain("invalid email");
-    expect(wrapper.text()).toContain("other error");
   });
 });

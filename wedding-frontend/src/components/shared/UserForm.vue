@@ -93,28 +93,22 @@
   </form>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { User, UserError } from "@/models/auth.interface";
 import LoadingView from "./LoadingView.vue";
-import { defineComponent, type PropType } from "vue";
+import { type PropType } from "vue";
 
-export default defineComponent({
-  name: "UserForm",
-  components: {
-    LoadingView,
-  },
-  props: {
-    user: { type: Object as PropType<User> },
-    registerError: { type: Object as PropType<UserError> },
-    loading: { type: Boolean, default: false },
-  },
-  emits: ["register"],
-  methods: {
-    register(user: User | undefined) {
-      if (user) {
-        this.$emit("register", user);
-      }
-    },
-  },
+defineProps({
+  user: { type: Object as PropType<User> },
+  registerError: { type: Object as PropType<UserError> },
+  loading: { type: Boolean, default: false },
 });
+
+const emit = defineEmits(["register"]);
+
+function register(user: User | undefined) {
+  if (user) {
+    emit("register", user);
+  }
+}
 </script>

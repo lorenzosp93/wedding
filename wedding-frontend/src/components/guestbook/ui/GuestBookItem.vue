@@ -22,29 +22,22 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, type PropType } from "vue";
+<script setup lang="ts">
+import { type PropType, computed } from "vue";
 import type { GuestBookEntry } from "@/models/guestbook.interface";
 import { TrashIcon } from "@heroicons/vue/24/outline";
 import i18n from "@/i18n";
 
-export default defineComponent({
-  name: "GuestBookItem",
-  components: {
-    TrashIcon,
-  },
-  props: {
-    entry: { type: Object as PropType<GuestBookEntry> },
-    own: { type: Boolean },
-  },
-  emits: ["deleteEntry"],
-  computed: {
-    dateForDisplay() {
-      let date = new Date(this.entry?.created_at ?? "");
-      return date.toLocaleDateString(i18n.global.locale.value, {
-        dateStyle: "medium",
-      });
-    },
-  },
+const props = defineProps({
+  entry: { type: Object as PropType<GuestBookEntry> },
+  own: { type: Boolean },
+});
+defineEmits(["deleteEntry"]);
+
+const dateForDisplay = computed(() => {
+  let date = new Date(props.entry?.created_at ?? "");
+  return date.toLocaleDateString(i18n.global.locale.value, {
+    dateStyle: "medium",
+  });
 });
 </script>

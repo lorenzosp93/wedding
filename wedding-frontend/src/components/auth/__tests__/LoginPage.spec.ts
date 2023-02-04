@@ -9,11 +9,21 @@ describe("Login page test", () => {
       global: {
         mocks: {
           $t: (t: string) => t,
-          $route: {
-            query: { email: "test@email.com" },
-          },
         },
       },
+    });
+    vi.mock("vue-router", async () => {
+      const actual: typeof import("vue-router") = await vi.importActual(
+        "vue-router"
+      );
+      return {
+        ...actual,
+        useRoute: vi.fn(() => ({
+          query: {
+            email: "test@email.com",
+          },
+        })),
+      };
     });
     await wrapper.vm.$nextTick();
     let input = wrapper.get("input");
@@ -25,7 +35,6 @@ describe("Login page test", () => {
       global: {
         mocks: {
           $t: (t: string) => t,
-          $route: () => {},
         },
       },
     });
