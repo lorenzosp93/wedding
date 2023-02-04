@@ -5,7 +5,7 @@
     <main v-show="!loading" class="flex w-full">
       <section
         id="list-view"
-        class="flex flex-col w-full py-3 px-3 md:w-[40%] lg:w-[35%] bg-neutral dark:bg-darkNeutral h-full max-h-rest"
+        class="flex flex-col w-full pt-3 px-3 md:w-[40%] lg:w-[35%] bg-neutral dark:bg-darkNeutral h-full max-h-rest"
       >
         <div class="flex flex-initial">
           <push-subscribe></push-subscribe>
@@ -145,7 +145,7 @@ function hideDetail() {
 <style scoped>
 .max-h-rest {
   max-height: 90vh;
-  max-height: calc(100vh - 4.5rem);
-  max-height: calc(100svh - 4.5rem);
+  max-height: calc(100vh - 5.6rem);
+  max-height: calc(100svh - 5.6rem);
 }
 </style>

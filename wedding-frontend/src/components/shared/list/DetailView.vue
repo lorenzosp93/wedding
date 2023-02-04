@@ -141,7 +141,7 @@ onMounted(() => {
 <style scoped>
 .max-h-rest {
   max-height: 90vh;
-  max-height: calc(100vh - 4.5rem);
-  max-height: calc(100svh - 4.5rem);
+  max-height: calc(100vh - 5.6rem);
+  max-height: calc(100svh - 5.6rem);
 }
 </style>
