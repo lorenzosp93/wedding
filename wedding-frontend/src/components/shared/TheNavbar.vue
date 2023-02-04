@@ -26,7 +26,7 @@
         style="transition: max-height 0.4s, opacity 0.2s ease-in"
         :class="{
           'invisible md:visible opacity-0 max-h-0': !menu,
-          'opacity-100 max-h-96': menu,
+          'opacity-100 max-h-screen': menu,
         }"
       >
         <ul
