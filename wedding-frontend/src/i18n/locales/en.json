@@ -44,7 +44,7 @@
   "shared": {
     "listview": {
       "alreadyAnswered": "You have already answered these questions.",
-      "changeResponses": "Change your responses",
+      "changeResponses": "Edit your responses",
       "done": "You're all done for the day!",
       "loading": "Loading",
       "noMessage": "Couldn't find any message that matches your search.",
