@@ -11,9 +11,6 @@ from shared.advanced_models import (
 )
 
 INFO_TYPES = (
-    (0, _('Venues')),
-    (1, _('Food')),
-    (2, _('Attractions')),
     (3, _('Tips')),
     (4, _('Travel')),
     (5, _('Events')),
