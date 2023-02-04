@@ -145,7 +145,7 @@ function hideDetail() {
 <style scoped>
 .max-h-rest {
   max-height: 90vh;
-  max-height: calc(100vh - 5.6rem);
-  max-height: calc(100svh - 5.6rem);
+  max-height: calc(100vh - 80px);
+  max-height: calc(100svh - 80px);
 }
 </style>
