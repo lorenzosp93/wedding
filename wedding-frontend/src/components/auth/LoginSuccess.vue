@@ -12,7 +12,10 @@
         class="py-2 dark:text-darkNeutral"
         v-html="$t('auth.loginsuccess.ifYouGetYourEmail')"
       ></p>
-      <form class="w-fit mx-auto flex flex-col mt-3" @submit.prevent="getToken">
+      <form
+        class="w-fit mx-auto flex flex-col mt-3"
+        @submit.prevent="getAuthToken"
+      >
         <label for="otp" class="block mx-auto my-1 dark:text-darkNeutral">{{
           $t("auth.loginsuccess.otp")
         }}</label>
@@ -28,7 +31,7 @@
           class="flex mx-auto mt-3 px-2 py-1 rounded-lg bg-accent text-primary shadow-md"
           type="submit"
           data-test="form-button"
-          @click.prevent="getToken"
+          @click.prevent="getAuthToken"
         >
           {{ $t("auth.loginpage.submit") }}
         </button>
@@ -48,42 +51,34 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { getToken } from "@/services/login.service.js";
 import type { AxiosError } from "axios";
-import { defineComponent } from "vue";
+import { type Ref, ref, onMounted } from "vue";
 import OtpInput from "./ui/OtpInput.vue";
+import { useRoute } from "vue-router";
 
-export default defineComponent({
-  name: "LoginSuccess",
-  components: {
-    LoadingView,
-    OtpInput,
-  },
-  data() {
-    return {
-      email: "" as string,
-      token: ["", "", "", "", "", ""] as string[],
-      loading: false as boolean,
-      error: null as any,
-    };
-  },
-  mounted() {
-    this.email = this.$route.query.email as string;
-  },
-  methods: {
-    getToken() {
-      this.loading = true;
-      getToken(this.email, this.token.join(""))
-        .then()
-        .catch((error: AxiosError) => {
-          this.loading = false;
-          this.error = error.response?.data ?? "Unable to log you in";
-        });
-    },
-  },
+const email: Ref<string> = ref("");
+const token: Ref<string[]> = ref(["", "", "", "", "", ""]);
+const loading: Ref<boolean> = ref(false);
+const error: Ref<any> = ref(null);
+
+const route = useRoute();
+
+onMounted(() => {
+  email.value = route.query.email as string;
 });
+
+function getAuthToken() {
+  loading.value = true;
+  getToken(email.value, token.value.join(""))
+    .then()
+    .catch((e: AxiosError) => {
+      loading.value = false;
+      error.value = e.response?.data ?? "Unable to log you in";
+    });
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

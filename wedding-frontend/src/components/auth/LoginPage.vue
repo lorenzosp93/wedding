@@ -61,39 +61,32 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { type Ref, ref, onMounted } from "vue";
 import { login } from "@/services/login.service";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import type { AxiosError } from "axios";
 import type { UserError } from "@/models/auth.interface";
+import { useRoute } from "vue-router";
 
-export default defineComponent({
-  name: "LoginPage",
-  components: {
-    LoadingView,
-  },
-  data() {
-    return {
-      loading: false as boolean,
-      email: "" as string,
-      error: undefined as UserError | undefined,
-      message: "" as string,
-    };
-  },
-  methods: {
-    handleLogin() {
-      this.loading = true;
-      login(this.email).catch((error: AxiosError<UserError>) => {
-        this.loading = false;
-        this.error = error.response?.data ?? undefined;
-      });
-    },
-  },
-  mounted() {
-    this.email = (this.$route.query?.email as string) ?? "";
-    this.message = (this.$route.query?.message as string) ?? "";
-  },
+let loading: Ref<boolean> = ref(false);
+var email: Ref<string> = ref("");
+var error: Ref<UserError | undefined> = ref(undefined);
+
+function handleLogin() {
+  loading.value = true;
+  login(email.value).catch((e: AxiosError<UserError>) => {
+    loading.value = false;
+    error.value = e.response?.data ?? undefined;
+  });
+}
+
+var message: Ref<string> = ref("");
+
+onMounted(() => {
+  const route = useRoute();
+  email.value = (route.query?.email as string) ?? "";
+  message.value = (route.query?.message as string) ?? "";
 });
 </script>
 

@@ -1,39 +1,26 @@
 <template>
   <div>
-    <list-view :obj-list="infosActiveType" :loading="loading" :error="error" />
+    <list-view
+      :obj-list="infoStore.infosActiveType"
+      :loading="infoStore.loading"
+      :error="infoStore.error"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
 import { useInfoStore } from "@/stores";
 import ListView from "@/components/shared/list/ListView.vue";
-import { defineComponent } from "vue";
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
 
-export default defineComponent({
-  name: "TheInfo",
-  components: {
-    ListView,
-  },
-  computed: {
-    ...mapState(useInfoStore, [
-      "infos",
-      "activeType",
-      "infosActiveType",
-      "infoTypes",
-      "loading",
-      "error",
-    ]),
-  },
-  mounted() {
-    this.getInfo();
-    if (!this.activeType) {
-      this.activateType(this.$route.params.infoType as string);
-    }
-  },
-  methods: {
-    ...mapActions(useInfoStore, ["getInfo", "activateType"]),
-  },
+const infoStore = useInfoStore();
+const route = useRoute();
+onMounted(() => {
+  infoStore.getInfo();
+  if (!infoStore.activeType) {
+    infoStore.activateType(route.params.infoType as string);
+  }
 });
 </script>
 

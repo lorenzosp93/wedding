@@ -25,16 +25,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "LoadingView",
-  data() {
-    return {
-      logo: new URL("@/assets/logo.svg", import.meta.url).href,
-    };
-  },
-});
+<script setup lang="ts">
+import { ref } from "vue";
+
+const logo = ref(new URL("@/assets/logo.svg", import.meta.url).href);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

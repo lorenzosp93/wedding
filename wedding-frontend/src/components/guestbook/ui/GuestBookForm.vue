@@ -11,13 +11,16 @@
           :placeholder="$t('guestbook.ui.guestbookform.writeAGuestbook')"
         />
         <div class="flex flex-col">
-          <span class="text-secondary dark:text-darkNeutral ml-3 px-auto">
+          <span class="text-secondary dark:text-darkNeutral ml-auto px-auto">
             {{ text?.length }}/280
           </span>
           <button
             @click.prevent="submitEntry"
-            class="rounded-md bg-accent text-primary ml-3 mt-auto px-2 py-1 shadow-md"
+            class="rounded-md bg-accent text-primary ml-3 mt-auto px-2 py-1 shadow-md flex"
           >
+            <paper-airplane-icon
+              class="w-5 h-5 my-auto mr-1"
+            ></paper-airplane-icon>
             {{ $t("guestbook.ui.guestbookform.submit") }}
           </button>
         </div>
@@ -40,27 +43,22 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { GuestBookError } from "@/models/guestbook.interface";
-import { defineComponent, type PropType } from "vue";
+import { ref, type PropType, type Ref } from "vue";
+import { PaperAirplaneIcon } from "@heroicons/vue/24/outline";
 
-export default defineComponent({
-  name: "GuestBookForm",
-  emits: ["submitEntry"],
-  props: {
-    submitLoading: { type: Boolean },
-    submitError: { type: Object as PropType<GuestBookError> },
-  },
-  data() {
-    return {
-      text: "" as string,
-    };
-  },
-  methods: {
-    submitEntry() {
-      this.$emit("submitEntry", this.text);
-      this.text = "";
-    },
-  },
+const emit = defineEmits(["submitEntry"]);
+
+defineProps({
+  submitLoading: { type: Boolean },
+  submitError: { type: Object as PropType<GuestBookError> },
 });
+
+const text: Ref<string> = ref("");
+
+function submitEntry() {
+  emit("submitEntry", text.value);
+  text.value = "";
+}
 </script>

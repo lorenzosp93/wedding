@@ -10,7 +10,7 @@
       <div
         class="p-1 mr-2 md:hidden select-none cursor-pointer"
         data-test="hide-icon"
-        @click="$emit('hideDetail')"
+        @click="emit('hideDetail')"
       >
         <arrow-left-icon class="h-6 w-6" />
       </div>
@@ -24,7 +24,7 @@
           <li
             :class="{ 'invisible cursor-none': activeIdx == 0 }"
             class="p-1 cursor-pointer select-none"
-            @click="$emit('setActive', (activeIdx ?? 0) - 1)"
+            @click="emit('setActive', (activeIdx ?? 0) - 1)"
           >
             <arrow-up-icon class="h-6 w-6" />
           </li>
@@ -35,7 +35,7 @@
               ),
             }"
             class="p-1 cursor-pointer select-none"
-            @click="$emit('setActive', (activeIdx ?? 0) + 1)"
+            @click="emit('setActive', (activeIdx ?? 0) + 1)"
           >
             <arrow-down-icon class="h-6 w-6" />
           </li>
@@ -72,14 +72,14 @@
         :delete-loading="deleteLoading"
         :delete-error="deleteError"
         :delete-success="deleteSuccess"
-        @submit-response="(responses: IResponse[]) => $emit('submitResponse', responses)"
-        @delete-responses="$emit('deleteResponses')"
+        @submit-response="(responses: IResponse[]) => emit('submitResponse', responses)"
+        @delete-responses="emit('deleteResponses')"
       ></question-view>
     </article>
   </article>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { marked } from "marked";
 import QuestionView from "./QuestionView.vue";
 import WidgetsView from "./ui/WidgetsView.vue";
@@ -88,7 +88,7 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@heroicons/vue/24/outline";
-import { defineComponent, type PropType } from "vue";
+import { type Ref, ref, type PropType, computed, onMounted } from "vue";
 import type {
   IListObject,
   IResponse,
@@ -96,51 +96,45 @@ import type {
 } from "@/models/listObjects.interface";
 import { useEventListener } from "@vueuse/core";
 
-export default defineComponent({
-  components: {
-    QuestionView,
-    WidgetsView,
-    ArrowDownIcon,
-    ArrowLeftIcon,
-    ArrowUpIcon,
-  },
-  props: {
-    activeObject: { type: Object as PropType<IListObject> },
-    activeIdx: { type: Number },
-    searchedListLength: { type: Number },
-    submitLoading: { type: Boolean },
-    submitError: { type: Array<IResponseErrors> },
-    submitSuccess: { type: Boolean },
-    deleteLoading: { type: Boolean },
-    deleteError: { type: Array<IResponseErrors> },
-    deleteSuccess: { type: Boolean },
-  },
-  emits: ["hideDetail", "setActive", "deleteResponses", "submitResponse"],
-  data() {
-    return {
-      loadWidgets: false as boolean,
-    };
-  },
-  computed: {
-    markdown() {
-      return marked.parse(this.activeObject?.content ?? "");
-    },
-  },
-  mounted() {
-    useEventListener("keydown", (event: KeyboardEvent) => {
-      if (
-        event.key == "ArrowRight" &&
-        this.activeIdx &&
-        this.activeIdx < (this.searchedListLength ?? 0) - 1
-      ) {
-        this.$emit("setActive", this.activeIdx + 1);
-      }
-      if (event.key == "ArrowLeft" && this.activeIdx && this.activeIdx > 0) {
-        this.$emit("setActive", this.activeIdx - 1);
-      }
-    });
-    this.loadWidgets = true;
-  },
+const props = defineProps({
+  activeObject: { type: Object as PropType<IListObject> },
+  activeIdx: { type: Number },
+  searchedListLength: { type: Number },
+  submitLoading: { type: Boolean },
+  submitError: { type: Array<IResponseErrors> },
+  submitSuccess: { type: Boolean },
+  deleteLoading: { type: Boolean },
+  deleteError: { type: Array<IResponseErrors> },
+  deleteSuccess: { type: Boolean },
+});
+
+const emit = defineEmits([
+  "hideDetail",
+  "setActive",
+  "deleteResponses",
+  "submitResponse",
+]);
+
+const loadWidgets: Ref<boolean> = ref(false);
+
+const markdown = computed(() => {
+  return marked.parse(props.activeObject?.content ?? "");
+});
+
+onMounted(() => {
+  useEventListener("keydown", (event: KeyboardEvent) => {
+    if (
+      event.key == "ArrowRight" &&
+      props.activeIdx &&
+      props.activeIdx < (props.searchedListLength ?? 0) - 1
+    ) {
+      emit("setActive", props.activeIdx + 1);
+    }
+    if (event.key == "ArrowLeft" && props.activeIdx && props.activeIdx > 0) {
+      emit("setActive", props.activeIdx - 1);
+    }
+  });
+  loadWidgets.value = true;
 });
 </script>
 

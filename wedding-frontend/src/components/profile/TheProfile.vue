@@ -2,28 +2,30 @@
   <div class="flex flex-col max-w-xl mx-auto bg-neutral dark:bg-darkNeutral">
     <div class="w-full overflow-auto px-5">
       <table
-        v-if="!!profile"
+        v-if="!!authStore.profile"
         id="mainTable"
         class="table-auto mx-auto my-5 text-right py-3 px-5 w-full"
       >
         <tbody class="">
           <tr>
             <td>{{ $t("profile.theprofile.first_name") }}</td>
-            <td>{{ profile.user?.first_name }}</td>
+            <td>{{ authStore.profile.user?.first_name }}</td>
           </tr>
           <tr>
             <td>{{ $t("profile.theprofile.last_name") }}</td>
-            <td>{{ profile.user?.last_name }}</td>
+            <td>{{ authStore.profile.user?.last_name }}</td>
           </tr>
           <tr>
             <td>{{ $t("profile.theprofile.email") }}</td>
-            <td>{{ profile.user?.email }}</td>
+            <td>{{ authStore.profile.user?.email }}</td>
           </tr>
-          <tr v-if="profile?.plus">
+          <tr v-if="authStore.profile?.plus">
             <td>{{ $t("profile.theprofile.plusOne") }}</td>
             <td class="flex w-full">
               <div
-                v-if="profile.plus - profile?.childs?.length"
+                v-if="
+                  authStore.profile.plus - authStore.profile?.childs?.length
+                "
                 class="ml-auto"
               >
                 <button
@@ -31,10 +33,12 @@
                   data-test="plusOne-button"
                   @click="togglePlusOne"
                 >
-                  <p class="my-auto ml-auto pr-2">
-                    {{ profile.plus - profile?.childs?.length }}
+                  <user-plus-icon class="w-6 h-6 mr-1 my-auto"></user-plus-icon>
+                  <p class="my-auto ml-auto">
+                    {{
+                      authStore.profile.plus - authStore.profile?.childs?.length
+                    }}
                   </p>
-                  <user-plus-icon class="w-6 h-6"></user-plus-icon>
                 </button>
                 <plus-one v-if="showPlusOne" @toggle="togglePlusOne" />
               </div>
@@ -45,7 +49,10 @@
       </table>
     </div>
 
-    <div v-if="profile?.childs?.length" class="w-full overflow-auto px-5">
+    <div
+      v-if="authStore.profile?.childs?.length"
+      class="w-full overflow-auto px-5"
+    >
       <p class="font-bold">
         {{ $t("profile.theprofile.yourPlusOnes") }}
       </p>
@@ -60,7 +67,10 @@
                   <th>{{ $t("profile.theprofile.last_name") }}</th>
                 </thead>
                 <tbody data-test="plusOne-table">
-                  <tr v-for="child in profile?.childs" :key="child.id">
+                  <tr
+                    v-for="child in authStore.profile?.childs"
+                    :key="child.id"
+                  >
                     <td>{{ child.user.email }}</td>
                     <td>{{ child.user.first_name }}</td>
                     <td>{{ child.user.last_name }}</td>
@@ -74,40 +84,33 @@
     </div>
 
     <button
-      class="rounded-md shadow-md bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3"
-      @click="logout"
+      class="rounded-md shadow-md bg-pale dark:bg-darkPale py-1 px-2 ml-auto mr-5 my-3 flex"
+      @click="authStore.logout"
       data-test="logout-button"
     >
+      <arrow-right-on-rectangle-icon
+        class="w-5 h-5 my-auto mr-1"
+      ></arrow-right-on-rectangle-icon>
       {{ $t("profile.theprofile.logOut") }}
     </button>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import PlusOne from "./PlusOne.vue";
-import profile from "@/components/mixins/profile";
-import { defineComponent } from "vue";
-import { UserPlusIcon } from "@heroicons/vue/24/outline";
+import { useAuthStore } from "@/stores";
+import { ref, type Ref } from "vue";
+import {
+  UserPlusIcon,
+  ArrowRightOnRectangleIcon,
+} from "@heroicons/vue/24/outline";
 
-export default defineComponent({
-  name: "TheProfile",
-  components: {
-    PlusOne,
-    UserPlusIcon,
-  },
-  mixins: [profile],
-  data() {
-    return {
-      showPlusOne: false,
-    };
-  },
-  mounted() {},
-  methods: {
-    togglePlusOne() {
-      this.showPlusOne = !this.showPlusOne;
-    },
-  },
-});
+const showPlusOne: Ref<boolean> = ref(false);
+const authStore = useAuthStore();
+
+function togglePlusOne() {
+  showPlusOne.value = !showPlusOne.value;
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

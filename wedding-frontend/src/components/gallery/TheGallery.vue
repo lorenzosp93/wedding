@@ -8,7 +8,7 @@
         data-test="gallery-cols"
       >
         <thumbnail-item
-          v-for="photo in gallery.filter((_,idx:number)=>{ return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4) == col - 1 })"
+          v-for="photo in galleryStore.gallery.filter((_,idx:number)=>{ return idx%(breakpoint == 'md' ? 1 : breakpoint == 'lg' ? 2 : 4) == col - 1 })"
           :key="photo.id"
           :photo="photo"
           @click="activePhoto = photo"
@@ -16,8 +16,8 @@
       </div>
       <infinite-scrolling
         @get-more-content="getMoreContent"
-        :next="next ?? undefined"
-        :loading="loading"
+        :next="galleryStore.next ?? undefined"
+        :loading="galleryStore.loading"
         class="m-auto cursor-pointer"
       />
     </div>
@@ -30,11 +30,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { mapActions, mapState } from "pinia";
+<script setup lang="ts">
 import { useGalleryStore, GALLERY_LIMIT } from "@/stores";
-import LoadingView from "@/components/shared/LoadingView.vue";
-import { defineComponent } from "vue";
+import { type Ref, ref, onMounted } from "vue";
 import type { Photo } from "@/models/gallery.interface";
 import ThumbnailItem from "./ui/ThumbnailItem.vue";
 import PhotoItem from "./ui/PhotoItem.vue";
@@ -47,59 +45,45 @@ type Breakpoint = {
   value: number;
 };
 
-export default defineComponent({
-  name: "TheGallery",
-  components: {
-    LoadingView,
-    InfiniteScrolling,
-    ThumbnailItem,
-    PhotoItem,
-  },
-  props: {},
-  data() {
-    return {
-      activePhoto: undefined as Photo | undefined,
-      breakpointMap: [
-        { name: "md", value: 768 },
-        { name: "lg", value: 1024 },
-      ] as Array<Breakpoint>,
-      breakpoint: "xl" as string,
-    };
-  },
-  computed: {
-    ...mapState(useGalleryStore, ["gallery", "loading", "error", "next"]),
-  },
-  mounted() {
-    this.getGalleryContent({ force: false, limit: GALLERY_LIMIT });
-    this.setupGalleryColumns();
-    this.updateBreakpoint();
-  },
-  methods: {
-    ...mapActions(useGalleryStore, ["getGalleryContent"]),
-    getMoreContent() {
-      if (this.next && !this.loading) {
-        this.getGalleryContent({
-          force: true,
-          next: true,
-          limit: GALLERY_LIMIT,
-        });
-      }
-    },
-    setupGalleryColumns() {
-      useEventListener("resize", this.resizeEventListener());
-    },
-    resizeEventListener() {
-      return useDebounceFn(() => {
-        this.updateBreakpoint();
-      }, 100);
-    },
-    updateBreakpoint() {
-      this.breakpoint =
-        this.breakpointMap.find((bp) => bp.value >= window.innerWidth)?.name ??
-        "xl";
-    },
-  },
+const galleryStore = useGalleryStore();
+
+const activePhoto: Ref<Photo | undefined> = ref(undefined);
+const breakpointMap: Breakpoint[] = [
+  { name: "md", value: 768 },
+  { name: "lg", value: 1024 },
+];
+const breakpoint: Ref<string> = ref("xl");
+
+onMounted(() => {
+  galleryStore.getGalleryContent({ force: false, limit: GALLERY_LIMIT });
+  setupGalleryColumns();
+  updateBreakpoint();
 });
+
+function getMoreContent() {
+  if (galleryStore.next && !galleryStore.loading) {
+    galleryStore.getGalleryContent({
+      force: true,
+      next: true,
+      limit: GALLERY_LIMIT,
+    });
+  }
+}
+
+function updateBreakpoint() {
+  breakpoint.value =
+    breakpointMap.find((bp) => bp.value >= window.innerWidth)?.name ?? "xl";
+}
+
+function resizeEventListener() {
+  return useDebounceFn(() => {
+    updateBreakpoint();
+  }, 100);
+}
+
+function setupGalleryColumns() {
+  useEventListener("resize", resizeEventListener());
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

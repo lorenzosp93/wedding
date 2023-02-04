@@ -25,32 +25,23 @@
   </li>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import ListItemWidgets from "./ListItemWidgets.vue";
 import type { IListObject, IQuestion } from "@/models/listObjects.interface";
-import { defineComponent, type PropType } from "vue";
-import truncation from "@/components/mixins/truncation";
+import { computed, type PropType } from "vue";
+import { itemContent } from "@/components/composables/truncation";
 
-export default defineComponent({
-  name: "ListItem",
-  components: {
-    ListItemWidgets,
-  },
-  props: {
-    obj: { type: Object as PropType<IListObject> },
-    active: { type: Boolean },
-  },
-  computed: {
-    hasQuestions() {
-      return !!this?.obj?.questions?.length;
-    },
-    hasResponses() {
-      return (
-        this.hasQuestions &&
-        !!this?.obj?.questions?.every((q: IQuestion) => q.response)
-      );
-    },
-  },
-  mixins: [truncation],
+const props = defineProps({
+  obj: { type: Object as PropType<IListObject> },
+  active: { type: Boolean },
+});
+
+const hasQuestions = computed(() => {
+  return !!props.obj?.questions?.length;
+});
+const hasResponses = computed(() => {
+  return (
+    hasQuestions && !!props.obj?.questions?.every((q: IQuestion) => q.response)
+  );
 });
 </script>

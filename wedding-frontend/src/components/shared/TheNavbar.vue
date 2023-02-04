@@ -68,14 +68,14 @@
                 }"
               >
                 <li
-                  v-for="type in infoTypes"
+                  v-for="type in infoStore.infoTypes"
                   :key="type"
                   class="pl-5 pt-1 pb-1 md:pb-0 rounded-lg"
                 >
                   <router-link
                     :to="{ name: 'info', params: { infoType: type } }"
                     class="hover:text-accent child capitalize"
-                    @click="activateType(type)"
+                    @click="infoStore.activateType(type)"
                   >
                     {{ type }}
                   </router-link>
@@ -112,10 +112,7 @@
               id="navbar-profile"
               :to="{ name: 'profile' }"
               class="flex py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              ><p class="md:hidden">{{ $t("shared.thenavbar.profile") }}</p>
-              <user-circle-icon
-                class="h-6 w-6 hidden md:block"
-              ></user-circle-icon>
+              ><p>{{ $t("shared.thenavbar.profile") }}</p>
             </router-link>
           </li>
         </ul>
@@ -124,10 +121,9 @@
   </nav>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useInfoStore } from "@/stores";
-import { mapActions, mapState } from "pinia";
-import { defineComponent } from "vue";
+import { type Ref, onMounted, ref } from "vue";
 import {
   Bars3Icon,
   ChevronDownIcon,
@@ -135,42 +131,31 @@ import {
 } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
 import Shepherd from "shepherd.js";
+import { RouterLink } from "vue-router";
 
-export default defineComponent({
-  name: "TheNavbar",
-  components: {
-    Bars3Icon,
-    ChevronDownIcon,
-    UserCircleIcon,
-    OnClickOutside,
-  },
-  data() {
-    return {
-      menu: false as boolean,
-      dropInfo: false as boolean,
-      logo: new URL("@/assets/logo_long.svg", import.meta.url).href as string,
-    };
-  },
-  computed: {
-    ...mapState(useInfoStore, ["infoTypes", "infos"]),
-  },
-  mounted() {
-    this.getInfo();
-  },
-  methods: {
-    handleTrigger(target: HTMLElement) {
-      let isTour = !!Shepherd.activeTour;
-      let isMenuButton = (this.$refs.menuToggle as HTMLElement).contains(
-        target
-      );
-      if (isTour || isMenuButton) {
-        return;
-      }
-      this.menu = false;
-    },
-    ...mapActions(useInfoStore, ["getInfo", "activateType"]),
-  },
+const infoStore = useInfoStore();
+
+const menu = ref(false);
+const dropInfo = ref(false);
+const logo = ref(
+  new URL("@/assets/logo_long.svg", import.meta.url).href as string
+);
+const menuToggle: Ref<HTMLElement | null> = ref(null);
+
+onMounted(() => {
+  infoStore.getInfo();
 });
+
+function handleTrigger(target: HTMLElement) {
+  let isTour = !!Shepherd.activeTour;
+  let isMenuButton = menuToggle.value
+    ? (menuToggle.value as HTMLElement).contains(target)
+    : false;
+  if (isTour || isMenuButton) {
+    return;
+  }
+  menu.value = false;
+}
 </script>
 
 <style scoped>

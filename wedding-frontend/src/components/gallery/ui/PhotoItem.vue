@@ -17,19 +17,14 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { Photo } from "@/models/gallery.interface";
-import { defineComponent, type PropType } from "vue";
+import { type PropType } from "vue";
 import { OnClickOutside } from "@vueuse/components";
 
-export default defineComponent({
-  name: "PhotoItem",
-  components: {
-    OnClickOutside,
-  },
-  props: {
-    activePhoto: { type: Object as PropType<Photo> },
-  },
-  emits: ["closePhoto"],
+defineProps({
+  activePhoto: { type: Object as PropType<Photo> },
 });
+
+defineEmits(["closePhoto"]);
 </script>

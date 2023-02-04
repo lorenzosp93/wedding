@@ -47,105 +47,98 @@
         @hide-detail="hideDetail"
         @set-active="setActiveByIdx"
         @submit-response="
-          (responses: IResponse[]) => $emit('submitResponse', responses, activeObject?.uuid)
+          (responses: IResponse[]) => emit('submitResponse', responses, activeObject?.uuid)
         "
-        @delete-responses="(_) => $emit('deleteResponses', activeObject?.uuid)"
+        @delete-responses="(_) => emit('deleteResponses', activeObject?.uuid)"
       ></detail-view>
     </main>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import LoadingView from "@/components/shared/LoadingView.vue";
 import PushSubscribe from "@/components/shared/PushSubscribe.vue";
 import DetailView from "./DetailView.vue";
 import ListItem from "./ui/ListItem.vue";
-import { defineComponent, type PropType } from "vue";
+import { ref, type PropType, Ref, computed, watch, onMounted } from "vue";
 import type {
   IResponseErrors,
   IListObject,
   IResponse,
 } from "@/models/listObjects.interface";
 import type { AxiosError } from "axios";
+import { useRoute, useRouter } from "vue-router";
 
-export default defineComponent({
-  name: "ListView",
-  components: {
-    LoadingView,
-    DetailView,
-    PushSubscribe,
-    ListItem,
-  },
-  props: {
-    objList: { type: Array<IListObject> },
-    loading: { type: Boolean },
-    error: { type: Object as PropType<AxiosError> },
-    submitLoading: { type: Boolean },
-    submitError: { type: Array<IResponseErrors> },
-    submitSuccess: { type: Boolean },
-    deleteLoading: { type: Boolean },
-    deleteError: { type: Array<IResponseErrors> },
-    deleteSuccess: { type: Boolean },
-  },
-  emits: ["submitResponse", "deleteResponses"],
-  data() {
-    return {
-      active: "" as string,
-      viewDetail: false as boolean,
-      search: "" as string,
-    };
-  },
-  computed: {
-    searchedList(): Array<IListObject> | undefined {
-      if (!this.search) {
-        return this.objList;
-      }
-      return this.objList?.filter((obj) => {
-        return (
-          (obj?.subject + obj?.content)
-            .toLowerCase()
-            .search(this.search.toLowerCase()) != -1
-        );
-      });
-    },
-    activeObject(): IListObject | undefined {
-      return this.objList?.length
-        ? this.objList.find((obj) => obj.slug == this.active) ?? this.objList[0]
-        : undefined;
-    },
-  },
-  watch: {
-    $route() {
-      this.getActiveFromRoute();
-    },
-  },
-  mounted() {
-    this.getActiveFromRoute();
-  },
-  methods: {
-    getActiveFromRoute() {
-      this.viewDetail = !!this.$route.params.active;
-      this.setActive(this.$route.params.active as string);
-    },
-    setActive(active: string) {
-      this.active = active;
-      this.$router.push({
-        name: this.$route.name ?? undefined,
-        params: { ...this.$route.params, active: active },
-      });
-    },
-    setActiveByIdx(idx: number) {
-      if (this.searchedList?.length) {
-        let active = this.searchedList[idx]?.slug ?? "";
-        this.setActive(active);
-      }
-    },
-    hideDetail() {
-      this.setActive("");
-      this.viewDetail = false;
-    },
-  },
+const props = defineProps({
+  objList: { type: Array<IListObject> },
+  loading: { type: Boolean },
+  error: { type: Object as PropType<AxiosError> },
+  submitLoading: { type: Boolean },
+  submitError: { type: Array<IResponseErrors> },
+  submitSuccess: { type: Boolean },
+  deleteLoading: { type: Boolean },
+  deleteError: { type: Array<IResponseErrors> },
+  deleteSuccess: { type: Boolean },
 });
+const emit = defineEmits(["submitResponse", "deleteResponses"]);
+
+const active: Ref<string> = ref("");
+const search: Ref<string> = ref("");
+const viewDetail: Ref<boolean> = ref(false);
+
+const searchedList: Ref<IListObject[] | undefined> = computed(() => {
+  if (!search.value) {
+    return props.objList;
+  }
+  return props.objList?.filter((obj) => {
+    return (
+      (obj?.subject + obj?.content)
+        .toLowerCase()
+        .search(search.value.toLowerCase()) != -1
+    );
+  });
+});
+
+const activeObject: Ref<IListObject | undefined> = computed(() => {
+  return props.objList?.length
+    ? props.objList.find((obj) => obj.slug == active.value) ?? props.objList[0]
+    : undefined;
+});
+
+const route = useRoute();
+const router = useRouter();
+
+watch(route, async () => {
+  getActiveFromRoute();
+});
+
+onMounted(() => {
+  getActiveFromRoute();
+});
+
+function getActiveFromRoute() {
+  viewDetail.value = !!route.params.active;
+  setActive(route.params.active as string);
+}
+function setActive(a: string) {
+  active.value = a;
+  router.push({
+    name: route.name ?? undefined,
+    params: { ...route.params, active: a },
+  });
+}
+
+function setActiveByIdx(idx: number) {
+  if (searchedList.value?.length) {
+    let a = searchedList.value[idx]?.slug ?? "";
+    setActive(a);
+  }
+}
+
+function hideDetail() {
+  setActive("");
+  viewDetail.value = false;
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

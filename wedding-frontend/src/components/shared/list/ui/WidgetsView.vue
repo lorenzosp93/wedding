@@ -6,14 +6,14 @@
         :href="`data:text/calendar;base64,${createICalBase64()}`"
         class="my-auto ml-auto px-2 py-1 shadow-md rounded-md bg-accent w-fit text-primary font-semibold flex cursor-pointer whitespace-nowrap"
       >
-        <calendar-icon class="h-6 w-6 my-auto" />
+        <calendar-icon class="h-5 w-5 my-auto" />
         <time class="hidden @xl:block px-2 my-auto">
           {{ dateForDisplay("full") }}
         </time>
         <time class="hidden @md:block @xl:hidden px-2 my-auto">
           {{ dateForDisplay("medium") }}
         </time>
-        <plus-icon class="h-6 w-6 my-auto" />
+        <plus-icon class="h-5 w-5 my-auto" />
       </a>
     </Teleport>
 
@@ -63,78 +63,70 @@
   </section>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { CalendarIcon, MapIcon, PlusIcon } from "@heroicons/vue/24/outline";
-import { createEvent, type EventStatus, type EventAttributes } from "ics";
+import { createEvent, type EventAttributes } from "ics";
 import i18n from "@/i18n/index.js";
-import { defineComponent, Teleport, type PropType } from "vue";
+import { Teleport, type PropType, computed } from "vue";
 import {
   IWidgetType,
   type IWidget,
   type IListObject,
 } from "@/models/listObjects.interface";
 
-export default defineComponent({
-  components: {
-    CalendarIcon,
-    MapIcon,
-    PlusIcon,
-  },
-  props: {
-    activeObject: { type: Object as PropType<IListObject> },
-  },
-  computed: {
-    calendarWidget() {
-      return this.activeObject?.widget?.find(
-        (w: IWidget) => w.type == IWidgetType.calendar
-      )?.content;
-    },
-    mapsWidget() {
-      return this.activeObject?.widget?.find(
-        (w: IWidget) => w.type == IWidgetType.maps
-      )?.content;
-    },
-  },
-  methods: {
-    createICalBase64() {
-      const event: EventAttributes = {
-        start: this.calendarWidget?.start ?? [2030, 1, 1], // [2018, 5, 30, 6, 30],
-        startInputType: "utc", // provide dates in UTC
-        duration: this.calendarWidget?.duration ?? { hours: 2 },
-        title: this.activeObject?.subject,
-        description: this.calendarWidget?.description,
-        location: this.calendarWidget?.location,
-        url: import.meta.url,
-        geo: this.calendarWidget?.geo, //{ lat: 40.0095, lon: 105.2669 },
-        status: this.calendarWidget?.status ?? "CONFIRMED",
-        busyStatus: "BUSY",
-        organizer: {
-          name: "Priscilla and Lorenzo",
-          email: "info@priscillalorenzo.com",
-        },
-      };
-      return createEvent(event, (error, value) => {
-        if (error) {
-          console.log(error);
-          return;
-        }
-        return window.btoa(value);
-      });
-    },
-    dateForDisplay(format: "full" | "long" | "medium" | "short" = "full") {
-      let start = this.calendarWidget?.start as number[];
-      start = [...(start as number[])]; // shallow copy
-      if (!start) {
-        return null;
-      }
-      start[1] -= 1; // months are 0-indexed
-      const date = new Date(...(start as []));
-      return date.toLocaleDateString(i18n.global.locale.value, {
-        dateStyle: format,
-      });
-    },
-  },
+const props = defineProps({
+  activeObject: { type: Object as PropType<IListObject> },
 });
+
+const calendarWidget = computed(() => {
+  return props.activeObject?.widget?.find(
+    (w: IWidget) => w.type == IWidgetType.calendar
+  )?.content;
+});
+
+const mapsWidget = computed(() => {
+  return props.activeObject?.widget?.find(
+    (w: IWidget) => w.type == IWidgetType.maps
+  )?.content;
+});
+function createICalBase64() {
+  const event: EventAttributes = {
+    start: calendarWidget.value?.start ?? [2030, 1, 1], // [2018, 5, 30, 6, 30],
+    startInputType: "utc", // provide dates in UTC
+    duration: calendarWidget.value?.duration ?? { hours: 2 },
+    title: props.activeObject?.subject,
+    description: calendarWidget.value?.description,
+    location: calendarWidget.value?.location,
+    url: import.meta.url,
+    geo: calendarWidget.value?.geo, //{ lat: 40.0095, lon: 105.2669 },
+    status: calendarWidget.value?.status ?? "CONFIRMED",
+    busyStatus: "BUSY",
+    organizer: {
+      name: "Priscilla and Lorenzo",
+      email: "info@priscillalorenzo.com",
+    },
+  };
+  return createEvent(event, (error, value) => {
+    if (error) {
+      console.log(error);
+      return;
+    }
+    return window.btoa(value);
+  });
+}
+
+function dateForDisplay(format: "full" | "long" | "medium" | "short" = "full") {
+  let start = calendarWidget.value?.start as number[];
+  start = [...(start as number[])]; // shallow copy
+  if (!start) {
+    return null;
+  }
+  start[1] -= 1; // months are 0-indexed
+  const date = new Date(...(start as []));
+  return date.toLocaleDateString(i18n.global.locale.value, {
+    dateStyle: format,
+  });
+}
 </script>
 
 <style scoped></style>

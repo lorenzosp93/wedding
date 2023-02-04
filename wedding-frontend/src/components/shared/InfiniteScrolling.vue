@@ -16,51 +16,46 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
-import { defineComponent } from "vue";
+import { onMounted } from "vue";
 import LoadingView from "./LoadingView.vue";
 import { useEventListener } from "@vueuse/core";
 import { useDebounceFn, useThrottleFn } from "@vueuse/core";
 
-export default defineComponent({
-  name: "InfiniteScrolling",
-  props: {
-    loading: { type: Boolean },
-    next: { type: String },
-  },
-  emits: ["getMoreContent"],
-  components: {
-    ChevronDoubleDownIcon,
-    LoadingView,
-  },
-  mounted() {
-    this.setupInfiniteScroll();
-  },
-  methods: {
-    getMoreContent() {
-      this.$emit("getMoreContent");
-    },
-    setupInfiniteScroll() {
-      useEventListener("scroll", this.scrollEventListener());
-    },
-    scrollEventListener() {
-      return useDebounceFn(() => {
-        let condition =
-          window.innerHeight + window.pageYOffset >=
-          document.documentElement.offsetHeight;
-        if (condition) {
-          useThrottleFn(
-            () => {
-              this.getMoreContent();
-            },
-            500,
-            false,
-            true
-          )();
-        }
-      }, 200);
-    },
-  },
+defineProps({
+  loading: { type: Boolean },
+  next: { type: String },
 });
+const emit = defineEmits(["getMoreContent"]);
+
+onMounted(() => {
+  setupInfiniteScroll();
+});
+
+function getMoreContent() {
+  emit("getMoreContent");
+}
+
+function setupInfiniteScroll() {
+  useEventListener("scroll", scrollEventListener());
+}
+
+function scrollEventListener() {
+  return useDebounceFn(() => {
+    let condition =
+      window.innerHeight + window.pageYOffset >=
+      document.documentElement.offsetHeight;
+    if (condition) {
+      useThrottleFn(
+        () => {
+          getMoreContent();
+        },
+        500,
+        false,
+        true
+      )();
+    }
+  }, 200);
+}
 </script>

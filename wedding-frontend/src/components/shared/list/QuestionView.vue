@@ -3,7 +3,7 @@
   <section id="object-questions">
     <form
       v-if="responses && responses?.length"
-      @submit.prevent="$emit('submitResponse', responses)"
+      @submit.prevent="emit('submitResponse', responses)"
     >
       <div v-for="(question, idx) in questions" :key="question.uuid">
         <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
@@ -81,12 +81,15 @@
         <p class="py-1 font-bold my-auto">
           {{ $t("shared.listview.alreadyAnswered") }}
         </p>
-        <div class="ml-auto my-auto relative w-48 min-h-[2.5rem] p-2">
+        <div class="ml-auto my-auto relative w-56 min-h-[2.5rem] p-2">
           <button
             v-show="!deleteLoading"
-            class="bg-pale dark:bg-darkPale text-primary rounded-md px-2 py-1 my-auto"
-            @click.prevent="$emit('deleteResponses')"
+            class="bg-pale dark:bg-darkPale text-primary rounded-md px-2 py-1 my-auto flex"
+            @click.prevent="emit('deleteResponses')"
           >
+            <pencil-square-icon
+              class="w-5 h-5 mr-1 my-auto"
+            ></pencil-square-icon>
             {{ $t("shared.listview.changeResponses") }}
           </button>
           <loading-view v-if="deleteLoading"></loading-view>
@@ -99,8 +102,11 @@
         <button
           v-show="!submitLoading"
           class="bg-accent text-primary rounded-md px-2 py-1 flex mx-auto"
-          @click.prevent="$emit('submitResponse', responses)"
+          @click.prevent="emit('submitResponse', responses)"
         >
+          <paper-airplane-icon
+            class="w-5 h-5 mr-1 my-auto"
+          ></paper-airplane-icon>
           {{ $t("shared.listview.submit") }}
         </button>
         <loading-view v-if="submitLoading"></loading-view>
@@ -110,91 +116,90 @@
   </section>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import LoadingView from "@/components/shared/LoadingView.vue";
-import { defineComponent, type PropType } from "vue";
+import { type Ref, ref, watch, onMounted } from "vue";
 import type {
   IQuestion,
   IResponse,
   IResponseErrors,
 } from "@/models/listObjects.interface";
+import { PencilSquareIcon, PaperAirplaneIcon } from "@heroicons/vue/24/outline";
 
-export default defineComponent({
-  data() {
-    return {
-      responses: [] as IResponse[],
-    };
-  },
-  components: {
-    LoadingView,
-  },
-  props: {
-    questions: { type: Array<IQuestion>, default: [] },
-    submitLoading: { type: Boolean },
-    submitError: { type: Array<IResponseErrors> },
-    submitSuccess: { type: Boolean },
-    deleteLoading: { type: Boolean },
-    deleteError: { type: Array<IResponseErrors> },
-    deleteSuccess: { type: Boolean },
-  },
-  watch: {
-    questions(newVal: IQuestion[], oldVal: IQuestion[]) {
-      if (newVal != oldVal) {
-        this.responseSetup();
-      }
-    },
-  },
-  emits: ["deleteResponses", "submitResponse"],
-  mounted() {
-    this.responseSetup();
-  },
-  methods: {
-    responseSetup() {
-      this.responses = [];
-      if (this.questions.length) {
-        this.questions.forEach((question: IQuestion) => {
-          this.responses = [
-            ...this.responses,
-            {
-              question: question.uuid,
-              option: question?.response?.option ?? [],
-              text: question?.response?.text ?? "",
-            },
-          ];
-        });
-      }
-    },
-    handleInput(question: IQuestion, event: Event) {
-      let value = (event?.target as HTMLInputElement).value;
-      let response = this.getResponse(question);
-      if (response) {
-        if (question.multi_select) {
-          this.multiSelectInputHandler(value, response);
-        } else {
-          this.singleSelectInputHandler(value, response);
-        }
-      }
-    },
-    multiSelectInputHandler(value: string, response: IResponse) {
-      if (response.option.includes(value)) {
-        response.option = response.option.filter((o: string) => o != value);
-      } else {
-        response.option = [...response.option, value];
-      }
-    },
-    singleSelectInputHandler(value: string, response: IResponse) {
-      response.option = [value];
-    },
-    getResponse(question: IQuestion): IResponse {
-      return (
-        this.responses.find((r: IResponse) => r.question == question.uuid) ?? {
-          option: [],
-          text: "",
-        }
-      );
-    },
-  },
+const responses: Ref<IResponse[]> = ref([]);
+const props = defineProps({
+  questions: { type: Array<IQuestion>, default: [] },
+  submitLoading: { type: Boolean },
+  submitError: { type: Array<IResponseErrors> },
+  submitSuccess: { type: Boolean },
+  deleteLoading: { type: Boolean },
+  deleteError: { type: Array<IResponseErrors> },
+  deleteSuccess: { type: Boolean },
 });
+
+watch(
+  () => props.questions,
+  (newVal: IQuestion[], oldVal: IQuestion[]) => {
+    if (newVal != oldVal) {
+      responseSetup();
+    }
+  }
+);
+
+function responseSetup() {
+  responses.value = [];
+  if (props.questions.length) {
+    props.questions.forEach((question: IQuestion) => {
+      responses.value = [
+        ...responses.value,
+        {
+          question: question.uuid,
+          option: question?.response?.option ?? [],
+          text: question?.response?.text ?? "",
+        },
+      ];
+    });
+  }
+}
+
+const emit = defineEmits(["deleteResponses", "submitResponse"]);
+
+onMounted(() => {
+  responseSetup();
+});
+
+function handleInput(question: IQuestion, event: Event) {
+  let value = (event?.target as HTMLInputElement).value;
+  let response = getResponse(question);
+  if (response) {
+    if (question.multi_select) {
+      multiSelectInputHandler(value, response);
+    } else {
+      singleSelectInputHandler(value, response);
+    }
+  }
+}
+
+function multiSelectInputHandler(value: string, response: IResponse) {
+  if (response.option.includes(value)) {
+    response.option = response.option.filter((o: string) => o != value);
+  } else {
+    response.option = [...response.option, value];
+  }
+}
+
+function singleSelectInputHandler(value: string, response: IResponse) {
+  response.option = [value];
+}
+
+function getResponse(question: IQuestion): IResponse {
+  return (
+    responses.value.find((r: IResponse) => r.question == question.uuid) ?? {
+      option: [],
+      text: "",
+    }
+  );
+}
 </script>
 
 <style scoped></style>
