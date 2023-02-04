@@ -81,10 +81,10 @@
         <p class="py-1 font-bold my-auto">
           {{ $t("shared.listview.alreadyAnswered") }}
         </p>
-        <div class="ml-auto my-auto relative w-56 min-h-[2.5rem] p-2">
+        <div class="ml-auto my-auto relative w-56 min-h-[2.5rem]">
           <button
             v-show="!deleteLoading"
-            class="bg-pale dark:bg-darkPale text-primary rounded-md px-2 py-1 my-auto flex"
+            class="bg-pale dark:bg-darkPale text-primary rounded-md px-2 py-1 my-auto flex ml-auto"
             @click.prevent="emit('deleteResponses')"
           >
             <pencil-square-icon
