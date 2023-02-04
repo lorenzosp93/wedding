@@ -5,9 +5,14 @@
       v-if="responses && responses?.length"
       @submit.prevent="emit('submitResponse', responses)"
     >
-      <div v-for="(question, idx) in questions" :key="question.uuid">
+      <div
+        v-for="(question, idx) in questions"
+        :key="question.uuid"
+        class="my-3"
+      >
+        <hr class="my-1" />
         <h1 class="text-lg">{{ idx + 1 }}. {{ question.subject }}</h1>
-        <p v-html="question.content" class="text-sm pl-5"></p>
+        <p v-html="question.content" class="text-sm pl-5 py-1"></p>
         <ul
           v-if="question.options?.length"
           :multiple="question.multi_select"
@@ -42,7 +47,7 @@
         >
           {{ submitError.find((e) => e.q == question.uuid)?.e.option[0] }}
         </p>
-        <div v-if="question.free_text" class="mb-5">
+        <div v-if="question.free_text" class="">
           <label v-if="question.options?.length" for="input" class="my-1">{{
             $t("shared.listview.other")
           }}</label>
@@ -81,7 +86,7 @@
         <p class="py-1 font-bold my-auto">
           {{ $t("shared.listview.alreadyAnswered") }}
         </p>
-        <div class="ml-auto my-auto relative w-56 min-h-[2.5rem]">
+        <div class="ml-auto py-3 relative w-56 min-h-[2.5rem]">
           <button
             v-show="!deleteLoading"
             class="bg-pale dark:bg-darkPale text-primary rounded-md px-2 py-1 my-auto flex ml-auto"
