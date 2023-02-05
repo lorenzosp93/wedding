@@ -198,7 +198,7 @@ export default defineComponent({
           0.5
         )
         .set("#scroller", { autoAlpha: 0 }, 0.5)
-        .to("#rsvp", { autoAlpha: 1, duration: 0.1 }, 0.9);
+        .to("#rsvp", { autoAlpha: 1, duration: 0.2 }, 0.8);
       this.tl = tl;
     },
     scrollToBottom() {

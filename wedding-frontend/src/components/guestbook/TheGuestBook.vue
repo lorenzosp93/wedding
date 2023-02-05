@@ -39,8 +39,6 @@ import GuestBookForm from "./ui/GuestBookForm.vue";
 import InfiniteScrolling from "../shared/InfiniteScrolling.vue";
 import { GUESTBOOK_LIMIT } from "@/stores";
 
-const text: Ref<string> = ref("");
-
 const guestBookStore = useGuestBookStore();
 const authStore = useAuthStore();
 
