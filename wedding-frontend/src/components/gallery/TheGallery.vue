@@ -37,28 +37,13 @@ import type { Photo } from "@/models/gallery.interface";
 import ThumbnailItem from "./ui/ThumbnailItem.vue";
 import PhotoItem from "./ui/PhotoItem.vue";
 import InfiniteScrolling from "../shared/InfiniteScrolling.vue";
-import { useEventListener } from "@vueuse/core";
-import { useDebounceFn } from "@vueuse/core";
+import { useBreakpoints } from "@/components/composables/breakpoints";
 
-type Breakpoint = {
-  name: "sm" | "md" | "lg" | "xl";
-  value: number;
-};
+const breakpoint = useBreakpoints();
 
 const galleryStore = useGalleryStore();
 
 const activePhoto: Ref<Photo | undefined> = ref(undefined);
-const breakpointMap: Breakpoint[] = [
-  { name: "md", value: 768 },
-  { name: "lg", value: 1024 },
-];
-const breakpoint: Ref<string> = ref("xl");
-
-onMounted(() => {
-  galleryStore.getGalleryContent({ force: false, limit: GALLERY_LIMIT });
-  setupGalleryColumns();
-  updateBreakpoint();
-});
 
 function getMoreContent() {
   if (galleryStore.next && !galleryStore.loading) {
@@ -70,20 +55,9 @@ function getMoreContent() {
   }
 }
 
-function updateBreakpoint() {
-  breakpoint.value =
-    breakpointMap.find((bp) => bp.value >= window.innerWidth)?.name ?? "xl";
-}
-
-function resizeEventListener() {
-  return useDebounceFn(() => {
-    updateBreakpoint();
-  }, 100);
-}
-
-function setupGalleryColumns() {
-  useEventListener("resize", resizeEventListener());
-}
+onMounted(() => {
+  galleryStore.getGalleryContent({ force: false, limit: GALLERY_LIMIT });
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
