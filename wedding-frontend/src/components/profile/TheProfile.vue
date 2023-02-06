@@ -33,14 +33,14 @@
                   data-test="plusOne-button"
                   @click="togglePlusOne"
                 >
-                  <user-plus-icon class="w-6 h-6 mr-1 my-auto"></user-plus-icon>
+                  <UserPlusIcon class="w-6 h-6 mr-1 my-auto" />
                   <p class="my-auto ml-auto">
                     {{
                       authStore.profile.plus - authStore.profile?.childs?.length
                     }}
                   </p>
                 </button>
-                <plus-one v-if="showPlusOne" @toggle="togglePlusOne" />
+                <PlusOne v-if="showPlusOne" @toggle="togglePlusOne" />
               </div>
               <div v-else class="ml-auto">0</div>
             </td>
@@ -88,9 +88,7 @@
       @click="authStore.logout"
       data-test="logout-button"
     >
-      <arrow-right-on-rectangle-icon
-        class="w-5 h-5 my-auto mr-1"
-      ></arrow-right-on-rectangle-icon>
+      <ArrowRightOnRectangleIcon class="w-5 h-5 my-auto mr-1" />
       {{ $t("profile.theprofile.logOut") }}
     </button>
   </div>

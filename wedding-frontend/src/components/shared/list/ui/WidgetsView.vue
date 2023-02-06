@@ -69,24 +69,24 @@ import { createEvent, type EventAttributes } from "ics";
 import i18n from "@/i18n/index.js";
 import { Teleport, type PropType, computed } from "vue";
 import {
-  IWidgetType,
-  type IWidget,
-  type IListObject,
+  WidgetType,
+  type Widget,
+  type ListObject,
 } from "@/models/listObjects.interface";
 
 const props = defineProps({
-  activeObject: { type: Object as PropType<IListObject> },
+  activeObject: { type: Object as PropType<ListObject> },
 });
 
 const calendarWidget = computed(() => {
   return props.activeObject?.widget?.find(
-    (w: IWidget) => w.type == IWidgetType.calendar
+    (w: Widget) => w.type == WidgetType.calendar
   )?.content;
 });
 
 const mapsWidget = computed(() => {
   return props.activeObject?.widget?.find(
-    (w: IWidget) => w.type == IWidgetType.maps
+    (w: Widget) => w.type == WidgetType.maps
   )?.content;
 });
 function createICalBase64() {

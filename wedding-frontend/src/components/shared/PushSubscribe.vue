@@ -6,7 +6,7 @@
         class="bg-neutral dark:bg-darkNeutral p-1 rounded-md"
         @click="notificationStore.askPermission"
       >
-        <bell-alert-icon class="h-6 w-6 md:h-7 md:w-7" />
+        <BellAlertIcon class="h-6 w-6 md:h-7 md:w-7" />
       </button>
     </div>
   </div>

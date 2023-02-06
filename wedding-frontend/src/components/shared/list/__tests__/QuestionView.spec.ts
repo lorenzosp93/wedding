@@ -2,7 +2,7 @@ import { describe, it, vi, beforeEach, expect, type Mock } from "vitest";
 import { type VueWrapper, mount } from "@vue/test-utils";
 import QuestionView from "../QuestionView.vue";
 import type { ComponentPublicInstance } from "vue";
-import type { IResponse } from "@/models/listObjects.interface";
+import type { Response } from "@/models/listObjects.interface";
 
 describe("Question view tests", () => {
   let wrapper: VueWrapper<ComponentPublicInstance<any>>;
@@ -73,7 +73,7 @@ describe("Question view tests", () => {
     await wrapper.findAll("input[type=text]")[1].setValue("someText");
     await wrapper.get("button").trigger("click");
 
-    let submit = wrapper.emitted().submitResponse[0] as Array<IResponse[]>;
+    let submit = wrapper.emitted().submitResponse[0] as Array<Response[]>;
     expect(submit[0]).toHaveLength(2);
     expect(submit[0][0].question).toBe("abc123");
     expect(submit[0][0].option).toStrictEqual(["a23456", "a3456"]);

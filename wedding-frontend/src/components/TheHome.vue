@@ -13,18 +13,18 @@
           {{ $t("thehome.priscillaAndLorenzo") }}
         </p>
       </div>
-      <count-down :end-date="endDate" class="my-10 mx-auto"></count-down>
+      <CountDown :end-date="endDate" class="my-10 mx-auto" />
       <div
         id="invite-link"
         class="flex w-fit mx-auto my-8 bg-accent text-primary px-2 py-1 rounded-md shadow-md"
       >
-        <router-link :to="{ name: 'invitation' }" class="flex">
-          <envelope-icon class="w-5 h-5 mr-1 my-auto"></envelope-icon>
+        <RouterLink :to="{ name: 'invitation' }" class="flex">
+          <EnvelopeIcon class="w-5 h-5 mr-1 my-auto" />
           {{ $t("thehome.openYourInvitation") }}
-        </router-link>
+        </RouterLink>
       </div>
     </div>
-    <onboarding-tour v-if="authStore.profile"></onboarding-tour>
+    <OnboardingTour v-if="authStore.profile" />
   </div>
 </template>
 

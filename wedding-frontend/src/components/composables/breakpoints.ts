@@ -20,7 +20,7 @@ export function useBreakpoints() {
 
   function updateBreakpoint() {
     breakpoint.value =
-      breakpointMap.find((bp) => bp.value >= window.innerWidth)?.name ?? "xl";
+      breakpointMap.find((bp) => bp.value >= window.outerWidth)?.name ?? "xl";
   }
 
   function resizeEventListener() {

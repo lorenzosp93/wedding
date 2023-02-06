@@ -4,9 +4,9 @@
     class="px-3 py-3 flex flex-initial max-w-4xl mx-auto w-full"
   >
     <div class="flex flex-wrap justify-between items-center w-full">
-      <router-link to="/" class="mr-auto w-fit">
+      <RouterLink to="/" class="mr-auto w-fit">
         <img class="h-12 w-48" :src="logo" aria-label="P & L logo" />
-      </router-link>
+      </RouterLink>
       <button
         id="menu-toggle"
         type="button"
@@ -33,12 +33,12 @@
           class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 duration-500 ease-out md:transition-none"
         >
           <li>
-            <router-link
+            <RouterLink
               id="navbar-home"
               :to="{ name: 'home' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
               aria-current="page"
-              >{{ $t("shared.thenavbar.home") }}</router-link
+              >{{ $t("shared.thenavbar.home") }}</RouterLink
             >
           </li>
           <li>
@@ -72,48 +72,48 @@
                   :key="type"
                   class="pl-5 pt-1 pb-1 md:pb-0 rounded-lg"
                 >
-                  <router-link
+                  <RouterLink
                     :to="{ name: 'info', params: { infoType: type } }"
                     class="hover:text-accent child capitalize"
                     @click="infoStore.activateType(type)"
                   >
                     {{ type }}
-                  </router-link>
+                  </RouterLink>
                 </li>
               </ul>
             </OnClickOutside>
           </li>
           <li>
-            <router-link
+            <RouterLink
               id="navbar-guestbook"
               :to="{ name: 'guestbook' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              >{{ $t("shared.thenavbar.guestbook") }}</router-link
+              >{{ $t("shared.thenavbar.guestbook") }}</RouterLink
             >
           </li>
           <li>
-            <router-link
+            <RouterLink
               id="navbar-inbox"
               :to="{ name: 'inbox' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              >{{ $t("shared.thenavbar.inbox") }}</router-link
+              >{{ $t("shared.thenavbar.inbox") }}</RouterLink
             >
           </li>
           <li>
-            <router-link
+            <RouterLink
               id="navbar-gallery"
               :to="{ name: 'gallery' }"
               class="block py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              >{{ $t("shared.thenavbar.gallery") }}</router-link
+              >{{ $t("shared.thenavbar.gallery") }}</RouterLink
             >
           </li>
           <li>
-            <router-link
+            <RouterLink
               id="navbar-profile"
               :to="{ name: 'profile' }"
               class="flex py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
               >{{ $t("shared.thenavbar.profile") }}
-            </router-link>
+            </RouterLink>
           </li>
         </ul>
       </OnClickOutside>
@@ -127,7 +127,6 @@ import { type Ref, onMounted, ref } from "vue";
 import {
   Bars3Icon,
   ChevronDownIcon,
-  UserCircleIcon,
 } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
 import Shepherd from "shepherd.js";

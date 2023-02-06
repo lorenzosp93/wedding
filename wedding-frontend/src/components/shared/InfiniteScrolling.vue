@@ -8,11 +8,11 @@
       @click="getMoreContent"
       class="m-auto cursor-pointer"
     >
-      <chevron-double-down-icon
+      <ChevronDoubleDownIcon
         class="h-10 w-10 md:h-12 md:w-12 pt-3.5 animate-bounce stroke-accent stroke-2"
       />
     </div>
-    <loading-view v-show="loading"></loading-view>
+    <LoadingView v-show="loading" />
   </div>
 </template>
 

@@ -10,9 +10,9 @@ import {
 } from "../api.store";
 import { apiService } from "@/services/api.service";
 import type {
-  IInformation,
-  IMessage,
-  IResponse,
+  Information,
+  Message,
+  Response,
 } from "@/models/listObjects.interface";
 import type { AxiosError, AxiosResponse } from "axios";
 import type { Gallery } from "@/models/gallery.interface";
@@ -43,7 +43,7 @@ let testInfo = [
     picture: "https://link.to.pic",
     thumbnail: "https://link.to.thumb",
   },
-] as IInformation[];
+] as Information[];
 
 describe("Info store test", () => {
   beforeEach(() => {
@@ -99,13 +99,13 @@ let testInbox = [
     subject: "someOtherTestSubject",
     questions: [],
   },
-] as IMessage[];
+] as Message[];
 
 let testResponse = {
   option: ["acb231"],
   text: "someTextResponse",
   question: "cba321",
-} as IResponse;
+} as Response;
 
 describe("Inbox store test", () => {
   beforeEach(() => {

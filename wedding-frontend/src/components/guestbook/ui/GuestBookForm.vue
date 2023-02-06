@@ -18,9 +18,7 @@
             @click.prevent="submitEntry"
             class="rounded-md bg-accent text-primary ml-3 mt-auto px-2 py-1 shadow-md flex"
           >
-            <paper-airplane-icon
-              class="w-5 h-5 my-auto mr-1"
-            ></paper-airplane-icon>
+            <PaperAirplaneIcon class="w-5 h-5 my-auto mr-1" />
             {{ $t("guestbook.ui.guestbookform.submit") }}
           </button>
         </div>

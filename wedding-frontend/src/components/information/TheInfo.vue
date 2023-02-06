@@ -1,6 +1,6 @@
 <template>
   <div>
-    <list-view
+    <ListView
       :obj-list="infoStore.infosActiveType"
       :loading="infoStore.loading"
       :error="infoStore.error"

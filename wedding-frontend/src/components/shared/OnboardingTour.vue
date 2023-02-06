@@ -5,7 +5,7 @@
       class="p-1 bg-neutral dark:bg-darkNeutral rounded-md"
       @click="tour?.start"
     >
-      <information-circle-icon class="h-6 w-6 md:h-7 md:w-7" />
+      <InformationCircleIcon class="h-6 w-6 md:h-7 md:w-7" />
     </button>
   </div>
 </template>
@@ -114,7 +114,7 @@ export default {
             canClickTarget: true,
             showOn: () => {
               return (
-                window.innerWidth < 768 &&
+                window.outerWidth < 768 &&
                 window.getComputedStyle(
                   document.getElementById("navbar-default") ?? new Element()
                 ).visibility == "hidden"
