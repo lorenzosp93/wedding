@@ -1,6 +1,6 @@
 <template>
   <div>
-    <list-view
+    <ListView
       :obj-list="inboxStore.inbox"
       :loading="inboxStore.inboxLoading"
       :error="inboxStore.error"
@@ -12,9 +12,7 @@
       :delete-success="inboxStore.deleteSuccess"
       @submit-response="inboxStore.submitResponse"
       @delete-responses="inboxStore.deleteResponses"
-    >
-      <template #search> </template>
-    </list-view>
+    />
   </div>
 </template>
 

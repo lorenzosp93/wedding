@@ -12,7 +12,7 @@
         data-test="hide-icon"
         @click="emit('hideDetail')"
       >
-        <arrow-left-icon class="h-6 w-6" />
+        <ArrowLeftIcon class="h-6 w-6" />
       </div>
       <div id="header-title" class="w-full flex py-3">
         <h3 class="font-semibold text-2xl mr-1">{{ activeObject?.subject }}</h3>
@@ -26,7 +26,7 @@
             class="p-1 cursor-pointer select-none"
             @click="emit('setActive', (activeIdx ?? 0) - 1)"
           >
-            <arrow-up-icon class="h-6 w-6" />
+            <ArrowUpIcon class="h-6 w-6" />
           </li>
           <li
             :class="{
@@ -37,7 +37,7 @@
             class="p-1 cursor-pointer select-none"
             @click="emit('setActive', (activeIdx ?? 0) + 1)"
           >
-            <arrow-down-icon class="h-6 w-6" />
+            <ArrowDownIcon class="h-6 w-6" />
           </li>
         </ul>
       </div>
@@ -59,11 +59,11 @@
         class="my-3 prose dark:prose-invert"
         v-html="markdown"
       ></section>
-      <widgets-view
+      <WidgetsView
         v-if="activeObject?.widget?.length && loadWidgets"
         :active-object="activeObject"
-      ></widgets-view>
-      <question-view
+      />
+      <QuestionView
         v-if="activeObject?.questions?.length"
         :questions="activeObject.questions"
         :submit-loading="submitLoading"
@@ -72,9 +72,9 @@
         :delete-loading="deleteLoading"
         :delete-error="deleteError"
         :delete-success="deleteSuccess"
-        @submit-response="(responses: IResponse[]) => emit('submitResponse', responses)"
+        @submit-response="(responses: Response[]) => emit('submitResponse', responses)"
         @delete-responses="emit('deleteResponses')"
-      ></question-view>
+      />
     </article>
   </article>
 </template>
@@ -90,21 +90,21 @@ import {
 } from "@heroicons/vue/24/outline";
 import { type Ref, ref, type PropType, computed, onMounted } from "vue";
 import type {
-  IListObject,
-  IResponse,
-  IResponseErrors,
+  ListObject,
+  Response,
+  ResponseErrors,
 } from "@/models/listObjects.interface";
 import { useEventListener } from "@vueuse/core";
 
 const props = defineProps({
-  activeObject: { type: Object as PropType<IListObject> },
+  activeObject: { type: Object as PropType<ListObject> },
   activeIdx: { type: Number },
   searchedListLength: { type: Number },
   submitLoading: { type: Boolean },
-  submitError: { type: Array<IResponseErrors> },
+  submitError: { type: Array<ResponseErrors> },
   submitSuccess: { type: Boolean },
   deleteLoading: { type: Boolean },
-  deleteError: { type: Array<IResponseErrors> },
+  deleteError: { type: Array<ResponseErrors> },
   deleteSuccess: { type: Boolean },
 });
 

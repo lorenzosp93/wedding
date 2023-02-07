@@ -4,10 +4,10 @@ import type {
   GuestBookError,
 } from "@/models/guestbook.interface";
 import type {
-  IInformation,
-  IMessage,
-  IResponse,
-  IResponseErrors,
+  Information,
+  Message,
+  Response,
+  ResponseErrors,
 } from "@/models/listObjects.interface";
 import type { Gallery, Photo } from "@/models/gallery.interface";
 import { apiService } from "@/services/api.service";
@@ -35,14 +35,14 @@ export const useInfoStore = defineStore({
   id: "info",
   state: () => ({
     // initialize state from local storage to enable user to stay logged in
-    infos: useStorage("infos", []) as RemovableRef<IInformation[]>,
+    infos: useStorage("infos", []) as RemovableRef<Information[]>,
     loading: false as boolean,
     error: undefined as AxiosError | undefined,
     expiry: useStorage("infosExpiry", Date.now()) as RemovableRef<number>,
     activeType: undefined as string | undefined,
   }),
   getters: {
-    infosActiveType: (state): IInformation[] => {
+    infosActiveType: (state): Information[] => {
       return state.infos.filter((info) => {
         return info.type.toLowerCase() == state.activeType?.toLowerCase();
       });
@@ -67,7 +67,7 @@ export const useInfoStore = defineStore({
         this.loading = true;
         apiService
           .getInfoContent()
-          .then((response: AxiosResponse<IInformation[]>) => {
+          .then((response: AxiosResponse<Information[]>) => {
             this.handleResponse(response);
           })
           .catch((error: AxiosError) => {
@@ -83,7 +83,7 @@ export const useInfoStore = defineStore({
       }
       this.activeType = type.toLowerCase();
     },
-    handleResponse(response: AxiosResponse<IInformation[]>) {
+    handleResponse(response: AxiosResponse<Information[]>) {
       this.infos = response.data;
       this.loading = false;
       this.setExpiry();
@@ -100,17 +100,17 @@ export const useInfoStore = defineStore({
 export const useInboxStore = defineStore({
   id: "inbox",
   state: () => ({
-    inbox: useStorage("inbox", []) as RemovableRef<IMessage[]>,
+    inbox: useStorage("inbox", []) as RemovableRef<Message[]>,
     expiry: useStorage("inboxExpiry", Date.now()) as RemovableRef<number>,
     inboxLoading: false as boolean,
-    responses: [] as IResponse[],
+    responses: [] as Response[],
     error: undefined as AxiosError | undefined,
     submitLoading: false as boolean,
     submitSuccess: false as boolean,
-    submitError: [] as IResponseErrors[],
+    submitError: [] as ResponseErrors[],
     deleteLoading: false as boolean,
     deleteSuccess: false as boolean,
-    deleteError: [] as IResponseErrors[],
+    deleteError: [] as ResponseErrors[],
   }),
   actions: {
     async getInbox(
@@ -123,7 +123,7 @@ export const useInboxStore = defineStore({
         this.inboxLoading = true;
         apiService
           .getInboxContent()
-          .then((response: AxiosResponse<IMessage[]>) => {
+          .then((response: AxiosResponse<Message[]>) => {
             this.inboxLoading = false;
             this.inbox = response.data;
             this.setExpiry();
@@ -135,13 +135,13 @@ export const useInboxStore = defineStore({
       }
     },
     async submitResponse(
-      responses: IResponse[],
+      responses: Response[],
       activeUuid: string
     ): Promise<void> {
       var calls: Promise<AxiosResponse>[] = [];
       let activeMessage = this.inbox.find((m) => m.uuid == activeUuid);
       this.submitLoading = true;
-      responses.forEach((response: IResponse) => {
+      responses.forEach((response: Response) => {
         if (
           activeMessage?.questions.some(
             (q) => q.uuid == response.question && !q.response

@@ -19,7 +19,7 @@
         <label for="otp" class="block mx-auto my-1 dark:text-darkNeutral">{{
           $t("auth.loginsuccess.otp")
         }}</label>
-        <otp-input v-model:token="token"></otp-input>
+        <OtpInput v-model:token="token" />
         <p
           v-if="error?.token"
           class="text-alert dark:text-darkAlert font-bold text-sm mx-auto pt-1"

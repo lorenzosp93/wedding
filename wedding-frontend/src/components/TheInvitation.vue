@@ -6,7 +6,7 @@
       class="overflow-y-hidden bg-neutral dark:bg-darkNeutral"
     >
       <div id="invitation-content" class="flex">
-        <loading-view v-if="!loaded"></loading-view>
+        <LoadingView v-if="!loaded" />
         <div
           id="envelopeContainer"
           :class="{ invisible: !loaded }"
@@ -26,7 +26,7 @@
             class="max-w-[95%] max-h-[95%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[37%] z-10 px-1"
             @load="loadImage('letterBase')"
           />
-          <the-message class="font-[Tangerine]" />
+          <TheMessage class="font-[Tangerine]" />
           <img
             id="sideFlaps"
             :src="images.find((img) => img.name == 'sideFlaps')?.url"
@@ -66,16 +66,16 @@
         class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 short:mr-5 py-2 flex z-20 cursor-pointer"
         @click="scrollToBottom"
       >
-        <chevron-double-down-icon
+        <ChevronDoubleDownIcon
           class="h-10 w-10 md:h-12 md:w-12 pt-3.5 animate-bounce stroke-accent stroke-2"
         />
       </div>
-      <router-link
+      <RouterLink
         id="rsvp"
         :to="{ name: 'inbox', params: { active: 'rsvp' } }"
         v-show="loaded"
         class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-md px-2 py-1 mb-5 short:mr-5 opacity-0 font-[Tangerine] text-2xl cursor-pointer"
-        >{{ $t("theinvitation.rsvp") }}</router-link
+        >{{ $t("theinvitation.rsvp") }}</RouterLink
       >
     </Teleport>
   </div>
@@ -198,7 +198,7 @@ export default defineComponent({
           0.5
         )
         .set("#scroller", { autoAlpha: 0 }, 0.5)
-        .to("#rsvp", { autoAlpha: 1, duration: 0.1 }, 0.9);
+        .to("#rsvp", { autoAlpha: 1, duration: 0.2 }, 0.8);
       this.tl = tl;
     },
     scrollToBottom() {

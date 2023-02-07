@@ -47,7 +47,7 @@
         @hide-detail="hideDetail"
         @set-active="setActiveByIdx"
         @submit-response="
-          (responses: IResponse[]) => emit('submitResponse', responses, activeObject?.uuid)
+          (responses: Response[]) => emit('submitResponse', responses, activeObject?.uuid)
         "
         @delete-responses="(_) => emit('deleteResponses', activeObject?.uuid)"
       ></detail-view>
@@ -62,22 +62,22 @@ import DetailView from "./DetailView.vue";
 import ListItem from "./ui/ListItem.vue";
 import { ref, type PropType, Ref, computed, watch, onMounted } from "vue";
 import type {
-  IResponseErrors,
-  IListObject,
-  IResponse,
+  ResponseErrors,
+  ListObject,
+  Response,
 } from "@/models/listObjects.interface";
 import type { AxiosError } from "axios";
 import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
-  objList: { type: Array<IListObject> },
+  objList: { type: Array<ListObject> },
   loading: { type: Boolean },
   error: { type: Object as PropType<AxiosError> },
   submitLoading: { type: Boolean },
-  submitError: { type: Array<IResponseErrors> },
+  submitError: { type: Array<ResponseErrors> },
   submitSuccess: { type: Boolean },
   deleteLoading: { type: Boolean },
-  deleteError: { type: Array<IResponseErrors> },
+  deleteError: { type: Array<ResponseErrors> },
   deleteSuccess: { type: Boolean },
 });
 const emit = defineEmits(["submitResponse", "deleteResponses"]);
@@ -86,7 +86,7 @@ const active: Ref<string> = ref("");
 const search: Ref<string> = ref("");
 const viewDetail: Ref<boolean> = ref(false);
 
-const searchedList: Ref<IListObject[] | undefined> = computed(() => {
+const searchedList: Ref<ListObject[] | undefined> = computed(() => {
   if (!search.value) {
     return props.objList;
   }
@@ -99,7 +99,7 @@ const searchedList: Ref<IListObject[] | undefined> = computed(() => {
   });
 });
 
-const activeObject: Ref<IListObject | undefined> = computed(() => {
+const activeObject: Ref<ListObject | undefined> = computed(() => {
   return props.objList?.length
     ? props.objList.find((obj) => obj.slug == active.value) ?? props.objList[0]
     : undefined;

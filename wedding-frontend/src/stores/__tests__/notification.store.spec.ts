@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createPinia, setActivePinia } from "pinia";
 import { useNotificationStore } from "../notification.store";
 import { apiService } from "@/services/api.service";
-import type { ISubscription } from "@/models/listObjects.interface";
+import type { Subscription } from "@/models/listObjects.interface";
 import type { AxiosResponse } from "axios";
 
 let testSubscription = {
@@ -11,7 +11,7 @@ let testSubscription = {
     p256dh: "abc123",
     auth: "abc",
   },
-} as ISubscription;
+} as Subscription;
 
 let axiosResponse = {
   data: [],

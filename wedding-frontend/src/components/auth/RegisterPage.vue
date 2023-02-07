@@ -9,7 +9,7 @@
       <p class="dark:text-darkNeutral pb-2">
         {{ $t("auth.registerpage.welcomeToThe") }}
       </p>
-      <user-form
+      <UserForm
         @register="(user: User) => authStore.register(user)"
         :user="user"
         :loading="authStore.loading"

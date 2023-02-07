@@ -1,9 +1,9 @@
 import type { AxiosResponse } from "axios";
 import type {
-  IInformation,
-  IMessage,
-  IResponse,
-  ISubscription,
+  Information,
+  Message,
+  Response,
+  Subscription,
 } from "@/models/listObjects.interface";
 import type { Gallery } from "@/models/gallery.interface";
 import type { User, Profile } from "@/models/auth.interface";
@@ -49,7 +49,7 @@ class ApiServiceProtected extends ApiClientProtected {
     return this.instance.post("/api/user/setup-plus-one/", invitee);
   }
 
-  async getUserSubscription(): Promise<AxiosResponse<ISubscription[]>> {
+  async getUserSubscription(): Promise<AxiosResponse<Subscription[]>> {
     return this.instance.get("/api/user/subscription/");
   }
 
@@ -57,11 +57,11 @@ class ApiServiceProtected extends ApiClientProtected {
     return this.instance.get("/api/user/profile/");
   }
 
-  async getInboxContent(): Promise<AxiosResponse<IMessage[]>> {
+  async getInboxContent(): Promise<AxiosResponse<Message[]>> {
     return this.instance.get("/api/inbox/message/");
   }
 
-  async postInboxResponse(response: IResponse): Promise<AxiosResponse> {
+  async postInboxResponse(response: Response): Promise<AxiosResponse> {
     return this.instance.post("/api/inbox/response/", response);
   }
 
@@ -69,7 +69,7 @@ class ApiServiceProtected extends ApiClientProtected {
     return this.instance.delete(`/api/inbox/response/${response_uuid}/`);
   }
 
-  async getInfoContent(): Promise<AxiosResponse<IInformation[]>> {
+  async getInfoContent(): Promise<AxiosResponse<Information[]>> {
     return this.instance.get("/api/info/");
   }
 

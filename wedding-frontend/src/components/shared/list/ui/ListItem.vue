@@ -27,12 +27,12 @@
 
 <script setup lang="ts">
 import ListItemWidgets from "./ListItemWidgets.vue";
-import type { IListObject, IQuestion } from "@/models/listObjects.interface";
+import type { ListObject, IQuestion } from "@/models/listObjects.interface";
 import { computed, type PropType } from "vue";
 import { itemContent } from "@/components/composables/truncation";
 
 const props = defineProps({
-  obj: { type: Object as PropType<IListObject> },
+  obj: { type: Object as PropType<ListObject> },
   active: { type: Boolean },
 });
 

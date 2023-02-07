@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import type { Photo } from "@/models/gallery.interface";
 import { type PropType } from "vue";
+
 defineProps({
   photo: { type: Object as PropType<Photo> },
 });

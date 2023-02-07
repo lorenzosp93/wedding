@@ -9,11 +9,11 @@
         </p>
         <p class="px-2 text-accent">{{ dateForDisplay }}</p>
       </div>
-      <trash-icon
+      <TrashIcon
         @click="$emit('deleteEntry')"
         v-if="own"
         class="w-5 h-5 float-right ml-auto cursor-pointer"
-      ></trash-icon>
+      />
     </div>
 
     <p class="px-2 py-1 rounded-md bg-pale dark:bg-darkPale mt-3 shadow-inner">

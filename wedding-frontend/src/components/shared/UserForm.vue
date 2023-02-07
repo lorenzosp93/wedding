@@ -78,7 +78,7 @@
       {{ $t("auth.loginpage.submit") }}
     </button>
     <div v-if="loading" class="relative w-10 h-10 my-1 mx-auto">
-      <loading-view>{{ $t("auth.loginpage.loading") }}</loading-view>
+      <LoadingView>{{ $t("auth.loginpage.loading") }}</LoadingView>
     </div>
     <p
       v-if="registerError?.non_field_errors?.length"

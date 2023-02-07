@@ -42,7 +42,7 @@
           </li>
         </ul>
         <p
-          v-if="submitError?.find((e: IResponseErrors) => e.q == question.uuid && e.e?.option?.length)"
+          v-if="submitError?.find((e: ResponseErrors) => e.q == question.uuid && e.e?.option?.length)"
           class="text-alert dark:text-darkAlert"
         >
           {{ submitError.find((e) => e.q == question.uuid)?.e.option[0] }}
@@ -59,7 +59,7 @@
             :required="question.mandatory && question.options.length == 0"
           />
           <p
-            v-if="submitError?.find((e: IResponseErrors) => e.q == question.uuid && e.e?.text?.length)"
+            v-if="submitError?.find((e: ResponseErrors) => e.q == question.uuid && e.e?.text?.length)"
             class="text-alert dark:text-darkAlert mx-3"
           >
             {{ submitError.find((e) => e.q == question.uuid)?.e.text[0] }}
@@ -126,19 +126,19 @@ import LoadingView from "@/components/shared/LoadingView.vue";
 import { type Ref, ref, watch, onMounted } from "vue";
 import type {
   IQuestion,
-  IResponse,
-  IResponseErrors,
+  Response,
+  ResponseErrors,
 } from "@/models/listObjects.interface";
 import { PencilSquareIcon, PaperAirplaneIcon } from "@heroicons/vue/24/outline";
 
-const responses: Ref<IResponse[]> = ref([]);
+const responses: Ref<Response[]> = ref([]);
 const props = defineProps({
   questions: { type: Array<IQuestion>, default: [] },
   submitLoading: { type: Boolean },
-  submitError: { type: Array<IResponseErrors> },
+  submitError: { type: Array<ResponseErrors> },
   submitSuccess: { type: Boolean },
   deleteLoading: { type: Boolean },
-  deleteError: { type: Array<IResponseErrors> },
+  deleteError: { type: Array<ResponseErrors> },
   deleteSuccess: { type: Boolean },
 });
 
@@ -185,7 +185,7 @@ function handleInput(question: IQuestion, event: Event) {
   }
 }
 
-function multiSelectInputHandler(value: string, response: IResponse) {
+function multiSelectInputHandler(value: string, response: Response) {
   if (response.option.includes(value)) {
     response.option = response.option.filter((o: string) => o != value);
   } else {
@@ -193,13 +193,13 @@ function multiSelectInputHandler(value: string, response: IResponse) {
   }
 }
 
-function singleSelectInputHandler(value: string, response: IResponse) {
+function singleSelectInputHandler(value: string, response: Response) {
   response.option = [value];
 }
 
-function getResponse(question: IQuestion): IResponse {
+function getResponse(question: IQuestion): Response {
   return (
-    responses.value.find((r: IResponse) => r.question == question.uuid) ?? {
+    responses.value.find((r: Response) => r.question == question.uuid) ?? {
       option: [],
       text: "",
     }
