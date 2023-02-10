@@ -9,27 +9,21 @@
     <defs></defs>
     <g id="Page-1">
       <g id="invite" transform="translate(1.661885, 1.729770)">
-        <text font-size="28" font-weight="normal" fill="#1F4045">
+        <text font-size="40" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="30%">
             {{ $t("theinvitation.atTheEndOfTheCeremony") }}
           </tspan>
-        </text>
-        <text font-size="28" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="40%">
             {{ $t("theinvitation.groomAndBride") }}
           </tspan>
-        </text>
-        <text font-size="28" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="50%">
             {{ $t("theinvitation.willBeGratefulForYourPresenceAt") }}
           </tspan>
-        </text>
-        <text font-size="28" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="60%">
             {{ $t("theinvitation.inviteLocation") }}
           </tspan>
         </text>
-        <text font-size="24" font-weight="normal" fill="#1F4045">
+        <text font-size="30" font-weight="normal" fill="#1F4045">
           <tspan x="95%" text-anchor="end" y="85%">
             {{ $t("theinvitation.rsvp") }}
           </tspan>

@@ -213,18 +213,18 @@ export default defineComponent({
           {
             y: `+=${window.outerHeight}px`,
             duration: 0.3,
-            ease: "none",
+            ease: "linear",
           },
           0.35
         )
         .to(
           "#participationBase, #participationMessage",
           {
-            y: `+=${window.outerHeight}px`,
-            duration: 0.3,
-            ease: "none",
+            y: `+=${-window.outerHeight}px`,
+            duration: 0.2,
+            ease: "linear",
           },
-          0.65
+          0.75
         )
         .set("#scroller", { autoAlpha: 0 }, 0.35)
         .to("#rsvp", { autoAlpha: 1, duration: 0.05 }, 0.95);
