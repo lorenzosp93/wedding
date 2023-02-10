@@ -16,34 +16,51 @@
             id="base"
             :src="images.find((img) => img.name == 'base')?.url"
             alt="Envelope base"
-            class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-0 px-0.5"
+            class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] px-0.5"
             @load="loadImage('base')"
           />
-          <img
-            id="letterBase"
-            :src="images.find((img) => img.name == 'letterBase')?.url"
-            alt="Invitation base"
-            class="max-w-[95%] max-h-[95%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[37%] z-10 px-1"
-            @load="loadImage('letterBase')"
-          />
-          <TheMessage class="font-[Tangerine]" />
+          <div id="inviteCard">
+            <img
+              id="inviteBase"
+              :src="images.find((img) => img.name == 'letterBase')?.url"
+              alt="Invitation base"
+              class="max-w-[65%] max-h-[65%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[47%] z-10 px-1"
+              @load="loadImage('letterBase')"
+            />
+            <InviteMessage
+              class="max-w-[65%] max-h-[65%] font-[Tangerine] z-10 top-[47%]"
+            />
+          </div>
+          <div id="participationCard">
+            <img
+              id="participationBase"
+              :src="images.find((img) => img.name == 'letterBase')?.url"
+              alt="Invitation base"
+              class="max-w-[95%] max-h-[95%] aspect-auto absolute left-1/2 -translate-x-1/2 top-[37%] z-20 px-1"
+              @load="loadImage('letterBase')"
+            />
+            <ParticipationMessage
+              id="participationMessage"
+              class="font-[Tangerine] z-20 top-[34%]"
+            />
+          </div>
           <img
             id="sideFlaps"
             :src="images.find((img) => img.name == 'sideFlaps')?.url"
             alt="Envelope side flaps"
-            class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-20 px-0.5"
+            class="max-w-full max-h-full aspect-auto absolute left-1/2 -translate-x-1/2 top-[32.3%] z-30 px-0.5"
             @load="loadImage('sideFlaps')"
           />
           <img
             id="bottomFlap"
             :src="images.find((img) => img.name == 'bottomFlap')?.url"
             alt="Envelope bottom flap"
-            class="absolute aspect-auto max-w-full max-h-[59.35%] left-1/2 -translate-x-1/2 top-[73%] z-30 px-0.5"
+            class="absolute aspect-auto max-w-full max-h-[59.35%] left-1/2 -translate-x-1/2 top-[73%] z-40 px-0.5"
             @load="loadImage('bottomFlap')"
           />
           <img
             id="envelopeFlap"
-            class="max-w-full max-h-[59.35%] absolute left-1/2 -translate-x-1/2 top-[32.6%] origin-top z-40 px-0.5"
+            class="max-w-full max-h-[59.35%] absolute left-1/2 -translate-x-1/2 top-[32.6%] origin-top z-50 px-0.5"
             :src="images.find((img) => img.name == 'envelopeFlap')?.url"
             :aria-label="$t('theinvitation.envelopeFlap')"
             @load="loadImage('envelopeFlap')"
@@ -87,7 +104,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
-import TheMessage from "./shared/ui/TheMessage.vue";
+import InviteMessage from "./shared/ui/InviteMessage.vue";
+import ParticipationMessage from "./shared/ui/ParticipationMessage.vue";
 
 ScrollTrigger.config({
   ignoreMobileResize: true,
@@ -105,7 +123,9 @@ export default defineComponent({
   components: {
     LoadingView,
     ChevronDoubleDownIcon,
-    TheMessage,
+    TheMessage: ParticipationMessage,
+    ParticipationMessage,
+    InviteMessage,
   },
   data() {
     return {
@@ -177,28 +197,37 @@ export default defineComponent({
       });
       tl.to("#waxSeal", {
         opacity: 0,
-        duration: 0.2,
+        duration: 0.15,
       })
         .to(
           "#envelopeFlap",
           {
             rotationX: 180,
-            duration: 0.3,
+            duration: 0.2,
           },
-          0.2
+          0.15
         )
-        .set("#envelopeFlap", { zIndex: 0 }, 0.5)
+        .set("#envelopeFlap", { zIndex: 0 }, 0.35)
         .to(
           "#envelopeFlap, #sideFlaps, #bottomFlap, #base",
           {
-            y: `+=${window.outerHeight}`,
-            duration: 0.5,
+            y: `+=${window.outerHeight}px`,
+            duration: 0.3,
             ease: "none",
           },
-          0.5
+          0.35
         )
-        .set("#scroller", { autoAlpha: 0 }, 0.5)
-        .to("#rsvp", { autoAlpha: 1, duration: 0.2 }, 0.8);
+        .to(
+          "#participationBase, #participationMessage",
+          {
+            y: `+=${window.outerHeight}px`,
+            duration: 0.3,
+            ease: "none",
+          },
+          0.65
+        )
+        .set("#scroller", { autoAlpha: 0 }, 0.35)
+        .to("#rsvp", { autoAlpha: 1, duration: 0.05 }, 0.95);
       this.tl = tl;
     },
     scrollToBottom() {
