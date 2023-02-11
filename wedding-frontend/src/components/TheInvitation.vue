@@ -2,7 +2,7 @@
   <div id="invitation-wrapper">
     <div
       id="the-invitation"
-      :class="{ 'h-[200vh]': loaded }"
+      :class="{ 'h-[400vh]': loaded }"
       class="overflow-y-hidden bg-neutral dark:bg-darkNeutral"
     >
       <div id="invitation-content" class="flex">
@@ -10,7 +10,7 @@
         <div
           id="envelopeContainer"
           :class="{ invisible: !loaded }"
-          class="relative w-full mx-auto max-w-3xl aspect-[1.41384211] max-h-[80vh] top-20 sm:-top-24 px-1"
+          class="relative w-full mx-auto max-w-5xl aspect-[1.41384211] max-h-[72.5vh] top-20 sm:-top-24 px-1"
         >
           <img
             id="base"
@@ -211,7 +211,7 @@ function setupEnvelopeAnimation() {
     .to(
       "#participationBase, #participationMessage",
       {
-        y: `+=${-window.outerHeight}px`,
+        x: `+=${-window.outerHeight}px`,
         duration: 0.2,
         ease: "linear",
       },
