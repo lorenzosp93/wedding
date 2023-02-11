@@ -28,6 +28,21 @@ export default defineConfig({
       workbox: {
         importScripts: ["/push-sw.js"],
         navigateFallbackDenylist: [/\/api\//],
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => {
+              return url.pathname.startsWith("/api");
+            },
+            handler: "NetworkFirst" as const,
+            method: "GET",
+            options: {
+              cacheName: "api-cache",
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
       devOptions: {
         enabled: false,
@@ -53,12 +68,6 @@ export default defineConfig({
           {
             src: "pwa-512x512.png",
             sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
-          },
-          {
-            src: "pwa.png",
-            sizes: "1024x1024",
             type: "image/png",
             purpose: "any maskable",
           },
