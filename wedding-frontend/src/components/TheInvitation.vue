@@ -105,13 +105,12 @@ import LoadingView from "@/components/shared/LoadingView.vue";
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 import InviteMessage from "./shared/ui/InviteMessage.vue";
 import ParticipationMessage from "./shared/ui/ParticipationMessage.vue";
-import { type Ref, ref, onBeforeUnmount } from "vue";
+import { type Ref, ref, onBeforeUnmount, onMounted } from "vue";
 
 ScrollTrigger.config({
   ignoreMobileResize: true,
 });
 gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.normalizeScroll(true);
 
 type ImageDef = {
   name: string;
@@ -168,7 +167,12 @@ function loadImage(img: string) {
 
 function cleanup() {
   tl.value?.kill();
+  ScrollTrigger.normalizeScroll(false);
 }
+
+onMounted(() => {
+  ScrollTrigger.normalizeScroll(true);
+});
 
 onBeforeUnmount(() => {
   cleanup();
@@ -183,7 +187,7 @@ function setupEnvelopeAnimation() {
       start: "top top",
       end: "bottom bottom",
       pin: "#envelopeContainer",
-      anticipatePin: 1,
+      snap: [0, 0.65, 0.85, 1],
     },
   });
   tl.to("#waxSeal", {
@@ -199,6 +203,7 @@ function setupEnvelopeAnimation() {
       0.15
     )
     .set("#envelopeFlap", { zIndex: 0 }, 0.35)
+    .set("#scroller", { autoAlpha: 0 }, 0.35)
     .to(
       "#envelopeFlap, #sideFlaps, #bottomFlap, #base",
       {
@@ -215,10 +220,10 @@ function setupEnvelopeAnimation() {
         duration: 0.2,
         ease: "linear",
       },
-      0.75
+      0.65
     )
-    .set("#scroller", { autoAlpha: 0 }, 0.35)
-    .to("#rsvp", { autoAlpha: 1, duration: 0.05 }, 0.95);
+    .to("#rsvp", { autoAlpha: 1, duration: 0.15 }, 0.7)
+    .to("#rsvp", { scale: 1.3, duration: 0.15 }, 0.85);
   tl.value = tl;
 }
 
