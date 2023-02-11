@@ -10,7 +10,7 @@
         <p class="mx-auto">{{ $t("thehome.weAreDelighted") }}</p>
         <p class="mx-auto">
           {{ $t("thehome.withLove") }} <br />
-          {{ $t("thehome.priscillaAndLorenzo") }}
+          {{ $t("thehome.brideAndGroom") }}
         </p>
       </div>
       <CountDown :end-date="endDate" class="my-10 mx-auto" />

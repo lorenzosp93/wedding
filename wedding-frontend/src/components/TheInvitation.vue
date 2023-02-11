@@ -98,19 +98,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { ChevronDoubleDownIcon } from "@heroicons/vue/24/outline";
 import InviteMessage from "./shared/ui/InviteMessage.vue";
 import ParticipationMessage from "./shared/ui/ParticipationMessage.vue";
+import { type Ref, ref, onBeforeUnmount } from "vue";
 
 ScrollTrigger.config({
   ignoreMobileResize: true,
 });
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.normalizeScroll(true);
 
 type ImageDef = {
   name: string;
@@ -118,123 +119,112 @@ type ImageDef = {
   loaded: boolean;
 };
 
-export default defineComponent({
-  name: "TheInvitation",
-  components: {
-    LoadingView,
-    ChevronDoubleDownIcon,
-    TheMessage: ParticipationMessage,
-    ParticipationMessage,
-    InviteMessage,
-  },
-  data() {
-    return {
-      loaded: false as Boolean,
-      tl: null as GSAPTimeline | null,
-      images: [
-        {
-          name: "waxSeal",
-          url: new URL("@/assets/waxSeal.webp", import.meta.url).href,
-          loaded: false,
-        },
-        {
-          name: "envelopeFlap",
-          url: new URL("@/assets/envelopeFlap.webp", import.meta.url).href,
-          loaded: false,
-        },
-        {
-          name: "base",
-          url: new URL("@/assets/base.webp", import.meta.url).href,
-          loaded: false,
-        },
-        {
-          name: "bottomFlap",
-          url: new URL("@/assets/bottomFlap.webp", import.meta.url).href,
-          loaded: false,
-        },
-        {
-          name: "sideFlaps",
-          url: new URL("@/assets/sideFlaps.webp", import.meta.url).href,
-          loaded: false,
-        },
-        {
-          name: "letterBase",
-          url: new URL("@/assets/letterBase.webp", import.meta.url).href,
-          loaded: false,
-        },
-      ] as Array<ImageDef>,
-    };
-  },
-  beforeUnmount() {
-    this.cleanup();
-  },
-  methods: {
-    loadImage(img: string) {
-      const image = this.images.find((image) => image.name == img);
-      if (image) {
-        image.loaded = true;
-      }
-      if (this.images.every((image) => image.loaded)) {
-        this.loaded = true;
-        this.setupEnvelopeAnimation();
-      }
-    },
-    cleanup() {
-      this.tl?.kill();
-    },
-    setupEnvelopeAnimation() {
-      this.cleanup();
+const loaded = ref(false);
+const tl: Ref<GSAPTimeline | null> = ref(null);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "#main",
-          scrub: true,
-          start: "top top",
-          end: "bottom bottom",
-          pin: "#envelopeContainer",
-          anticipatePin: 1,
-        },
-      });
-      tl.to("#waxSeal", {
-        opacity: 0,
-        duration: 0.15,
-      })
-        .to(
-          "#envelopeFlap",
-          {
-            rotationX: 180,
-            duration: 0.2,
-          },
-          0.15
-        )
-        .set("#envelopeFlap", { zIndex: 0 }, 0.35)
-        .to(
-          "#envelopeFlap, #sideFlaps, #bottomFlap, #base",
-          {
-            y: `+=${window.outerHeight}px`,
-            duration: 0.3,
-            ease: "linear",
-          },
-          0.35
-        )
-        .to(
-          "#participationBase, #participationMessage",
-          {
-            y: `+=${-window.outerHeight}px`,
-            duration: 0.2,
-            ease: "linear",
-          },
-          0.75
-        )
-        .set("#scroller", { autoAlpha: 0 }, 0.35)
-        .to("#rsvp", { autoAlpha: 1, duration: 0.05 }, 0.95);
-      this.tl = tl;
-    },
-    scrollToBottom() {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    },
+const images: Ref<ImageDef[]> = ref([
+  {
+    name: "waxSeal",
+    url: new URL("@/assets/waxSeal.webp", import.meta.url).href,
+    loaded: false,
   },
+  {
+    name: "envelopeFlap",
+    url: new URL("@/assets/envelopeFlap.webp", import.meta.url).href,
+    loaded: false,
+  },
+  {
+    name: "base",
+    url: new URL("@/assets/base.webp", import.meta.url).href,
+    loaded: false,
+  },
+  {
+    name: "bottomFlap",
+    url: new URL("@/assets/bottomFlap.webp", import.meta.url).href,
+    loaded: false,
+  },
+  {
+    name: "sideFlaps",
+    url: new URL("@/assets/sideFlaps.webp", import.meta.url).href,
+    loaded: false,
+  },
+  {
+    name: "letterBase",
+    url: new URL("@/assets/letterBase.webp", import.meta.url).href,
+    loaded: false,
+  },
+]);
+
+function loadImage(img: string) {
+  const image = images.value.find((image) => image.name == img);
+  if (image) {
+    image.loaded = true;
+  }
+  if (images.value.every((image) => image.loaded)) {
+    loaded.value = true;
+    setupEnvelopeAnimation();
+  }
+}
+
+function cleanup() {
+  tl.value?.kill();
+}
+
+onBeforeUnmount(() => {
+  cleanup();
 });
+
+function setupEnvelopeAnimation() {
+  cleanup();
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#main",
+      scrub: true,
+      start: "top top",
+      end: "bottom bottom",
+      pin: "#envelopeContainer",
+      anticipatePin: 1,
+    },
+  });
+  tl.to("#waxSeal", {
+    opacity: 0,
+    duration: 0.15,
+  })
+    .to(
+      "#envelopeFlap",
+      {
+        rotationX: 180,
+        duration: 0.2,
+      },
+      0.15
+    )
+    .set("#envelopeFlap", { zIndex: 0 }, 0.35)
+    .to(
+      "#envelopeFlap, #sideFlaps, #bottomFlap, #base",
+      {
+        y: `+=${window.outerHeight}px`,
+        duration: 0.3,
+        ease: "linear",
+      },
+      0.35
+    )
+    .to(
+      "#participationBase, #participationMessage",
+      {
+        y: `+=${-window.outerHeight}px`,
+        duration: 0.2,
+        ease: "linear",
+      },
+      0.75
+    )
+    .set("#scroller", { autoAlpha: 0 }, 0.35)
+    .to("#rsvp", { autoAlpha: 1, duration: 0.05 }, 0.95);
+  tl.value = tl;
+}
+
+function scrollToBottom() {
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
