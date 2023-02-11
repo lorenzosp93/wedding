@@ -30,7 +30,7 @@
         }"
       >
         <ul
-          class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 duration-500 ease-out md:transition-none"
+          class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 duration-500 ease-out md:transition-none bg-neutral dark:bg-darkNeutral rounded-sm"
         >
           <li>
             <RouterLink
@@ -56,11 +56,11 @@
                 </div>
                 <chevron-down-icon
                   :class="{ 'rotate-180': dropInfo, 'rotate-0': !dropInfo }"
-                  class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"
+                  class="inline h-4 ml-1 transition-transform duration-200 transform md:mt-1"
                 ></chevron-down-icon>
               </div>
               <ul
-                class="md:absolute md:left-1/2 md:-translate-x-1/2 md:top-5 flex flex-col md:flex-row z-30 md:transition-none"
+                class="md:absolute md:left-0 md:top-7 flex flex-col md:flex-row z-30 md:transition-none md:space-x-6"
                 style="transition: max-height 0.4s, opacity 0.2s ease-in"
                 :class="{
                   'invisible opacity-0 max-h-0': !dropInfo,
@@ -70,7 +70,7 @@
                 <li
                   v-for="type in infoStore.infoTypes"
                   :key="type"
-                  class="pl-5 pt-1 pb-1 md:pb-0 rounded-lg"
+                  class="pl-5 md:p-0 py-1 rounded-lg"
                 >
                   <RouterLink
                     :to="{ name: 'info', params: { infoType: type } }"
@@ -124,10 +124,7 @@
 <script setup lang="ts">
 import { useInfoStore } from "@/stores";
 import { type Ref, onMounted, ref } from "vue";
-import {
-  Bars3Icon,
-  ChevronDownIcon,
-} from "@heroicons/vue/24/outline";
+import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
 import Shepherd from "shepherd.js";
 import { RouterLink } from "vue-router";
