@@ -187,7 +187,7 @@ function setupEnvelopeAnimation() {
       start: "top top",
       end: "bottom bottom",
       pin: "#envelopeContainer",
-      snap: [0, 0.65, 1],
+      snap: [0, 0.65, 0.85, 1],
     },
   });
   tl.to("#waxSeal", {
@@ -217,12 +217,13 @@ function setupEnvelopeAnimation() {
       "#participationBase, #participationMessage",
       {
         x: `+=${-window.outerHeight}px`,
-        duration: 0.3,
+        duration: 0.2,
         ease: "linear",
       },
       0.65
     )
-    .to("#rsvp", { autoAlpha: 1, duration: 0.05 }, 0.95);
+    .to("#rsvp", { autoAlpha: 1, duration: 0.15 }, 0.7)
+    .to("#rsvp", { scale: 1.3, duration: 0.15 }, 0.85);
   tl.value = tl;
 }
 
