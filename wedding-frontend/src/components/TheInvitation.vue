@@ -184,7 +184,6 @@ function setupEnvelopeAnimation() {
       start: "top top",
       end: "bottom bottom",
       pin: "#envelopeContainer",
-      snap: [0.65, 1],
     },
   });
   tl.to("#waxSeal", {
@@ -213,11 +212,11 @@ function setupEnvelopeAnimation() {
     .to(
       "#participationBase, #participationMessage",
       {
-        x: `+=${-window.outerHeight}px`,
-        duration: 0.25,
+        x: `-=${window.outerHeight}px`,
+        duration: 0.2,
         ease: "linear",
       },
-      0.65
+      0.7
     )
     .to("#rsvp", { autoAlpha: 1, duration: 0.1 }, 0.8)
     .to("#rsvp", { scale: 1.2, duration: 0.1 }, 0.9);
