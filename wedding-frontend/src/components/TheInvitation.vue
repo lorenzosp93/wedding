@@ -184,7 +184,7 @@ function setupEnvelopeAnimation() {
       start: "top top",
       end: "bottom bottom",
       pin: "#envelopeContainer",
-      snap: [0, 0.65, 1],
+      snap: [0.65, 1],
     },
   });
   tl.to("#waxSeal", {
