@@ -111,7 +111,6 @@ ScrollTrigger.config({
   ignoreMobileResize: true,
 });
 gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
 
 type ImageDef = {
   name: string;
@@ -168,6 +167,7 @@ function loadImage(img: string) {
 
 function cleanup() {
   tl.value?.kill();
+  ScrollTrigger.normalizeScroll(false);
 }
 
 onBeforeUnmount(() => {
@@ -175,7 +175,8 @@ onBeforeUnmount(() => {
 });
 
 function setupEnvelopeAnimation() {
-  cleanup();
+  ScrollTrigger.normalizeScroll(true);
+
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: "#main",
@@ -183,7 +184,6 @@ function setupEnvelopeAnimation() {
       start: "top top",
       end: "bottom bottom",
       pin: "#envelopeContainer",
-      snap: [0, 0.65, 1],
     },
   });
   tl.to("#waxSeal", {
@@ -212,14 +212,13 @@ function setupEnvelopeAnimation() {
     .to(
       "#participationBase, #participationMessage",
       {
-        x: `+=${-window.outerHeight}px`,
-        duration: 0.25,
+        x: `-=${window.outerHeight}px`,
+        duration: 0.3,
         ease: "linear",
       },
-      0.65
+      0.7
     )
-    .to("#rsvp", { autoAlpha: 1, duration: 0.1 }, 0.8)
-    .to("#rsvp", { scale: 1.3, duration: 0.1 }, 0.9);
+    .to("#rsvp", { scale: 1.2, autoAlpha: 1, duration: 0.2 }, 0.8);
   tl.value = tl;
 }
 
