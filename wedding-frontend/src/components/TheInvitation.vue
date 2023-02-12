@@ -213,13 +213,12 @@ function setupEnvelopeAnimation() {
       "#participationBase, #participationMessage",
       {
         x: `-=${window.outerHeight}px`,
-        duration: 0.2,
+        duration: 0.3,
         ease: "linear",
       },
       0.7
     )
-    .to("#rsvp", { autoAlpha: 1, duration: 0.1 }, 0.8)
-    .to("#rsvp", { scale: 1.2, duration: 0.1 }, 0.9);
+    .to("#rsvp", { scale: 1.2, autoAlpha: 1, duration: 0.2 }, 0.8);
   tl.value = tl;
 }
 
