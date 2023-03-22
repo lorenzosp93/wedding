@@ -1,11 +1,11 @@
 import i18n from "@/i18n";
+import { useAuthStore } from "@/stores";
 import axios, {
+  type InternalAxiosRequestConfig,
   type AxiosError,
   type AxiosInstance,
-  type AxiosRequestConfig,
   type AxiosResponse,
 } from "axios";
-import type { StoreDefinition } from "pinia";
 
 function getCookie(name: string): string {
   let cookieValue = "";
@@ -48,7 +48,7 @@ export abstract class HttpClient {
     );
   };
 
-  protected _handleRequest(config: AxiosRequestConfig) {
+  protected _handleRequest(config: InternalAxiosRequestConfig) {
     return {
       ...config,
       headers: {
@@ -56,7 +56,7 @@ export abstract class HttpClient {
         "X-CSRFToken": getCookie("csrftoken"),
         "Accept-Language": i18n.global.locale.value,
       },
-    } as AxiosRequestConfig;
+    } as unknown as InternalAxiosRequestConfig;
   }
 
   protected _handleResponse(response: AxiosResponse) {
@@ -69,11 +69,9 @@ export abstract class HttpClient {
   }
 }
 
-type AuthStore = StoreDefinition<"auth">;
-
 export abstract class HttpClientProtected extends HttpClient {
-  private readonly useAuth: AuthStore;
-  public constructor(useAuth: AuthStore, baseURL: string) {
+  private readonly useAuth: typeof useAuthStore;
+  public constructor(useAuth: typeof useAuthStore, baseURL: string) {
     super(baseURL);
 
     this.useAuth = useAuth;
@@ -96,7 +94,7 @@ export abstract class HttpClientProtected extends HttpClient {
     );
   };
 
-  protected _handleRequest = (config: AxiosRequestConfig) => {
+  protected _handleRequest = (config: InternalAxiosRequestConfig) => {
     config = super._handleRequest(config);
 
     let authStore = this.useAuth();
@@ -108,7 +106,7 @@ export abstract class HttpClientProtected extends HttpClient {
         Authorization: `Token ${authStore.token}`,
         "Accept-Language": authStore?.profile?.language,
       },
-    } as AxiosRequestConfig;
+    } as unknown as InternalAxiosRequestConfig;
   };
 
   protected _handleError = (error: AxiosError) => {
