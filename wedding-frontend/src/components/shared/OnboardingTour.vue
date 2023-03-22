@@ -15,6 +15,7 @@ import { InformationCircleIcon } from "@heroicons/vue/24/outline";
 import { useNotificationStore } from "@/stores";
 import Shepherd from "shepherd.js";
 import { offset, autoPlacement } from "@floating-ui/dom";
+import { defineComponent } from "vue";
 
 const notificationStore = useNotificationStore();
 
@@ -23,7 +24,7 @@ let pushSubscribeVisible =
   "PushManager" in window &&
   !notificationStore.isSubscribed;
 
-export default {
+export default defineComponent({
   name: "OnboardingTour",
   components: {
     InformationCircleIcon,
@@ -338,7 +339,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style>

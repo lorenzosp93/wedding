@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { defineConfig } from "vite";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "url";

@@ -80,7 +80,7 @@
         </p>
       </div>
       <div
-        v-if="questions?.every((q: IQuestion) => q.response)"
+        v-if="questions?.every((q: Question) => q.response)"
         class="flex flex-wrap"
       >
         <p class="py-1 font-bold my-auto">
@@ -101,7 +101,7 @@
         </div>
       </div>
       <div
-        v-if="questions.some((q: IQuestion) => !q.response)"
+        v-if="questions.some((q: Question) => !q.response)"
         class="relative h-20 w-full pt-5 mx-auto"
       >
         <button
@@ -125,7 +125,7 @@
 import LoadingView from "@/components/shared/LoadingView.vue";
 import { type Ref, ref, watch, onMounted } from "vue";
 import type {
-  IQuestion,
+  Question,
   Response,
   ResponseErrors,
 } from "@/models/listObjects.interface";
@@ -133,7 +133,7 @@ import { PencilSquareIcon, PaperAirplaneIcon } from "@heroicons/vue/24/outline";
 
 const responses: Ref<Response[]> = ref([]);
 const props = defineProps({
-  questions: { type: Array<IQuestion>, default: [] },
+  questions: { type: Array<Question>, default: [] },
   submitLoading: { type: Boolean },
   submitError: { type: Array<ResponseErrors> },
   submitSuccess: { type: Boolean },
@@ -144,7 +144,7 @@ const props = defineProps({
 
 watch(
   () => props.questions,
-  (newVal: IQuestion[], oldVal: IQuestion[]) => {
+  (newVal: Question[], oldVal: Question[]) => {
     if (newVal != oldVal) {
       responseSetup();
     }
@@ -154,7 +154,7 @@ watch(
 function responseSetup() {
   responses.value = [];
   if (props.questions.length) {
-    props.questions.forEach((question: IQuestion) => {
+    props.questions.forEach((question: Question) => {
       responses.value = [
         ...responses.value,
         {
@@ -173,7 +173,7 @@ onMounted(() => {
   responseSetup();
 });
 
-function handleInput(question: IQuestion, event: Event) {
+function handleInput(question: Question, event: Event) {
   let value = (event?.target as HTMLInputElement).value;
   let response = getResponse(question);
   if (response) {
@@ -197,7 +197,7 @@ function singleSelectInputHandler(value: string, response: Response) {
   response.option = [value];
 }
 
-function getResponse(question: IQuestion): Response {
+function getResponse(question: Question): Response {
   return (
     responses.value.find((r: Response) => r.question == question.uuid) ?? {
       option: [],

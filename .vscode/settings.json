@@ -1,5 +1,4 @@
 {
-    "python.pythonPath": "env\\",
     "python.testing.unittestArgs": [
         "-v",
         "-s",
@@ -8,12 +7,28 @@
         "test*.py"
     ],
     "python.testing.pytestEnabled": false,
-    "python.testing.nosetestsEnabled": false,
     "python.testing.unittestEnabled": true,
     "python.linting.pylintArgs": [
         "--load-plugins=pylint_django"
     ],
     "typescript.tsdk": "node_modules/typescript/lib",
     "prettier.tabWidth": 4,
-    "prettier.useTabs": true
+    "prettier.useTabs": true,
+    "vite.base": "./wedding-frontend",
+    "vite.devCommand": "npm run dev",
+    "vite.port": 8080,
+    	"python.linting.mypyCategorySeverity.error": "Warning",
+	"python.linting.mypyArgs": [
+		"--follow-imports=silent",
+		"--ignore-missing-imports",
+		"--show-column-numbers",
+		"--no-pretty",
+		"--disallow-untyped-defs",
+		"--disallow-untyped-calls"
+    ],
+    "python.envFile": "${workspaceFolder}/wedding-backend/.env",
+    "vitest.enable": true,
+    "eslint.workingDirectories": [
+       "./wedding-frontend" 
+    ],
 }
