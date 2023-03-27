@@ -108,9 +108,12 @@ const activeObject: Ref<ListObject | undefined> = computed(() => {
 const route = useRoute();
 const router = useRouter();
 
-watch(route, async () => {
-  getActiveFromRoute();
-});
+watch(
+  () => route,
+  async () => {
+    getActiveFromRoute();
+  }
+);
 
 onMounted(() => {
   getActiveFromRoute();
