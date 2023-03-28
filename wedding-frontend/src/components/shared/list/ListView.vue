@@ -109,9 +109,11 @@ const route = useRoute();
 const router = useRouter();
 
 watch(
-  () => route,
+  () => route.params.active,
   async () => {
-    getActiveFromRoute();
+    if (route.params.active) {
+      getActiveFromRoute();
+    }
   }
 );
 
