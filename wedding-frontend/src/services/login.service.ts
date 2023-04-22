@@ -10,7 +10,7 @@ export async function login(email: string) {
     })
     .catch((error) => {
       console.log(error.message);
-      if (error.response.data?.non_field_errors.length) {
+      if (error.response.data?.non_field_errors?.length) {
         router.push({ name: "register", query: { email: email } });
       } else {
         throw error;
