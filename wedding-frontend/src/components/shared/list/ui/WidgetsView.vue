@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import { CalendarIcon, MapIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { createEvent, type EventAttributes } from "ics";
-import i18n from "@/i18n/index.js";
+import i18n from "@/i18n";
 import { Teleport, type PropType, computed } from "vue";
 import {
   WidgetType,

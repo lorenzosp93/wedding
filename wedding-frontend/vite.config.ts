@@ -20,6 +20,7 @@ export default defineConfig({
         dirname(fileURLToPath(import.meta.url)),
         "./src/i18n/locales/**"
       ),
+      strictMessage: false,
     }),
     VitePWA({
       strategies: "generateSW",
