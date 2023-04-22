@@ -67,7 +67,7 @@ const error: Ref<any> = ref(null);
 const route = useRoute();
 
 onMounted(() => {
-  email.value = route.query.email as string;
+  email.value = route?.query.email as string;
 });
 
 function getAuthToken() {

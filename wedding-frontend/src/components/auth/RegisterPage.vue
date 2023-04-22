@@ -35,7 +35,7 @@ const user: Ref<User> = ref({
 const route = useRoute();
 
 onMounted(() => {
-  user.value.email = route.query.email as string;
+  user.value.email = route?.query.email as string;
 });
 
 const authStore = useAuthStore();
