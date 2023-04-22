@@ -20,15 +20,22 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref } from "vue";
+import { type Ref, ref, onMounted } from "vue";
 import { useAuthStore } from "@/stores";
 import type { User } from "@/models/auth.interface";
 import UserForm from "../shared/UserForm.vue";
+import { useRoute } from "vue-router";
 
 const user: Ref<User> = ref({
   email: "",
   first_name: "",
   last_name: "",
+});
+
+const route = useRoute();
+
+onMounted(() => {
+  user.value.email = route?.query?.email as string;
 });
 
 const authStore = useAuthStore();
