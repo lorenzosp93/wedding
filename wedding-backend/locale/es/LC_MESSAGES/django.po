@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-25 11:23+0000\n"
+"POT-Creation-Date: 2023-04-27 08:38+0000\n"
 "PO-Revision-Date: 2022-12-25 12:25+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
@@ -31,70 +31,58 @@ msgid "Text must be provided"
 msgstr "Favor de proporcionar texto"
 
 #: info/models.py:14
-msgid "Venues"
-msgstr "Lugares"
-
-#: info/models.py:15
-msgid "Food"
-msgstr "Comida"
-
-#: info/models.py:16
-msgid "Attractions"
-msgstr "Atracciones"
-
-#: info/models.py:17
 msgid "Tips"
 msgstr "Consejos"
 
-#: info/models.py:18
+#: info/models.py:15
 msgid "Travel"
 msgstr "Viaje"
 
-#: info/models.py:19
+#: info/models.py:16
 msgid "Events"
 msgstr "Eventos"
 
-#: info/models.py:20
+#: info/models.py:17
 msgid "Gifts"
 msgstr "Regalo"
 
-#: info/models.py:24
+#: info/models.py:21
 msgid "Before"
 msgstr "Antes"
 
-#: info/models.py:25
+#: info/models.py:22
 msgid "Ice-breaker"
 msgstr "Ice-breaker"
 
-#: info/models.py:26
+#: info/models.py:23
 msgid "Ceremony"
 msgstr "Ceremonia"
 
-#: info/models.py:27
+#: info/models.py:24
 msgid "Reception"
 msgstr "Recepción"
 
-#: info/models.py:28
+#: info/models.py:25
 msgid "Dinner"
 msgstr "Cena"
 
-#: info/models.py:29
+#: info/models.py:26
 msgid "Dance"
 msgstr "Baile"
 
-#: profile/models.py:60
+#: profile/models.py:63
 #, python-format
 msgid "You have been invited as %(parent)s's plus one"
 msgstr "Has sido invitado como plus-one de %(parent)s"
 
-#: profile/models.py:65
+#: profile/models.py:68
 #, python-format
 msgid ""
 "%(parent)s invited you to Priscilla and Lorenzo's wedding website: %(url)s"
 msgstr ""
 "%(parent)s te invita al sitio web de la boda de Priscilla y Lorenzo: %(url)s"
 
-#: profile/serializers.py:124
+#: profile/serializers.py:131
 msgid ""
 "First and Last Name not found in invitee list,\n"
 "                    did you write it correcly?"
@@ -102,7 +90,7 @@ msgstr ""
 "No se encuentra el nombre y apellidos en la lista de invitados,\n"
 "                    ¿lo has escrito correctamente?"
 
-#: profile/serializers.py:135
+#: profile/serializers.py:142
 msgid "A user was already set up for this invitee with a different email"
 msgstr ""
 "Ya se ha configurado un usuario para éste invitado con una dirección de "
@@ -135,7 +123,7 @@ msgstr "El usuario %(email)s ya existe"
 msgid "No plus-one available"
 msgstr "No hay +1 disponible"
 
-#: shared/advanced_models.py:75
+#: shared/advanced_models.py:79
 #, python-format
 msgid "There is a new message for you: %(subject)s"
 msgstr "Hay un nuevo mensaje para ti: %(subject)s"
@@ -189,6 +177,12 @@ msgid "Alternatively, you can input the following code on the login page."
 msgstr ""
 "Alternativamente, puedes ingresar el siguiente código en la página de inicio "
 "de sesión."
+
+#~ msgid "Venues"
+#~ msgstr "Lugares"
+
+#~ msgid "Food"
+#~ msgstr "Comida"
 
 #, fuzzy
 #~| msgid "Text must be provided"

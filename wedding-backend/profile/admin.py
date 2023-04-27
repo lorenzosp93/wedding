@@ -108,6 +108,7 @@ class UserAdmin(admin.ModelAdmin):
     list_editable = ('first_name', 'last_name')
     inlines = [UserProfileInLine]
     fields = ('username', 'email', 'first_name', 'last_name', )
+    search_fields = ('email', 'first_name', 'last_name')
 
     def get_urls(self) -> list[URLPattern]:
         urls = super().get_urls()
