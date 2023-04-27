@@ -13,12 +13,19 @@ from .models import HasSubject
 
 
 audience_types = list(chain(*[
-    [(reduce(mul, el, 1),
-      f"{' & '.join(dict(USER_TYPES)[k] for k in el)}") for el in comb]
-    for comb in [combinations(
-        [idx for (idx, _) in USER_TYPES],
-        r=ii+1
-    ) for ii in range(len(USER_TYPES))]
+    [
+        (
+            reduce(mul, el, 1),
+            f"{' & '.join(dict(USER_TYPES)[k] for k in el)}"
+        )
+        for el in comb
+    ]
+    for comb in [
+        combinations(
+            [idx for (idx, _) in USER_TYPES],
+            r=ii+1
+        ) for ii in range(len(USER_TYPES))
+    ]
 ]))
 
 
@@ -33,7 +40,7 @@ class HasUserList(models.Model):
 class HasAudience(HasUserList):
     audience: models.Field = models.IntegerField(
         choices=audience_types,
-        default=30,
+        default=audience_types[-1][0],
     )
 
     def get_users(self) -> models.QuerySet[AbstractBaseUser]:
