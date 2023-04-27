@@ -12,6 +12,8 @@ USER_TYPES = (
     (2, 'family'),
     (3, 'friend'),
     (5, 'colleague'),
+    (7, 'friend of family'),
+    (11, 'distant family'),
 )  # index should be prime number!
 
 
