@@ -1,4 +1,6 @@
-from itertools import combinations
+from functools import reduce
+from itertools import combinations, chain
+from operator import mul
 from django.db import models
 from django.apps import apps
 from django.contrib.auth.models import AbstractBaseUser
@@ -9,17 +11,15 @@ from wedding.settings import FRONTEND_HOST
 from profile.models import USER_TYPES
 from .models import HasSubject
 
-audience_types = [
-    *USER_TYPES,
-    *list(
-        (a*b, f"{dict(USER_TYPES)[a]} & {dict(USER_TYPES)[b]}")
-        for (a, b) in combinations(
-            [idx for (idx, _) in USER_TYPES],
-            r=2
-        )
-    ),
-    (30, 'all')
-]
+
+audience_types = list(chain(*[
+    [(reduce(mul, el, 1),
+      f"{' & '.join(dict(USER_TYPES)[k] for k in el)}") for el in comb]
+    for comb in [combinations(
+        [idx for (idx, _) in USER_TYPES],
+        r=ii+1
+    ) for ii in range(len(USER_TYPES))]
+]))
 
 
 class HasUserList(models.Model):
