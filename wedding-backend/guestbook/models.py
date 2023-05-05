@@ -21,3 +21,4 @@ class Entry(Serializable, TimeStampable, Deactivate):
 
     class Meta:
         ordering = ['-created_at']
+        verbose_name_plural = 'entries'

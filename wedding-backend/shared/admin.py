@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import ContentString, TranslatedString, Address
+from .models import ContentString, TranslatedString
 
 # Register your models here.
-admin.site.register(Address)
 
 
 class TranslatedStringInline(admin.TabularInline):
