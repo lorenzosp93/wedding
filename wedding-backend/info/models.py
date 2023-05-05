@@ -56,9 +56,6 @@ class InformationWidget(models.Model):
     type: models.Field = models.IntegerField(choices=WIDGET_TYPES,)
     content: models.Field = models.JSONField()
 
-    def get_content_dict(self) -> dict:
-        return json.loads(self.content)
-
     def __str__(self) -> str:
         return f"{self.type} - {self.info}"
 
