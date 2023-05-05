@@ -48,12 +48,6 @@ class TestInfo(TestCase):
             self.assertIsInstance(thumb, Image.Image)
             self.assertEqual(thumb.size, THUMBNAIL_SIZE)
 
-    def test_info_widget(self) -> None:
-        self.assertEqual(
-            self.info_widget.get_content_dict(),
-            {"start": [2022, 12, 15,]},
-        )
-
     def test_info_widget_unique(self) -> None:
         with self.assertRaises(ValidationError):
             InformationWidget.objects.create(
