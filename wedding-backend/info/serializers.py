@@ -12,7 +12,6 @@ from profile.serializers import (
 
 class InformationWidgetSerializer(ModelSerializer):
     type = CharField(source="get_type_display")
-    content = DictField(source="get_content_dict")
 
     class Meta:
         model = InformationWidget
