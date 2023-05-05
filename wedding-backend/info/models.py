@@ -47,13 +47,6 @@ class Information(
         ordering = ['pk']
 
 
-def validate_json(value: str) -> None:
-    try:
-        json.loads(value)
-    except ValueError:
-        raise ValidationError("Please enter a valid JSON string")
-
-
 class InformationWidget(models.Model):
     info: models.Field = models.ForeignKey(
         Information,
@@ -61,7 +54,7 @@ class InformationWidget(models.Model):
         related_name='widget'
     )
     type: models.Field = models.IntegerField(choices=WIDGET_TYPES,)
-    content: models.Field = models.TextField(validators=[validate_json,])
+    content: models.Field = models.JSONField()
 
     def get_content_dict(self) -> dict:
         return json.loads(self.content)
