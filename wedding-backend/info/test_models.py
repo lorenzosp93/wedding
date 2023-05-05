@@ -62,29 +62,6 @@ class TestInfo(TestCase):
                 content=self.content_json
             )
 
-    def test_info_widget_bad_json(self) -> None:
-        bad_json_comma = '{"start": [123,456],}'
-        bad_json_bracket = '{"start": [123,456]'
-        bad_json_quotes = "{start: [123,456]}"
-        with self.assertRaises(ValidationError):
-            InformationWidget.objects.create(
-                info=self.info,
-                type=1,
-                content=bad_json_bracket,
-            )
-        with self.assertRaises(ValidationError):
-            InformationWidget.objects.create(
-                info=self.info,
-                type=1,
-                content=bad_json_comma,
-            )
-        with self.assertRaises(ValidationError):
-            InformationWidget.objects.create(
-                info=self.info,
-                type=1,
-                content=bad_json_quotes,
-            )
-
 
 class TestTriggersNotification(TestCase):
     def setUp(self) -> None:

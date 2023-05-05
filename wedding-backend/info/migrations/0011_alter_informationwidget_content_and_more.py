@@ -15,11 +15,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='informationwidget',
             name='content',
-            field=models.TextField(validators=[info.models.validate_json]),
+            field=models.TextField(validators=[]),
         ),
         migrations.AlterField(
             model_name='informationwidget',
             name='info',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='widget', to='info.information'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='widget', to='info.information'),
         ),
     ]
