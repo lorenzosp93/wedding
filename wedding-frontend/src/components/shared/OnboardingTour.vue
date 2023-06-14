@@ -1,8 +1,8 @@
 <template>
-  <div v-show="tour" id="tour-trigger" class="fixed bottom-0 right-0 p-3">
+  <div v-show="tour" id="tour-trigger" class="fixed bottom-0 right-0">
     <button
       :aria-label="$t('shared.onboardingtour.tourButton')"
-      class="p-1 bg-neutral dark:bg-darkNeutral rounded-md"
+      class="bg-neutral dark:bg-darkNeutral rounded-tl-lg p-2"
       @click="tour?.start"
     >
       <InformationCircleIcon class="h-6 w-6 md:h-7 md:w-7" />
