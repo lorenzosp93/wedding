@@ -1,11 +1,27 @@
-{% extends 'admin/base.html' %} {% block extrastyle %}
+{% extends 'admin/base.html' %} {% block extrastyle %} {{ block.super }}
 <style>
-  html[data-theme="light"], 
   :root {
-    --secondary: #1F4045;
     --primary: #7F9593;
+    --primary-fg: #fff;
+    --secondary: #1F4045;
+
+    --body-fg: #1F4045;
+    --body-bg: #EaE6E3;
+    --body-quiet-color: #7f9593;
+
+    --darkened-bg: #fff;
+    --selected-row: #ECCDC4;
+
+    --link-fg: #D5B19B;
+    --header-link-color: #fff;
+    --link-hover-color: #1f4045;
+
     --accent: #D5B19B;
-    --header-color: #d5b19b;
+    --header-color: #D5B19B;
   } 
+  caption, #content-related, #toolbar {
+    border-radius: 5px;
+  }
+  
 </style>
 {% endblock %}
