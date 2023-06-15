@@ -35,7 +35,7 @@ class ExportCsvMixin:
 
         return response
 
-    export_as_csv.short_description = f"Export selected objects"
+    export_as_csv.short_description = "Export selected %(verbose_name_plural)s"
 
 
 class TranslatedStringInline(admin.TabularInline):
