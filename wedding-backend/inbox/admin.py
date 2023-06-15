@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Message, Question, Option, Response
+from shared.admin import ExportCsvMixin
 # Register your models here.
 
 
@@ -42,8 +43,9 @@ class MessageAdmin(admin.ModelAdmin):
 
 
 @admin.register(Response)
-class ResponseAdmin(admin.ModelAdmin):
+class ResponseAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = (
         'user', 'question', 'get_options', 'text', 'active', 'deleted_at'
     )
     list_filter = ('user', 'question', 'active')
+    actions = ['export_as_csv']
