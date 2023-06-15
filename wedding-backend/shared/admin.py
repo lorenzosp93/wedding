@@ -5,12 +5,17 @@ from .models import ContentString, TranslatedString
 
 # Register your models here.
 
+CSV_ADDITIONAL_SEPARATOR = '|'
+
 
 class ExportCsvMixin:
     def export_as_csv(self, request, queryset):
 
         meta = self.model._meta
-        field_names = [field.name for field in meta.fields]
+
+        field_names = [
+            field.name for field in meta.get_fields()
+        ]
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename={}.csv'.format(
@@ -19,12 +24,18 @@ class ExportCsvMixin:
 
         writer.writerow(field_names)
         for obj in queryset:
-            row = writer.writerow([getattr(obj, field)
-                                  for field in field_names])
+            row = [getattr(obj, field) for field in field_names]
+            for idx, el in enumerate(row):
+                if hasattr(el, 'all'):
+                    row[idx] = CSV_ADDITIONAL_SEPARATOR.join(
+                        str(e)
+                        for e in el.all()
+                    )
+            writer.writerow(row)
 
         return response
 
-    export_as_csv.short_description = "Export Selected"
+    export_as_csv.short_description = f"Export selected objects"
 
 
 class TranslatedStringInline(admin.TabularInline):

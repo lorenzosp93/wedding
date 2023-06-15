@@ -7,6 +7,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import URLPattern, path
 from .models import UserProfile, Subscription
+from shared.admin import ExportCsvMixin
 
 # Register your models here.
 
@@ -19,10 +20,11 @@ class SubscriptionAdmin(admin.ModelAdmin):
 
 
 @admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
+class UserProfileAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ('user', 'language', 'type', 'plus')
     list_editable = ('language', 'type', 'plus', )
     list_filter = ('language', 'type', 'plus',)
+    actions = ['export_as_csv']
 
 
 class UserProfileInLine(admin.TabularInline):

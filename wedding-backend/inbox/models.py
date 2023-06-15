@@ -82,7 +82,7 @@ class Option(Serializable, HasContent):
         ...
 
     def __str__(self) -> str:
-        return f"{self.question} - {self.content}"
+        return f"{self.content}"
 
 
 class Response(Serializable, TimeStampable, Deactivate):
