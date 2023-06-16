@@ -47,5 +47,5 @@ class ResponseAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = (
         'user', 'question', 'get_options', 'text', 'active', 'deleted_at'
     )
-    list_filter = ('user', 'question', 'active')
+    list_filter = ('question', 'active')
     actions = ['export_as_csv']
