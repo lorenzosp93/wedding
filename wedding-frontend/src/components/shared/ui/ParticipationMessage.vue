@@ -9,12 +9,7 @@
     <defs></defs>
     <g id="Page-1">
       <g id="participation" transform="translate(1.661885, 1.729770)">
-        <text
-          font-size="18"
-          font-weight="normal"
-          word-spacing="-3"
-          fill="#1F4045"
-        >
+        <text font-size="18" font-weight="normal" fill="#1F4045">
           <tspan x="25%" text-anchor="middle" y="12.5%">
             {{ $t("theinvitation.brideParentsLine1") }}
           </tspan>
@@ -34,12 +29,7 @@
             {{ $t("theinvitation.groomParentsLine3") }}
           </tspan>
         </text>
-        <text
-          font-size="26"
-          font-weight="normal"
-          word-spacing="-1"
-          fill="#1F4045"
-        >
+        <text font-size="26" font-weight="normal" fill="#1F4045">
           <tspan x="25%" text-anchor="middle" y="32.5%">
             {{ $t("theinvitation.groom") }}
           </tspan>
@@ -47,42 +37,22 @@
             {{ $t("theinvitation.bride") }}
           </tspan>
         </text>
-        <text
-          font-size="20"
-          font-weight="normal"
-          word-spacing="-1"
-          fill="#1F4045"
-        >
+        <text font-size="20" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="45%">
             {{ $t("theinvitation.eventDate") }}
           </tspan>
         </text>
-        <text
-          font-size="26"
-          font-weight="normal"
-          word-spacing="-1"
-          fill="#1F4045"
-        >
+        <text font-size="26" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="52.5%">
             {{ $t("theinvitation.eventLocation") }}
           </tspan>
         </text>
-        <text
-          font-size="22"
-          font-weight="normal"
-          word-spacing="-1"
-          fill="#1F4045"
-        >
+        <text font-size="22" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="60%">
             {{ $t("theinvitation.eventCity") }}
           </tspan>
         </text>
-        <text
-          font-size="14"
-          font-weight="normal"
-          word-spacing="-3"
-          fill="#1F4045"
-        >
+        <text font-size="14" font-weight="normal" fill="#1F4045">
           <tspan x="50%" text-anchor="middle" y="75%">
             {{ $t("theinvitation.wedsCity") }}
           </tspan>
@@ -105,13 +75,8 @@
             {{ $t("theinvitation.brideParentsAddress2") }}
           </tspan>
         </text>
-        <text
-          font-size="20"
-          font-weight="normal"
-          word-spacing="-1"
-          fill="#1F4045"
-        >
-          <tspan x="50%" text-anchor="middle" y="95%" fill="#D5B19B">
+        <text font-size="20" font-weight="normal" fill="#1F4045">
+          <tspan x="50%" text-anchor="middle" y="95%">
             {{ $t("theinvitation.noKids") }}
           </tspan>
         </text>
