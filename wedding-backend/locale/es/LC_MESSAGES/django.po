@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 18:41+0000\n"
+"POT-Creation-Date: 2023-07-02 18:49+0000\n"
 "PO-Revision-Date: 2022-12-25 12:25+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
@@ -168,11 +168,9 @@ msgstr "Tus credenciales de acceso"
 
 #: templates/token_email.html:7
 #, fuzzy
-#| msgid "Please click the link below to access the invitee area."
-msgid "Please use the code below to access "
-msgstr ""
-"Por favor, utiliza el codigo a continuación para acceder al área de "
-"invitados."
+#| msgid "Please use the code below to access "
+msgid "Please use the code below to access:"
+msgstr "Por favor, utiliza el codigo a continuación para acceder:"
 
 #: templates/token_email.html:10
 msgid "Alternatively, if you're not on mobile, you can click directly on "
