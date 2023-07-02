@@ -237,6 +237,7 @@ PASSWORDLESS_AUTH = {
     'PASSWORDLESS_EMAIL_TOKEN_HTML_TEMPLATE_NAME': "token_email.html",
     'PASSWORDLESS_EMAIL_CALLBACK': 'shared.utils.send_email_with_callback_token',
     'PASSWORDLESS_REGISTER_NEW_USERS': False,
+    'PASSWORDLESS_TOKEN_EXPIRE_TIME': 15 * 60,
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

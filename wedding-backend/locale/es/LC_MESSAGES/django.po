@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-27 08:38+0000\n"
+"POT-Creation-Date: 2023-07-02 18:41+0000\n"
 "PO-Revision-Date: 2022-12-25 12:25+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
@@ -123,7 +123,7 @@ msgstr "El usuario %(email)s ya existe"
 msgid "No plus-one available"
 msgstr "No hay +1 disponible"
 
-#: shared/advanced_models.py:79
+#: shared/advanced_models.py:86
 #, python-format
 msgid "There is a new message for you: %(subject)s"
 msgstr "Hay un nuevo mensaje para ti: %(subject)s"
@@ -158,25 +158,46 @@ msgstr "%(parent_fullname)s te invitó a la boda de Priscilla y Lorenzo."
 msgid "You can access the website through the link below."
 msgstr "Puedes acceder al sitio web a través del siguiente enlace."
 
-#: templates/plus_one_email.html:17 templates/token_email.html:16
+#: templates/plus_one_email.html:17
 msgid "Click here"
 msgstr "Click aquí"
 
 #: templates/token_email.html:5
-msgid "Your login link"
-msgstr "Tu enlace de acceso"
+msgid "Your login credentials"
+msgstr "Tus credenciales de acceso"
 
-#: templates/token_email.html:6
-msgid "Please click the link below to access the invitee area."
+#: templates/token_email.html:7
+#, fuzzy
+#| msgid "Please click the link below to access the invitee area."
+msgid "Please use the code below to access "
 msgstr ""
-"Por favor, haz click al enlace a continuación para acceder al área de "
+"Por favor, utiliza el codigo a continuación para acceder al área de "
 "invitados."
 
-#: templates/token_email.html:24
-msgid "Alternatively, you can input the following code on the login page."
+#: templates/token_email.html:10
+msgid "Alternatively, if you're not on mobile, you can click directly on "
+msgstr "Alternativamente, si no estas en tu celular, puedes hacer click en "
+
+#: templates/token_email.html:10
+msgid "this link"
+msgstr "este enlace"
+
+#: templates/token_email.html:10
+msgid "to access directly."
+msgstr "para acceder directamente"
+
+#: templates/token_email.html:12
+msgid ""
+"Please note that this code and link will expire within 15 minutes of "
+"submission."
 msgstr ""
-"Alternativamente, puedes ingresar el siguiente código en la página de inicio "
-"de sesión."
+"Por favor ten en cuenta que el código y el enlace expira dentro de 15 "
+"minutos desde que este correo ha sido enviado."
+
+#~ msgid "Alternatively, you can input the following code on the login page."
+#~ msgstr ""
+#~ "Alternativamente, puedes ingresar el siguiente código en la página de "
+#~ "inicio de sesión."
 
 #~ msgid "Venues"
 #~ msgstr "Lugares"
