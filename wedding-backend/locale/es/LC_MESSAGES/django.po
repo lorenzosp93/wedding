@@ -167,8 +167,6 @@ msgid "Your login credentials"
 msgstr "Tus credenciales de acceso"
 
 #: templates/token_email.html:7
-#, fuzzy
-#| msgid "Please use the code below to access "
 msgid "Please use the code below to access:"
 msgstr "Por favor, utiliza el codigo a continuación para acceder:"
 
