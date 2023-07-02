@@ -7,7 +7,7 @@
         <p>{% translate "Please use the code below to access:" %}</p>
         <h3 style="padding-left: 5px; width: 100%;">{{ callback_token }}</h3>
 
-        <p>{% translate "Alternatively, if you're not on mobile, you can click directly on " %}<a style="color:#7F9593; font-weight: bold;" href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}">{% translate "this link" %}</a> {% translate "to access directly." %}</p>
+        <p>{% translate "Alternatively, if you're not on mobile, you can click on " %}<a style="color:#7F9593; font-weight: bold;" href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}">{% translate "this link" %}</a> {% translate "to access directly." %}</p>
 
         <p style="color: red;">{% translate "Please note that this code and link will expire within 15 minutes of submission." %}</p>
     </div>

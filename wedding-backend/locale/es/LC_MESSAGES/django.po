@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-02 18:49+0000\n"
+"POT-Creation-Date: 2023-07-02 19:04+0000\n"
 "PO-Revision-Date: 2022-12-25 12:25+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
@@ -171,7 +171,7 @@ msgid "Please use the code below to access:"
 msgstr "Por favor, utiliza el codigo a continuación para acceder:"
 
 #: templates/token_email.html:10
-msgid "Alternatively, if you're not on mobile, you can click directly on "
+msgid "Alternatively, if you're not on mobile, you can click on "
 msgstr "Alternativamente, si no estas en tu celular, puedes hacer click en "
 
 #: templates/token_email.html:10
@@ -187,8 +187,7 @@ msgid ""
 "Please note that this code and link will expire within 15 minutes of "
 "submission."
 msgstr ""
-"Por favor ten en cuenta que el código y el enlace expiran en 15 "
-"minutos."
+"Por favor ten en cuenta que el código y el enlace expiran en 15 minutos."
 
 #~ msgid "Alternatively, you can input the following code on the login page."
 #~ msgstr ""
