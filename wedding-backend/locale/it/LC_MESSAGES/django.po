@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-27 08:38+0000\n"
+"POT-Creation-Date: 2023-07-02 19:04+0000\n"
 "PO-Revision-Date: 2022-12-25 12:28+0100\n"
 "Last-Translator: Lorenzo Spinelli <me@lorenzosp.com>\n"
 "Language-Team: \n"
@@ -122,7 +122,7 @@ msgstr "L'utente %(email)s esiste già"
 msgid "No plus-one available"
 msgstr "Non è disponibile il plus-one"
 
-#: shared/advanced_models.py:79
+#: shared/advanced_models.py:86
 #, python-format
 msgid "There is a new message for you: %(subject)s"
 msgstr "C'è un nuovo messaggio per te: %(subject)s"
@@ -158,23 +158,40 @@ msgstr ""
 msgid "You can access the website through the link below."
 msgstr "Puoi accedere al sito attraverso il link sottostante."
 
-#: templates/plus_one_email.html:17 templates/token_email.html:16
+#: templates/plus_one_email.html:17
 msgid "Click here"
 msgstr "Clicca quì"
 
 #: templates/token_email.html:5
-msgid "Your login link"
-msgstr "Il tuo link di accesso"
+msgid "Your login credentials"
+msgstr "Il tuo codice di accesso"
 
-#: templates/token_email.html:6
-msgid "Please click the link below to access the invitee area."
-msgstr ""
-"Fare clic sul link sottostante per accedere all'area riservata agli invitati."
+#: templates/token_email.html:7
+msgid "Please use the code below to access:"
+msgstr "Puoi utilizzare il codice sottostante per accedere:"
 
-#: templates/token_email.html:24
-msgid "Alternatively, you can input the following code on the login page."
+#: templates/token_email.html:10
+msgid "Alternatively, if you're not on mobile, you can click on "
+msgstr "Alternativamente, se non sei sul cellulare, puoi cliccare "
+
+#: templates/token_email.html:10
+msgid "this link"
+msgstr "questo link"
+
+#: templates/token_email.html:10
+msgid "to access directly."
+msgstr "per accedere direttamente"
+
+#: templates/token_email.html:12
+msgid ""
+"Please note that this code and link will expire within 15 minutes of "
+"submission."
 msgstr ""
-"In alternativa, puoi inserire il seguente codice nella pagina di accesso."
+"Nota che il codice e il link scadranno entro 15 minuti da questo messaggio."
+
+#~ msgid "Alternatively, you can input the following code on the login page."
+#~ msgstr ""
+#~ "In alternativa, puoi inserire il seguente codice nella pagina di accesso."
 
 #~ msgid "Venues"
 #~ msgstr "Località"

@@ -76,7 +76,7 @@
           </tspan>
         </text>
         <text font-size="20" font-weight="normal" fill="#1F4045">
-          <tspan x="50%" text-anchor="middle" y="95%">
+          <tspan x="50%" text-anchor="middle" y="95%" fill="#D5B19B">
             {{ $t("theinvitation.noKids") }}
           </tspan>
         </text>
