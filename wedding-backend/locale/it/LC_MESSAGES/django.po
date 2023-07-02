@@ -187,7 +187,7 @@ msgstr "per accedere direttamente"
 msgid ""
 "Please note that this code and link will expire within 15 minutes of "
 "submission."
-msgstr "Nota che il codice e il link scadranno entro 15 minuti dall'invio."
+msgstr "Nota che il codice e il link scadranno entro 15 minuti da questo messaggio."
 
 #~ msgid "Alternatively, you can input the following code on the login page."
 #~ msgstr ""
