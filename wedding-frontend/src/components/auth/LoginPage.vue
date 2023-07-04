@@ -1,4 +1,5 @@
 <template>
+  <TheHeader />
   <div class="flex py-5 px-3">
     <div
       class="bg-pale dark:bg-darkPale p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-full max-w-xl shadow-sm"
@@ -59,12 +60,15 @@
       </form>
     </div>
   </div>
+  <TheFooter />
 </template>
 
 <script setup lang="ts">
 import { type Ref, ref, onMounted } from "vue";
 import { login } from "@/services/login.service";
+import TheFooter from "../ui/TheFooter.vue";
 import LoadingView from "@/components/shared/LoadingView.vue";
+import TheHeader from "../ui/TheHeader.vue";
 import type { AxiosError } from "axios";
 import type { UserError } from "@/models/auth.interface";
 import { useRoute } from "vue-router";

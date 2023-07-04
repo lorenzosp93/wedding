@@ -25,17 +25,14 @@
       </div>
     </div>
     <OnboardingTour v-if="authStore.profile" />
-    <footer
-      class="px-2 py-1 text-xs md:text-sm text-secondary fixed bottom-0 left-0 bg-neutral dark:bg-darkNeutral rounded-tr-lg"
-    >
-      © Lorenzo Spinelli, 2023
-    </footer>
+    <TheFooter />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "@/stores";
+import TheFooter from "./ui/TheFooter.vue";
 import CountDown from "@/components/shared/CountDown.vue";
 import OnboardingTour from "./shared/OnboardingTour.vue";
 import { EnvelopeIcon } from "@heroicons/vue/24/outline";
