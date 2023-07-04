@@ -36,7 +36,7 @@ msgstr "Consigli"
 
 #: info/models.py:15
 msgid "Travel"
-msgstr "Viaggi"
+msgstr "Spostamenti"
 
 #: info/models.py:16
 msgid "Events"
