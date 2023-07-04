@@ -48,10 +48,10 @@ class Message(
         return f"{self.subject}"
 
     class Meta:
-        ordering = ['created_at']
+        ...
 
 
-class Question(Serializable, HasSubject, HasContent, TimeStampable):
+class Question(Serializable, HasSubject, HasContent):
     "Model to define questions for users"
     message: models.Field = models.ForeignKey(
         Message,
@@ -66,7 +66,7 @@ class Question(Serializable, HasSubject, HasContent, TimeStampable):
         return f"{self.message} - {self.subject}"
 
     class Meta:
-        ordering = ['created_at']
+        ...
 
 
 class Option(Serializable, HasContent):
