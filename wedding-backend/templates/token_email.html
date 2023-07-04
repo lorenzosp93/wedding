@@ -5,27 +5,42 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+        <meta name="viewport" content="width=device-width">
     </head>
     <body>
-        <table style="background-color: #EAE6E3; color: #1F4045; font-family: serif; padding: 20px; width: 100%;">
-            <tr style="width: 100%; padding: 40px;">
-               <img src="{{ site }}{% static 'logo_long.webp' %}" width="100%" alt="logo">
-            </tr>
-            <tr>
-                <p style="font-size: 18px;">{% translate "Your login credentials" %}</p>
-            </tr>
-            <tr>
-                <p>{% translate "Please use the code below to access:" %}</p>
-                <p style="padding-left: 5px; width: 100%; color: #7F9593; font-weight: bold; font-size: 16px">{{ callback_token }}</p>
-
-                <p>{% translate "Alternatively, if you're not on mobile, you can click on " %}<a style="color:#7F9593; font-weight: bold;" href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}">{% translate "this link" %}</a> {% translate "to access directly." %}</p>
-
-            </tr>
-            <tr>
-                <p style="color: red;">{% translate "Please note that this code and link will expire within 15 minutes of submission." %}</p>
-
-
-            </tr>
-        </table>
+        <div id="email">
+            <table role="presentation" width="100%" cellspacing="0" border="0" style="color: #1F4045; font-family: serif; padding: 20px; font-size: 16px">
+                <tr style="padding: 40px;">
+                    <td align="center">
+                        <img src="{{ site }}{% static 'logo_long.webp' %}" width="100%" alt="logo">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="font-size: 20px; font-weight: bold;">{% translate "Your login credentials" %}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>{% translate "Please use the code below to access:" %}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <p style=" color: #7F9593; font-weight: bold; font-size: 20px;">{{ callback_token }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>{% translate "Alternatively, if you're not on mobile, you can click on " %}<a style="color:#7F9593; font-weight: bold;" href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}">{% translate "this link" %}</a> {% translate "to access directly." %}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top: 1px solid #7F9593; padding-top: 8px;">
+                        <p style="color: red;">{% translate "Please note that this code and link will expire within 15 minutes of submission." %}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </body>
 </html>
