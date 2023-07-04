@@ -16,7 +16,7 @@
             :placeholder="$t('shared.listview.search')"
           />
         </div>
-        <ul class="mt-1 flex-auto overflow-y-scroll">
+        <ul class="mt-1 flex-auto overflow-y-auto">
           <list-item
             v-for="(obj, idx) in searchedList"
             :key="obj.uuid"
