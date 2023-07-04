@@ -1,15 +1,31 @@
 {% load i18n %}
+{% load static %}
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+    </head>
+    <body>
+        <table style="background-color: #EAE6E3; color: #1F4045; font-family: serif; padding: 20px; width: 100%;">
+            <tr style="width: 100%; padding: 40px;">
+               <img src="{{ site }}{% static 'logo_long.webp' %}" width="100%" alt="logo">
+            </tr>
+            <tr>
+                <p style="font-size: 18px;">{% translate "Your login credentials" %}</p>
+            </tr>
+            <tr>
+                <p>{% translate "Please use the code below to access:" %}</p>
+                <p style="padding-left: 5px; width: 100%; color: #7F9593; font-weight: bold; font-size: 16px">{{ callback_token }}</p>
 
-<body style="font-family:serif; background-color: #EAE6E3; color: #1F4045">
-    <div style="padding: 20px">
-        <h3>{% translate "Your login credentials" %}</h3>
+                <p>{% translate "Alternatively, if you're not on mobile, you can click on " %}<a style="color:#7F9593; font-weight: bold;" href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}">{% translate "this link" %}</a> {% translate "to access directly." %}</p>
 
-        <p>{% translate "Please use the code below to access:" %}</p>
-        <h3 style="padding-left: 5px; width: 100%;">{{ callback_token }}</h3>
+            </tr>
+            <tr>
+                <p style="color: red;">{% translate "Please note that this code and link will expire within 15 minutes of submission." %}</p>
 
-        <p>{% translate "Alternatively, if you're not on mobile, you can click on " %}<a style="color:#7F9593; font-weight: bold;" href="{{ site_name }}{{ auth_url }}?email={{ user_email }}&token={{ callback_token }}">{% translate "this link" %}</a> {% translate "to access directly." %}</p>
 
-        <p style="color: red;">{% translate "Please note that this code and link will expire within 15 minutes of submission." %}</p>
-    </div>
-
-</body>
+            </tr>
+        </table>
+    </body>
+</html>
