@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="email">
-            <table role="presentation" width="100%" cellspacing="0" border="0" style="color: #1F4045; font-family: serif; padding: 20px; font-size: 16px; background-color: #EAE6E3;">
+            <table role="presentation" width="100%" cellspacing="0" border="0" style="color: #1F4045; font-family: serif; padding: 20px; font-size: 16px;">
                 <tr style="padding: 40px;">
                     <td align="center">
                         <img src="{{ site }}{% static 'logo_long.webp' %}" width="100%" alt="logo">
@@ -17,17 +17,12 @@
                 </tr>
                 <tr style="padding-top: 10px;">
                     <td>
-                        <p style="font-size: 20px; font-weight: bold;">{% translate "Your login credentials" %}</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <p>{% translate "Please use the code below to access:" %}</p>
                     </td>
                 </tr>
                 <tr>
                     <td align="center">
-                        <p style=" color: #7F9593; font-weight: bold; font-size: 20px;">{{ callback_token }}</p>
+                        <p style=" color: #7F9593; font-weight: bold; font-size: 22px;">{{ callback_token }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -36,7 +31,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="border-top: 1px solid #7F9593; padding-top: 8px;">
+                    <td style="border-top: 1px solid #7F9593; padding-top: 5px;">
                         <p style="color: red;">{% translate "Please note that this code and link will expire within 15 minutes of submission." %}</p>
                     </td>
                 </tr>
