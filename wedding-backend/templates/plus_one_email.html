@@ -9,14 +9,14 @@
         <meta name="viewport" content="width=device-width">
     </head>
     <body>
-        <table style="color: #1F4045; font-family: serif; padding: 20px; width: 100%;">
+        <table role="presentation" width="100%" cellspacing="0" border="0" style="color: #1F4045; font-family: serif; padding: 20px; font-size: 16px; background-color: #EAE6E3;">
             <tr style="width: 100%; padding: 40px;">
                 <td>
                     <img src="{{ site }}{% static 'logo_long.webp' %}" width="100%" alt="logo">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td style="padding-top: 10px">
                     <p style="font-size: 20px; font-weight: bold;">{% translate "You have been invited!" %}</p>
                     <p>{% blocktrans %}{{parent_fullname}} invited you to Priscilla and Lorenzo's wedding.{% endblocktrans %}</p>
                     <p>{% translate "You can access the website through the link below." %}</p>
