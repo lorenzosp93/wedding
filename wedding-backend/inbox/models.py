@@ -48,7 +48,7 @@ class Message(
         return f"{self.subject}"
 
     class Meta:
-        ordering = ['pk']
+        ordering = ['created_at']
 
 
 class Question(Serializable, HasSubject, HasContent):
