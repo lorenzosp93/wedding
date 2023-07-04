@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
+  <TheHeader />
   <div class="py-5 px-3 flex">
     <div
       class="bg-pale dark:bg-darkPale p-5 rounded-2xl mx-auto max-w-xl w-full shadow-sm"
@@ -49,6 +50,7 @@
       </form>
     </div>
   </div>
+  <TheFooter />
 </template>
 
 <script setup lang="ts">
@@ -57,6 +59,8 @@ import { getToken } from "@/services/login.service.js";
 import type { AxiosError } from "axios";
 import { type Ref, ref, onMounted } from "vue";
 import OtpInput from "./ui/OtpInput.vue";
+import TheHeader from "../ui/TheHeader.vue";
+import TheFooter from "../ui/TheFooter.vue";
 import { useRoute } from "vue-router";
 
 const email: Ref<string> = ref("");

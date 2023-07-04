@@ -1,4 +1,5 @@
 <template>
+  <TheHeader />
   <div class="flex py-5 px-3">
     <div
       class="bg-pale dark:bg-darkPale p-5 rounded-2xl text-primary dark:text-darkPrimary mx-auto w-full max-w-xl shadow-sm"
@@ -17,6 +18,7 @@
       />
     </div>
   </div>
+  <TheFooter />
 </template>
 
 <script setup lang="ts">
@@ -24,6 +26,8 @@ import { type Ref, ref, onMounted } from "vue";
 import { useAuthStore } from "@/stores";
 import type { User } from "@/models/auth.interface";
 import UserForm from "../shared/UserForm.vue";
+import TheHeader from "../ui/TheHeader.vue";
+import TheFooter from "../ui/TheFooter.vue";
 import { useRoute } from "vue-router";
 
 const user: Ref<User> = ref({
