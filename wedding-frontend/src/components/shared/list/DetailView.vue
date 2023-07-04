@@ -42,7 +42,7 @@
         </ul>
       </div>
     </header>
-    <article class="pt-3 flex-auto overflow-y-scroll px-1">
+    <article class="pt-3 flex-auto overflow-y-auto px-1">
       <section
         v-if="activeObject?.picture"
         id="object-picture"
