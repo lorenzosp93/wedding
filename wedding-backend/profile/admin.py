@@ -104,13 +104,14 @@ class CsvImportForm(forms.Form):
 
 
 @admin.register(get_user_model())
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin, ExportCsvMixin):
     change_list_template = "profile/user_admin.html"
     list_display = ('username', 'first_name', 'last_name', 'profile')
     list_editable = ('first_name', 'last_name')
     inlines = [UserProfileInLine]
     fields = ('username', 'email', 'first_name', 'last_name', )
     search_fields = ('email', 'first_name', 'last_name')
+    actions = ['export_as_csv']
 
     def get_urls(self) -> list[URLPattern]:
         urls = super().get_urls()
