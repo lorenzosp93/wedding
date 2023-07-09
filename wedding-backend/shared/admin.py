@@ -24,8 +24,12 @@ class ExportCsvMixin:
 
         writer.writerow(field_names)
         for obj in queryset:
-            row = [getattr(obj, field)
-                   for field in field_names if hasattr(obj, field)]
+            row = []
+            for field in field_names:
+                if hasattr(obj, field):
+                    row.append(getattr(obj, field))
+                else:
+                    row.append("")
             for idx, el in enumerate(row):
                 if hasattr(el, 'all'):
                     row[idx] = CSV_ADDITIONAL_SEPARATOR.join(
