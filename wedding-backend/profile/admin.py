@@ -30,7 +30,7 @@ class UserProfileAdmin(admin.ModelAdmin, ExportCsvMixin):
 class UserProfileInLine(admin.TabularInline):
     model = UserProfile
     fk_name = 'user'
-    exclude = ('parent',)
+    exclude = ()
     min_num = 1
 
 
