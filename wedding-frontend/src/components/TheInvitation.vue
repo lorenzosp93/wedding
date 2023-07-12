@@ -28,7 +28,7 @@
               @load="loadImage('letterBase')"
             />
             <InviteMessage
-              class="max-w-[65%] max-h-[65%] font-[Tangerine] z-10 top-[47%]"
+              class="max-w-[65%] max-h-[65%] font-fancy z-10 top-[47%]"
             />
           </div>
           <div id="participationCard">
@@ -41,7 +41,7 @@
             />
             <ParticipationMessage
               id="participationMessage"
-              class="font-[Tangerine] z-20 top-[34%]"
+              class="font-fancy z-20 top-[34%]"
             />
           </div>
           <img
@@ -91,7 +91,7 @@
         id="rsvp"
         :to="{ name: 'inbox', params: { active: 'rsvp' } }"
         v-show="loaded"
-        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-md px-2 py-1 mb-5 short:mr-5 opacity-0 font-[Tangerine] text-2xl cursor-pointer"
+        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-md px-2 py-1 mb-5 short:mr-5 opacity-0 text-xl cursor-pointer"
         >{{ $t("theinvitation.rsvp") }}</RouterLink
       >
     </Teleport>
@@ -230,11 +230,11 @@ function scrollToBottom() {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @font-face {
-  font-family: "Tangerine";
+  font-family: "ClassicScript";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local("Tangerine"),
-    url("@/assets/Tangerine-Regular.ttf") format("truetype");
+  src: local("Classic Script MN"),
+    url("@/assets/ClassicScriptMNRegular.ttf") format("truetype");
 }
 </style>

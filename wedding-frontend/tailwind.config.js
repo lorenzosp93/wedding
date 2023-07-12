@@ -9,6 +9,9 @@ module.exports = {
         short: { raw: "(max-height: 640px)" },
         tall: { raw: "(min-height: 1080px)" },
       },
+      fontFamily: {
+        fancy: ["ClassicScript", "Tangerine"],
+      },
     },
     colors: {
       transparent: "transparent",
