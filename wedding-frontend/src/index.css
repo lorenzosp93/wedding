@@ -8,5 +8,5 @@
   font-weight: 400;
   font-display: swap;
   src: local("Classic Script MN"),
-    url("@/assets/ClassicScriptMNRegular.ttf") format("truetype");
+    url("@/assets/fonts/ClassicScriptMNRegular.ttf") format("truetype");
 }
