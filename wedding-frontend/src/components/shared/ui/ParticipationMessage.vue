@@ -9,7 +9,12 @@
     <defs></defs>
     <g id="Page-1">
       <g id="participation" transform="translate(1.661885, 1.729770)">
-        <text font-size="18" font-weight="normal" fill="#1F4045">
+        <text
+          font-size="18"
+          font-weight="normal"
+          fill="#1F4045"
+          word-spacing="-2.5"
+        >
           <tspan x="25%" text-anchor="middle" y="12.5%">
             {{ $t("theinvitation.brideParentsLine1") }}
           </tspan>

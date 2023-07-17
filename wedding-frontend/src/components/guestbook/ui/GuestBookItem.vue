@@ -4,7 +4,10 @@
   >
     <div class="flex">
       <div class="flex flex-col">
-        <p class="px-2" :class="{ 'text-accent': own }">
+        <p
+          class="px-2 font-fancy text-2xl [word-spacing:-2.5px]"
+          :class="{ 'text-accent': own }"
+        >
           {{ entry?.user_fullname }}
         </p>
         <p class="px-2 text-accent">{{ dateForDisplay }}</p>

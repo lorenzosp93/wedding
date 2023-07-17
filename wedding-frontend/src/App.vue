@@ -5,6 +5,10 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { registerSW } from "virtual:pwa-register";
+
+registerSW({ immediate: true });
+</script>
 
 <style></style>

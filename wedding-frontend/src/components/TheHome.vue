@@ -9,7 +9,9 @@
         </p>
         <p class="mx-auto">{{ $t("thehome.weAreDelighted") }}</p>
         <p class="mx-auto">
-          {{ $t("thehome.withLove") }} <br />
+          {{ $t("thehome.withLove") }}
+        </p>
+        <p class="font-fancy text-3xl my-0 mx-auto">
           {{ $t("thehome.brideAndGroom") }}
         </p>
       </div>
@@ -18,7 +20,7 @@
         id="invite-link"
         class="flex w-fit mx-auto my-8 bg-accent text-primary px-2 py-1 rounded-md shadow-md"
       >
-        <RouterLink :to="{ name: 'invitation' }" class="flex">
+        <RouterLink :to="{ name: 'invitation' }" class="flex uppercase">
           <EnvelopeIcon class="w-5 h-5 mr-1 my-auto" />
           {{ $t("thehome.openYourInvitation") }}
         </RouterLink>
