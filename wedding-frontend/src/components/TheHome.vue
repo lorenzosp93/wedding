@@ -22,7 +22,9 @@
       >
         <RouterLink :to="{ name: 'invitation' }" class="flex">
           <EnvelopeIcon class="w-5 h-5 mr-1 my-auto" />
-          {{ $t("thehome.openYourInvitation") }}
+          <p class="mx-1">
+            {{ $t("thehome.openYourInvitation") }}
+          </p>
         </RouterLink>
       </div>
     </div>
