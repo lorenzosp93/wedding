@@ -10,7 +10,7 @@ module.exports = {
         tall: { raw: "(min-height: 1080px)" },
       },
       fontFamily: {
-        fancy: ["ClassicScript", "Tangerine"],
+        fancy: ["ClassicScript", "cursive"],
       },
     },
     colors: {

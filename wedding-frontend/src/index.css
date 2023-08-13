@@ -6,7 +6,8 @@
   font-family: "ClassicScript";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
-  src: local("Classic Script MN"),
+  font-display: auto;
+  size-adjust: 150%;
+  src: local("Classic Script MN"), local("ClassicScriptMN"),
     url("@/assets/fonts/ClassicScriptMNRegular.ttf") format("truetype");
 }
