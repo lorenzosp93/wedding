@@ -91,7 +91,7 @@
         id="rsvp"
         :to="{ name: 'inbox', params: { active: 'rsvp' } }"
         v-show="loaded"
-        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-md pl-1 pr-3 pb-0 pt-1 mb-5 short:mr-5 opacity-0 cursor-pointer font-fancy text-2xl tracking-tighter"
+        class="fixed w-fit bottom-0 right-1/2 short:right-0 translate-x-1/2 short:translate-x-0 z-30 rounded-md bg-accent text-primary shadow-md pl-1 pr-3 pb-0 pt-1 mb-5 short:mr-5 opacity-0 cursor-pointer font-fancy text-lg tracking-tighter"
         >{{ $t("theinvitation.rsvp") }}</RouterLink
       >
     </Teleport>
