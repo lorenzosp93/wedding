@@ -122,12 +122,14 @@ class HasPicture(models.Model):
             suf = self.save_img(thumb, save_path)
             self.thumbnail.save(save_path, suf, save=False)
 
-    def create_thumb(self, img: Image.Image) -> Image.Image:
+    @staticmethod
+    def create_thumb(img: Image.Image) -> Image.Image:
         thumb = exif_transpose(img)
-        thumb.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
+        thumb.thumbnail(THUMBNAIL_SIZE, Image.BILINEAR)
         return thumb
 
-    def save_img(self, img: Image.Image, save_path: str) -> SimpleUploadedFile:
+    @staticmethod
+    def save_img(img: Image.Image, save_path: str) -> SimpleUploadedFile:
         with BytesIO() as io:
             img.save(
                 io,

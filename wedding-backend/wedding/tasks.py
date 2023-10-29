@@ -1,11 +1,15 @@
 import json
+import base64
+from io import BytesIO
+from PIL import Image
 from smtplib import SMTPConnectError, SMTPServerDisconnected
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.apps import apps
 from django.core.mail import send_mail
 from pywebpush import webpush, WebPushException
 from wedding.settings import WEBPUSH_SETTINGS, EMAIL_TO
 from wedding.celery import app
-
+from shared.models import HasPicture
 
 @app.task(
     ignore_result=True,
@@ -53,3 +57,27 @@ def send_notifications_for_subscriptions(
             )
         except WebPushException:
             subscription.delete()
+
+@app.task(
+    ignore_result=True,
+    autoretry_for=(
+    ),
+    retry_kwargs={'max_retries': 3},
+    retry_backoff=True,
+    default_retry_delay=15
+)
+def process_photos_task(type: str,
+                        encoded_photos: list[str]=[],
+                        filenames: list[str]=[]
+                        ) -> None:
+    photo_model = apps.get_model('info', 'Photo')
+
+    for encoded_photo, filename in zip(encoded_photos, filenames):
+        decoded_photo = base64.b64decode(encoded_photo)
+        with BytesIO(decoded_photo) as f:
+            with Image.open(f) as img:
+                suf = HasPicture.save_img(img, filename)
+                photo_model.objects.create(
+                    type=type,
+                    picture=suf,
+                )

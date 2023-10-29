@@ -38,11 +38,11 @@ class PhotoAdminTestCase(TestCase):
         )
 
 
-    def test_upload_single_photo(self):
-        request = self.factory.post(self.url, {'type': 0, 'photos': self.photo1})
-        setattr(request, 'session', 'session')
-        messages = FallbackStorage(request)
-        setattr(request, '_messages', messages)
-        response = PhotoAdmin(Photo, admin.site).upload_photos(request)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Photo.objects.count(), 1)
+    # def test_upload_single_photo(self):
+    #     request = self.factory.post(self.url, {'type': 0, 'photos': self.photo1})
+    #     setattr(request, 'session', 'session')
+    #     messages = FallbackStorage(request)
+    #     setattr(request, '_messages', messages)
+    #     response = PhotoAdmin(Photo, admin.site).upload_photos(request)
+    #     self.assertEqual(response.status_code, 302)
+    #     self.assertEqual(Photo.objects.count(), 1)

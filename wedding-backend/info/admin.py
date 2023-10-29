@@ -1,9 +1,11 @@
+import base64
 from django import forms
 from django.contrib import admin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import URLPattern, path
 from django.utils.safestring import mark_safe, SafeString
+from wedding.tasks import process_photos_task
 from .models import Information, Photo, InformationWidget
 
 # Register your models here.
@@ -56,13 +58,15 @@ class PhotoAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             form = UploadPhotosForm(request.POST, request.FILES)
             if form.is_valid():
-                uploaded = self.process_photos(form)
-                if uploaded:
-                    message = "Your photos have been uploaded"
-                    level = 'SUCCESS'
-                else:
-                    message = "There was an error uploading your photos"
-                    level = 'ERROR'
+                photos = form.cleaned_data.get('photos')
+                encoded_photos = [base64.b64encode(photo.read()).decode('utf8') for photo in photos]
+                filenames = [photo.name for photo in photos]
+                process_photos_task.delay(
+                    form.cleaned_data.get('type'),
+                    encoded_photos,
+                    filenames,
+                )
+                message, level = "Your photos upload will be processed soon", "SUCCESS"
                 self.message_user(
                     request, message, level
                 )
@@ -76,26 +80,6 @@ class PhotoAdmin(admin.ModelAdmin):
         return render(
             request, "custom_form.html", payload
         )
-
-    @staticmethod
-    def process_photos(form: UploadPhotosForm) -> bool:
-        type = form.cleaned_data.get('type')
-        photos = form.cleaned_data.get('photos')
-        try:
-            if isinstance(photos, list):
-                for photo in photos:
-                    Photo.objects.create(
-                        picture=photo,
-                        type=type,
-                    )
-            else:
-                Photo.objects.create(
-                    picture=photos,
-                    type=type,
-                )
-            return True
-        except:
-            return False
 
     list_display = ('pk', 'img_preview', 'content', 'type', 'private',)
     list_filter = ('type', 'private',)
