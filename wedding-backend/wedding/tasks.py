@@ -60,12 +60,7 @@ def send_notifications_for_subscriptions(
 
 @app.task(
     ignore_result=True,
-    autoretry_for=(
-
-    ),
-    retry_kwargs={'max_retries': 3},
-    retry_backoff=True,
-    default_retry_delay=15
+    acks_late=True,
 )
 def process_photos_task(type: str,
                         encoded_photo: str=[],
