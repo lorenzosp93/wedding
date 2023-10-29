@@ -5,6 +5,7 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth import get_user_model
 from django.contrib import admin
 from django.core.files.uploadedfile import UploadedFile
+from django.urls import reverse
 from .admin import (
     HEADERS,
     UserAdmin
@@ -34,7 +35,7 @@ class TestCsvProfileAdmin(TestCase):
     @patch('django.contrib.messages.add_message')
     def test_import_csv(self, add_message: Mock, create_users: Mock) -> None:
         request = self.factory.post(
-            '/api/admin/auth/user/import-csv/',
+            reverse('admin:import-csv'),
         )
         request.FILES['csv_file'] = UploadedFile(
             file=self.csv, name='testFile.csv', size=self.csv.__sizeof__()
@@ -61,3 +62,4 @@ class TestCsvProfileAdmin(TestCase):
             self.assertEqual(user.first_name, 'testFirstName')
             self.assertEqual(user.last_name, 'testLastName')
             self.assertEqual(user.profile.type, 3)
+
