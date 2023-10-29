@@ -147,7 +147,7 @@ class UserAdmin(admin.ModelAdmin, ExportCsvMixin):
         form = CsvImportForm()
         payload = {"form": form}
         return render(
-            request, "csv_form.html", payload
+            request, "custom_form.html", payload
         )
 
     @staticmethod
@@ -188,7 +188,7 @@ class UserAdmin(admin.ModelAdmin, ExportCsvMixin):
             ) for row in reader
         ])
 
-    @ staticmethod
+    @staticmethod
     def download_csv_template(_: HttpRequest) -> HttpResponse:
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=upload_template.csv'
