@@ -1,12 +1,9 @@
-import re
-from typing import Any
 from django import forms
 from django.contrib import admin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import URLPattern, path
 from django.utils.safestring import mark_safe, SafeString
-from django.core.validators import validate_image_file_extension
 from .models import Information, Photo, InformationWidget
 
 # Register your models here.
@@ -19,7 +16,7 @@ class InformationWidgetInline(admin.TabularInline):
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
-class MultipleFileField(forms.FileField):
+class MultipleImageField(forms.ImageField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("widget", MultipleFileInput())
         super().__init__(*args, **kwargs)
@@ -31,17 +28,10 @@ class MultipleFileField(forms.FileField):
         else:
             result = single_file_clean(data, initial)
         return result
-    
-    def run_validators(self, value: Any) -> None:
-        single_file_validators = super().run_validators
-        if isinstance(value, (list, tuple)):
-            [single_file_validators(v) for v in value]
-        else:
-            single_file_validators(value)
 
 class UploadPhotosForm(forms.Form):
-    type = forms.ChoiceField(choices=Photo.type.field.choices)
-    photos = MultipleFileField(validators=[validate_image_file_extension])
+    type = forms.ChoiceField(choices=Photo.type.field.choices, required=True)
+    photos = MultipleImageField()
 
 
 @admin.register(Photo)
@@ -66,13 +56,20 @@ class PhotoAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             form = UploadPhotosForm(request.POST, request.FILES)
             if form.is_valid():
-                upload = self.process_photos(form)
-                if upload:
-                    self.message_user(
-                request, "Your photos have been uploaded")
+                uploaded = self.process_photos(form)
+                if uploaded:
+                    message = "Your photos have been uploaded"
+                    level = 'SUCCESS'
+                else:
+                    message = "There was an error uploading your photos"
+                    level = 'ERROR'
+                self.message_user(
+                    request, message, level
+                )
                 return redirect("..")
             self.message_user(
-                request, form.errors.as_text(), level='ERROR')
+                request, form.errors.as_text(), level='ERROR'
+            )
             return redirect("..")
         form = UploadPhotosForm()
         payload = {"form": form}
