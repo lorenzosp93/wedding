@@ -61,6 +61,7 @@ def send_notifications_for_subscriptions(
 @app.task(
     ignore_result=True,
     autoretry_for=(
+
     ),
     retry_kwargs={'max_retries': 3},
     retry_backoff=True,
@@ -72,12 +73,12 @@ def process_photos_task(type: str,
                         ) -> None:
     photo_model = apps.get_model('info', 'Photo')
 
-    decoded_photo = base64.b64decode(encoded_photo)
+    decoded_photo = base64.urlsafe_b64decode(encoded_photo)
 
     with BytesIO(decoded_photo) as f:
         with Image.open(f) as img:
             suf = HasPicture.save_img(img, filename)
-            photo_model.objects.create(
+            photo_model.objects.update_or_create(
                 type=type,
                 picture=suf,
             )

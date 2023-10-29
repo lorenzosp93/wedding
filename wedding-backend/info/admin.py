@@ -61,7 +61,7 @@ class PhotoAdmin(admin.ModelAdmin):
                 type = form.cleaned_data.get('type')
                 photos = form.cleaned_data.get('photos')
                 for photo in photos:
-                    encoded_photo = base64.b64encode(photo.read()).decode('utf8')
+                    encoded_photo = base64.urlsafe_b64encode(photo.read()).decode('utf8')
                     filename = photo.name
                     process_photos_task.delay(
                         type,
