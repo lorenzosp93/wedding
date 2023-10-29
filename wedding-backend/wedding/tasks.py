@@ -67,17 +67,17 @@ def send_notifications_for_subscriptions(
     default_retry_delay=15
 )
 def process_photos_task(type: str,
-                        encoded_photos: list[str]=[],
-                        filenames: list[str]=[]
+                        encoded_photo: str=[],
+                        filename: str=[]
                         ) -> None:
     photo_model = apps.get_model('info', 'Photo')
 
-    for encoded_photo, filename in zip(encoded_photos, filenames):
-        decoded_photo = base64.b64decode(encoded_photo)
-        with BytesIO(decoded_photo) as f:
-            with Image.open(f) as img:
-                suf = HasPicture.save_img(img, filename)
-                photo_model.objects.create(
-                    type=type,
-                    picture=suf,
-                )
+    decoded_photo = base64.b64decode(encoded_photo)
+
+    with BytesIO(decoded_photo) as f:
+        with Image.open(f) as img:
+            suf = HasPicture.save_img(img, filename)
+            photo_model.objects.create(
+                type=type,
+                picture=suf,
+            )

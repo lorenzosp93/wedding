@@ -58,14 +58,16 @@ class PhotoAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             form = UploadPhotosForm(request.POST, request.FILES)
             if form.is_valid():
+                type = form.cleaned_data.get('type')
                 photos = form.cleaned_data.get('photos')
-                encoded_photos = [base64.b64encode(photo.read()).decode('utf8') for photo in photos]
-                filenames = [photo.name for photo in photos]
-                process_photos_task.delay(
-                    form.cleaned_data.get('type'),
-                    encoded_photos,
-                    filenames,
-                )
+                for photo in photos:
+                    encoded_photo = base64.b64encode(photo.read()).decode('utf8')
+                    filename = photo.name
+                    process_photos_task.delay(
+                        type,
+                        encoded_photo,
+                        filename,
+                    )
                 message, level = "Your photos upload will be processed soon", "SUCCESS"
                 self.message_user(
                     request, message, level
