@@ -116,7 +116,7 @@ describe("Auth store test", () => {
     store.logout();
     expect(store.token).toBe(undefined);
     expect(store.profile).toBe(undefined);
-    expect(router.push as Mock).toBeCalledWith({ name: "login" });
+    expect(router.push as Mock).toBeCalledWith({ name: "home" });
   });
 
   it("Setup plus one", () => {
