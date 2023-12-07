@@ -41,7 +41,7 @@
               >{{ $t("shared.thenavbar.home") }}</RouterLink
             >
           </li>
-          <li>
+          <li v-if="authStore.isAuthenticated">
             <OnClickOutside
               id="navbar-information"
               @trigger="dropInfo = false"
@@ -91,7 +91,7 @@
               >{{ $t("shared.thenavbar.guestbook") }}</RouterLink
             >
           </li>
-          <li>
+          <li v-if="authStore.isAuthenticated">
             <RouterLink
               id="navbar-inbox"
               :to="{ name: 'inbox' }"
@@ -107,12 +107,20 @@
               >{{ $t("shared.thenavbar.gallery") }}</RouterLink
             >
           </li>
-          <li>
+          <li v-if="authStore.isAuthenticated">
             <RouterLink
               id="navbar-profile"
               :to="{ name: 'profile' }"
               class="flex py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
               >{{ $t("shared.thenavbar.profile") }}
+            </RouterLink>
+          </li>
+          <li v-else>
+            <RouterLink
+              id="navbar-login"
+              :to="{ name: 'login' }"
+              class="flex py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
+              >{{ $t("shared.thenavbar.login") }}
             </RouterLink>
           </li>
         </ul>
@@ -122,7 +130,7 @@
 </template>
 
 <script setup lang="ts">
-import { useInfoStore } from "@/stores";
+import { useAuthStore, useInfoStore } from "@/stores";
 import { type Ref, onMounted, ref } from "vue";
 import { Bars3Icon, ChevronDownIcon } from "@heroicons/vue/24/outline";
 import { OnClickOutside } from "@vueuse/components";
@@ -130,6 +138,7 @@ import Shepherd from "shepherd.js";
 import { RouterLink } from "vue-router";
 
 const infoStore = useInfoStore();
+const authStore = useAuthStore();
 
 const menu = ref(false);
 const dropInfo = ref(false);
@@ -139,7 +148,9 @@ const logo = ref(
 const menuToggle: Ref<HTMLElement | null> = ref(null);
 
 onMounted(() => {
-  infoStore.getInfo();
+  if (authStore.isAuthenticated) {
+    infoStore.getInfo();
+  }
 });
 
 function handleTrigger(target: HTMLElement) {

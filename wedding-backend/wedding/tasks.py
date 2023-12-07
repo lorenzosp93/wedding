@@ -11,21 +11,19 @@ from wedding.settings import WEBPUSH_SETTINGS, EMAIL_TO
 from wedding.celery import app
 from shared.models import HasPicture
 
+
 @app.task(
     ignore_result=True,
     autoretry_for=(
         SMTPConnectError,
         SMTPServerDisconnected,
     ),
-    retry_kwargs={'max_retries': 3},
+    retry_kwargs={"max_retries": 3},
     retry_backoff=True,
-    default_retry_delay=15
+    default_retry_delay=15,
 )
 def send_email(
-    recipient_list: list[str],
-    subject: str,
-    message: str,
-    html_message: str
+    recipient_list: list[str], subject: str, message: str, html_message: str
 ) -> None:
     send_mail(
         subject=subject,
@@ -43,30 +41,30 @@ def send_email(
 def send_notifications_for_subscriptions(
     subscriptions_list: list[str], payload: dict
 ) -> None:
-    subscriptions = apps.get_model(
-        'profile', 'Subscription').objects.filter(pk__in=subscriptions_list)
+    subscriptions = apps.get_model("profile", "Subscription").objects.filter(
+        pk__in=subscriptions_list
+    )
 
     for subscription in subscriptions:
         try:
             webpush(
-                apps.get_model('profile', 'Subscription')(subscription).data,
+                apps.get_model("profile", "Subscription")(subscription).data,
                 json.dumps(payload),
-                vapid_private_key=WEBPUSH_SETTINGS.get('VAPID_PRIVATE_KEY'),
+                vapid_private_key=WEBPUSH_SETTINGS.get("VAPID_PRIVATE_KEY"),
                 vapid_claims={
-                    "sub": f"mailto:{WEBPUSH_SETTINGS.get('VAPID_ADMIN_EMAIL')}"},
+                    "sub": f"mailto:{WEBPUSH_SETTINGS.get('VAPID_ADMIN_EMAIL')}"
+                },
             )
         except WebPushException:
             subscription.delete()
+
 
 @app.task(
     ignore_result=True,
     acks_late=True,
 )
-def process_photos_task(type: str,
-                        encoded_photo: str=[],
-                        filename: str=[]
-                        ) -> None:
-    photo_model = apps.get_model('info', 'Photo')
+def process_photos_task(type: str, encoded_photo: str = "", filename: str = "") -> None:
+    photo_model = apps.get_model("info", "Photo")
 
     decoded_photo = base64.urlsafe_b64decode(encoded_photo)
 

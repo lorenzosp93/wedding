@@ -19,6 +19,11 @@ export const useAuthStore = defineStore({
     registerError: undefined as UserError | undefined,
     success: false as boolean,
   }),
+  getters: {
+    isAuthenticated(): boolean {
+      return !!this.profile?.user && !!this.token;
+    },
+  },
   actions: {
     async setupPlusOne(plusOne: User) {
       this.loading = true;
@@ -70,7 +75,7 @@ export const useAuthStore = defineStore({
       this.token = undefined;
       this.profile = undefined;
       localStorage.clear();
-      router.push({ name: "login" });
+      router.push({ name: "home" });
     },
     async register(user: User) {
       this.loading = true;

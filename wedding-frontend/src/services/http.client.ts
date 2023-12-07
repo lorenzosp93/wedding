@@ -99,14 +99,18 @@ export abstract class HttpClientProtected extends HttpClient {
 
     let authStore = this.useAuth();
 
-    return {
-      ...config,
-      headers: {
-        ...config.headers,
-        Authorization: `Token ${authStore.token}`,
-        "Accept-Language": authStore?.profile?.language,
-      },
-    } as unknown as InternalAxiosRequestConfig;
+    if (!!authStore.token) {
+      config = {
+        ...config,
+        headers: {
+          ...config.headers,
+          Authorization: `Token ${authStore.token}`,
+          "Accept-Language": authStore?.profile?.language,
+        },
+      } as unknown as InternalAxiosRequestConfig;
+    }
+
+    return config;
   };
 
   protected _handleError = (error: AxiosError) => {

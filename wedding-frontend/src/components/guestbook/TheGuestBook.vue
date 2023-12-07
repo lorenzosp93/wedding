@@ -7,6 +7,7 @@
         @submit-entry="(text: string) => {guestBookStore.submitEntry(text)}"
         :submitLoading="guestBookStore.submitLoading"
         :submitError="guestBookStore.submitError"
+        v-if="authStore.isAuthenticated"
       />
     </div>
     <div class="px-5">

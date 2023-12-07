@@ -63,7 +63,8 @@
       "inbox": "Inbox",
       "information": "Informazioni",
       "openMainMenu": "Apri il menu principale",
-      "profile": "Profilo"
+      "profile": "Profilo",
+      "login": "Accedi come invitato"
     },
     "tour": {
       "confirmCancel": "Sei sicuro di voler annullare il tour? Puoi sempre accedervi facendo clic sul pulsante (i) nella pagina Home.",
@@ -111,6 +112,8 @@
   },
   "thehome": {
     "hi": "Ciao {a},",
+    "guest": "ospite",
+    "readOnlyIntro": "benvenuto nella nostra app per il matrimonio. Come utente ospite, puoi visualizzare il Guestbook e la Galleria. Se vuoi accedere a tutte le funzionalità, puoi fare log in come invitato.",
     "openYourInvitation": "Apri il tuo invito!",
     "brideAndGroom": "Priscilla e Lorenzo",
     "weAreDelighted": "siamo lieti di invitarti al nostro matrimonio a Roma.\n          La Città Eterna è il luogo in cui ci siamo incontrati e ci siamo innamorati e ci piacerebbe che tu ti unissi a noi nei festeggiamenti!",

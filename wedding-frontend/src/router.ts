@@ -18,14 +18,35 @@ const TheGuestBook = () => import("@/components/guestbook/TheGuestBook.vue");
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { name: "login", path: "/login", component: LoginPage },
-    { name: "register", path: "/register", component: RegisterPage },
-    { name: "login-success", path: "/login/success", component: LoginSuccess },
-    { name: "home", path: "/", components: { default: TheHome, TheNavbar } },
+    {
+      name: "login",
+      path: "/login",
+      component: LoginPage,
+      meta: { title: "Login", public: true },
+    },
+    {
+      name: "register",
+      path: "/register",
+      component: RegisterPage,
+      meta: { title: "Register", public: true },
+    },
+    {
+      name: "login-success",
+      path: "/login/success",
+      component: LoginSuccess,
+      meta: { title: "Login Success", public: true },
+    },
+    {
+      name: "home",
+      path: "/",
+      components: { default: TheHome, TheNavbar },
+      meta: { title: "Home", public: true },
+    },
     {
       name: "invitation",
       path: "/invitation",
       components: { default: TheInvitation, TheNavbar },
+      meta: { title: "Invitation", public: true },
     },
     {
       name: "inbox",
@@ -41,6 +62,7 @@ const router = createRouter({
       name: "gallery",
       path: "/gallery",
       components: { default: TheGallery, TheNavbar },
+      meta: { title: "Gallery", public: true },
     },
     {
       name: "profile",
@@ -51,20 +73,19 @@ const router = createRouter({
       name: "guestbook",
       path: "/guestbook",
       components: { default: TheGuestBook, TheNavbar },
+      meta: { title: "Guest Book", public: true },
     },
   ],
 });
 
 router.beforeEach(async (to: RouteLocation) => {
   // redirect to login page if not logged in and trying to access a restricted page
-
-  const publicPages = ["login", "login-success", "register"];
-  const authRequired = !publicPages.includes(to.name as string);
+  const authRequired = !to.meta.public;
 
   const auth = useAuthStore();
   const token = auth.token || to.query["token"];
 
-  if (!auth.profile?.id && token) {
+  if (!auth.isAuthenticated && token) {
     await auth.login(token as string);
     return;
   }
@@ -72,7 +93,8 @@ router.beforeEach(async (to: RouteLocation) => {
   if (authRequired && !token) {
     return { ...to, name: "login" };
   }
-  if (!authRequired && token) {
+
+  if (!authRequired && !auth.isAuthenticated && token) {
     return { ...to, name: "home" };
   }
 });

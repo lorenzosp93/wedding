@@ -63,7 +63,8 @@
       "inbox": "Inbox",
       "information": "Information",
       "openMainMenu": "Open main menu",
-      "profile": "Profile"
+      "profile": "Profile",
+      "login": "Log in as an invitee"
     },
     "tour": {
       "confirmCancel": "Are you sure you want to cancel the tour? You can always access it again by clicking on the (i) button in the homepage.",
@@ -111,6 +112,8 @@
   },
   "thehome": {
     "hi": "Hi {a},",
+    "guest": "there",
+    "readOnlyIntro": "welcome to our wedding app. As a guest user, you can view the Guestbook and Gallery. If you want to access all the features, you can log in as an invitee.",
     "openYourInvitation": "Open your invitation!",
     "brideAndGroom": "Priscilla and Lorenzo",
     "weAreDelighted": "we are delighted to invite you to our wedding in Rome.\n          The Eternal City is where we found each other and fell in love, and we would love to have you join us in the celebration!",

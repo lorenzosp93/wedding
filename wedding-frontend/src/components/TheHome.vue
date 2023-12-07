@@ -5,9 +5,20 @@
         class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-sm prose"
       >
         <p class="mx-auto">
-          {{ $t("thehome.hi", { a: authStore.profile?.user?.first_name }) }}
+          {{
+            $t("thehome.hi", {
+              a: authStore.profile?.user?.first_name ?? $t("thehome.guest"),
+            })
+          }}
         </p>
-        <p class="mx-auto">{{ $t("thehome.weAreDelighted") }}</p>
+        <template v-if="authStore.isAuthenticated">
+          <p class="mx-auto">{{ $t("thehome.weAreDelighted") }}</p>
+        </template>
+        <template v-else>
+          <p class="mx-auto">
+            {{ $t("thehome.readOnlyIntro") }}
+          </p>
+        </template>
         <p class="mx-auto">
           {{ $t("thehome.withLove") }}
         </p>
@@ -15,8 +26,13 @@
           {{ $t("thehome.brideAndGroom") }}
         </p>
       </div>
-      <CountDown :end-date="endDate" class="my-10 mx-auto" />
+      <CountDown
+        v-if="endDate > new Date()"
+        :end-date="endDate"
+        class="my-10 mx-auto"
+      />
       <div
+        v-if="authStore.isAuthenticated"
         id="invite-link"
         class="flex w-fit mx-auto my-8 bg-accent text-primary px-2 py-1 rounded-md shadow-md"
       >
@@ -27,8 +43,20 @@
           </p>
         </RouterLink>
       </div>
+      <div
+        id="login"
+        v-else
+        class="flex w-fit mx-auto my-8 bg-accent text-primary px-2 py-1 rounded-md shadow-md"
+      >
+        <RouterLink :to="{ name: 'login' }" class="flex">
+          <UserIcon class="w-5 h-5 mr-1 my-auto" />
+          <p class="mx-1">
+            {{ $t("shared.thenavbar.login") }}
+          </p>
+        </RouterLink>
+      </div>
     </div>
-    <OnboardingTour v-if="authStore.profile" />
+    <OnboardingTour v-if="authStore.profile?.id" />
     <TheFooter />
   </div>
 </template>
@@ -39,7 +67,7 @@ import { useAuthStore } from "@/stores";
 import TheFooter from "./ui/TheFooter.vue";
 import CountDown from "@/components/shared/CountDown.vue";
 import OnboardingTour from "./shared/OnboardingTour.vue";
-import { EnvelopeIcon } from "@heroicons/vue/24/outline";
+import { EnvelopeIcon, UserIcon } from "@heroicons/vue/24/outline";
 
 const authStore = useAuthStore();
 const endDate = ref(new Date("2023-10-01T14:30:00.00Z"));
