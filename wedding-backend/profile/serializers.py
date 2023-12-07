@@ -6,49 +6,52 @@ from django.http import HttpRequest
 from django.db.models import Model
 from django.contrib.auth import get_user_model
 from rest_framework.serializers import (
-    ModelSerializer, CharField, SerializerMethodField,
-    Serializer, EmailField, BaseSerializer
+    ModelSerializer,
+    CharField,
+    SerializerMethodField,
+    Serializer,
+    EmailField,
+    BaseSerializer,
 )
 from shared.serializers import (
     UserSerializer,
 )
-from .models import (
-    Keys,
-    Subscription,
-    UserProfile
-)
+from .models import Keys, Subscription, UserProfile
 from shared.models import get_translated_content
 
 
-def translated_string(
-    serializer: BaseSerializer, obj: Model, field: str
-) -> str | None:
-    request: HttpRequest | None = serializer.context.get('request')
+def translated_string(serializer: BaseSerializer, obj: Model, field: str) -> str | None:
+    request: HttpRequest | None = serializer.context.get("request")
     if request:
-        profile = UserProfile.objects.get(
-            user__pk=request.user.pk)
+        user_pk = request.user.pk
+        if user_pk:
+            language = profile = UserProfile.objects.get(
+                user__pk=request.user.pk
+            ).language
+        else:
+            language = request.LANGUAGE_CODE
         content = getattr(obj, field)
         if content:
-            return get_translated_content(content, profile.language)
+            return get_translated_content(content, language)
     return None
 
 
 class TranslationContentMixin(ModelSerializer):
     def translated_content(self, obj: Model) -> str | None:
-        return translated_string(self, obj, 'content')
+        return translated_string(self, obj, "content")
 
-    content = SerializerMethodField('translated_content')
+    content = SerializerMethodField("translated_content")
 
 
 class TranslationSubjectMixin(ModelSerializer):
-    subject = SerializerMethodField('translated_subject')
-    slug = SerializerMethodField('get_slug')
+    subject = SerializerMethodField("translated_subject")
+    slug = SerializerMethodField("get_slug")
 
     def translated_subject(self, obj: Model) -> str | None:
-        return translated_string(self, obj, 'subject')
+        return translated_string(self, obj, "subject")
 
     def get_slug(self, obj: Model) -> str | None:
-        if (subject := self.translated_subject(obj)):
+        if subject := self.translated_subject(obj):
             return slugify(subject)
         return None
 
@@ -58,14 +61,16 @@ class BaseUserProfileSerializer(ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['user']
+        fields = ["user"]
 
 
 class UserProfileSerializer(BaseUserProfileSerializer):
-    type = CharField(source='get_type_display')
-    parent = UserSerializer(required=False,)
+    type = CharField(source="get_type_display")
+    parent = UserSerializer(
+        required=False,
+    )
     childs = BaseUserProfileSerializer(
-        source='user.childs',
+        source="user.childs",
         many=True,
         required=False,
     )
@@ -73,7 +78,7 @@ class UserProfileSerializer(BaseUserProfileSerializer):
     class Meta:
         model = UserProfile
         depth = 1
-        fields = '__all__'
+        fields = "__all__"
 
 
 class PlusOneSerializer(Serializer):
@@ -85,7 +90,7 @@ class PlusOneSerializer(Serializer):
 class KeysSerializer(ModelSerializer):
     class Meta:
         model = Keys
-        fields = '__all__'
+        fields = "__all__"
 
 
 class SubscriptionSerializer(ModelSerializer):
@@ -93,11 +98,11 @@ class SubscriptionSerializer(ModelSerializer):
 
     class Meta:
         model = Subscription
-        fields = ['endpoint', 'keys']
+        fields = ["endpoint", "keys"]
 
     def create(self, validated_data: dict) -> Subscription | None:
-        keys_data = validated_data.pop('keys')
-        request: HttpRequest | None = self.context.get('request')
+        keys_data = validated_data.pop("keys")
+        request: HttpRequest | None = self.context.get("request")
         if request:
             user_agent: str = self.get_user_agent(request)
             user = request.user
@@ -113,7 +118,7 @@ class SubscriptionSerializer(ModelSerializer):
 
     @staticmethod
     def get_user_agent(request: HttpRequest) -> str:
-        return request.META.get('HTTP_USER_AGENT', '')
+        return request.META.get("HTTP_USER_AGENT", "")
 
 
 class RegisterUserSerializer(ModelSerializer):
@@ -122,33 +127,33 @@ class RegisterUserSerializer(ModelSerializer):
     def validate(self, attrs: dict[str, str]) -> dict[str, str]:
         try:
             self.user = self.Meta.model.objects.get(
-                first_name__iexact=attrs.get('first_name', '').strip(),
-                last_name__iexact=attrs.get('last_name', '').strip(),
+                first_name__iexact=attrs.get("first_name", "").strip(),
+                last_name__iexact=attrs.get("last_name", "").strip(),
             )
         except Exception:
-            raise ValidationError({
-                "non_field_errors": _(
-                    """First and Last Name not found in invitee list,
+            raise ValidationError(
+                {
+                    "non_field_errors": _(
+                        """First and Last Name not found in invitee list,
                     did you write it correcly?"""
-                )
-            })
+                    )
+                }
+            )
         if (
             isinstance(self.user, AbstractUser)
-            and self.user.email != ''
-            and self.user.email != attrs.get('email', '')
+            and self.user.email != ""
+            and self.user.email != attrs.get("email", "")
         ):
-            raise ValidationError({
-                "email": _(
-                    """A user was already set up for this invitee with a different email"""
-                )
-            })
+            raise ValidationError(
+                {
+                    "email": _(
+                        """A user was already set up for this invitee with a different email"""
+                    )
+                }
+            )
         return super().validate(attrs)
 
     class Meta:
         model = get_user_model()
-        fields = [
-            'first_name',
-            'last_name',
-            'email'
-        ]
-        extra_kwargs = {'email': {'required': True, 'allow_blank': False}}
+        fields = ["first_name", "last_name", "email"]
+        extra_kwargs = {"email": {"required": True, "allow_blank": False}}

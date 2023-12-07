@@ -63,7 +63,8 @@
       "inbox": "Inbox",
       "information": "Información",
       "openMainMenu": "Abrir menú principal",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "login": "Iniciar sesión como invitado"
     },
     "tour": {
       "confirmCancel": "¿Estás seguro de que quieres cancelar el tour? Siempre puedes acceder a él nuevamente haciendo clic en el botón (i) en la pagina principal.",
@@ -111,6 +112,8 @@
   },
   "thehome": {
     "hi": "Hola {a},",
+    "guest": "huesped",
+    "readOnlyIntro": "Bienvenido a nuestra aplicación de bodas. Como usuario huesped, podrás ver el Guestbook y la Galería. Si desea acceder a todas las funciones, puede iniciar sesión como invitado.",
     "openYourInvitation": "¡Abre tu invitación!",
     "brideAndGroom": "Priscilla y Lorenzo",
     "weAreDelighted": "estamos encantados de invitarte a nuestra boda en Roma.\n          La Ciudad Eterna es donde nos conocimos y nos enamoramos, ¡y nos encantaría que nos acompañes en la celebración!",

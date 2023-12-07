@@ -44,7 +44,7 @@ function setupInfiniteScroll() {
 function scrollEventListener() {
   return useDebounceFn(() => {
     let condition =
-      window.innerHeight + window.pageYOffset >=
+      window.innerHeight + window.scrollY >=
       document.documentElement.offsetHeight;
     if (condition) {
       useThrottleFn(
