@@ -9,5 +9,7 @@
   font-display: auto;
   size-adjust: 150%;
   src: local("Classic Script MN"), local("ClassicScriptMN"),
+    url("@/assets/fonts/ClassicScriptMN.woff2") format("woff2"),
+    url("@/assets/fonts/ClassicScriptMN.woff") format("woff"),
     url("@/assets/fonts/ClassicScriptMNRegular.ttf") format("truetype");
 }
