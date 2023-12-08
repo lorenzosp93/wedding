@@ -44,7 +44,7 @@
         <RouterLink
           v-if="!authStore.isAuthenticated"
           :to="{ name: 'login' }"
-          class="flex border-l-2 pl-2 ml-2"
+          class="flex border-l-2 dark:border-darkNeutral border-neutral pl-2 ml-2"
         >
           <UserIcon class="w-5 h-5 mr-1 my-auto" />
           <p class="mx-1 my-auto">

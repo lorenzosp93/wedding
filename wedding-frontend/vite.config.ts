@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "url";
+import { resolve } from "node:path";
+import path from "path";
 import vue from "@vitejs/plugin-vue";
 import viteCompression from "vite-plugin-compression";
 import { VitePWA } from "vite-plugin-pwa";
@@ -16,10 +16,7 @@ export default defineConfig({
       filter: /\.(js|mjs|json|css|html|svg|webp|ttf|png|ico|txt)$/i,
     }),
     VueI18nPlugin({
-      include: resolve(
-        dirname(fileURLToPath(import.meta.url)),
-        "./src/i18n/locales/**"
-      ),
+      include: resolve(__dirname, "./src/i18n/locales/**"),
       strictMessage: false,
     }),
     VitePWA({
@@ -77,7 +74,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
   server: {
