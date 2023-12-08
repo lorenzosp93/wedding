@@ -115,14 +115,6 @@
               >{{ $t("shared.thenavbar.profile") }}
             </RouterLink>
           </li>
-          <li v-else>
-            <RouterLink
-              id="navbar-login"
-              :to="{ name: 'login' }"
-              class="flex py-2 pr-4 pl-3 rounded hover:text-accent md:p-0"
-              >{{ $t("shared.thenavbar.login") }}
-            </RouterLink>
-          </li>
         </ul>
       </OnClickOutside>
     </div>
