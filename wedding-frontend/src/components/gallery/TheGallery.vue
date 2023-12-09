@@ -27,7 +27,8 @@
 
 <script setup lang="ts">
 import { useGalleryStore, GALLERY_LIMIT } from "@/stores";
-import { type Ref, ref, onMounted } from "vue";
+import { useEventListener } from "@vueuse/core";
+import { type Ref, ref, onMounted, computed } from "vue";
 import type { Photo } from "@/models/gallery.interface";
 import GalleryColumns from "./ui/GalleryColumns.vue";
 import PhotoItem from "./ui/PhotoItem.vue";
@@ -47,8 +48,39 @@ function getMoreContent() {
   }
 }
 
+const activePhotoIndex: Ref<number> = computed(() => {
+  if (activePhoto.value === undefined) return -1;
+  return galleryStore.gallery.findIndex(
+    (photo) => photo.id === activePhoto.value?.id
+  );
+});
+
+function handleKeydownGallery(event: KeyboardEvent) {
+  if (activePhotoIndex.value === -1) return;
+
+  switch (event.key) {
+    case "Escape":
+      activePhoto.value = undefined;
+      return;
+    case "ArrowRight":
+      seekGallery(1);
+      break;
+    case "ArrowLeft":
+      seekGallery(-1);
+      break;
+  }
+}
+
+function seekGallery(indexChange: number) {
+  let newIndex =
+    (activePhotoIndex.value + indexChange + galleryStore.gallery.length) %
+    galleryStore.gallery.length;
+  activePhoto.value = galleryStore.gallery[newIndex];
+}
+
 onMounted(() => {
   galleryStore.getGalleryContent({ force: false, limit: GALLERY_LIMIT });
+  useEventListener("keydown", handleKeydownGallery);
 });
 </script>
 
