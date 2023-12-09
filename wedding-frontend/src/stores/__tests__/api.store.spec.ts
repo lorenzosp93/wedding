@@ -137,7 +137,7 @@ describe("Inbox store test", () => {
     let mockGet = vi.spyOn(store, "getInbox").mockResolvedValue();
 
     store
-      .submitResponse([testResponse, testResponse], testInbox[0].uuid)
+      .submitResponse([testResponse, testResponse], testInbox[0].uuid ?? "")
       .then(() => {
         expect(mockPost).toBeCalledTimes(2);
         expect(store.submitSuccess).toBe(true);
@@ -153,7 +153,7 @@ describe("Inbox store test", () => {
     });
     vi.spyOn(store, "getInbox").mockResolvedValue();
 
-    store.submitResponse([testResponse], testInbox[0].uuid).then(() => {
+    store.submitResponse([testResponse], testInbox[0].uuid ?? "").then(() => {
       expect(store.submitError).toStrictEqual([
         {
           q: testInbox[0].questions[0].uuid,
@@ -171,7 +171,7 @@ describe("Inbox store test", () => {
       .mockResolvedValue(axiosResponse);
     let mockGet = vi.spyOn(store, "getInbox").mockResolvedValue();
 
-    store.deleteResponses(testInbox[0].uuid).then(() => {
+    store.deleteResponses(testInbox[0].uuid ?? "").then(() => {
       expect(mockDelete).toBeCalled();
       expect(store.deleteSuccess).toBe(true);
       expect(mockGet).toBeCalledWith({ force: true });
@@ -186,7 +186,7 @@ describe("Inbox store test", () => {
     });
     vi.spyOn(store, "getInbox").mockResolvedValue();
 
-    store.deleteResponses(testInbox[0].uuid).then(() => {
+    store.deleteResponses(testInbox[0].uuid ?? "").then(() => {
       expect(store.deleteError).toStrictEqual([
         {
           q: testInbox[0].questions[0].uuid,
