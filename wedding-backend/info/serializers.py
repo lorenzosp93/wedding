@@ -1,9 +1,9 @@
 from rest_framework.serializers import (
-    ModelSerializer, CharField, DictField,
+    ModelSerializer,
+    CharField,
+    DictField,
 )
-from .models import (
-    Information, Photo, InformationWidget
-)
+from .models import Information, Photo, InformationWidget
 from profile.serializers import (
     TranslationContentMixin,
     TranslationSubjectMixin,
@@ -15,7 +15,7 @@ class InformationWidgetSerializer(ModelSerializer):
 
     class Meta:
         model = InformationWidget
-        fields = ['type', 'content']
+        fields = ["type", "content"]
 
 
 class InformationSerializer(
@@ -32,7 +32,8 @@ class InformationSerializer(
     class Meta:
         model = Information
         exclude = [
-            'audience', 'submit',
+            "audience",
+            "submit",
         ]
 
 
@@ -40,6 +41,8 @@ class PhotoSerializer(
     TranslationContentMixin,
     ModelSerializer,
 ):
+    type = CharField(source="get_type_display")
+
     class Meta:
         model = Photo
-        fields = ['picture', 'thumbnail', 'content', 'id']
+        fields = ["picture", "type", "thumbnail", "content", "id"]

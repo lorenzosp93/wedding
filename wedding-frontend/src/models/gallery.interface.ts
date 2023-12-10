@@ -8,5 +8,6 @@ export interface Photo {
   picture: string;
   thumbnail: string;
   content: string;
+  type: string;
   id: number;
 }

@@ -1,8 +1,14 @@
 <template>
   <div class="m-auto max-w-5xl py-5">
     <div class="mx-3 p-3 bg-pale dark:bg-darkPale rounded-md flex flex-wrap">
+      <GalleryFilters
+        :photo-types="photoTypes"
+        :active-type="activeType"
+        @update:active-type="($event) => (activeType = $event)"
+        class="flex"
+      />
       <GalleryColumns
-        :gallery="galleryStore.gallery"
+        :gallery="filteredGallery"
         @activate-photo="
           (photo) => {
             activePhoto = photo;
@@ -31,12 +37,25 @@ import { useEventListener } from "@vueuse/core";
 import { type Ref, ref, onMounted, computed } from "vue";
 import type { Photo } from "@/models/gallery.interface";
 import GalleryColumns from "./ui/GalleryColumns.vue";
+import GalleryFilters from "./ui/GalleryFilters.vue";
 import PhotoItem from "./ui/PhotoItem.vue";
 import InfiniteScrolling from "../shared/InfiniteScrolling.vue";
 
 const galleryStore = useGalleryStore();
 
 const activePhoto: Ref<Photo | undefined> = ref(undefined);
+
+const photoTypes: Ref<string[]> = computed(() => {
+  return [...new Set(galleryStore.gallery.map((photo) => photo.type))];
+});
+
+const activeType: Ref<string> = ref("");
+
+const filteredGallery: Ref<Photo[]> = computed(() => {
+  return galleryStore.gallery.filter(
+    (photo) => photo.type === activeType.value || activeType.value === ""
+  );
+});
 
 function getMoreContent() {
   if (galleryStore.next && !galleryStore.loading) {
@@ -50,7 +69,7 @@ function getMoreContent() {
 
 const activePhotoIndex: Ref<number> = computed(() => {
   if (activePhoto.value === undefined) return -1;
-  return galleryStore.gallery.findIndex(
+  return filteredGallery.value.findIndex(
     (photo) => photo.id === activePhoto.value?.id
   );
 });
@@ -73,9 +92,9 @@ function handleKeydownGallery(event: KeyboardEvent) {
 
 function seekGallery(indexChange: number) {
   let newIndex =
-    (activePhotoIndex.value + indexChange + galleryStore.gallery.length) %
-    galleryStore.gallery.length;
-  activePhoto.value = galleryStore.gallery[newIndex];
+    (activePhotoIndex.value + indexChange + filteredGallery.value.length) %
+    filteredGallery.value.length;
+  activePhoto.value = filteredGallery.value[newIndex];
 }
 
 onMounted(() => {
