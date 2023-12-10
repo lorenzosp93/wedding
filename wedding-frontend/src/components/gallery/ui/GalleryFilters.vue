@@ -5,10 +5,10 @@
       <div
         v-for="type in photoTypes"
         :key="type"
-        class="px-2 py-1 rounded-md dark:bg-darkPale cursor-pointer text-primary"
+        class="px-2 py-1 rounded-md cursor-pointer text-primary"
         :class="{
           'bg-accent dark:bg-darkAccent': type === activeType,
-          'bg-pale': type !== activeType,
+          'bg-pale dark:bg-darkPale': type !== activeType,
         }"
         @click="handleTypeUpdate(type)"
       >
