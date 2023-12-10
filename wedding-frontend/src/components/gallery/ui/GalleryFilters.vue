@@ -1,11 +1,13 @@
 <template>
   <div class="p-2 dark:bg-darkNeutral bg-neutral rounded-md w-full">
-    <FunnelIcon class="w-6 h-6 stroke-2 my-auto stroke-accent mr-3" />
+    <FunnelIcon
+      class="w-6 h-6 stroke-2 my-auto stroke-accent mr-3 flex-shrink-0"
+    />
     <div class="overflow-x-scroll gap-2 flex flex-row ml-auto">
       <div
         v-for="type in photoTypes"
         :key="type"
-        class="px-2 py-1 rounded-md cursor-pointer text-primary"
+        class="px-2 py-1 rounded-md cursor-pointer text-primary whitespace-nowrap"
         :class="{
           'bg-accent dark:bg-darkAccent': type === activeType,
           'bg-pale dark:bg-darkPale': type !== activeType,
