@@ -4,14 +4,18 @@
       @trigger="$emit('closePhoto')"
       class="absolute w-fit h-fit top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-xl"
       :style="{
-        background: `url(${activePhoto?.thumbnail}) no-repeat center center`,
+        background: `url(${activePhoto?.thumbnail})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
       }"
     >
+      <LoadingView v-show="!isLoaded" />
       <img
         class="max-w-[90vw] max-h-[80vh] rounded-lg"
         :src="activePhoto?.picture"
         alt="Full-size picture"
-        loading="lazy"
+        @load="() => (isLoaded = true)"
       />
     </OnClickOutside>
     <div
@@ -23,12 +27,15 @@
 
 <script setup lang="ts">
 import type { Photo } from "@/models/gallery.interface";
-import { type PropType } from "vue";
+import LoadingView from "@/components/shared/LoadingView.vue";
+import { ref, type PropType } from "vue";
 import { OnClickOutside } from "@vueuse/components";
 
 defineProps({
   activePhoto: { type: Object as PropType<Photo> },
 });
+
+const isLoaded = ref(false);
 
 defineEmits(["closePhoto"]);
 </script>
