@@ -16,6 +16,7 @@
         :src="activePhoto?.picture"
         alt="Full-size picture"
         @load="() => (isLoaded = true)"
+        loading="lazy"
       />
     </OnClickOutside>
     <div
