@@ -14,7 +14,7 @@
       <img
         class="max-w-[90vw] max-h-[80vh] rounded-lg"
         :src="activePhoto?.picture"
-        :alt="`Full-size picture: ${activePhoto?.id}`"
+        :alt="`Full-size picture of the ${activePhoto?.type}`"
         @load="() => (isLoaded = true)"
         loading="lazy"
       />
@@ -29,14 +29,21 @@
 <script setup lang="ts">
 import type { Photo } from "@/models/gallery.interface";
 import LoadingView from "@/components/shared/LoadingView.vue";
-import { ref, type PropType } from "vue";
+import { ref, type PropType, watch } from "vue";
 import { OnClickOutside } from "@vueuse/components";
 
-defineProps({
+const props = defineProps({
   activePhoto: { type: Object as PropType<Photo> },
 });
 
 const isLoaded = ref(false);
+
+watch(
+  () => props.activePhoto,
+  () => {
+    isLoaded.value = false;
+  }
+);
 
 defineEmits(["closePhoto"]);
 </script>

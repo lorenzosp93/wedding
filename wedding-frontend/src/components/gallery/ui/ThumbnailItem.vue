@@ -4,7 +4,7 @@
   >
     <img
       :src="photo?.thumbnail"
-      :alt="`Picture ${photo?.id} thumbnail`"
+      :alt="`Thumbnail of the ${photo?.type}`"
       class="w-full"
     />
     <div
