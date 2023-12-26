@@ -80,7 +80,7 @@ function handleKeydownGallery(event: KeyboardEvent) {
   switch (event.key) {
     case "Escape":
       activePhoto.value = undefined;
-      return;
+      break;
     case "ArrowRight":
       seekGallery(1);
       break;
