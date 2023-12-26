@@ -14,8 +14,9 @@
       <img
         class="max-w-[90vw] max-h-[80vh] rounded-lg"
         :src="activePhoto?.picture"
-        alt="Full-size picture"
+        :alt="`Full-size picture: ${activePhoto?.id}`"
         @load="() => (isLoaded = true)"
+        loading="lazy"
       />
     </OnClickOutside>
     <div
