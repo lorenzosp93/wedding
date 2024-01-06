@@ -1,6 +1,11 @@
 <template>
   <div class="flex flex-col">
     <div class="mx-auto">
+      <VideoEmbed
+        v-if="videoLink"
+        :video-link="videoLink"
+        class="rounded-md mx-auto my-3 min-h-[30vh] aspect-video"
+      />
       <div
         class="max-w-2xl my-5 mx-3 p-5 rounded-md bg-pale dark:bg-darkPale dark:text-darkNeutral shadow-sm prose"
       >
@@ -64,8 +69,10 @@ import { useAuthStore } from "@/stores";
 import TheFooter from "./ui/TheFooter.vue";
 import CountDown from "@/components/shared/CountDown.vue";
 import OnboardingTour from "./shared/OnboardingTour.vue";
+import VideoEmbed from "./shared/VideoEmbed.vue";
 import { EnvelopeIcon, UserIcon } from "@heroicons/vue/24/outline";
 
+const videoLink = import.meta.env.VITE_APP_YOUTUBE_VIDEO_URL;
 const authStore = useAuthStore();
 const endDate = ref(new Date("2023-10-01T14:30:00.00Z"));
 </script>
