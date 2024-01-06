@@ -72,7 +72,7 @@ import OnboardingTour from "./shared/OnboardingTour.vue";
 import VideoEmbed from "./shared/VideoEmbed.vue";
 import { EnvelopeIcon, UserIcon } from "@heroicons/vue/24/outline";
 
-const videoLink = import.meta.env.VITE_APP_YOUTUBE_VIDEO_URL;
+const videoLink = import.meta.env.VITE_APP_VIDEO_URL;
 const authStore = useAuthStore();
 const endDate = ref(new Date("2023-10-01T14:30:00.00Z"));
 </script>
