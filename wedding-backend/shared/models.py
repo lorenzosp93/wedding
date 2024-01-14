@@ -13,21 +13,21 @@ from wedding.settings import AUTH_USER_MODEL
 
 THUMBNAIL_SIZE = 640, 640
 I18N = (
-    ('en', _('English')),
-    ('it', _('Italian')),
-    ('es', _('Spanish')),
+    ("en", _("English")),
+    ("it", _("Italian")),
+    ("es", _("Spanish")),
 )
 
 
 class Address(models.Model):
     "Model to capture an address from a user"
     address1: models.Field = models.TextField(max_length=128)
-    address2: models.Field = models.TextField(
-        max_length=128, null=True, blank=True)
+    address2: models.Field = models.TextField(max_length=128, null=True, blank=True)
     city: models.Field = models.CharField(max_length=20)
     postal_code: models.Field = models.CharField(max_length=10)
     province_or_state: models.Field = models.CharField(
-        max_length=10, null=True, blank=True)
+        max_length=10, null=True, blank=True
+    )
     country: models.Field = models.CharField(max_length=20)
 
 
@@ -58,7 +58,7 @@ class TimeStampable(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
 
 class Described(models.Model):
@@ -131,12 +131,7 @@ class HasPicture(models.Model):
     @staticmethod
     def save_img(img: Image.Image, save_path: str) -> SimpleUploadedFile:
         with BytesIO() as io:
-            img.save(
-                io,
-                quality=90,
-                optimize=True,
-                format='png'
-            )
+            img.save(io, quality=90, optimize=True, format="png")
             io.seek(0)
             return SimpleUploadedFile(
                 save_path,
@@ -149,8 +144,9 @@ class HasPicture(models.Model):
 
 class ContentString(models.Model):
     """
-        Model to define a string of content
+    Model to define a string of content
     """
+
     value: models.Field = models.TextField()
 
     def __str__(self) -> str:
@@ -162,37 +158,31 @@ class TranslatedString(models.Model):
     language: models.Field = models.CharField(
         choices=I18N,
         max_length=2,
-        default='en',
+        default="en",
     )
     t9n: models.Field = models.TextField()
     content: models.Field = models.ForeignKey(
-        ContentString,
-        on_delete=models.CASCADE,
-        related_name='translated_strings'
+        ContentString, on_delete=models.CASCADE, related_name="translated_strings"
     )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['language', 'content'],
-                name='unique_translation_per_language_and_content',
+                fields=["language", "content"],
+                name="unique_translation_per_language_and_content",
             ),
         ]
 
     def __str__(self) -> str:
-        return f'{strip_tags(self.content.value)} => {self.language}'
+        return f"{strip_tags(self.content.value)} => {self.language}"
 
 
-def get_translated_content(
-    content: ContentString, language: str = 'en'
-) -> str:
+def get_translated_content(content: ContentString, language: str = "en") -> str:
     """
-        Helper function to return the translated string
-        for a given content and language
+    Helper function to return the translated string
+    for a given content and language
     """
-    if (translated_str := content.translated_strings.filter(
-        language=language
-    ).first()):
+    if translated_str := content.translated_strings.filter(language=language).first():
         return translated_str.t9n
     return content.value
 
@@ -200,10 +190,7 @@ def get_translated_content(
 class HasContent(models.Model):
     "Abstract class to define content"
     content: models.Field = models.ForeignKey(
-        ContentString,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
+        ContentString, on_delete=models.CASCADE, null=True, blank=True
     )
 
     class Meta:
@@ -215,7 +202,7 @@ class HasSubject(models.Model):
     subject: models.Field = models.OneToOneField(
         ContentString,
         on_delete=models.CASCADE,
-        related_name='%(class)s_subject',
+        related_name="%(class)s_subject",
     )
 
     class Meta:
@@ -225,8 +212,12 @@ class HasSubject(models.Model):
 class Deactivate(models.Model):
     "Abstract class for models that can be deactivated"
     active: models.Field = models.BooleanField(default=True)
-    deleted_at: models.Field = models.DateTimeField(
-        default=None, null=True, blank=True)
+    deleted_at: models.Field = models.DateTimeField(default=None, null=True, blank=True)
 
     class Meta:
         abstract = True
+
+
+class ByteArray(models.Model):
+    "Model to store raw data for later processing"
+    data: models.Field = models.BinaryField()

@@ -3,7 +3,6 @@ import base64
 from io import BytesIO
 from PIL import Image
 from smtplib import SMTPConnectError, SMTPServerDisconnected
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.apps import apps
 from django.core.mail import send_mail
 from pywebpush import webpush, WebPushException
@@ -63,12 +62,15 @@ def send_notifications_for_subscriptions(
     ignore_result=True,
     acks_late=True,
 )
-def process_photos_task(type: str, encoded_photo: str = "", filename: str = "") -> None:
+def process_photos_task(
+    type: str, encoded_photo_pk: str = "", filename: str = ""
+) -> None:
     photo_model = apps.get_model("info", "Photo")
+    bytearray_model = apps.get_model("shared", "ByteArray")
 
-    decoded_photo = base64.urlsafe_b64decode(encoded_photo)
+    _bytearray = bytearray_model.objects.get(pk=encoded_photo_pk)
 
-    with BytesIO(decoded_photo) as f:
+    with BytesIO(_bytearray.data) as f:
         with Image.open(f) as img:
             suf = HasPicture.save_img(img, filename)
             photo_model.objects.update_or_create(
