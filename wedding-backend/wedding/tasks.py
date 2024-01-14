@@ -77,3 +77,5 @@ def process_photos_task(
                 type=type,
                 picture=suf,
             )
+
+    _bytearray.delete()
