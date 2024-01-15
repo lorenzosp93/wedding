@@ -14,6 +14,7 @@ if [ "$PROCESS_TYPE" = "server" ]; then
         gunicorn \
             --reload \
             --bind 0.0.0.0:8000 \
+            --timeout 120 \
             --workers 2 \
             --log-level DEBUG \
             --access-logfile "-" \
@@ -22,8 +23,9 @@ if [ "$PROCESS_TYPE" = "server" ]; then
     else
         gunicorn \
             --bind 0.0.0.0:8000 \
+            --timeout 120 \
             --workers 2 \
-            --log-level DEBUG \
+            --log-level INFO \
             --access-logfile "-" \
             --error-logfile "-" \
             wedding.wsgi

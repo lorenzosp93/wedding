@@ -1,4 +1,3 @@
-import base64
 from django import forms
 from django.contrib import admin
 from django.http import HttpRequest, HttpResponse
@@ -71,13 +70,13 @@ class PhotoAdmin(admin.ModelAdmin):
             request, "custom_form.html", {"form": UploadPhotosForm(), **kwargs}
         )
 
-    def valid_photos_form(self, form):
+    def valid_photos_form(self, form: UploadPhotosForm) -> None:
         type = form.cleaned_data.get("type")
         photos = form.cleaned_data.get("photos")
         for photo in photos:
             self.process_photo(type, photo)
 
-    def process_photo(self, type, photo):
+    def process_photo(self, type: str, photo: Photo) -> None:
         encoded_photo_pk = self.save_bytearray(photo)
         filename = photo.name
         process_photos_task.delay(
