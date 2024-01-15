@@ -56,29 +56,35 @@ class PhotoAdmin(admin.ModelAdmin):
         ]
         return my_urls + urls
 
-    def upload_photos(self, request: HttpRequest) -> HttpResponse:
+    def upload_photos(self, request: HttpRequest, **kwargs) -> HttpResponse:
         # This function will handle the bulk upload of photos
         if request.method == "POST":
             form = UploadPhotosForm(request.POST, request.FILES)
             if form.is_valid():
-                type = form.cleaned_data.get("type")
-                photos = form.cleaned_data.get("photos")
-                for photo in photos:
-                    encoded_photo_pk = self.save_bytearray(photo)
-                    filename = photo.name
-                    process_photos_task.delay(
-                        type,
-                        encoded_photo_pk,
-                        filename,
-                    )
+                self.valid_photos_form(form)
                 message, level = "Your photos upload will be processed soon", "SUCCESS"
                 self.message_user(request, message, level)
-                return redirect("..")
-            self.message_user(request, form.errors.as_text(), level="ERROR")
+            else:
+                self.message_user(request, form.errors.as_text(), level="ERROR")
             return redirect("..")
-        form = UploadPhotosForm()
-        payload = {"form": form}
-        return render(request, "custom_form.html", payload)
+        return render(
+            request, "custom_form.html", {"form": UploadPhotosForm(), **kwargs}
+        )
+
+    def valid_photos_form(self, form):
+        type = form.cleaned_data.get("type")
+        photos = form.cleaned_data.get("photos")
+        for photo in photos:
+            self.process_photo(type, photo)
+
+    def process_photo(self, type, photo):
+        encoded_photo_pk = self.save_bytearray(photo)
+        filename = photo.name
+        process_photos_task.delay(
+            type,
+            encoded_photo_pk,
+            filename,
+        )
 
     def save_bytearray(self, photo: Photo) -> str:
         encoded_photo = ByteArray.objects.create(data=photo.read())
