@@ -20,7 +20,7 @@ export const INBOX_TTL = 10; // minutes
 export const GALLERY_TTL = 60; // minutes
 export const GUESTBOOK_TTL = 5; // minutes
 
-export const GALLERY_LIMIT = 16;
+export const GALLERY_LIMIT = 50;
 export const GUESTBOOK_LIMIT = 30;
 
 interface GetContentOptions {
