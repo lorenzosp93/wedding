@@ -46,6 +46,6 @@ elif [ "$PROCESS_TYPE" = "worker" ]; then
     celery \
         --app wedding \
         worker \
-        --concurrency 4 \
+        --autoscale=8,2  \
         --loglevel INFO
 fi
